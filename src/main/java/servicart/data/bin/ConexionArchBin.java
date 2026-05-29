@@ -1,25 +1,39 @@
 package servicart.data.bin;
 
-public class ConexionArchBin {
-    private static final String NOMBRE_ARCHIVO = "usuarios.txt";
-    private static final String SEPARADOR = ",";  // CSV
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-    // Verifica si el archivo existe físicamente
-    public static boolean existeArchivo() {
-        // return new File(NOMBRE_ARCHIVO).exists();
-        return false;
+public class ConexionArchBin {
+    private static final String NOMBRE_ARCHIVO = "usuarios.bin";
+
+    private static void asegurarArchivo() {
+        Path ruta = Paths.get(NOMBRE_ARCHIVO);
+        if (Files.notExists(ruta)) {
+            try {
+                Files.createFile(ruta);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
-    // Crea el archivo vacío si no existe (similar a inicializar base de datos)
-    public static boolean crearArchivoSiNoExiste() {
-        // Si no existe, crea un archivo vacío (y opcionalmente escribe una cabecera)
-        // Retorna true si se creó o ya existía; false si hubo error.
-        return false;
+    public static DataInputStream abrirParaLectura() throws IOException {
+        asegurarArchivo();
+        return new DataInputStream(new FileInputStream(NOMBRE_ARCHIVO));
+    }
+
+    public static DataOutputStream abrirParaEscritura() throws IOException {
+        asegurarArchivo();
+        // Si el archivo no existe, se crea automáticamente al abrir FileOutputStream
+        return new DataOutputStream(new FileOutputStream(NOMBRE_ARCHIVO));
     }
 
     // Verifica si el archivo está vacío (sin líneas, o solo cabecera)
-    public static boolean estaVacio() {
-        // Abre el archivo, lee la primera línea, si no hay -> true
-        return false;
+    public static boolean estaVacio() throws IOException {
+        Path ruta = Paths.get(NOMBRE_ARCHIVO);
+            return Files.size(ruta) == 0;
     }
 }
