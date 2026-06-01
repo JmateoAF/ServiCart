@@ -14,7 +14,7 @@ public class SobreNosotrosController {
     @FXML
     private void irAMain(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/main.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("/views/main.fxml")));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.getScene().setRoot(root);
         } catch (IOException e) {
