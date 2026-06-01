@@ -1,33 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane fx:controller="servicart.controllers.MainController" prefWidth="800" prefHeight="600" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 12 20 12 20;">
-            <Label text="SERVICART" style="-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-weight: bold; -fx-font-family: 'Courier New';"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <Button text="inicio" style="-fx-background-color: #1f1f1f; -fx-text-fill: #e8c96d; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;"/>
-            <Button text="sobre nosotros" onAction="#irASobreNosotros" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;"/>
-        </HBox>
-    </top>
+<VBox alignment="CENTER" spacing="30" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="servicart.controllers.MainController">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
 
-    <center>
-        <VBox alignment="CENTER" spacing="10" style="-fx-background-color: #0f0f0f;">
-            <VBox alignment="CENTER" spacing="6">
-                <Label text="SERVICART" style="-fx-text-fill: #e8c96d; -fx-font-size: 28; -fx-font-weight: bold; -fx-font-family: 'Courier New';"/>
-                <Label text="plataforma de pago de servicios básicos" style="-fx-text-fill: #444444; -fx-font-size: 12;"/>
-            </VBox>
+    <Label text="Mi Aplicación" style="-fx-font-size: 32px; -fx-font-weight: bold;"/>
 
-            <VBox maxWidth="380" spacing="10">
-                <VBox.margin>
-                    <Insets top="22"/>
-                </VBox.margin>
-
-                <TextField promptText="Ingrese cédula o número de contrato..." style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #cccccc; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 14; -fx-padding: 12 16 12 16;"/>
-                <Button text="BUSCAR DEUDAS" maxWidth="Infinity" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 14; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12 0 12 0; -fx-cursor: hand;"/>
-            </VBox>
-        </VBox>
-    </center>
-</BorderPane>
+    <Button text="Sobre Nosotros" onAction="#irASobreNosotros" prefWidth="180" prefHeight="40"
+            style="-fx-font-size: 16px;"/>
+</VBox>
