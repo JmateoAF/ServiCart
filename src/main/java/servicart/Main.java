@@ -35,6 +35,8 @@ void main() {
 
     System.out.println("\nIniciando pruebas de entorno...");
 
-    //Inicializamos la base de datos y cargamos los archivos .sql (dbsetup y datosprueba)
+    //Inicializamos la base de datos y cargamos los archivos .sql
     ConexionSQLite.inicializarBaseDeDatos();
+
+
 }
