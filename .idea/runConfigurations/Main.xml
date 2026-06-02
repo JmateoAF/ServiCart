@@ -3,7 +3,7 @@
     <option name="UNNAMED_CLASS_CONFIGURATION" value="true" />
     <option name="MAIN_CLASS_NAME" value="Main" />
     <module name="ServiCart" />
-    <option name="VM_PARAMETERS" value="--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow -Djdk.module.illegalAccess.silent=true" />
+    <option name="VM_PARAMETERS" value="--enable-native-access=ALL-UNNAMED --sun-misc-unsafe-memory-access=allow" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

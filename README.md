@@ -52,7 +52,7 @@ Para trabajar cómodos con la base de datos y la interfaz sin salir de la IDE, v
 
 ---
 
-## Posibles nombres para la aplicacion
+## Posibles nombres para la aplicación
 **ServiCart** - Mezcla "Servicios" y "Carrito". Es directo y comercial
 
 **UniPay** - Corto, fácil de recordar y hace alusión a "Unificar" todos los pagos en un solo carrito.

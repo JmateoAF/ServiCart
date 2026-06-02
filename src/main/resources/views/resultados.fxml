@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <?import javafx.scene.control.*?>
-        <?import javafx.scene.layout.*?>
-        <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane prefWidth="800" prefHeight="600" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<BorderPane prefWidth="800" prefHeight="600" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx">
     <top>
         <VBox>
             <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 12 20 12 20;">
