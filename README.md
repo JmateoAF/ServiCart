@@ -12,7 +12,7 @@
 
 **Fecha de Entrega:** 3 de julio de 2026
 
-**Repositorio GitHub:** https://github.com/JmateoAF/PagoServicios
+**Repositorio GitHub:** https://github.com/JmateoAF/ServiCart
 
 ---
 
