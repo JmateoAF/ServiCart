@@ -3,6 +3,7 @@ import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import servicart.data.sql.ConexionSQLite;
 
 void main() {
@@ -17,6 +18,8 @@ void main() {
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
+
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/icon/marcoDorado.png"))));
 
             stage.setMinWidth(700);
             stage.setMinHeight(500);
