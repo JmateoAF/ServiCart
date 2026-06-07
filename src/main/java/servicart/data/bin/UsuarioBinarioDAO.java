@@ -1,24 +1,24 @@
 package servicart.data.bin;
 
 import servicart.domain.models.Usuario;
-import servicart.domain.interfaces.InterfazDAO;
+import servicart.domain.interfaces.CrudDAO;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioBinarioDAO implements InterfazDAO<Usuario> {
+public class UsuarioBinarioDAO {
 
     // Lee todos los usuarios del archivo binario
     private List<Usuario> leerTodosDesdeArchivo() throws IOException {
         List<Usuario> usuarios = new ArrayList<>();
 
         // Si el archivo está vacío, no hay nada que leer
-        if (ConexionBinario.estaVacio()) {
+        if (ConexionBinarioDAO.estaVacio()) {
             return usuarios;
         }
 
-        try (DataInputStream dis = ConexionBinario.abrirParaLectura()) {
+        try (DataInputStream dis = ConexionBinarioDAO.abrirParaLectura()) {
             while (true) {
                 try {
                     int id = dis.readInt();
@@ -36,7 +36,7 @@ public class UsuarioBinarioDAO implements InterfazDAO<Usuario> {
 
     // sobrescribe
     private void guardarTodosEnArchivo(List<Usuario> usuarios) throws IOException {
-        try (DataOutputStream dos = ConexionBinario.abrirParaEscritura()) {
+        try (DataOutputStream dos = ConexionBinarioDAO.abrirParaEscritura()) {
             for (Usuario u : usuarios) {
                 dos.writeInt(u.getId());
                 dos.writeUTF(u.getNombre());
@@ -45,7 +45,7 @@ public class UsuarioBinarioDAO implements InterfazDAO<Usuario> {
         }
     }
 
-    @Override
+    //@Override
     public boolean actualizar(Usuario usuarioAActualizar) {
         try {
             List<Usuario> usuarios = leerTodosDesdeArchivo();
