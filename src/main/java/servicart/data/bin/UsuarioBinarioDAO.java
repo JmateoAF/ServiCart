@@ -1,7 +1,6 @@
 package servicart.data.bin;
 
 import servicart.domain.models.Usuario;
-import servicart.domain.interfaces.CrudDAO;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,11 +13,11 @@ public class UsuarioBinarioDAO {
         List<Usuario> usuarios = new ArrayList<>();
 
         // Si el archivo está vacío, no hay nada que leer
-        if (ConexionBinarioDAO.estaVacio()) {
+        if (ConexionBinario.estaVacio()) {
             return usuarios;
         }
 
-        try (DataInputStream dis = ConexionBinarioDAO.abrirParaLectura()) {
+        try (DataInputStream dis = ConexionBinario.abrirParaLectura()) {
             while (true) {
                 try {
                     int id = dis.readInt();
@@ -36,7 +35,7 @@ public class UsuarioBinarioDAO {
 
     // sobrescribe
     private void guardarTodosEnArchivo(List<Usuario> usuarios) throws IOException {
-        try (DataOutputStream dos = ConexionBinarioDAO.abrirParaEscritura()) {
+        try (DataOutputStream dos = ConexionBinario.abrirParaEscritura()) {
             for (Usuario u : usuarios) {
                 dos.writeInt(u.getId());
                 dos.writeUTF(u.getNombre());

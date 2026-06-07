@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class ConexionBinarioDAO {
+public class ConexionBinario {
     private static final String NOMBRE_ARCHIVO = "usuarios.bin";
 
     private static void asegurarArchivo() {
