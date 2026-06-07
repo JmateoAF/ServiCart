@@ -1,4 +1,4 @@
-package servicart.core.models;
+package servicart.domain.models;
 
 public class Usuario {
     private int id;

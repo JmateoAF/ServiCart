@@ -1,13 +1,13 @@
 package servicart.data.sql;
 
-import servicart.core.models.Usuario;
-import servicart.data.interfaces.InterfazCRUD;
+import servicart.domain.models.Usuario;
+import servicart.domain.interfaces.InterfazDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class UsuarioSQLite implements InterfazCRUD<Usuario> {
+public class UsuarioSQLiteDAO implements InterfazDAO<Usuario> {
     @Override
     public boolean actualizar(Usuario usuario) {
         String sql = "UPDATE usuarios SET username = ?, cedula = ? WHERE id = ?";

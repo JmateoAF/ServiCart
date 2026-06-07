@@ -1,24 +1,24 @@
 package servicart.data.bin;
 
-import servicart.core.models.Usuario;
-import servicart.data.interfaces.InterfazCRUD;
+import servicart.domain.models.Usuario;
+import servicart.domain.interfaces.InterfazDAO;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsuarioBinario implements InterfazCRUD<Usuario> {
+public class UsuarioBinarioDAO implements InterfazDAO<Usuario> {
 
     // Lee todos los usuarios del archivo binario
     private List<Usuario> leerTodosDesdeArchivo() throws IOException {
         List<Usuario> usuarios = new ArrayList<>();
 
         // Si el archivo está vacío, no hay nada que leer
-        if (ConexionArchBin.estaVacio()) {
+        if (ConexionBinario.estaVacio()) {
             return usuarios;
         }
 
-        try (DataInputStream dis = ConexionArchBin.abrirParaLectura()) {
+        try (DataInputStream dis = ConexionBinario.abrirParaLectura()) {
             while (true) {
                 try {
                     int id = dis.readInt();
@@ -36,7 +36,7 @@ public class UsuarioBinario implements InterfazCRUD<Usuario> {
 
     // sobrescribe
     private void guardarTodosEnArchivo(List<Usuario> usuarios) throws IOException {
-        try (DataOutputStream dos = ConexionArchBin.abrirParaEscritura()) {
+        try (DataOutputStream dos = ConexionBinario.abrirParaEscritura()) {
             for (Usuario u : usuarios) {
                 dos.writeInt(u.getId());
                 dos.writeUTF(u.getNombre());

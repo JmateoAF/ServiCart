@@ -7,8 +7,6 @@ import javafx.scene.image.Image;
 import servicart.data.sql.ConexionSQLite;
 
 void main() {
-    System.out.println("Lanzando interfaz gráfica");
-
     Platform.startup(() -> {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/main.fxml")));
@@ -31,8 +29,6 @@ void main() {
             System.out.println("Error: " + e.getMessage());
         }
     });
-
-    System.out.println("\nIniciando pruebas de entorno");
 
     //Inicializamos la base de datos y cargamos los archivos .sql
     ConexionSQLite.inicializarBaseDeDatos();
