@@ -46,7 +46,7 @@ public class ConexionSQLite {
                 }
             }
         } catch (IOException | SQLException e) {
-            System.out.println("Nota/Error con " + rutaArchivo + ": " + e.getMessage());
+            System.out.println("Error con " + rutaArchivo + ": " + e.getMessage());
         }
     }
 }

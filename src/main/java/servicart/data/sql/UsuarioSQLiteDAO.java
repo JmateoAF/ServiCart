@@ -24,15 +24,6 @@ public class UsuarioSQLiteDAO implements CrudDAO<Usuario> {
 
     @Override
     public void update(Usuario usuario) {
-        String sql = "UPDATE usuarios SET username = ?, cedula = ? WHERE id = ?";
-
-        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getCedula());
-            stmt.setInt(3, usuario.getId());
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar usuario: " + e.getMessage());
-        }
     }
 
     @Override
