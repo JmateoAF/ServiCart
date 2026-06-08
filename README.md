@@ -24,7 +24,7 @@
 
 ## Descripción del Proyecto
 Este es un proyecto de **programación orientada a objetos** bajo una **arquitectura multicapas** 
-(Presentación, Lógica y Datos) que simula una plataforma de pagos. Los usuarios pueden acumular sus 
+(Presentación, Lógica y Datos) que simula una plataforma de pagos. Los clientes pueden acumular sus 
 planillas de servicios básicos (Luz, Agua, Internet, etc.) en un **carrito de compras** para procesar el 
 pago conjunto.
 

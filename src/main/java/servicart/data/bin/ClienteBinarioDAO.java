@@ -1,6 +1,6 @@
 package servicart.data.bin;
 
-import servicart.domain.models.Usuario;
+import servicart.domain.models.Cliente;
 import servicart.domain.interfaces.CrudDAO;
 
 import java.io.*;
@@ -9,21 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
+public class ClienteBinarioDAO implements CrudDAO<Cliente> {
 
     // Mismo nombre de archivo que ConexionBinario, sin necesidad de modificar esa clase
     private static final String NOMBRE_ARCHIVO = "usuarios.bin";
 
-    private List<Usuario> cache = null;
+    private List<Cliente> cache = null;
 
     /**
      * Lee todos los usuarios desde el archivo binario gestionado por ConexionBinario.
      */
-    private List<Usuario> leerTodos() {
-        List<Usuario> usuarios = new ArrayList<>();
+    private List<Cliente> leerTodos() {
+        List<Cliente> clientes = new ArrayList<>();
         try {
             if (ConexionBinario.estaVacio()) {
-                return usuarios;
+                return clientes;
             }
         } catch (IOException e) {
             throw new RuntimeException("Error al verificar si el archivo está vacío: " + e.getMessage(), e);
@@ -36,7 +36,7 @@ public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
                     String email = dis.readUTF();
                     String telefono = dis.readUTF();
                     boolean activo = dis.readBoolean();
-                    usuarios.add(new Usuario(cedula, nombre, email, telefono, activo));
+                    clientes.add(new Cliente(cedula, nombre, email, telefono, activo));
                 } catch (EOFException e) {
                     break;
                 }
@@ -44,25 +44,25 @@ public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
         } catch (IOException e) {
             throw new RuntimeException("Error al leer usuarios: " + e.getMessage(), e);
         }
-        return usuarios;
+        return clientes;
     }
 
     /**
      * Guarda la lista de usuarios de forma atómica:
      * escribe en un archivo temporal y luego lo mueve al destino original.
      */
-    private void guardarTodos(List<Usuario> usuarios) {
+    private void guardarTodos(List<Cliente> clientes) {
         Path archivoOriginal = Paths.get(NOMBRE_ARCHIVO);
         Path archivoTemporal = null;
         try {
             archivoTemporal = Files.createTempFile("usuarios", ".tmp");
             try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(archivoTemporal.toFile()))) {
-                for (Usuario u : usuarios) {
+                for (Cliente u : clientes) {
                     dos.writeUTF(u.getCedula());
                     dos.writeUTF(u.getNombre());
                     dos.writeUTF(u.getEmail());
-                    dos.writeUTF(u.getTelefono());
-                    dos.writeBoolean(u.isActivo());
+                    dos.writeUTF(u.getCelular());
+                    dos.writeBoolean(u.getActivo());
                 }
             }
             // Reemplazo atómico (si el sistema de archivos lo soporta)
@@ -80,15 +80,15 @@ public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
     }
 
 
-    public Optional<Usuario> findId(String id) {
-        List<Usuario> lista = (cache != null) ? cache : leerTodos();
+    public Optional<Cliente> findId(String id) {
+        List<Cliente> lista = (cache != null) ? cache : leerTodos();
         return lista.stream()
                 .filter(u -> u.getCedula().equals(id))
                 .findFirst();
     }
 
 
-    public List<Usuario> findAll() {
+    public List<Cliente> findAll() {
         if (cache == null) {
             cache = leerTodos();
         }
@@ -97,23 +97,23 @@ public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
     }
 
     @Override
-    public void save(Usuario entidad) {
-        List<Usuario> usuarios = (cache != null) ? cache : leerTodos();
-        boolean existe = usuarios.stream().anyMatch(u -> u.getCedula().equals(entidad.getCedula()));
+    public void save(Cliente entidad) {
+        List<Cliente> clientes = (cache != null) ? cache : leerTodos();
+        boolean existe = clientes.stream().anyMatch(u -> u.getCedula().equals(entidad.getCedula()));
         if (existe) {
             throw new RuntimeException("Ya existe un usuario con cédula " + entidad.getCedula());
         }
-        usuarios.add(entidad);
-        guardarTodos(usuarios);
-        cache = usuarios;
+        clientes.add(entidad);
+        guardarTodos(clientes);
+        cache = clientes;
     }
 
     @Override
-    public void update(Usuario entidad) {
-        List<Usuario> usuarios = (cache != null) ? cache : leerTodos();
+    public void update(Cliente entidad) {
+        List<Cliente> clientes = (cache != null) ? cache : leerTodos();
         int index = -1;
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getCedula().equals(entidad.getCedula())) {
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getCedula().equals(entidad.getCedula())) {
                 index = i;
                 break;
             }
@@ -121,26 +121,26 @@ public class UsuarioBinarioDAO implements CrudDAO<Usuario> {
         if (index == -1) {
             throw new RuntimeException("Usuario con cédula " + entidad.getCedula() + " no encontrado");
         }
-        usuarios.set(index, entidad);
-        guardarTodos(usuarios);
-        cache = usuarios;
+        clientes.set(index, entidad);
+        guardarTodos(clientes);
+        cache = clientes;
     }
 
     @Override
-    public void delete(String id) {
-        List<Usuario> usuarios = (cache != null) ? cache : leerTodos();
-        for (Usuario u : usuarios) {
-            if (u.getCedula().equals(id)) {
-                if (!u.isActivo()) {
+    public void delete(String cedula) {
+        List<Cliente> clientes = (cache != null) ? cache : leerTodos();
+        for (Cliente u : clientes) {
+            if (u.getCedula().equals(cedula)) {
+                if (!u.getActivo()) {
                     // Ya estaba inactivo, no hacemos nada (evita escritura innecesaria)
                     return;
                 }
                 u.setActivo(false);
-                guardarTodos(usuarios);
-                cache = usuarios;
+                guardarTodos(clientes);
+                cache = clientes;
                 return;
             }
         }
-        throw new RuntimeException("Usuario con cédula " + id + " no encontrado");
+        throw new RuntimeException("Usuario con cédula " + cedula + " no encontrado");
     }
 }

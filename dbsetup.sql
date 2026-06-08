@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Clientes (
     nombre TEXT NOT NULL,
     celular TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
-    activo INTEGER DEFAULT 1
+    activo INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS Empresa (
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Servicio (
     servicio TEXT NOT NULL,
     tipoValor TEXT NOT NULL,
     costoReactivacion DECIMAL NOT NULL,
-    tasaInteresDiario DECIMAL NOT NULL DEFAULT 0.01,
+    tasaInteresDiario DECIMAL NOT NULL DEFAULT 0.15,
     idEmpresa INTEGER NOT NULL,
     CONSTRAINT fkServicio FOREIGN KEY (idEmpresa) REFERENCES Empresa(id)
 );
