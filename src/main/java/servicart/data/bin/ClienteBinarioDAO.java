@@ -13,25 +13,26 @@ import java.util.stream.Collectors;
 
 public class ClienteBinarioDAO implements CrudDAO<Cliente> {
 
+    private final ConexionBinario conexion = new ConexionBinario("clientes.bin");
     private List<Cliente> cache = null;
 
-    //Lee todos los clientes del archivo binario, incluidos los inactivos.
+    // Lee todos los clientes del archivo binario, incluidos los inactivos
     private List<Cliente> leerTodos() {
         List<Cliente> clientes = new ArrayList<>();
         try {
-            if (ConexionBinario.estaVacioArchivo()) {
+            if (conexion.estaVacio()) {
                 return clientes;
             }
         } catch (IOException e) {
             throw new RuntimeException("Error al verificar si el archivo está vacío: " + e.getMessage(), e);
         }
-        try (DataInputStream dis = ConexionBinario.abrirParaLectura()) {
+        try (DataInputStream dis = conexion.abrirParaLectura()) {
             while (true) {
                 try {
                     String cedula = dis.readUTF();
                     String nombre = dis.readUTF();
                     String email = dis.readUTF();
-                    String celular = dis.readUTF();   // ← nombre corregido
+                    String celular = dis.readUTF();
                     int activo = dis.readInt();
                     clientes.add(new Cliente(cedula, nombre, email, celular, activo));
                 } catch (EOFException e) {
@@ -44,19 +45,17 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         return clientes;
     }
 
-    /**
-     * Guarda la lista completa de forma atómica.
-     */
+    // Guarda la lista completa de forma atómica
     private void guardarTodos(List<Cliente> clientes) {
         try {
-            ConexionBinario.guardarAtomicamente(dos -> {
-                for (Cliente u : clientes) {
+            conexion.guardarAtomicamente(dos -> {
+                for (Cliente c : clientes) {
                     try {
-                        dos.writeUTF(u.getCedula());
-                        dos.writeUTF(u.getNombre());
-                        dos.writeUTF(u.getEmail());
-                        dos.writeUTF(u.getCelular());
-                        dos.writeInt(u.getActivo());
+                        dos.writeUTF(c.getCedula());
+                        dos.writeUTF(c.getNombre());
+                        dos.writeUTF(c.getEmail());
+                        dos.writeUTF(c.getCelular());
+                        dos.writeInt(c.getActivo());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -67,11 +66,7 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         }
     }
 
-    /*
-     Es necesario para ocultar los clientes inactivos
-     en las consultas principales, respetando el borrado
-     lógico que implementaste con el campo activo
-     */
+    // Filtra solo los clientes activos
     private List<Cliente> filtrarActivos(List<Cliente> todos) {
         return todos.stream()
                 .filter(c -> c.getActivo() == 1)
@@ -131,7 +126,6 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         for (Cliente u : clientes) {
             if (u.getCedula().equals(cedula)) {
                 if (u.getActivo() == 0) {
-                    // Ya estaba inactivo, pero actualizamos la caché para evitar recargas
                     cache = clientes;
                     return;
                 }

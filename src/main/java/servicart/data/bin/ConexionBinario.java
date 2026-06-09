@@ -5,46 +5,46 @@ import java.nio.file.*;
 import java.util.function.Consumer;
 
 public class ConexionBinario {
-    private static final String NOMBRE_ARCHIVO = "usuarios.bin";
+    private final Path rutaArchivo;
 
-    private static void asegurarArchivoExiste() {
-        Path ruta = Paths.get(NOMBRE_ARCHIVO);
+    public ConexionBinario(String nombreArchivo) {
+        this.rutaArchivo = Paths.get(nombreArchivo);
+        asegurarArchivoExiste();
+    }
+
+    private void asegurarArchivoExiste() {
         try {
-            Files.createFile(ruta);
+            Files.createFile(rutaArchivo);
         } catch (FileAlreadyExistsException e) {
             // El archivo ya existe, no hace nada
         } catch (IOException e) {
-            throw new RuntimeException("No se pudo crear el archivo: " + NOMBRE_ARCHIVO, e);
+            throw new RuntimeException("No se pudo crear el archivo: " + rutaArchivo, e);
         }
     }
 
-    public static DataInputStream abrirParaLectura() throws IOException {
-        asegurarArchivoExiste();
-        return new DataInputStream(new FileInputStream(NOMBRE_ARCHIVO));
+    public DataInputStream abrirParaLectura() throws IOException {
+        return new DataInputStream(new FileInputStream(rutaArchivo.toFile()));
     }
 
-    public static boolean estaVacioArchivo() throws IOException {
-        Path ruta = Paths.get(NOMBRE_ARCHIVO);
-        return Files.size(ruta) == 0;
+    public boolean estaVacio() throws IOException {
+        return Files.size(rutaArchivo) == 0;
     }
 
-    //Escribe datos de forma atómica usando un archivo temporal
-    public static void guardarAtomicamente(Consumer<DataOutputStream> escritor) throws IOException {
-        Path archivoOriginal = Paths.get(NOMBRE_ARCHIVO);
+    public void guardarAtomicamente(Consumer<DataOutputStream> escritor) throws IOException {
         Path archivoTemporal = null;
         try {
-            archivoTemporal = Files.createTempFile("usuarios_temp", ".bin");
+            archivoTemporal = Files.createTempFile("temp_bin", ".bin");
             try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(archivoTemporal.toFile()))) {
                 escritor.accept(dos);
             }
-            Files.move(archivoTemporal, archivoOriginal,
+            Files.move(archivoTemporal, rutaArchivo,
                     StandardCopyOption.REPLACE_EXISTING,
                     StandardCopyOption.ATOMIC_MOVE);
         } catch (IOException e) {
             if (archivoTemporal != null) {
                 try { Files.deleteIfExists(archivoTemporal); } catch (IOException ignored) {}
             }
-            throw e; // Lanzamos la excepción original sin envolver
+            throw e;
         }
     }
 }
