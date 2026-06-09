@@ -5,7 +5,7 @@ public class Cliente {
     private String nombre;
     private String email;
     private String celular;
-    private int activo;      //Activo = 1, Inactivo = 0
+    private int activo; //Activo = 1, Inactivo = 0
 
     // Constructor completo
     public Cliente(String cedula, String nombre, String email, String celular, int activo) {

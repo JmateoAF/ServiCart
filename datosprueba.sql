@@ -1,7 +1,7 @@
-INSERT INTO Clientes (cedula, nombre, celular, email, activo) VALUES
-    ('0102030405', 'Carlos Mendoza', '0991234567', 'carlos@mail.com', 1),
-    ('0908070605', 'Ana Lopez', '0987654321', 'ana@mail.com', 1),
-    ('1122334455', 'Luis Fernandez', '0971122334', 'luis@mail.com', 1);
+INSERT INTO Clientes (cedula, nombre, email, celular, activo) VALUES
+    ('0102030405', 'Carlos Mendoza', 'carlos@mail.com', '0991234567', 1),
+    ('0908070605', 'Ana Lopez', 'ana@mail.com', '0987654321', 1),
+    ('1122334455', 'Luis Fernandez',  'luis@mail.com', '0971122334', 1);
 
 INSERT INTO Empresa (nombre) VALUES
     ('ETAPA'),

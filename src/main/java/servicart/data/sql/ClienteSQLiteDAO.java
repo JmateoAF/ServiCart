@@ -17,7 +17,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
     public void save(Cliente cliente) {
         String sql = "INSERT INTO Clientes (cedula, nombre, celular, email, activo) VALUES (?, ?, ?, ?, 1)";
 
-        try (Connection conn = ConexionSQLite.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
             stmt.setString(1, cliente.getCedula());
             stmt.setString(2, cliente.getNombre());

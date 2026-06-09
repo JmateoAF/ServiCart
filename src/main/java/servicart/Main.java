@@ -4,9 +4,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import servicart.domain.models.Cliente;
+import servicart.data.sql.ClienteSQLiteDAO;
 import servicart.data.sql.ConexionSQLite;
+import servicart.domain.interfaces.CrudDAO;
 
 void main() {
+    //Inicializando la interfaz grafica
     Platform.startup(() -> {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/main.fxml")));
@@ -30,6 +34,10 @@ void main() {
         }
     });
 
-    //Inicializamos la base de datos y cargamos los archivos .sql
+    //Inicializando las capas
+    CrudDAO<Cliente> clienteCrudDAO = new ClienteSQLiteDAO(); //Inicializamos la capa de datos, hacer inyección de dependencias
+    Cliente cliente = new Cliente(clienteCrudDAO); //Conectamos la capa de dominio con la capa de datos, punteros a donde se crea la base de datos
+
+    //Inicializamos la base de datos
     ConexionSQLite.inicializarBaseDeDatos();
 }

@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS Clientes (
     cedula TEXT NOT NULL UNIQUE PRIMARY KEY,
     nombre TEXT NOT NULL,
-    celular TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
+    celular TEXT NOT NULL UNIQUE,
     activo INTEGER
 );
 
