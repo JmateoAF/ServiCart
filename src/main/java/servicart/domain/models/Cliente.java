@@ -1,7 +1,7 @@
 package servicart.domain.models;
 
 public class Cliente {
-    private String cedula;
+    private final String cedula;
     private String nombre;
     private String email;
     private String celular;
@@ -19,9 +19,6 @@ public class Cliente {
     // Getters y Setters
     public String getCedula() {
         return cedula;
-    }
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
     }
 
     public String getNombre() {

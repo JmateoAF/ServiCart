@@ -3,26 +3,23 @@ package servicart.data.bin;
 import servicart.domain.models.Cliente;
 import servicart.domain.interfaces.CrudDAO;
 
-import java.io.*;
-import java.nio.file.*;
+import java.io.DataInputStream;
+import java.io.EOFException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ClienteBinarioDAO implements CrudDAO<Cliente> {
 
-    // Mismo nombre de archivo que ConexionBinario, sin necesidad de modificar esa clase
-    private static final String NOMBRE_ARCHIVO = "usuarios.bin";
-
     private List<Cliente> cache = null;
 
-    /**
-     * Lee todos los usuarios desde el archivo binario gestionado por ConexionBinario.
-     */
+    //Lee todos los clientes del archivo binario, incluidos los inactivos.
     private List<Cliente> leerTodos() {
         List<Cliente> clientes = new ArrayList<>();
         try {
-            if (ConexionBinario.estaVacio()) {
+            if (ConexionBinario.estaVacioArchivo()) {
                 return clientes;
             }
         } catch (IOException e) {
@@ -34,66 +31,68 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
                     String cedula = dis.readUTF();
                     String nombre = dis.readUTF();
                     String email = dis.readUTF();
-                    String telefono = dis.readUTF();
-                    boolean activo = dis.readBoolean();
-                    clientes.add(new Cliente(cedula, nombre, email, telefono, activo));
+                    String celular = dis.readUTF();   // ← nombre corregido
+                    int activo = dis.readInt();
+                    clientes.add(new Cliente(cedula, nombre, email, celular, activo));
                 } catch (EOFException e) {
                     break;
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error al leer usuarios: " + e.getMessage(), e);
+            throw new RuntimeException("Error al leer clientes: " + e.getMessage(), e);
         }
         return clientes;
     }
 
     /**
-     * Guarda la lista de usuarios de forma atómica:
-     * escribe en un archivo temporal y luego lo mueve al destino original.
+     * Guarda la lista completa de forma atómica.
      */
     private void guardarTodos(List<Cliente> clientes) {
-        Path archivoOriginal = Paths.get(NOMBRE_ARCHIVO);
-        Path archivoTemporal = null;
         try {
-            archivoTemporal = Files.createTempFile("usuarios", ".tmp");
-            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(archivoTemporal.toFile()))) {
+            ConexionBinario.guardarAtomicamente(dos -> {
                 for (Cliente u : clientes) {
-                    dos.writeUTF(u.getCedula());
-                    dos.writeUTF(u.getNombre());
-                    dos.writeUTF(u.getEmail());
-                    dos.writeUTF(u.getCelular());
-                    dos.writeBoolean(u.getActivo());
+                    try {
+                        dos.writeUTF(u.getCedula());
+                        dos.writeUTF(u.getNombre());
+                        dos.writeUTF(u.getEmail());
+                        dos.writeUTF(u.getCelular());
+                        dos.writeInt(u.getActivo());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            }
-            // Reemplazo atómico (si el sistema de archivos lo soporta)
-            Files.move(archivoTemporal, archivoOriginal,
-                    StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            });
         } catch (IOException e) {
-            // Si algo falla, intentamos eliminar el archivo temporal
-            if (archivoTemporal != null) {
-                try {
-                    Files.deleteIfExists(archivoTemporal);
-                } catch (IOException ignored) {}
-            }
-            throw new RuntimeException("Error al guardar usuarios: " + e.getMessage(), e);
+            throw new RuntimeException("Error al guardar clientes: " + e.getMessage(), e);
         }
     }
 
+    /*
+     Es necesario para ocultar los clientes inactivos
+     en las consultas principales, respetando el borrado
+     lógico que implementaste con el campo activo
+     */
+    private List<Cliente> filtrarActivos(List<Cliente> todos) {
+        return todos.stream()
+                .filter(c -> c.getActivo() == 1)
+                .collect(Collectors.toList());
+    }
 
+    @Override
     public Optional<Cliente> findId(String id) {
         List<Cliente> lista = (cache != null) ? cache : leerTodos();
         return lista.stream()
-                .filter(u -> u.getCedula().equals(id))
+                .filter(u -> u.getCedula().equals(id) && u.getActivo() == 1)
                 .findFirst();
     }
 
-
+    @Override
     public List<Cliente> findAll() {
         if (cache == null) {
             cache = leerTodos();
         }
-        // Devuelve una copia para proteger la lista interna
-        return new ArrayList<>(cache);
+        // Devuelve copia de solo los activos
+        return filtrarActivos(cache);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         List<Cliente> clientes = (cache != null) ? cache : leerTodos();
         boolean existe = clientes.stream().anyMatch(u -> u.getCedula().equals(entidad.getCedula()));
         if (existe) {
-            throw new RuntimeException("Ya existe un usuario con cédula " + entidad.getCedula());
+            throw new RuntimeException("Ya existe un cliente con cédula " + entidad.getCedula());
         }
         clientes.add(entidad);
         guardarTodos(clientes);
@@ -119,7 +118,7 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
             }
         }
         if (index == -1) {
-            throw new RuntimeException("Usuario con cédula " + entidad.getCedula() + " no encontrado");
+            throw new RuntimeException("Cliente con cédula " + entidad.getCedula() + " no encontrado");
         }
         clientes.set(index, entidad);
         guardarTodos(clientes);
@@ -131,16 +130,17 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         List<Cliente> clientes = (cache != null) ? cache : leerTodos();
         for (Cliente u : clientes) {
             if (u.getCedula().equals(cedula)) {
-                if (!u.getActivo()) {
-                    // Ya estaba inactivo, no hacemos nada (evita escritura innecesaria)
+                if (u.getActivo() == 0) {
+                    // Ya estaba inactivo, pero actualizamos la caché para evitar recargas
+                    cache = clientes;
                     return;
                 }
-                u.setActivo(false);
+                u.setActivo(0);
                 guardarTodos(clientes);
                 cache = clientes;
                 return;
             }
         }
-        throw new RuntimeException("Usuario con cédula " + cedula + " no encontrado");
+        throw new RuntimeException("Cliente con cédula " + cedula + " no encontrado");
     }
 }
