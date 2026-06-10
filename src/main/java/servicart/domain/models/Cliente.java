@@ -7,7 +7,6 @@ public class Cliente {
     private String celular;
     private int activo; //Activo = 1, Inactivo = 0
 
-    // Constructor completo
     public Cliente(String cedula, String nombre, String email, String celular, int activo) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -16,7 +15,6 @@ public class Cliente {
         this.activo = activo;
     }
 
-    // Getters y Setters
     public String getCedula() {
         return cedula;
     }
