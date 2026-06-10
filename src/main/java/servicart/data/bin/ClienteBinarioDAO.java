@@ -1,6 +1,6 @@
 package servicart.data.bin;
 
-import servicart.domain.models.Cliente;
+import servicart.domain.models.entidades.Cliente;
 import servicart.domain.interfaces.CrudDAO;
 
 import java.io.DataInputStream;

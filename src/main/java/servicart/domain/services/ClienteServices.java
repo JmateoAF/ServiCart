@@ -1,6 +1,6 @@
 package servicart.domain.services;
 
-import servicart.domain.models.Cliente;
+import servicart.domain.models.entidades.Cliente;
 import servicart.domain.interfaces.CrudDAO;
 
 public class ClienteServices {

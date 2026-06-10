@@ -1,4 +1,4 @@
-package servicart.domain.models;
+package servicart.domain.models.entidades;
 
 public class Cliente {
     private final String cedula;
