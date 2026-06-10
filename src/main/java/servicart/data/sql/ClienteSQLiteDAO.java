@@ -15,7 +15,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
     @Override
     public void save(Cliente cliente) {
-        String sql = "INSERT INTO Clientes (cedula, nombre, celular, email, activo) VALUES (?, ?, ?, ?, 1)";
+        String sql = "INSERT INTO Clientes (cedula, nombre, email, celular, activo) VALUES (?, ?, ?, ?, 1)";
 
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -23,7 +23,6 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             stmt.setString(2, cliente.getNombre());
             stmt.setString(3, cliente.getEmail());
             stmt.setString(4, cliente.getCelular());
-            stmt.setString(5, cliente.getEmail());
 
             stmt.executeUpdate();
             System.out.println("Usuario guardado con éxito");
@@ -34,7 +33,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
     @Override
     public Optional<Cliente> findId(String cedula) {
-        String sql = "SELECT * FROM usuarios WHERE cedula = ? AND activo = 1";
+        String sql = "SELECT * FROM Clientes WHERE cedula = ? AND activo = 1";
 
         try (Connection conn = ConexionSQLite.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cedula);
@@ -42,7 +41,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             //El ResultSet actúa como un puntero sobre las filas devueltas
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) { //Sí encuentra una coincidencia
-                    Cliente cliente = new Cliente(cedula,  rs.getString("nombre"), rs.getString("celular"), rs.getString("email"), rs.getInt("activo"));
+                    Cliente cliente = new Cliente(cedula, rs.getString("nombre"), rs.getString("email"), rs.getString("celular"), rs.getInt("activo"));
 
                     return Optional.of(cliente);
                 }
@@ -57,7 +56,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
     @Override
     public List<Cliente> findAll() {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM usuarios WHERE activo = 1";
+        String sql = "SELECT * FROM Clientes WHERE activo = 1";
 
         try (Connection conn = ConexionSQLite.conectar(); PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -75,7 +74,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
     @Override
     public void update(Cliente cliente) {
-        String sql = "UPDATE usuarios SET nombre = ?, email = ?, celular = ?, activo = ? WHERE cedula = ?";
+        String sql = "UPDATE Clientes SET nombre = ?, email = ?, celular = ?, activo = ? WHERE cedula = ?";
 
         try (Connection conn = ConexionSQLite.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -83,6 +82,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             stmt.setString(2, cliente.getEmail());
             stmt.setString(3, cliente.getCelular());
             stmt.setInt(4, cliente.getActivo());
+            stmt.setString(5, cliente.getCedula());
 
             stmt.executeUpdate();
             System.out.println("Usuario actualizado con éxito.");
@@ -95,7 +95,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
     @Override
     public void delete(String cedula) {
         //Eliminación lógica
-        String sql = "UPDATE usuarios SET activo = 0 WHERE cedula = ?";
+        String sql = "UPDATE Clientes SET activo = 0 WHERE cedula = ?";
 
         try (Connection conn = ConexionSQLite.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cedula);
