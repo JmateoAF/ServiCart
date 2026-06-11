@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Contrato (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fechaInicio DATE NOT NULL,
     fechaFin DATE,
-    causaTerminacion DEFAULT 0,
+    causaTerminacion INTEGER DEFAULT 0, --0 no termina, 1 empresa, 2 cliente
     fechaTerminacion DATE,
     idServicios INTEGER NOT NULL,
     idCliente TEXT NOT NULL,

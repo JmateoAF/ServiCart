@@ -26,11 +26,7 @@ public class ClienteServices {
         return clienteDAO.findAll();
     }
 
-    public void actualizar(Cliente cliente){
-        clienteDAO.update(cliente);
-    }
+    public void actualizar(Cliente cliente){ clienteDAO.update(cliente); }
 
-    public void eliminar(String  cedula){
-        clienteDAO.delete(cedula);
-    }
+    public void eliminar(String  cedula) { clienteDAO.delete(cedula); }
 }

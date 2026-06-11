@@ -54,25 +54,25 @@ void main() {
     TU MARY, TAMBIEN INSTANCIARAS PARA QUE PRUEBES Y DOCUMENTA LAS COSAS Q SEAN NECESARIOAS PARA EVITAR ERRORES
     */
 
-    CrudDAO<Cliente> clienteCrudDAO = new ClienteSQLiteDAO(); //Inicializamos la capa de datos
+    //CrudDAO<Cliente> clienteCrudDAO = new ClienteSQLiteDAO(); //Inicializamos la capa de datos
 
-    ClienteServices cliente = new ClienteServices(clienteCrudDAO); //Conectamos la capa de dominio con la capa de datos, punteros a donde se crea la base de datos
+    //ClienteServices cliente = new ClienteServices(clienteCrudDAO); //Conectamos la capa de dominio con la capa de datos, punteros a donde se crea la base de datos
 
-    Cliente mary = new Cliente("0106807365", "Maritza", "lyrax@gmail.com", "0963304126", 1); //CAMBIAR LOS DATOS SI SE QUIERE PONER MÁS EN LA BASE DE DATOS
+    //Cliente mary = new Cliente("0106807365", "Maritza", "lyrax@gmail.com", "0963304126", 1); //CAMBIAR LOS DATOS SI SE QUIERE PONER MÁS EN LA BASE DE DATOS
 
-    cliente.guardarCliente(mary); //NOTA: DEBERÍA FUNCIONAR, INYECCIÓN, APUNTA A LA DIRECCION DE MEMORIA Y GUARDA EN EL CONTRUCTOR
+    //cliente.guardarCliente(mary); //NOTA: DEBERÍA FUNCIONAR, INYECCIÓN, APUNTA A LA DIRECCION DE MEMORIA Y GUARDA EN EL CONTRUCTOR
     //LA COMUNICACIÓN ENTRE CAPAS SOLO POR INTERFACES, SOLO LLAMO A LOS MÉTODOS DE LAS INTERFACES Y LUEGO EL OBJETO CREADO SABRA COMO ES LA IMPLEMENTACIÓN
     //ACTUALIZACIÓN: NO FUNCIONO XD
     //ACTUALIZACIÓN 2: YA FUNCIONO XD
 
-    Optional<Cliente> clienteEncontrado = cliente.buscarId("0106807365");
+    //Optional<Cliente> clienteEncontrado = cliente.buscarId("0106807365");
 
     /* cliente.buscarId("0106807365").ifPresentOrElse(
             c -> System.out.println("Cliente encontrado: " + c.getNombre()),
             () -> System.out.println("Lo siento, ese cliente no existe en ServiCart")
     ); */
 
-    if(clienteEncontrado.isPresent()){
+    /* if(clienteEncontrado.isPresent()){
         Cliente c = clienteEncontrado.get();
 
         System.out.println(c.getNombre() + "\n");
@@ -94,5 +94,5 @@ void main() {
     System.out.println("\n");
 
     for(Cliente lista : cliente.buscarTodos())
-        System.out.println("Cédula: " + lista.getCedula() + " | Nombre: " + lista.getNombre());
+        System.out.println("Cédula: " + lista.getCedula() + " | Nombre: " + lista.getNombre()); */
 }
