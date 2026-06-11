@@ -1,7 +1,7 @@
 package servicart.data.bin;
 
 import servicart.domain.models.entidades.Cliente;
-import servicart.domain.interfaces.CrudDAO;
+import servicart.data.interfaces.CrudDAO;
 
 import java.io.DataInputStream;
 import java.io.EOFException;

@@ -4,11 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import servicart.domain.models.entidades.Cliente;
-import servicart.data.sql.ClienteSQLiteDAO;
 import servicart.data.sql.ConexionSQLite;
-import servicart.domain.interfaces.CrudDAO;
-import servicart.domain.services.ClienteServices;
 
 void main() {
     //ENTORNO DE PRUEBAS

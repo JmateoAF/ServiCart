@@ -8,6 +8,7 @@ public enum Empresa {
     Empresa(int codigo) {
         this.codigo = codigo;
     }
+
     public int getCodigo() {
         return codigo;
     }

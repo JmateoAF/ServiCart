@@ -1,7 +1,7 @@
 package servicart.domain.services;
 
 import servicart.domain.models.entidades.Cliente;
-import servicart.domain.interfaces.CrudDAO;
+import servicart.data.interfaces.CrudDAO;
 
 import java.util.List;
 import java.util.Optional;

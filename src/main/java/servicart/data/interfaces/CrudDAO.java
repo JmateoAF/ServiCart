@@ -1,4 +1,4 @@
-package servicart.domain.interfaces;
+package servicart.data.interfaces;
 
 import java.util.List;
 import java.util.Optional;

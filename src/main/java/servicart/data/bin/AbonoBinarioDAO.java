@@ -1,6 +1,6 @@
 package servicart.data.bin;
 
-import servicart.domain.interfaces.CrudDAO;
+import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entidades.Abono;
 
 import java.util.List;
