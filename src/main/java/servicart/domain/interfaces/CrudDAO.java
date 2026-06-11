@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public interface CrudDAO<T> {
     void save(T entidad);
-    Optional<T> findId(String cedula);
+    Optional<T> findId(String id);
     List<T> findAll();
     void update(T entidad);
-    void delete(String cedula);
+    void delete(String id);
 }
