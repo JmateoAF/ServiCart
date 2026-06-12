@@ -41,7 +41,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             //El ResultSet actúa como un puntero sobre las filas devueltas
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) { //Sí encuentra una coincidencia
-                    Cliente cliente = new Cliente(cedula, rs.getString("nombre"), rs.getString("email"), rs.getString("celular"), rs.getInt("activo"));
+                    Cliente cliente = new Cliente(cedula, rs.getString("nombre"), rs.getString("email"), rs.getString("celular"));
 
                     return Optional.of(cliente);
                 }
@@ -63,7 +63,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
             // Recorremos todas las filas devueltas por la consulta
             while (rs.next()) {
-                Cliente cliente = new Cliente(rs.getString("cedula"),  rs.getString("nombre"), rs.getString("celular"), rs.getString("email"), rs.getInt("activo"));
+                Cliente cliente = new Cliente(rs.getString("cedula"),  rs.getString("nombre"), rs.getString("celular"), rs.getString("email"));
                 clientes.add(cliente);
             }
         } catch (SQLException e) {
