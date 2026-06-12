@@ -14,7 +14,7 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
         this.email = email;
         this.celular = celular;
-        this.activo = 1;
+        setActivo(1);
     }
 
     public String getCedula() {

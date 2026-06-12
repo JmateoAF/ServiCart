@@ -19,7 +19,7 @@ public class CorteServicio implements Serializable {
         this.fechaCorte = fechaCorte;
         this.fechaReactivacion = fechaReactivacion;
         this.costoReactivacionPagado = costoReactivacionPagado;
-        this.estadoCorte = EstadoCorte.ACTIVO;
+        setEstadoCorte(EstadoCorte.ACTIVO);
         this.contrato = contrato;
         this.factura = factura;
     }

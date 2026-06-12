@@ -19,10 +19,10 @@ public class Contrato implements Serializable {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.causaTerminacion = CausaTerminacion.ACTIVO;
         this.fechaTerminacion = fechaTerminacion;
         this.servicio = servicio;
         this.cliente = cliente;
+        setCausaTerminacion(CausaTerminacion.ACTIVO);
     }
 
     public int getId() { return id; }

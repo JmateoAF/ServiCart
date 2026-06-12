@@ -21,8 +21,8 @@ public class Factura implements Serializable {
         this.fechaVencimiento = fechaVencimiento;
         this.fechaCorte = fechaCorte;
         this.valorTotal = valorTotal;
-        this.estado = EstadoFactura.PENDIENTE;
         this.contrato = contrato;
+        setEstado(EstadoFactura.PENDIENTE);
     }
 
     public int getId() { return id; }
