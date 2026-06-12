@@ -1,6 +1,8 @@
 package servicart.domain.models.entidades;
 
-public class Notificador {
+import java.io.Serializable;
+
+public class Notificador implements Serializable {
     //Inicio de la clase notificador, usando el patron de diseño observer
     private final String prefijoSistema;
     public Notificador() {

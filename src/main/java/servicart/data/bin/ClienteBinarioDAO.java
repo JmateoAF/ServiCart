@@ -3,8 +3,6 @@ package servicart.data.bin;
 import servicart.domain.models.entidades.Cliente;
 import servicart.data.interfaces.CrudDAO;
 
-import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,52 +11,30 @@ import java.util.stream.Collectors;
 
 public class ClienteBinarioDAO implements CrudDAO<Cliente> {
 
-    private final ConexionBinario conexion = new ConexionBinario("clientes.bin");
-    private List<Cliente> cache = null;
+    private final ConexionBinario conexion = new ConexionBinario("clientes.ser");
+    private List<Cliente> cache = null;               // evita leer el archivo en cada operación
 
-    // Lee todos los clientes del archivo binario, incluidos los inactivos
+    // Carga la lista completa; si el archivo está vacío devuelve lista nueva.
+    @SuppressWarnings("unchecked")
     private List<Cliente> leerTodos() {
-        List<Cliente> clientes = new ArrayList<>();
         try {
             if (conexion.estaVacio()) {
-                return clientes;
+                return new ArrayList<>();             // archivo nuevo, sin datos
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error al verificar si el archivo está vacío: " + e.getMessage(), e);
-        }
-        try (DataInputStream dis = conexion.abrirParaLectura()) {
-            while (true) {
-                try {
-                    String cedula = dis.readUTF();
-                    String nombre = dis.readUTF();
-                    String email = dis.readUTF();
-                    String celular = dis.readUTF();
-                    int activo = dis.readInt();
-                    clientes.add(new Cliente(cedula, nombre, email, celular, activo));
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-        } catch (IOException e) {
+            return conexion.leerObjeto();             // lectura delegada
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("Error al leer clientes: " + e.getMessage(), e);
         }
-        return clientes;
     }
 
-    // Guarda la lista completa de forma atómica
+    // Persiste la lista completa usando un Consumer (escritura delegada al DAO).
     private void guardarTodos(List<Cliente> clientes) {
         try {
-            conexion.guardarAtomicamente(dos -> {
-                for (Cliente c : clientes) {
-                    try {
-                        dos.writeUTF(c.getCedula());
-                        dos.writeUTF(c.getNombre());
-                        dos.writeUTF(c.getEmail());
-                        dos.writeUTF(c.getCelular());
-                        dos.writeInt(c.getActivo());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+            conexion.guardarAtomicamente(oos -> {    // Consumer recibe el stream
+                try {
+                    oos.writeObject(clientes);       // serializa la lista entera
+                } catch (IOException e) {
+                    throw new RuntimeException("Error al escribir clientes", e);
                 }
             });
         } catch (IOException e) {
@@ -66,11 +42,11 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         }
     }
 
-    // Filtra solo los clientes activos
+    // Filtra solo clientes con activo == 1 usando Streams.
     private List<Cliente> filtrarActivos(List<Cliente> todos) {
         return todos.stream()
                 .filter(c -> c.getActivo() == 1)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());       // Collectors.toList() crea lista mutable
     }
 
     @Override
@@ -78,28 +54,26 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         List<Cliente> lista = (cache != null) ? cache : leerTodos();
         return lista.stream()
                 .filter(u -> u.getCedula().equals(id) && u.getActivo() == 1)
-                .findFirst();
+                .findFirst();                        // devuelve Optional vacío si no encuentra
     }
 
     @Override
     public List<Cliente> findAll() {
         if (cache == null) {
-            cache = leerTodos();
+            cache = leerTodos();                     // carga inicial o refresco
         }
-        // Devuelve copia de solo los activos
-        return filtrarActivos(cache);
+        return filtrarActivos(cache);                // devuelve copia solo de activos
     }
 
     @Override
     public void save(Cliente entidad) {
         List<Cliente> clientes = (cache != null) ? cache : leerTodos();
-        boolean existe = clientes.stream().anyMatch(u -> u.getCedula().equals(entidad.getCedula()));
-        if (existe) {
+        if (clientes.stream().anyMatch(u -> u.getCedula().equals(entidad.getCedula()))) {
             throw new RuntimeException("Ya existe un cliente con cédula " + entidad.getCedula());
         }
         clientes.add(entidad);
         guardarTodos(clientes);
-        cache = clientes;
+        cache = clientes;                            // mantiene la caché coherente
     }
 
     @Override
@@ -115,7 +89,7 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         if (index == -1) {
             throw new RuntimeException("Cliente con cédula " + entidad.getCedula() + " no encontrado");
         }
-        clientes.set(index, entidad);
+        clientes.set(index, entidad);                // reemplazo en la lista
         guardarTodos(clientes);
         cache = clientes;
     }
@@ -126,10 +100,10 @@ public class ClienteBinarioDAO implements CrudDAO<Cliente> {
         for (Cliente u : clientes) {
             if (u.getCedula().equals(cedula)) {
                 if (u.getActivo() == 0) {
-                    cache = clientes;
+                    cache = clientes;                // ya estaba inactivo, no guarda
                     return;
                 }
-                u.setActivo(0);
+                u.setActivo(0);                      // borrado lógico
                 guardarTodos(clientes);
                 cache = clientes;
                 return;

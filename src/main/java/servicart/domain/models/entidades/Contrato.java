@@ -1,18 +1,21 @@
 package servicart.domain.models.entidades;
 
+import servicart.domain.models.enums.CausaTerminacion;
 import servicart.domain.models.servicios.Servicio;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Contrato {
+public class Contrato implements Serializable {
     private final int id;
     private final LocalDateTime fechaInicio;
     private final LocalDateTime fechaFin;
-    private int causaTerminacion;
+    private CausaTerminacion causaTerminacion;
     private final LocalDateTime fechaTerminacion;
     private final Servicio servicio;
     private final Cliente cliente;
 
-    public Contrato(int id, LocalDateTime fechaInicio, LocalDateTime fechaFin, int causaTerminacion, LocalDateTime fechaTerminacion, Servicio servicio, Cliente cliente) {
+    public Contrato(int id, LocalDateTime fechaInicio, LocalDateTime fechaFin, CausaTerminacion causaTerminacion, LocalDateTime fechaTerminacion, Servicio servicio, Cliente cliente) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
@@ -28,8 +31,8 @@ public class Contrato {
 
     public LocalDateTime getFechaFin() { return fechaFin; }
 
-    public int getCausaTerminacion() { return causaTerminacion; }
-    public void setCausaTerminacion(int causaTerminacion) { this.causaTerminacion = causaTerminacion; }
+    public CausaTerminacion getCausaTerminacion() { return causaTerminacion; }
+    public void setCausaTerminacion(CausaTerminacion causaTerminacion) { this.causaTerminacion = causaTerminacion; }
 
     public LocalDateTime getFechaTerminacion() { return fechaTerminacion; }
 

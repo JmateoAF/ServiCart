@@ -2,9 +2,10 @@ package servicart.domain.models.entidades;
 
 import servicart.domain.models.enums.ModalidadPago;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CorteServicio {
+public class CorteServicio implements Serializable {
     private final int id;
     private final LocalDateTime diasRetraso;
     private final LocalDateTime fechaReactivacion;

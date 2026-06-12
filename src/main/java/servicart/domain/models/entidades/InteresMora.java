@@ -1,8 +1,9 @@
 package servicart.domain.models.entidades;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class InteresMora {
+public class InteresMora implements Serializable {
     private final int id;
     private int diasRetraso;
     private double interesAcumulado;

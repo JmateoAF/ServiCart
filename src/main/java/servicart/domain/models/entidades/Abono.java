@@ -1,9 +1,11 @@
 package servicart.domain.models.entidades;
 
 import servicart.domain.models.enums.ModalidadPago;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Abono {
+public class Abono implements Serializable {
     private final int id;
     private double monto;
     private final LocalDateTime fechaPago;

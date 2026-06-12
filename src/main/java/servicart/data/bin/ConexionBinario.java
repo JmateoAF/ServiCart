@@ -8,41 +8,54 @@ public class ConexionBinario {
     private final Path rutaArchivo;
 
     public ConexionBinario(String nombreArchivo) {
-        this.rutaArchivo = Paths.get(nombreArchivo);
+        this.rutaArchivo = Paths.get(nombreArchivo); // ruta relativa o absoluta
         asegurarArchivoExiste();
     }
 
+    // Garantiza que el archivo exista; si ya está, no hace nada.
     private void asegurarArchivoExiste() {
         try {
-            Files.createFile(rutaArchivo);
+            Files.createFile(rutaArchivo);            // crea el archivo vacío
         } catch (FileAlreadyExistsException e) {
-            // El archivo ya existe, no hace nada
+            // ya existe, normal
         } catch (IOException e) {
             throw new RuntimeException("No se pudo crear el archivo: " + rutaArchivo, e);
         }
     }
 
-    public DataInputStream abrirParaLectura() throws IOException {
-        return new DataInputStream(new FileInputStream(rutaArchivo.toFile()));
-    }
-
+    // Verifica si el archivo tiene tamaño 0 bytes.
     public boolean estaVacio() throws IOException {
-        return Files.size(rutaArchivo) == 0;
+        return Files.size(rutaArchivo) == 0;          // Files.size evita abrir flujo
+    }
+    // Lee un objeto serializado desde el archivo y lo devuelve con tipo genérico, siendo una lista.
+    @SuppressWarnings("unchecked")                   // suprime aviso de cast no verificable
+    public <T> T leerObjeto() throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(rutaArchivo.toFile()))) { // try-with-resources cierra solo
+            return (T) ois.readObject();
+        }
     }
 
-    public void guardarAtomicamente(Consumer<DataOutputStream> escritor) throws IOException {
-        Path archivoTemporal = null;
+    // Guarda de forma atómica usando un Consumer que recibe un ObjectOutputStream.
+    // El DAO decide qué escribir; aquí solo se garantiza la integridad.
+    public void guardarAtomicamente(Consumer<ObjectOutputStream> escritor) throws IOException {
+        Path temp = null;
         try {
-            archivoTemporal = Files.createTempFile("temp_bin", ".bin");
-            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(archivoTemporal.toFile()))) {
-                escritor.accept(dos);
+            // Crea un archivo temporal único, evita colisiones
+            temp = Files.createTempFile("temp_ser", ".bin");
+            // try-with-resources cierra automáticamente el stream
+            try (ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(temp.toFile()))) {
+                escritor.accept(oos);                // el DAO escribe aquí
             }
-            Files.move(archivoTemporal, rutaArchivo,
+            // Reemplaza el original de manera atómica (evita archivos corruptos)
+            Files.move(temp, rutaArchivo,
                     StandardCopyOption.REPLACE_EXISTING,
                     StandardCopyOption.ATOMIC_MOVE);
         } catch (IOException e) {
-            if (archivoTemporal != null) {
-                try { Files.deleteIfExists(archivoTemporal); } catch (IOException ignored) {}
+            // Si algo falla, limpia el temporal
+            if (temp != null) {
+                try { Files.deleteIfExists(temp); } catch (IOException ignored) {}
             }
             throw e;
         }

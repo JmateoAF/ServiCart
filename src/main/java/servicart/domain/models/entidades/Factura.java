@@ -1,17 +1,20 @@
 package servicart.domain.models.entidades;
 
+import servicart.domain.models.enums.EstadoFactura;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Factura {
+public class Factura implements Serializable {
     private final int id;
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;
     private final LocalDateTime fechaCorte;
     private double valorTotal;
-    private String estado;
+    private EstadoFactura estado;
     private final Contrato contrato;
 
-    public Factura(int id, LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, String estado, Contrato contrato) {
+    public Factura(int id, LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, EstadoFactura estado, Contrato contrato) {
         this.id = id;
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
@@ -32,8 +35,8 @@ public class Factura {
     public double getValorTotal() { return valorTotal; }
     public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public EstadoFactura getEstado() { return estado; }
+    public void setEstado(EstadoFactura estado) { this.estado = estado; }
 
     public Contrato getContrato() { return contrato; }
 }

@@ -1,6 +1,8 @@
 package servicart.domain.models.entidades;
 
-public class Carrito {
+import java.io.Serializable;
+
+public class Carrito implements Serializable {
     private final int id;
     private double montoAbono;
     private final Cliente cliente;

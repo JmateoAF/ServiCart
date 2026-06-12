@@ -1,6 +1,8 @@
 package servicart.domain.models.entidades;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
     private final String cedula;
     private String nombre;
     private String email;
