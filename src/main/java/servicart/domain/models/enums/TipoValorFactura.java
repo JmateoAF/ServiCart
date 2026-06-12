@@ -1,7 +1,8 @@
 package servicart.domain.models.enums;
 
 public enum TipoValorFactura {
-    FIJO(1), VARIABLE(2);
+    FIJO(0),
+    VARIABLE(1);
 
     private final int codigo;
 
@@ -9,7 +10,7 @@ public enum TipoValorFactura {
 
     public int getCodigo() { return this.codigo; }
 
-    public static TipoValorFactura valueOf(int codigo) {
+    public static TipoValorFactura fromCodigo(int codigo) {
         for (TipoValorFactura tipoValorFactura : TipoValorFactura.values())
             if (tipoValorFactura.getCodigo() == codigo) { return tipoValorFactura; }
 

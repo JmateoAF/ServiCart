@@ -29,7 +29,7 @@ public class Abono implements Serializable {
 
     public LocalDateTime getFechaPago() { return fechaPago; }
 
-    public boolean getPagoRealizado() { return pagoRealizado; }
+    public boolean isPagoRealizado() { return pagoRealizado; }
     public void setPagoRealizado(boolean pagoRealizado) { this.pagoRealizado = pagoRealizado; }
 
     public Factura getFactura() { return factura; }

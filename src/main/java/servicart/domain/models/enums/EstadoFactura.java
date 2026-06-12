@@ -1,7 +1,8 @@
 package servicart.domain.models.enums;
 
 public enum EstadoFactura {
-    PENDIENTE(1), PAGADA(2);
+    PENDIENTE(0),
+    PAGADA(1);
 
     private final int codigo;
 

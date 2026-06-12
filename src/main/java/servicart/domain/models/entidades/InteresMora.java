@@ -30,7 +30,7 @@ public class InteresMora implements Serializable {
 
     public LocalDateTime getFechaCalculo() { return fechaCalculo; }
 
-    public boolean getAplicadoAFactura() { return aplicadoAFactura; }
+    public boolean isAplicadoAFactura() { return aplicadoAFactura; }
     public void setAplicadoAFactura(boolean aplicadoAFactura) { this.aplicadoAFactura = aplicadoAFactura; }
 
     public Factura getFactura() { return factura; }

@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
 
 public class CorteServicio implements Serializable {
     private final int id;
-    private final LocalDateTime diasRetraso;
+    private final LocalDateTime fechaCorte;
     private final LocalDateTime fechaReactivacion;
     private double costoReactivacionPagado;
     private String estadoCorte;
     private final Contrato contrato;
     private final Factura factura;
 
-    public CorteServicio(int id, LocalDateTime diasRetraso, LocalDateTime fechaReactivacion, double costoReactivacionPagado, String estadoCorte, Contrato contrato, Factura factura, ModalidadPago modalidadPago) {
+    public CorteServicio(int id, LocalDateTime fechaCorte, LocalDateTime fechaReactivacion, double costoReactivacionPagado, String estadoCorte, Contrato contrato, Factura factura) {
         this.id = id;
-        this.diasRetraso = diasRetraso;
+        this.fechaCorte = fechaCorte;
         this.fechaReactivacion = fechaReactivacion;
         this.costoReactivacionPagado = costoReactivacionPagado;
         this.estadoCorte = estadoCorte;
@@ -26,7 +26,7 @@ public class CorteServicio implements Serializable {
 
     public int getId() { return id; }
 
-    public LocalDateTime getDiasRetraso() { return diasRetraso; }
+    public LocalDateTime getFechaCorte() { return fechaCorte; }
 
     public LocalDateTime getFechaReactivacion() { return fechaReactivacion; }
 

@@ -1,12 +1,13 @@
 package servicart.domain.models.enums;
 
-/**
+/*
  * Enum que indica la causa de terminación de un contrato.
- * ACTIVO=0 (el contrato sigue vigente, no hay terminación),
- * CLIENTE=1 (el cliente solicitó la baja),
- * EMPRESA=2 (la empresa canceló el servicio).
+ * ACTIVO = 0 (el contrato sigue vigente, no hay terminación),
+ * CLIENTE = 1 (el cliente solicitó la baja),
+ * EMPRESA = 2 (la empresa canceló el servicio).
  * Se guarda como número en contratos.bin.
  */
+
 public enum CausaTerminacion {
     ACTIVO(0),
     CLIENTE(1),

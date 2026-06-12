@@ -2,7 +2,10 @@ package servicart.domain.models.enums;
 
 // Representa los tipos de servicios con un código numérico asociado
 public enum TipoServicio {
-    AGUA(0), LUZ(1), BASURA(2), INTERNET(3);   // cada constante guarda su código
+    AGUA(0),
+    LUZ(1),
+    BASURA(2),
+    INTERNET(3);   // cada constante guarda su código
 
     private final int codigo;                  // código numérico del servicio
 

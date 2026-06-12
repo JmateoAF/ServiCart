@@ -1,7 +1,11 @@
 package servicart.domain.models.enums;
 
 public enum ModalidadPago {
-    TC(0), TD(1), PAYPAL(2), TRANSFERENCIA(3), DEBITO(4);
+    TC(0),
+    TD(1),
+    PAYPAL(2),
+    TRANSFERENCIA(3),
+    DEBITO(4);
 
     private final int codigo;
 
