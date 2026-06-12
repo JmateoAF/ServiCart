@@ -3,32 +3,13 @@ package servicart.data.bin;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entidades.Abono;
 
-import java.util.List;
-import java.util.Optional;
-
-public class AbonoBinarioDAO implements CrudDAO<Abono> {
-    @Override
-    public void save(Abono entidad) {
-
+public class AbonoBinarioDAO extends GenericBinarioDAO<Abono> implements CrudDAO<Abono> {
+    public AbonoBinarioDAO() {
+        super("abono.bin");               // archivo único para esta entidad
     }
 
     @Override
-    public Optional<Abono> findId(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<Abono> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public void update(Abono entidad) {
-
-    }
-
-    @Override
-    public void delete(String id) {
-
+    protected String getId(Abono entidad) {
+        return String.valueOf(entidad.getId());          // identificador natural
     }
 }

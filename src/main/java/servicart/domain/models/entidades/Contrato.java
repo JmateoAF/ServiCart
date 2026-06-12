@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 public class Contrato implements Serializable {
     private final int id;
     private final LocalDateTime fechaInicio;
-    private final LocalDateTime fechaFin;
+    private LocalDateTime fechaFin;
     private CausaTerminacion causaTerminacion;
     private final LocalDateTime fechaTerminacion;
     private final ServicioCatalogo servicio;
     private final Cliente cliente;
 
-    public Contrato(int id, LocalDateTime fechaInicio, LocalDateTime fechaFin, CausaTerminacion causaTerminacion, LocalDateTime fechaTerminacion, ServicioCatalogo servicio, Cliente cliente) {
+    public Contrato(int id, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaTerminacion, ServicioCatalogo servicio, Cliente cliente) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.causaTerminacion = causaTerminacion;
+        this.causaTerminacion = CausaTerminacion.ACTIVO;
         this.fechaTerminacion = fechaTerminacion;
         this.servicio = servicio;
         this.cliente = cliente;
@@ -30,6 +30,8 @@ public class Contrato implements Serializable {
     public LocalDateTime getFechaInicio() { return fechaInicio; }
 
     public LocalDateTime getFechaFin() { return fechaFin; }
+    public void setFechaFin(LocalDateTime fechaFin) { this.fechaFin = fechaFin; }
+
 
     public CausaTerminacion getCausaTerminacion() { return causaTerminacion; }
     public void setCausaTerminacion(CausaTerminacion causaTerminacion) { this.causaTerminacion = causaTerminacion; }

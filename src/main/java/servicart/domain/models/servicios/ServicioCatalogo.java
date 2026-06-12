@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 public class ServicioCatalogo implements Serializable {
-    private final int id;
+    private int id;
     private double tarifaFija;
     private double tarifaPorUnidad;
     private TipoServicio tipo;                // AGUA, LUZ, BASURA, INTERNET
@@ -61,11 +61,13 @@ public class ServicioCatalogo implements Serializable {
 
     public int getId() { return id; }
 
+    public void setId(int id) {this.id = id;}
+
     public double getTarifaFija() { return tarifaFija; }
-    public void setTarifaFija(int tarifaFija) { this.tarifaFija = tarifaFija; }
+    public void setTarifaFija(double tarifaFija) { this.tarifaFija = tarifaFija; }
 
     public double getTarifaPorUnidad() { return tarifaPorUnidad; }
-    public void setTarifaPorUnidad(int tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
+    public void setTarifaPorUnidad(double tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
 
     public TipoServicio getTipo() { return tipo; }
     public void setTipo(TipoServicio tipo) { this.tipo = tipo; }

@@ -2,33 +2,49 @@ package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entidades.Contrato;
+import servicart.domain.models.enums.CausaTerminacion;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
-public class ContratoBinarioDAO implements CrudDAO<Contrato> {
-    @Override
-    public void save(Contrato entidad) {
-
+public class ContratoBinarioDAO extends GenericBinarioDAO<Contrato> implements CrudDAO<Contrato>  {
+    public ContratoBinarioDAO() {
+        super("contrato.bin");               // archivo único para esta entidad
     }
 
     @Override
-    public Optional<Contrato> findId(String id) {
-        return Optional.empty();
+    protected String getId(Contrato entidad) {
+        return String.valueOf(entidad.getId());          // identificador natural
     }
 
     @Override
-    public List<Contrato> findAll() {
-        return List.of();
+    protected boolean isActivo(Contrato entidad) {
+        return entidad.getCausaTerminacion() == CausaTerminacion.ACTIVO;     // borrado lógico: activo = 1
     }
 
-    @Override
-    public void update(Contrato entidad) {
-
+    /**
+     * Borrado lógico: marca el campo activo a 0 en lugar de eliminar físicamente.
+     * Si ya estaba inactivo, no hace nada.
+     */
+    public void terminarContrato(String id, CausaTerminacion causa) {
+        List<Contrato> lista = (cache != null) ? cache : leerTodos();
+        for (Contrato c : lista) {
+            if (String.valueOf(c.getId()).equals(id)) {
+                if (!isActivo(c)){
+                    cache = lista;
+                    return;
+                }
+                c.setCausaTerminacion(causa);       // CLIENTE o EMPRESA
+                c.setFechaFin(fechaActual());
+                guardarTodos(lista);
+                cache = lista;
+                return;
+            }
+            }
+        throw new RuntimeException("Contrato no encontrado");
     }
 
-    @Override
-    public void delete(String id) {
-
+    private LocalDateTime fechaActual() {
+        return LocalDateTime.now();
     }
 }

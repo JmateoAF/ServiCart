@@ -3,32 +3,13 @@ package servicart.data.bin;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entidades.InteresMora;
 
-import java.util.List;
-import java.util.Optional;
-
-public class InteresMoraBinarioDAO implements CrudDAO<InteresMora> {
-    @Override
-    public void save(InteresMora entidad) {
-
+public class InteresMoraBinarioDAO  extends GenericBinarioDAO<InteresMora> implements CrudDAO<InteresMora> {
+    public InteresMoraBinarioDAO() {
+        super("InteresMora.bin");               // archivo único para esta entidad
     }
 
     @Override
-    public Optional<InteresMora> findId(String id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<InteresMora> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public void update(InteresMora entidad) {
-
-    }
-
-    @Override
-    public void delete(String id) {
-
+    protected String getId(InteresMora entidad) {
+        return String.valueOf(entidad.getId());          // identificador natural
     }
 }

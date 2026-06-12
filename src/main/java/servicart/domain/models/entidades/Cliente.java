@@ -9,12 +9,12 @@ public class Cliente implements Serializable {
     private String celular;
     private int activo; //Activo = 1, Inactivo = 0
 
-    public Cliente(String cedula, String nombre, String email, String celular, int activo) {
+    public Cliente(String cedula, String nombre, String email, String celular) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.email = email;
         this.celular = celular;
-        this.activo = activo;
+        this.activo = 1;
     }
 
     public String getCedula() {
@@ -45,5 +45,9 @@ public class Cliente implements Serializable {
     }
     public void setActivo(int activo) {
         this.activo = activo;
+    }
+
+    public void solicitarTerminacionContrato(Contrato contrato) {
+        // Implementación vacía o delegar en servicio
     }
 }

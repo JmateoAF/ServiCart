@@ -14,13 +14,14 @@ public class Factura implements Serializable {
     private EstadoFactura estado;
     private final Contrato contrato;
 
-    public Factura(int id, LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, EstadoFactura estado, Contrato contrato) {
+
+    public Factura(int id, LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, Contrato contrato) {
         this.id = id;
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
         this.fechaCorte = fechaCorte;
         this.valorTotal = valorTotal;
-        this.estado = estado;
+        this.estado = EstadoFactura.PENDIENTE;
         this.contrato = contrato;
     }
 
