@@ -6,30 +6,26 @@ CREATE TABLE IF NOT EXISTS Clientes (
     activo INTEGER
 );
 
-CREATE TABLE IF NOT EXISTS Empresa (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nombre TEXT NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS Servicio (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    servicio TEXT NOT NULL,
-    tipoValor INTEGER NOT NULL, -- FIJO O VARIABLE
+    tipoServicio INTEGER NOT NULL,
+    tarifaFija DECIMAL DEFAULT 0.00,
+    tarifaPorUnidad DECIMAL DEFAULT 0.00,
+    tipoValor INTEGER NOT NULL,
     costoReactivacion DECIMAL NOT NULL,
     tasaInteresDiario DECIMAL NOT NULL DEFAULT 0.15,
-    idEmpresa INTEGER NOT NULL,
-    CONSTRAINT fkServicio FOREIGN KEY (idEmpresa) REFERENCES Empresa(id)
+    idEmpresa INTEGER NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Contrato (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fechaInicio DATETIME NOT NULL,
     fechaFin DATETIME,
-    causaTerminacion INTEGER DEFAULT 0, -- 0 NO TERMINA, 1 EMPRESA, 2 CLIENTE
+    causaTerminacion INTEGER DEFAULT 0,
     fechaTerminacion DATETIME,
-    idServicios INTEGER NOT NULL,
     idCliente TEXT NOT NULL,
-    CONSTRAINT fkContratosCliente FOREIGN KEY (idCliente) REFERENCES clientes(cedula),
+    idServicios INTEGER NOT NULL,
+    CONSTRAINT fkContratosCliente FOREIGN KEY (idCliente) REFERENCES Clientes(cedula),
     CONSTRAINT fkContratosServicios FOREIGN KEY (idServicios) REFERENCES Servicio(id)
 );
 
@@ -39,14 +35,9 @@ CREATE TABLE IF NOT EXISTS Factura (
     fechaVencimiento DATETIME NOT NULL,
     fechaCorte DATETIME NOT NULL,
     valorTotal DECIMAL NOT NULL,
-    estado INTEGER NOT NULL, -- PENDIENTE O PAGADA
+    estado INTEGER NOT NULL,
     idContrato INTEGER NOT NULL,
     CONSTRAINT fkFactura FOREIGN KEY (idContrato) REFERENCES Contrato(id)
-);
-
-CREATE TABLE IF NOT EXISTS ModalidadPago (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    modalidad TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Abono (
@@ -55,9 +46,8 @@ CREATE TABLE IF NOT EXISTS Abono (
     fechaPago DATETIME NOT NULL,
     pagoRealizado BOOL DEFAULT FALSE,
     idFactura INTEGER NOT NULL,
-    idModalidad INTEGER NOT NULL, -- CRÉDITO, DÉBITO, PAYPAL, TRANSFERENCIA, DÉDITO DIRECTO
-    CONSTRAINT fkAbonoFactura FOREIGN KEY (idFactura) REFERENCES Factura(id),
-    CONSTRAINT fkAbonoModalidad FOREIGN KEY (idModalidad) REFERENCES ModalidadPago(id)
+    idModalidad INTEGER NOT NULL,
+    CONSTRAINT fkAbonoFactura FOREIGN KEY (idFactura) REFERENCES Factura(id)
 );
 
 CREATE TABLE IF NOT EXISTS InteresMora (
@@ -75,7 +65,7 @@ CREATE TABLE IF NOT EXISTS CorteServicio (
     fechaCorte DATETIME NOT NULL,
     fechaReactivacion DATETIME,
     costoReactivacionPagado DECIMAL,
-    estadoCorte TEXT, -- Activo o reactivado
+    estadoCorte INTEGER NOT NULL,
     idContrato INTEGER NOT NULL,
     idFactura INTEGER NOT NULL,
     CONSTRAINT fkCorteServiciosContrato FOREIGN KEY (idContrato) REFERENCES Contrato(id),
@@ -87,6 +77,6 @@ CREATE TABLE IF NOT EXISTS Carrito (
     montoAbono DECIMAL NOT NULL,
     idCliente TEXT NOT NULL,
     idAbono INTEGER NOT NULL,
-    CONSTRAINT fkCarritoClientes FOREIGN KEY (idCliente) REFERENCES clientes(cedula),
+    CONSTRAINT fkCarritoClientes FOREIGN KEY (idCliente) REFERENCES Clientes(cedula),
     CONSTRAINT fkCarritoAbono FOREIGN KEY (idAbono) REFERENCES Abono(id)
 );

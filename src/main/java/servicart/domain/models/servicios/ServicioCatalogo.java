@@ -79,12 +79,12 @@ public class ServicioCatalogo implements Serializable {
     }
 
     public double getCostoReactivacion() { return costoReactivacion; }
-    public void setCostoReactivacion(int costoReactivacion) { this.costoReactivacion = costoReactivacion; }
+    public void setCostoReactivacion(double costoReactivacion) { this.costoReactivacion = costoReactivacion; }
 
     public double getTasaInteresDiario() { return tasaInteresDiario; }
     public void setTasaInteresDiario(double tasaInteresDiario) { this.tasaInteresDiario = tasaInteresDiario; }
 
-    public Empresa getIdEmpresa() { return empresa; }
+    public Empresa getEmpresa() { return empresa; }
 
     // La estrategia no necesita getter público, es interna
 }

@@ -133,7 +133,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
         guardarTodos(lista);
         cache = lista;
     }
-    //Eliminacion fisica
+    //Eliminación física
     @Override
     public void delete(String id) {
         List<T> lista = (cache != null) ? cache : leerTodos();
