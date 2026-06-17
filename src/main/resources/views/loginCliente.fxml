@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefWidth="800" prefHeight="600" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
+            <Label text="SERVICART" style="-fx-text-fill: #e8c96d; -fx-font-size: 14; -fx-font-weight: bold; -fx-font-family: 'Courier New';"/>
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane style="-fx-background-color: #0f0f0f;">
+            <VBox alignment="CENTER" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 24;">
+                <Label text="BIENVENIDO" maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 12; -fx-font-family: 'Courier New'; -fx-alignment: center; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 0 0 12 0;"/>
+
+                <Label text="Acceso Cliente" style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-background-radius: 4;">
+                    <VBox.margin><Insets top="14" bottom="14"/></VBox.margin>
+                </Label>
+
+                <Label text="CÉDULA O N° DE CONTRATO" style="-fx-text-fill: #555555; -fx-font-size: 10;"/>
+
+                <TextField promptText="0102030405" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 12; -fx-padding: 8 10 8 10; -fx-font-family: 'Courier New';">
+                    <VBox.margin><Insets top="5" bottom="12"/></VBox.margin>
+                </TextField>
+
+                <TextField promptText="0102030405" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 12; -fx-padding: 8 10 8 10; -fx-font-family: 'Courier New';">
+                    <VBox.margin><Insets top="5" bottom="12"/></VBox.margin>
+                </TextField>
+
+                <Button text="BUSCAR MIS DEUDAS" maxWidth="Infinity" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 12; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 9 0 9 0; -fx-cursor: hand;"/>
+
+                <Separator>
+                    <VBox.margin><Insets top="18" bottom="12"/></VBox.margin>
+                </Separator>
+
+                <Label text="Soy administrador" maxWidth="Infinity" style="-fx-text-fill: #444444; -fx-font-size: 10; -fx-alignment: center; -fx-cursor: hand;"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>
