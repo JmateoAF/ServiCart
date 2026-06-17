@@ -19,7 +19,7 @@
                     <VBox.margin><Insets top="14" bottom="14"/></VBox.margin>
                 </Label>
 
-                <Label text="CÉDULA O N° DE CONTRATO" style="-fx-text-fill: #555555; -fx-font-size: 10;"/>
+                <Label text="CÉDULA" style="-fx-text-fill: #555555; -fx-font-size: 10;"/>
 
                 <TextField promptText="0102030405" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 12; -fx-padding: 8 10 8 10; -fx-font-family: 'Courier New';">
                     <VBox.margin><Insets top="5" bottom="12"/></VBox.margin>
