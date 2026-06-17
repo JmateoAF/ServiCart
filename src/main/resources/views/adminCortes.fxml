@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefWidth="1000" prefHeight="660"
+            style="-fx-background-color: #0f0f0f;"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
+            <Label text="SERVICART ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-size: 14; -fx-font-weight: bold; -fx-font-family: 'Courier New';"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="150"
+              style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
+            <Label text="ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-size: 11; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-padding: 0 14 12 14; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;"/>
+            <Button text="⊞ Dashboard" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;">
+                <VBox.margin><Insets top="6"/></VBox.margin>
+            </Button>
+            <Button text="👥 Usuarios" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Button text="⚙ Tarifas" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Button text="⚠ Cortes/mora" maxWidth="Infinity"
+                    style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 11; -fx-padding: 8 14 8 12; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="⬅ Salir" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
+            <VBox spacing="12" style="-fx-background-color: #0f0f0f; -fx-padding: 16 18 18 18;">
+
+                <!-- Stats resumen -->
+                <HBox spacing="8">
+                    <VBox HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+                        <Label text="SERVICIOS CORTADOS" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                        <Label text="17" style="-fx-text-fill: #c0392b; -fx-font-size: 22; -fx-font-family: 'Courier New'; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+                        <Label text="EN MORA (sin corte)" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                        <Label text="34" style="-fx-text-fill: #e07b39; -fx-font-size: 22; -fx-font-family: 'Courier New'; -fx-font-weight: bold;"/>
+                    </VBox>
+                    <VBox HBox.hgrow="ALWAYS"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+                        <Label text="INTERESES GENERADOS" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                        <Label text="$218" style="-fx-text-fill: #e8c96d; -fx-font-size: 22; -fx-font-family: 'Courier New'; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Toggle Con mora / Cortados -->
+                <HBox style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6;" maxWidth="220">
+                    <Button text="Con mora"
+                            style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 5 16 5 16; -fx-cursor: hand; -fx-background-radius: 5 0 0 5;"/>
+                    <Button text="Cortados"
+                            style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 5 16 5 16; -fx-cursor: hand; -fx-background-radius: 0 5 5 0;"/>
+                </HBox>
+
+                <!-- Card mora activa -->
+                <VBox spacing="8"
+                      style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="👤 Ana Gómez — ETAPA (Agua)"
+                               style="-fx-text-fill: #e8c96d; -fx-font-size: 12; -fx-font-family: 'Courier New';"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="⚠ 12 días de mora"
+                               style="-fx-text-fill: #e07b39; -fx-background-color: #2a1a10; -fx-font-size: 10; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Deuda original" style="-fx-text-fill: #555555; -fx-font-size: 11;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="$25.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Interés acumulado" style="-fx-text-fill: #555555; -fx-font-size: 11;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="+ $3.00" style="-fx-text-fill: #e07b39; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+                    </HBox>
+                    <!-- Barra progreso manual -->
+                    <StackPane prefHeight="4" style="-fx-background-color: #1e1e1e; -fx-background-radius: 2;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Region prefWidth="120" prefHeight="4"
+                                    style="-fx-background-color: #e07b39; -fx-background-radius: 2;"/>
+                        </HBox>
+                    </StackPane>
+                    <HBox>
+                        <Label text="12/30 días para corte" style="-fx-text-fill: #444444; -fx-font-size: 9;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Total: $28.00" style="-fx-text-fill: #444444; -fx-font-size: 9;"/>
+                    </HBox>
+                    <HBox spacing="6">
+                        <VBox.margin><Insets top="4"/></VBox.margin>
+                        <Button text="Ver detalle"
+                                style="-fx-background-color: #1e1e1e; -fx-text-fill: #888888; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;"/>
+                        <Button text="Forzar corte"
+                                style="-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Card servicio cortado -->
+                <VBox spacing="8"
+                      style="-fx-background-color: #161616; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="👤 María Vera — CentroSur (Luz)"
+                               style="-fx-text-fill: #e8c96d; -fx-font-size: 12; -fx-font-family: 'Courier New';"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="🔴 38 días — CORTADO"
+                               style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-font-size: 10; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Deuda original" style="-fx-text-fill: #555555; -fx-font-size: 11;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="$15.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Interés acumulado" style="-fx-text-fill: #555555; -fx-font-size: 11;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="+ $5.70" style="-fx-text-fill: #c0392b; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Costo reactivación" style="-fx-text-fill: #555555; -fx-font-size: 11;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="$20.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/>
+                    </HBox>
+                    <!-- Barra progreso llena -->
+                    <StackPane prefHeight="4" style="-fx-background-color: #1e1e1e; -fx-background-radius: 2;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Region maxWidth="Infinity" prefHeight="4" HBox.hgrow="ALWAYS"
+                                    style="-fx-background-color: #c0392b; -fx-background-radius: 2;"/>
+                        </HBox>
+                    </StackPane>
+                    <HBox>
+                        <Label text="Servicio cortado" style="-fx-text-fill: #444444; -fx-font-size: 9;"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Total con reactivación: $40.70" style="-fx-text-fill: #444444; -fx-font-size: 9;"/>
+                    </HBox>
+                    <HBox spacing="6">
+                        <VBox.margin><Insets top="4"/></VBox.margin>
+                        <Button text="Ver detalle"
+                                style="-fx-background-color: #1e1e1e; -fx-text-fill: #888888; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;"/>
+                        <Button text="Reactivar servicio"
+                                style="-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Tabla resumen -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT"
+                          style="-fx-padding: 8 14 8 14; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
+                        <Label text="HISTORIAL DE CORTES Y MORA"
+                               style="-fx-text-fill: #555555; -fx-font-size: 10; -fx-font-family: 'Courier New';"/>
+                    </HBox>
+                    <TableView prefHeight="160"
+                               style="-fx-background-color: transparent; -fx-control-inner-background: #161616; -fx-table-cell-border-color: #1e1e1e;">
+                        <columns>
+                            <TableColumn text="USUARIO"    prefWidth="150"/>
+                            <TableColumn text="SERVICIO"   prefWidth="130"/>
+                            <TableColumn text="DÍAS MORA"  prefWidth="90"/>
+                            <TableColumn text="INTERÉS"    prefWidth="90"/>
+                            <TableColumn text="ESTADO"     prefWidth="100"/>
+                            <TableColumn text="ACCIONES"   prefWidth="140"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

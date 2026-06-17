@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane prefWidth="1000" prefHeight="660"
+            style="-fx-background-color: #0f0f0f;"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
+            <Label text="SERVICART ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-size: 14; -fx-font-weight: bold; -fx-font-family: 'Courier New';"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="150"
+              style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
+            <Label text="ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-size: 11; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-padding: 0 14 12 14; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;"/>
+            <Button text="⊞ Dashboard" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;">
+                <VBox.margin><Insets top="6"/></VBox.margin>
+            </Button>
+            <Button text="👥 Usuarios" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Button text="⚙ Tarifas" maxWidth="Infinity"
+                    style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 11; -fx-padding: 8 14 8 12; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Button text="⚠ Cortes/mora" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button text="⬅ Salir" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
+            <VBox spacing="12" style="-fx-background-color: #0f0f0f; -fx-padding: 16 18 18 18;">
+
+                <!-- Grid de tarjetas: 2x2 -->
+                <GridPane hgap="12" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+                        <ColumnConstraints hgrow="ALWAYS" percentWidth="50"/>
+                    </columnConstraints>
+
+                    <!-- ETAPA -->
+                    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="💧 ETAPA — Agua"
+                                   style="-fx-text-fill: #e8c96d; -fx-font-size: 13; -fx-font-family: 'Courier New';"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="Variable"
+                                   style="-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 9; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                        </HBox>
+                        <HBox><Label text="Tarifa base" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$1.20 / m³" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Interés mora diario" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="0.1%" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Días para corte" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="30 días" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Costo reactivación" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$15.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <Button text="Editar tarifa" maxWidth="Infinity"
+                                style="-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 6 0 6 0; -fx-cursor: hand;">
+                            <VBox.margin><Insets top="4"/></VBox.margin>
+                        </Button>
+                    </VBox>
+
+                    <!-- CentroSur -->
+                    <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="⚡ CentroSur — Luz"
+                                   style="-fx-text-fill: #e8c96d; -fx-font-size: 13; -fx-font-family: 'Courier New';"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="Variable"
+                                   style="-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 9; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                        </HBox>
+                        <HBox><Label text="Tarifa base" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$1.80 / kWh" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Interés mora diario" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="0.1%" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Días para corte" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="30 días" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Costo reactivación" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$20.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <Button text="Editar tarifa" maxWidth="Infinity"
+                                style="-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 6 0 6 0; -fx-cursor: hand;">
+                            <VBox.margin><Insets top="4"/></VBox.margin>
+                        </Button>
+                    </VBox>
+
+                    <!-- EMAC -->
+                    <VBox spacing="8" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="🗑 EMAC — Basura"
+                                   style="-fx-text-fill: #e8c96d; -fx-font-size: 13; -fx-font-family: 'Courier New';"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="Fijo"
+                                   style="-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 9; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                        </HBox>
+                        <HBox><Label text="Tarifa fija mensual" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$5.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Interés mora diario" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="0.05%" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Días para corte" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="60 días" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Costo reactivación" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$8.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <Button text="Editar tarifa" maxWidth="Infinity"
+                                style="-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 6 0 6 0; -fx-cursor: hand;">
+                            <VBox.margin><Insets top="4"/></VBox.margin>
+                        </Button>
+                    </VBox>
+
+                    <!-- FibraMax -->
+                    <VBox spacing="8" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                          style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label text="📶 FibraMax — Internet"
+                                   style="-fx-text-fill: #e8c96d; -fx-font-size: 13; -fx-font-family: 'Courier New';"/>
+                            <Region HBox.hgrow="ALWAYS"/>
+                            <Label text="Fijo"
+                                   style="-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 9; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"/>
+                        </HBox>
+                        <HBox><Label text="Tarifa fija mensual" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$29.99" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Interés mora diario" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="0.08%" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Días para corte" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="15 días" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <HBox><Label text="Costo reactivación" style="-fx-text-fill: #555555; -fx-font-size: 11;"/><Region HBox.hgrow="ALWAYS"/><Label text="$10.00" style="-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;"/></HBox>
+                        <Button text="Editar tarifa" maxWidth="Infinity"
+                                style="-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 6 0 6 0; -fx-cursor: hand;">
+                            <VBox.margin><Insets top="4"/></VBox.margin>
+                        </Button>
+                    </VBox>
+
+                </GridPane>
+
+                <!-- Formulario editar tarifa -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 18;">
+                    <Label text="EDITAR TARIFA"
+                           style="-fx-text-fill: #e8c96d; -fx-font-size: 11; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 0 0 10 0;"/>
+                    <HBox spacing="12">
+                        <VBox.margin><Insets top="14"/></VBox.margin>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="TARIFA BASE" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                            <TextField promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-size: 12; -fx-padding: 7 9 7 9; -fx-font-family: 'Courier New';"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="INTERÉS MORA DIARIO (%)" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                            <TextField promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-size: 12; -fx-padding: 7 9 7 9; -fx-font-family: 'Courier New';"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="DÍAS PARA CORTE" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                            <TextField promptText="30"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-size: 12; -fx-padding: 7 9 7 9; -fx-font-family: 'Courier New';"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="COSTO REACTIVACIÓN ($)" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
+                            <TextField promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-size: 12; -fx-padding: 7 9 7 9; -fx-font-family: 'Courier New';"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="8" alignment="CENTER_RIGHT">
+                        <VBox.margin><Insets top="14"/></VBox.margin>
+                        <Button text="Cancelar"
+                                style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 7 16 7 16; -fx-cursor: hand;"/>
+                        <Button text="Guardar"
+                                style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 11; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 7 16 7 16; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
