@@ -1,15 +1,15 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Contrato;
-import servicart.domain.models.enums.CausaTerminacion;
+import servicart.models.entidades.Contrato;
+import servicart.models.enums.CausaTerminacion;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class ContratoBinarioDAO extends GenericBinarioDAO<Contrato> implements CrudDAO<Contrato>  {
     public ContratoBinarioDAO() {
-        super("contrato.bin");               // archivo único para esta entidad
+        super("bin/contrato.bin");               // archivo único para esta entidad
     }
 
     @Override

@@ -1,9 +1,9 @@
 package servicart.data.bin;
 
-import servicart.domain.models.servicios.ServicioCatalogo;
-import servicart.domain.models.enums.Empresa;
-import servicart.domain.models.enums.TipoServicio;
-import servicart.domain.models.enums.TipoValorFactura;
+import servicart.models.servicios.ServicioCatalogo;
+import servicart.models.enums.Empresa;
+import servicart.models.enums.TipoServicio;
+import servicart.models.enums.TipoValorFactura;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public class ServicioCatalogoBinarioDAO extends GenericBinarioDAO<ServicioCatalogo> {
 
     public ServicioCatalogoBinarioDAO() {
-        super("servicioCatalogo.bin");
+        super("bin/servicioCatalogo.bin");
         inicializarDatos();
     }
 

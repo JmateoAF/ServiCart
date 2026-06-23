@@ -1,13 +1,13 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Factura;
-import servicart.domain.models.enums.EstadoFactura;
+import servicart.models.entidades.Factura;
+import servicart.models.enums.EstadoFactura;
 
 import java.util.List;
 
 public class FacturaBinarioDAO extends GenericBinarioDAO<Factura> implements CrudDAO<Factura>  {
-    public FacturaBinarioDAO() {super("factura.bin");               // archivo único para esta entidad
+    public FacturaBinarioDAO() {super("bin/factura.bin");               // archivo único para esta entidad
     }
 
     @Override

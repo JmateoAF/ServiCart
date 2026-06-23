@@ -1,14 +1,14 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Cliente;
+import servicart.models.entidades.Cliente;
 
 import java.util.List;
 
 public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> implements CrudDAO<Cliente> {
 
     public ClienteBinarioDAO() {
-        super("clientes.bin");               // archivo único para esta entidad
+        super("bin/clientes.bin");               // archivo único para esta entidad
     }
 
     @Override

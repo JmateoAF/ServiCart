@@ -1,11 +1,11 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.InteresMora;
+import servicart.models.entidades.InteresMora;
 
 public class InteresMoraBinarioDAO  extends GenericBinarioDAO<InteresMora> implements CrudDAO<InteresMora> {
     public InteresMoraBinarioDAO() {
-        super("InteresMora.bin");               // archivo único para esta entidad
+        super("bin/InteresMora.bin");               // archivo único para esta entidad
     }
 
     @Override

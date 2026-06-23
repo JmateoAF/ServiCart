@@ -11,6 +11,7 @@
       <w>Servicios</w>
       <w>Sistema</w>
       <w>Sobre</w>
+      <w>acceso</w>
       <w>basura</w>
       <w>buscar</w>
       <w>centrosur</w>
@@ -19,12 +20,14 @@
       <w>empresa</w>
       <w>facturas</w>
       <w>fibramax</w>
+      <w>ingresar</w>
       <w>nosotros</w>
       <w>notificador</w>
       <w>pendientes</w>
       <w>pruebas</w>
       <w>servicart</w>
       <w>sobre</w>
+      <w>usuario</w>
     </words>
   </dictionary>
 </component>

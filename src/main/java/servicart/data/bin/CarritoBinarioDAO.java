@@ -1,11 +1,11 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Carrito;
+import servicart.models.entidades.Carrito;
 
 public class CarritoBinarioDAO extends GenericBinarioDAO<Carrito> implements CrudDAO<Carrito> {
     public CarritoBinarioDAO() {
-        super("carrito.bin");               // archivo único para esta entidad
+        super("bin/carrito.bin");               // archivo único para esta entidad
     }
 
     @Override

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600" prefWidth="800" style="-fx-background-color: #0f0f0f;" stylesheets="@../../assets/css/scrollSobreNosotros.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.SobreNosotrosController">
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="55.0" spacing="12" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 12 20 12 20;">
+            <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="SERVICART">
+            <font>
+               <Font size="15.0" />
+            </font></Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#irAMain" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;" text="Inicio" />
+            <Button style="-fx-background-color: #1f1f1f; -fx-text-fill: #e8c96d; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;" text="Sobre Nosotros" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background: #0f0f0f; -fx-background-color: transparent;">
+            <VBox>
+                <VBox alignment="CENTER" prefHeight="1264.0" prefWidth="1624.0" spacing="12" style="-fx-background-color: #0f0f0f; -fx-padding: 32 40 32 40;">
+                    <Label style="-fx-text-fill: #e8c96d; -fx-font-size: 20; -fx-font-family: 'Courier New';" text="SOBRE NOSOTROS" />
+                    <Separator prefWidth="40" style="-fx-background-color: #f0f0f0;" />
+
+                    <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-padding: 15;" text="Pagos de servicios basicos mediante un carrito de compras" wrapText="true">
+                        <VBox.margin>
+                            <Insets bottom="20.0" top="10.0" />
+                        </VBox.margin>
+                        <font>
+                            <Font size="20.0" />
+                        </font>
+                    </Label>
+
+                    <HBox alignment="CENTER">
+                        <VBox alignment="CENTER" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;">
+                            <ImageView fitHeight="500.0" fitWidth="500.0">
+                                <Image url="@../../assets/img/Ai Hoshino.jpg" />
+                                <VBox.margin>
+                                    <Insets bottom="25.0" left="30.0" right="30.0" top="30.0" />
+                                </VBox.margin>
+                            </ImageView>
+
+                            <Label style="-fx-text-fill: #aaaaaa;" text="Jostin Aucancela">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                </VBox.margin>
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </VBox>
+                        <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+
+                        <VBox alignment="CENTER" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;">
+                            <ImageView fitHeight="500.0" fitWidth="500.0">
+                                <Image url="@../../assets/img/Hornet.png" />
+                                <VBox.margin>
+                                    <Insets bottom="25.0" left="30.0" right="30.0" top="30.0" />
+                                </VBox.margin>
+                            </ImageView>
+
+                            <Label style="-fx-text-fill: #aaaaaa;" text="Maritza Quishpi">
+                                <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                </VBox.margin>
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Label>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -1,6 +1,6 @@
 package servicart.data.sql;
 
-import servicart.domain.models.entidades.Cliente;
+import servicart.models.entidades.Cliente;
 import servicart.data.interfaces.CrudDAO;
 
 import java.sql.Connection;

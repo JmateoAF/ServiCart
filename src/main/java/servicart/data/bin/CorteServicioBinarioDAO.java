@@ -1,8 +1,8 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.CorteServicio;
-import servicart.domain.models.enums.EstadoCorte;
+import servicart.models.entidades.CorteServicio;
+import servicart.models.enums.EstadoCorte;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio>
         implements CrudDAO<CorteServicio> {
 
     public CorteServicioBinarioDAO() {
-        super("corteServicio.bin");
+        super("bin/corteServicio.bin");
     }
 
     @Override
