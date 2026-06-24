@@ -5,7 +5,7 @@ import servicart.models.enums.EstadoFactura;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Factura implements Serializable {
+public class Factura implements Serializable,Identificable   {
     private int id;
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;

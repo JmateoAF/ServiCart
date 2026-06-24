@@ -1,6 +1,7 @@
 package servicart.data.bin;
 
 import servicart.data.interfaces.CrudDAO; // ubicación real según el árbol
+import servicart.models.entidades.Identificable;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -107,10 +108,21 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     @Override
     public void save(T entidad) {
         List<T> lista = (cache != null) ? cache : leerTodos();
+
+        // ── AUTOINCREMENTO para entidades con ID numérico ──
+        if (entidad instanceof Identificable) { //verifica si el objeto entidad implementa la interfaz Identificable
+            int maxId = lista.stream()
+                    .filter(e -> e instanceof Identificable)
+                    .mapToInt(e -> ((Identificable) e).getId())
+                    .max().orElse(0);
+            ((Identificable) entidad).setId(maxId + 1);
+        }
+
         String id = getId(entidad);
         if (lista.stream().anyMatch(e -> getId(e).equals(id))) {
             throw new RuntimeException("Ya existe un registro con ID " + id);
         }
+
         lista.add(entidad);
         guardarTodos(lista);
         cache = lista;

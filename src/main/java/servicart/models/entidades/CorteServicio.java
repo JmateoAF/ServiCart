@@ -5,7 +5,7 @@ import servicart.models.enums.EstadoCorte;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CorteServicio implements Serializable {
+public class CorteServicio implements Serializable,Identificable   {
     private int id;
     private final LocalDateTime fechaCorte;
     private final LocalDateTime fechaReactivacion;

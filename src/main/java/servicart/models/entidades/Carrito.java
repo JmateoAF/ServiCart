@@ -2,7 +2,7 @@ package servicart.models.entidades;
 
 import java.io.Serializable;
 
-public class Carrito implements Serializable {
+public class Carrito implements Serializable,Identificable   {
     private int id;
     private double montoAbono;
     private final Cliente cliente;

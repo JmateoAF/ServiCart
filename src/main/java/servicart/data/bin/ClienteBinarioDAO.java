@@ -8,17 +8,17 @@ import java.util.List;
 public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> implements CrudDAO<Cliente> {
 
     public ClienteBinarioDAO() {
-        super("bin/clientes.bin");               // archivo único para esta entidad
+        super("bin/clientes.bin");
     }
 
     @Override
-    protected String getId(Cliente entidad) {
-        return entidad.getCedula();          // identificador natural
+    protected String getId(Cliente cliente) {
+        return cliente.getCedula();          // identificador natural
     }
 
     @Override
-    protected boolean isActivo(Cliente entidad) {
-        return entidad.getActivo() == 1;     // borrado lógico: activo = 1
+    protected boolean isActivo(Cliente cliente) {
+        return cliente.getActivo() == 1;     // borrado lógico
     }
 
     /**
@@ -30,11 +30,11 @@ public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> implements Cru
         List<Cliente> lista = (cache != null) ? cache : leerTodos();
         for (Cliente c : lista) {
             if (getId(c).equals(cedula)) {
-                if (!isActivo(c)) {          // ya eliminado
+                if (!isActivo(c)) {
                     cache = lista;
                     return;
                 }
-                c.setActivo(0);             // marcado lógico
+                c.setActivo(0);
                 guardarTodos(lista);
                 cache = lista;
                 return;

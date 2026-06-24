@@ -5,7 +5,7 @@ import servicart.models.enums.ModalidadPago;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Abono implements Serializable {
+public class Abono implements Serializable,Identificable  {
     private int id;
     private double monto;
     private final LocalDateTime fechaPago;

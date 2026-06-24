@@ -6,7 +6,7 @@ import servicart.models.servicios.ServicioCatalogo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Contrato implements Serializable {
+public class Contrato implements Serializable,Identificable   {
     private int id;
     private final LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
