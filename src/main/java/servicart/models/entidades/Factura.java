@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Factura implements Serializable {
-    private final int id;
+    private int id;
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;
     private final LocalDateTime fechaCorte;
@@ -15,8 +15,7 @@ public class Factura implements Serializable {
     private final Contrato contrato;
 
 
-    public Factura(int id, LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, Contrato contrato) {
-        this.id = id;
+    public Factura( LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, Contrato contrato) {
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
         this.fechaCorte = fechaCorte;
@@ -26,6 +25,7 @@ public class Factura implements Serializable {
     }
 
     public int getId() { return id; }
+    public void setId(int id) {this.id = id;}
 
     public LocalDateTime getFechaEmision() { return fechaEmision; }
 

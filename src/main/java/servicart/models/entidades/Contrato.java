@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Contrato implements Serializable {
-    private final int id;
+    private int id;
     private final LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;
     private CausaTerminacion causaTerminacion;
@@ -15,8 +15,7 @@ public class Contrato implements Serializable {
     private final ServicioCatalogo servicio;
     private final Cliente cliente;
 
-    public Contrato(int id, LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaTerminacion, ServicioCatalogo servicio, Cliente cliente) {
-        this.id = id;
+    public Contrato(LocalDateTime fechaInicio, LocalDateTime fechaFin, LocalDateTime fechaTerminacion, ServicioCatalogo servicio, Cliente cliente) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.fechaTerminacion = fechaTerminacion;
@@ -26,6 +25,7 @@ public class Contrato implements Serializable {
     }
 
     public int getId() { return id; }
+    public void setId(int id) {this.id = id;}
 
     public LocalDateTime getFechaInicio() { return fechaInicio; }
 

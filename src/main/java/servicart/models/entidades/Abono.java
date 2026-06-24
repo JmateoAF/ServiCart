@@ -6,15 +6,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Abono implements Serializable {
-    private final int id;
+    private int id;
     private double monto;
     private final LocalDateTime fechaPago;
     private boolean pagoRealizado;
     private final Factura factura;
     private final ModalidadPago modalidadPago;
 
-    public Abono(int id, double monto, LocalDateTime fechaPago, boolean pagoRealizado, Factura factura, ModalidadPago modalidadPago) {
-        this.id = id;
+    public Abono(double monto, LocalDateTime fechaPago, boolean pagoRealizado, Factura factura, ModalidadPago modalidadPago) {
         this.monto = monto;
         this.fechaPago = fechaPago;
         this.pagoRealizado = pagoRealizado;
@@ -23,6 +22,7 @@ public class Abono implements Serializable {
     }
 
     public int getId() { return id; }
+    public void setId(int id) {this.id = id;}
 
     public double getMonto() { return monto; }
     public void setMonto(double monto) { this.monto = monto; }

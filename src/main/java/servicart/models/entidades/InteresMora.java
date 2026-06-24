@@ -4,15 +4,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class InteresMora implements Serializable {
-    private final int id;
+    private int id;
     private int diasRetraso;
     private double interesAcumulado;
     private final LocalDateTime fechaCalculo;
     private boolean aplicadoAFactura;
     private final Factura factura;
 
-    public InteresMora(int id, int diasRetraso, double interesAcumulado, LocalDateTime fechaCalculo, boolean aplicadoAFactura, Factura factura) {
-        this.id = id;
+    public InteresMora( int diasRetraso, double interesAcumulado, LocalDateTime fechaCalculo, boolean aplicadoAFactura, Factura factura) {
         this.diasRetraso = diasRetraso;
         this.interesAcumulado = interesAcumulado;
         this.fechaCalculo = fechaCalculo;
@@ -21,6 +20,7 @@ public class InteresMora implements Serializable {
     }
 
     public int getId() { return id; }
+    public void setId(int id) {this.id = id;}
 
     public int getDiasRetraso() { return diasRetraso; }
     public void setDiasRetraso(int diasRetraso) { this.diasRetraso = diasRetraso; }

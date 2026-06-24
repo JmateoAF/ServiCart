@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class CorteServicio implements Serializable {
-    private final int id;
+    private int id;
     private final LocalDateTime fechaCorte;
     private final LocalDateTime fechaReactivacion;
     private double costoReactivacionPagado;
@@ -14,8 +14,7 @@ public class CorteServicio implements Serializable {
     private final Contrato contrato;
     private final Factura factura;
 
-    public CorteServicio(int id, LocalDateTime fechaCorte, LocalDateTime fechaReactivacion, double costoReactivacionPagado, Contrato contrato, Factura factura) {
-        this.id = id;
+    public CorteServicio(LocalDateTime fechaCorte, LocalDateTime fechaReactivacion, double costoReactivacionPagado, Contrato contrato, Factura factura) {
         this.fechaCorte = fechaCorte;
         this.fechaReactivacion = fechaReactivacion;
         this.costoReactivacionPagado = costoReactivacionPagado;
@@ -25,6 +24,7 @@ public class CorteServicio implements Serializable {
     }
 
     public int getId() { return id; }
+    public void setId(int id) {this.id = id;}
 
     public LocalDateTime getFechaCorte() { return fechaCorte; }
 
