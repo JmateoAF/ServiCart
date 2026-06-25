@@ -80,3 +80,9 @@ CREATE TABLE IF NOT EXISTS Carrito (
     CONSTRAINT fkCarritoClientes FOREIGN KEY (idCliente) REFERENCES Clientes(cedula),
     CONSTRAINT fkCarritoAbono FOREIGN KEY (idAbono) REFERENCES Abono(id)
 );
+
+CREATE TABLE IF NOT EXISTS Administradores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario TEXT NOT NULL,
+    contrasenia TEXT NOT NULL
+);
