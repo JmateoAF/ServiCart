@@ -31,3 +31,6 @@ INSERT INTO CorteServicio (fechaCorte, fechaReactivacion, costoReactivacionPagad
 
 INSERT INTO Carrito (montoAbono, idCliente, idAbono) VALUES
     (35.00, '0102030405', 2);
+
+INSERT INTO Administradores (usuario, contrasenia) VALUES
+    ('admin', 'pass1');

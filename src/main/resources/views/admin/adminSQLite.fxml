@@ -3,11 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane prefWidth="1000" prefHeight="660"
-            style="-fx-background-color: #0f0f0f;"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml">
-
+<BorderPane prefWidth="1000" prefHeight="660" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
     <top>
         <HBox alignment="CENTER_LEFT"
               style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
@@ -16,7 +12,6 @@
         </HBox>
     </top>
 
-    <!-- Sidebar -->
     <left>
         <VBox prefWidth="150"
               style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
@@ -28,7 +23,7 @@
                     style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-font-size: 11; -fx-padding: 8 14 8 12; -fx-alignment: center-left; -fx-cursor: hand;">
                 <VBox.margin><Insets top="6"/></VBox.margin>
             </Button>
-            <Button text="👥 Usuarios" maxWidth="Infinity"
+            <Button text="Usuarios" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
             <Button text="⚙ Tarifas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;"/>
@@ -42,7 +37,6 @@
         </VBox>
     </left>
 
-    <!-- Main -->
     <center>
         <ScrollPane fitToWidth="true"
                     style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
@@ -80,12 +74,11 @@
                     <VBox HBox.hgrow="ALWAYS"
                           style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
                         <Label text="RECAUDADO" style="-fx-text-fill: #555555; -fx-font-size: 9;"/>
-                        <Label text="$4.2k" style="-fx-text-fill: #e8c96d; -fx-font-size: 22; -fx-font-family: 'Courier New'; -fx-font-weight: bold;"/>
+                        <Label text="4.2k" style="-fx-text-fill: #e8c96d; -fx-font-size: 22; -fx-font-family: 'Courier New'; -fx-font-weight: bold;"/>
                         <Label text="este mes" style="-fx-text-fill: #444444; -fx-font-size: 9;"/>
                     </VBox>
                 </HBox>
 
-                <!-- Tabla Usuarios -->
                 <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
                     <HBox alignment="CENTER_LEFT"
                           style="-fx-padding: 8 12 8 12; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
@@ -107,7 +100,6 @@
                     </TableView>
                 </VBox>
 
-                <!-- Tabla Tarifas -->
                 <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
                     <HBox alignment="CENTER_LEFT"
                           style="-fx-padding: 8 12 8 12; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
@@ -128,9 +120,7 @@
                         </columns>
                     </TableView>
                 </VBox>
-
             </VBox>
         </ScrollPane>
     </center>
-
 </BorderPane>
