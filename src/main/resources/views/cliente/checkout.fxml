@@ -8,7 +8,7 @@
             style="-fx-background-color: #0f0f0f;"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="servicart.ui.CheckoutController">
+            fx:controller="servicart.ui.controllers.CheckoutController">
 
     <top>
         <HBox alignment="CENTER_LEFT" spacing="12"

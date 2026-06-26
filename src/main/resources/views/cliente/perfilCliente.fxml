@@ -13,7 +13,7 @@
     Paleta: fondo #0f0f0f, superficie #161616, dorado #e8c96d, rojo #c0392b, verde #27ae60
 -->
 
-<BorderPane prefHeight="640" prefWidth="960" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.PerfilController">
+<BorderPane prefHeight="640" prefWidth="960" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.PerfilController">
 
     <!-- ═══════════════════════════════════════════════
          SIDEBAR IZQUIERDA

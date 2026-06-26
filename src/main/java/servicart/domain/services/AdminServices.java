@@ -1,9 +1,9 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.AdminDAO;
-import servicart.data.sql.AdminSQLiteDAO;
+import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.domain.interfaces.LoginAdmin;
-import servicart.models.entidades.Administrador;
+import servicart.domain.models.entidades.Administrador;
 
 import java.util.Optional;
 
