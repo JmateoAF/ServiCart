@@ -19,9 +19,7 @@ public class AdminSQLiteDAO implements AdminDAO<Administrador> {
             stmt.setString(2, contrasenia);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(new Administrador(rs.getString("usuario"), rs.getString("contrasenia")));
-                }
+                if (rs.next()) return Optional.of(new Administrador(rs.getString("usuario"), rs.getString("contrasenia")));
             }
         } catch (SQLException e) {
             throw new PersistenciaException("Error al validar credenciales de administrador", e);

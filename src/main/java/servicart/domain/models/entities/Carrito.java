@@ -1,5 +1,7 @@
 package servicart.domain.models.entities;
 
+import servicart.domain.interfaces.Identificable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;

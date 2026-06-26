@@ -40,6 +40,6 @@ public class CatalogoSeeder {
         ServicioCatalogo internet = new ServicioCatalogo(0, TipoServicio.INTERNET, TipoValorFactura.FIJO, 60.0, 0.04, Empresa.FIBRAMAX);
         internet.setTarifaFija(35.0); // $35.00 mensual fijo
 
-        for (ServicioCatalogo s : List.of(agua, luz, basura, internet)) { dao.save(s); }
+        for (ServicioCatalogo s : List.of(agua, luz, basura, internet)) dao.save(s);
     }
 }

@@ -1,10 +1,11 @@
 package servicart.domain.models.entities;
 
+import servicart.domain.interfaces.Identificable;
 import servicart.domain.models.enums.EstadoCorte;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CorteServicio implements Serializable,Identificable   {
+public class CorteServicio implements Serializable, Identificable {
     private int id;
     private final LocalDateTime fechaCorte;
     private LocalDateTime fechaReactivacion; //Null hasta que se reactive

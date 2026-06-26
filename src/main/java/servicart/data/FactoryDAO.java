@@ -62,7 +62,6 @@ public class FactoryDAO {
     }
 
     //Solo SQLite (credenciales de admin en BD, no en archivos)
-
     public static AdminDAO<Administrador> adminDAO() {
         return new AdminSQLiteDAO();
     }

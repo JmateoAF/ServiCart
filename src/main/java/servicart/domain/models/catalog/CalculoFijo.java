@@ -1,5 +1,7 @@
 package servicart.domain.models.catalog;
 
+import servicart.domain.interfaces.CalculoStrategy;
+
 import java.io.Serializable;
 
 public class CalculoFijo implements CalculoStrategy, Serializable {

@@ -55,7 +55,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         String sql = "SELECT cedula, nombre, email, celular FROM Clientes WHERE activo = 1";
 
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) clientes.add(mapear(rs));// un solo punto de mapeo
+            while (rs.next()) clientes.add(mapear(rs)); //Un solo punto de mapeo
         } catch (SQLException e) {
             throw new PersistenciaException("Error al listar los clientes", e);
         }
@@ -74,9 +74,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             stmt.setInt(4, c.getActivo());
             stmt.setString(5, c.getCedula());
 
-            if (stmt.executeUpdate() == 0) {
-                throw new EntidadNoEncontradaException(c.getCedula());
-            }
+            if (stmt.executeUpdate() == 0) throw new EntidadNoEncontradaException(c.getCedula());
         } catch (SQLException e) {
             throw new PersistenciaException("Error al actualizar el cliente: " + c.getCedula(), e);
         }
@@ -90,9 +88,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
 
-            if (stmt.executeUpdate() == 0) {
-                throw new EntidadNoEncontradaException(cedula);
-            }
+            if (stmt.executeUpdate() == 0) throw new EntidadNoEncontradaException(cedula);
         } catch (SQLException e) {
             throw new PersistenciaException("Error al dar de baja el cliente: " + cedula, e);
         }

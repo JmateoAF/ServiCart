@@ -1,5 +1,6 @@
 package servicart.domain.models.entities;
 
+import servicart.domain.interfaces.Identificable;
 import servicart.domain.models.enums.CausaTerminacion;
 import servicart.domain.models.catalog.ServicioCatalogo;
 import java.io.Serializable;

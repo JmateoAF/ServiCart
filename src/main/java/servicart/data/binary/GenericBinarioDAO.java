@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO; // ubicación real según el árbol
-import servicart.domain.models.entities.Identificable;
+import servicart.domain.interfaces.Identificable;
 
 import java.io.*;
 import java.util.ArrayList;

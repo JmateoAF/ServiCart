@@ -1,5 +1,6 @@
-package servicart.domain.models.catalog;
+package servicart.domain.interfaces;
 
+import servicart.domain.models.catalog.ServicioCatalogo;
 import java.io.Serializable;
 
 /*

@@ -1,4 +1,4 @@
-package servicart.domain.models.entities;
+package servicart.domain.interfaces;
 
 /* Contrato para entidades con ID numérico autoincremental.
 GenericBinarioDAO lo usa para asignar el ID al guardar sin
