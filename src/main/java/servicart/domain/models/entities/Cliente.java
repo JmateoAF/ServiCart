@@ -1,6 +1,12 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
 import java.io.Serializable;
+
+/* Eliminado solicitarTerminacionContrato()
+Terminar un contrato es un caso de uso del ContratoService, no
+una responsabilidad del objeto Cliente
+activo como int (0/1) se mantiene para compatibilidad con SQLite.
+El DAO hace la conversión; la entidad no sabe de la BD */
 
 public class Cliente implements Serializable {
     private final String cedula;
@@ -14,12 +20,10 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
         this.email = email;
         this.celular = celular;
-        setActivo(1);
+        this.activo = 1;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
+    public String getCedula() { return cedula; }
 
     public String getNombre() {
         return nombre;
@@ -47,7 +51,5 @@ public class Cliente implements Serializable {
         this.activo = activo;
     }
 
-    public void solicitarTerminacionContrato(Contrato contrato) {
-        // Implementación vacía o delegar en servicio
-    }
+    public boolean estaActivo() { return this.activo == 1; }
 }

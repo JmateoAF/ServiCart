@@ -1,7 +1,7 @@
 package servicart.data.sqlite;
 
 import servicart.data.interfaces.AdminDAO;
-import servicart.domain.models.entidades.Administrador;
+import servicart.domain.models.entities.Administrador;
 import servicart.exeptions.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -5,7 +5,7 @@ import servicart.data.interfaces.AdminDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.data.sqlite.ClienteSQLiteDAO;
-import servicart.domain.models.entidades.*;
+import servicart.domain.models.entities.*;
 import servicart.domain.models.catalog.ServicioCatalogo;
 
 /* Patrón Simple Factory para la capa de datos.
@@ -31,7 +31,7 @@ public class FactoryDAO {
         };
     }
 
-    // ── Entidades solo con implementación binaria (SQLite pendiente) ─────
+    //Entidades solo con implementación binaria (SQLite pendiente)
 
     public static CrudDAO<Factura> facturaDAO() {
         return new FacturaBinarioDAO();
@@ -61,7 +61,7 @@ public class FactoryDAO {
         return new ServicioCatalogoBinarioDAO();
     }
 
-    // ── Solo SQLite (credenciales de admin en BD, no en archivos) ───────
+    //Solo SQLite (credenciales de admin en BD, no en archivos)
 
     public static AdminDAO<Administrador> adminDAO() {
         return new AdminSQLiteDAO();

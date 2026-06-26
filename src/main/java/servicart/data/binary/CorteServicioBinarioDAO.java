@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.CorteServicio;
+import servicart.domain.models.entities.CorteServicio;
 import servicart.domain.models.enums.EstadoCorte;
 
 import java.util.List;

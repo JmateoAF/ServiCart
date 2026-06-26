@@ -1,4 +1,4 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +11,7 @@ public class InteresMora implements Serializable,Identificable   {
     private boolean aplicadoAFactura;
     private final Factura factura;
 
-    public InteresMora( int diasRetraso, double interesAcumulado, LocalDateTime fechaCalculo, boolean aplicadoAFactura, Factura factura) {
+    public InteresMora(int diasRetraso, double interesAcumulado, LocalDateTime fechaCalculo, boolean aplicadoAFactura, Factura factura) {
         this.diasRetraso = diasRetraso;
         this.interesAcumulado = interesAcumulado;
         this.fechaCalculo = fechaCalculo;

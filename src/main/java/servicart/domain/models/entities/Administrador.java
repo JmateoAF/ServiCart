@@ -1,6 +1,8 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
-public class Administrador {
+import java.io.Serializable;
+
+public class Administrador implements Serializable {
     private String usuario;
     private String contrasenia;
 

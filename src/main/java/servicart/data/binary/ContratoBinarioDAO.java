@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Contrato;
+import servicart.domain.models.entities.Contrato;
 import servicart.domain.models.enums.CausaTerminacion;
 
 import java.time.LocalDateTime;

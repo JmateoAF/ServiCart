@@ -1,11 +1,10 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
 import servicart.domain.models.enums.EstadoFactura;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Factura implements Serializable,Identificable   {
+public class Factura implements Serializable, Identificable {
     private int id;
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;
@@ -21,7 +20,7 @@ public class Factura implements Serializable,Identificable   {
         this.fechaCorte = fechaCorte;
         this.valorTotal = valorTotal;
         this.contrato = contrato;
-        setEstado(EstadoFactura.PENDIENTE);
+        this.estado = EstadoFactura.PENDIENTE;
     }
 
     public int getId() { return id; }
@@ -40,4 +39,10 @@ public class Factura implements Serializable,Identificable   {
     public void setEstado(EstadoFactura estado) { this.estado = estado; }
 
     public Contrato getContrato() { return contrato; }
+
+    public boolean estaVencida() { return estado != EstadoFactura.PAGADA && LocalDateTime.now().isAfter(fechaVencimiento); }
+
+    public boolean superaFechaCorte() { return estado != EstadoFactura.PAGADA && LocalDateTime.now().isAfter(fechaCorte); }
+
+    public boolean estaSaldada() { return estado == EstadoFactura.PAGADA; }
 }

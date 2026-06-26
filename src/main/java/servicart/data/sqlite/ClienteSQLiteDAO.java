@@ -1,6 +1,6 @@
 package servicart.data.sqlite;
 
-import servicart.domain.models.entidades.Cliente;
+import servicart.domain.models.entities.Cliente;
 import servicart.data.interfaces.CrudDAO;
 import servicart.exeptions.EntidadNoEncontradaException;
 import servicart.exeptions.PersistenciaException;

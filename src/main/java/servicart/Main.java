@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import servicart.domain.models.entidades.Cliente;
+import servicart.domain.models.entities.Cliente;
 import servicart.data.sqlite.ClienteSQLiteDAO;
 import servicart.data.sqlite.ConexionSQLite;
 import servicart.data.interfaces.CrudDAO;

@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Factura;
+import servicart.domain.models.entities.Factura;
 import servicart.domain.models.enums.EstadoFactura;
 
 import java.util.List;

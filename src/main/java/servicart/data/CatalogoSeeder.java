@@ -7,19 +7,16 @@ import servicart.domain.models.enums.TipoValorFactura;
 import servicart.domain.models.catalog.ServicioCatalogo;
 import java.util.List;
 
-/**
- * Siembra los 4 servicios del catálogo si el archivo/tabla está vacío.
- * Se llama UNA SOLA VEZ desde el Main al arrancar la aplicación.
- *
- * Por qué existe esta clase y no está en ServicioCatalogoBinarioDAO:
- * Un DAO solo sabe guardar y recuperar datos. Decidir QUÉ datos existen
- * al inicio es una responsabilidad de arranque (startup concern),
- * no de persistencia.
- *
- * Corrección de spec respecto a la versión anterior:
- *   AGUA y LUZ  → VARIABLE (dependen del consumo medido)
- *   BASURA e INTERNET → FIJO  (tarifa plana mensual)
- */
+/* Siembra los 4 servicios del catálogo si el archivo/tabla está vacío
+Se llama UNA SOLA VEZ desde el Main al arrancar la aplicación
+Por qué existe esta clase y no está en ServicioCatalogoBinarioDAO:
+Un DAO solo sabe guardar y recuperar datos. Decidir QUÉ datos existen
+al inicio es una responsabilidad de arranque (startup concern),
+no de persistencia
+Corrección de spec respecto a la versión anterior:
+AGUA y LU -> VARIABLE (dependen del consumo medido)
+BASURA e INTERNET -> FIJO(tarifa plana mensual) */
+
 public class CatalogoSeeder {
     private final CrudDAO<ServicioCatalogo> dao;
 

@@ -3,7 +3,7 @@ package servicart.domain.services;
 import servicart.data.interfaces.AdminDAO;
 import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.domain.interfaces.LoginAdmin;
-import servicart.domain.models.entidades.Administrador;
+import servicart.domain.models.entities.Administrador;
 
 import java.util.Optional;
 

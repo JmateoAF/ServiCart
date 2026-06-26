@@ -1,24 +1,23 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
 import servicart.domain.models.enums.EstadoCorte;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class CorteServicio implements Serializable,Identificable   {
     private int id;
     private final LocalDateTime fechaCorte;
-    private final LocalDateTime fechaReactivacion;
+    private LocalDateTime fechaReactivacion; //Null hasta que se reactive
     private double costoReactivacionPagado;
     private EstadoCorte estadoCorte;
     private final Contrato contrato;
     private final Factura factura;
 
-    public CorteServicio(LocalDateTime fechaCorte, LocalDateTime fechaReactivacion, double costoReactivacionPagado, Contrato contrato, Factura factura) {
+    public CorteServicio(LocalDateTime fechaCorte, Contrato contrato, Factura factura) {
         this.fechaCorte = fechaCorte;
-        this.fechaReactivacion = fechaReactivacion;
-        this.costoReactivacionPagado = costoReactivacionPagado;
-        setEstadoCorte(EstadoCorte.ACTIVO);
+        this.fechaReactivacion = null;
+        this.costoReactivacionPagado = 0.0;
+        this.estadoCorte = EstadoCorte.CORTADO;
         this.contrato = contrato;
         this.factura = factura;
     }
@@ -29,6 +28,7 @@ public class CorteServicio implements Serializable,Identificable   {
     public LocalDateTime getFechaCorte() { return fechaCorte; }
 
     public LocalDateTime getFechaReactivacion() { return fechaReactivacion; }
+    public void setFechaReactivacion(LocalDateTime fechaReactivacion) { this.fechaReactivacion = fechaReactivacion; }
 
     public double getCostoReactivacionPagado() { return costoReactivacionPagado; }
     public void setCostoReactivacionPagado(double costoReactivacionPagado) { this.costoReactivacionPagado = costoReactivacionPagado; }
@@ -39,4 +39,6 @@ public class CorteServicio implements Serializable,Identificable   {
     public Contrato getContrato() { return contrato; }
 
     public Factura getFactura() { return factura; }
+
+    public boolean estadoCortado() { return estadoCorte == EstadoCorte.CORTADO; }
 }

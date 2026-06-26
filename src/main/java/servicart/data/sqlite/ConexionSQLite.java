@@ -46,7 +46,7 @@ public class ConexionSQLite {
                 }
             }
         } catch (IOException | SQLException e) {
-            throw new PersistenciaException("Error al ejecutar el script: " + rutaArchivo, e);
+            System.err.println("Error al ejecutar el script");
         }
     }
 }

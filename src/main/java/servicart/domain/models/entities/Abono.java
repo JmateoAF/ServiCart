@@ -1,7 +1,6 @@
-package servicart.domain.models.entidades;
+package servicart.domain.models.entities;
 
 import servicart.domain.models.enums.ModalidadPago;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

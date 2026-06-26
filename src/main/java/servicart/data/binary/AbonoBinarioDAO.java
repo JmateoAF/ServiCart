@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.Abono;
+import servicart.domain.models.entities.Abono;
 
 public class AbonoBinarioDAO extends GenericBinarioDAO<Abono> implements CrudDAO<Abono> {
     public AbonoBinarioDAO() {

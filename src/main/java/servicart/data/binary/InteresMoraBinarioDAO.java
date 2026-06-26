@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entidades.InteresMora;
+import servicart.domain.models.entities.InteresMora;
 
 public class InteresMoraBinarioDAO  extends GenericBinarioDAO<InteresMora> implements CrudDAO<InteresMora> {
     public InteresMoraBinarioDAO() {
