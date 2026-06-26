@@ -1,7 +1,7 @@
 package servicart.domain.models.entidades;
 
 import servicart.domain.models.enums.CausaTerminacion;
-import servicart.domain.models.servicios.ServicioCatalogo;
+import servicart.domain.models.catalog.ServicioCatalogo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

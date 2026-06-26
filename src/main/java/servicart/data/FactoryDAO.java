@@ -6,7 +6,7 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.data.sqlite.ClienteSQLiteDAO;
 import servicart.domain.models.entidades.*;
-import servicart.domain.models.servicios.ServicioCatalogo;
+import servicart.domain.models.catalog.ServicioCatalogo;
 
 /* Patrón Simple Factory para la capa de datos.
  Centraliza la decisión de qué implementación (binaria o SQLite)

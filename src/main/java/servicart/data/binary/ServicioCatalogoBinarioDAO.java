@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.domain.models.servicios.ServicioCatalogo;
+import servicart.domain.models.catalog.ServicioCatalogo;
 import servicart.domain.models.enums.Empresa;
 import servicart.domain.models.enums.TipoServicio;
 import servicart.domain.models.enums.TipoValorFactura;
