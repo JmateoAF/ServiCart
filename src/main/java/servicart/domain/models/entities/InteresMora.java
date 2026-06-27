@@ -4,6 +4,8 @@ import servicart.domain.interfaces.Identificable;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/* Registro del interés por mora aplicado a una factura vencida.
+Los intereses son progresivos según los días de retraso */
 public class InteresMora implements Serializable, Identificable {
     private int id;
     private int diasRetraso;

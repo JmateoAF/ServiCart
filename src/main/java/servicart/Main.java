@@ -15,6 +15,8 @@ import servicart.ui.ManejadorTema;
 import servicart.ui.Navegador;
 import java.util.Objects;
 
+//TRABAJO REALIZADO POR: JOSTIN AUCANCELA Y MARITZA QUISHPI
+
 /* Punto de arranque
 Inicializar la base de datos SQLite
 Sembrar datos del catálogo si están vacíos
@@ -36,7 +38,7 @@ void main() {
     facturacionService.agregarObservador(new NotificadorPantalla(msg -> System.out.println("[PANTALLA] " + msg)));
 
     //Lanzar JavaFX
-    Platform.startup(() -> {
+/*    Platform.startup(() -> {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/cliente/loginCliente.fxml")));
             Stage stage = new Stage();
@@ -54,6 +56,29 @@ void main() {
             stage.show();
         } catch (Exception e) {
             System.err.println("Error al iniciar la UI: " + e.getMessage());
+        }
+    });*/
+
+    Platform.startup(() -> {
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/cliente/loginCliente.fxml")));
+
+            Stage stage = new Stage();
+            stage.setTitle("ServiCart");
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/icon/marcoDorado.png"))));
+
+            stage.setMinWidth(700);
+            stage.setMinHeight(500);
+
+            stage.sizeToScene();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     });
 }

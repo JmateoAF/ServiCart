@@ -9,7 +9,7 @@ import java.util.Optional;
 public class AdminServices implements LoginAdmin{
     private final AdminDAO<Administrador> adminDAO;
 
-    public AdminServices(AdminDAO<Administrador> adminDAO) { this.adminDAO = new AdminSQLiteDAO(); }
+    public AdminServices(AdminDAO<Administrador> adminDAO) { this.adminDAO = adminDAO; }
 
     @Override
     public boolean validarLogin(String usuario, String contrasena) {

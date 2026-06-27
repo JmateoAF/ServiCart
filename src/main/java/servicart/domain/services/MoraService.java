@@ -16,10 +16,12 @@ Fórmula: interés = valorTotal × tasaInteresDiario × diasRetraso */
 public class MoraService {
     private final CrudDAO<InteresMora> interesMoraDAO;
     private final CrudDAO<Factura> facturaDAO;
+    private final FacturacionService facturaService;
 
-    public MoraService(CrudDAO<InteresMora> interesMoraDAO, CrudDAO<Factura> facturaDAO) {
+    public MoraService(CrudDAO<InteresMora> interesMoraDAO, CrudDAO<Factura> facturaDAO, FacturacionService facturaService) {
         this.interesMoraDAO = interesMoraDAO;
         this.facturaDAO = facturaDAO;
+        this.facturaService = facturaService;
     }
 
     public InteresMora aplicarMora(Factura factura) {
@@ -38,7 +40,7 @@ public class MoraService {
 
         //Aplicar la mora al total de la factura
         factura.setValorTotal(factura.getValorTotal() + interes);
-        facturacionService.marcarComoVencida(factura);
+        facturaService.marcarComoVencida(factura);
         mora.setAplicadoAFactura(true);
 
         interesMoraDAO.update(mora);
@@ -49,8 +51,4 @@ public class MoraService {
 
     // Referencia al servicio de facturación para cambiar el estado
     private FacturacionService facturacionService;
-
-    public void setFacturacionService(FacturacionService fs) {
-        this.facturacionService = fs;
-    }
 }

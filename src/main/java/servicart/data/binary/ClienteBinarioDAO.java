@@ -37,6 +37,6 @@ public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> {
             }
         }
 
-        throw new EntidadNoEncontradaException(cedula);
+        throw new RuntimeException(cedula);
     }
 }

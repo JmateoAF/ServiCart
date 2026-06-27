@@ -21,7 +21,7 @@
                <Font size="15.0" />
             </font></Label>
             <Region HBox.hgrow="ALWAYS" />
-            <Button onAction="#irAMain" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;" text="Inicio" />
+            <Button onAction="#onVolver" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;" text="Inicio" />
             <Button style="-fx-background-color: #1f1f1f; -fx-text-fill: #e8c96d; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 12; -fx-padding: 5 14 5 14; -fx-cursor: hand;" text="Sobre Nosotros" />
         </HBox>
     </top>

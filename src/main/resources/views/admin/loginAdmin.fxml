@@ -60,7 +60,7 @@
                </font>
                 </PasswordField>
 
-                <Button onAction="#iniciarSesion" maxWidth="Infinity" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 12; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 9 0 9 0; -fx-cursor: hand;" text="INGRESAR">
+                <Button onAction="#onIniciarSesion" maxWidth="Infinity" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 12; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 9 0 9 0; -fx-cursor: hand;" text="INGRESAR">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin></Button>

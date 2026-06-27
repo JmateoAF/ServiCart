@@ -1,6 +1,7 @@
 package servicart.domain.models.catalog;
 
 import servicart.domain.interfaces.CalculoStrategy;
+import servicart.domain.interfaces.Identificable;
 import servicart.domain.models.enums.Empresa;
 import servicart.domain.models.enums.TipoServicio;
 import servicart.domain.models.enums.TipoValorFactura;
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * en una estrategia (fijo/variable) según el tipo de valor.
  */
 
-public class ServicioCatalogo implements Serializable {
+public class ServicioCatalogo implements Serializable, Identificable {
     private int id;
     private double tarifaFija;
     private double tarifaPorUnidad;

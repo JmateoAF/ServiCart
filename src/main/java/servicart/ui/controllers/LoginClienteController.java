@@ -17,7 +17,7 @@ import servicart.ui.Sesion;
 import java.util.Optional;
 
 public class LoginClienteController {
-    public Button btnBuscar;
+    @FXML private Button btnBuscar;
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
     @FXML private Label lblError;
