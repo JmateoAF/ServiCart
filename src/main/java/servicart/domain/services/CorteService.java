@@ -22,7 +22,7 @@ public class CorteService {
     }
 
     public CorteServicio cortarServicio(Contrato contrato, Factura factura) {
-        if (!factura.superaFechaCorte()) throw new ServiCartException("La factura aún no superó la fecha de corte", e);
+        if (!factura.superaFechaCorte()) throw new ServiCartException("La factura aún no superó la fecha de corte");
 
         CorteServicio corte = new CorteServicio(LocalDateTime.now(), contrato, factura);
         corteDAO.save(corte);
@@ -31,7 +31,7 @@ public class CorteService {
     }
 
     public void reactivarServicio(CorteServicio corte, double costoReactivacionPagado) {
-        if (!corte.estadoCortado()) throw new ServiCartException("El servicio no está en estado cortado", e);
+        if (!corte.estadoCortado()) throw new ServiCartException("El servicio no está en estado cortado");
 
         corte.setFechaReactivacion(LocalDateTime.now());
         corte.setCostoReactivacionPagado(costoReactivacionPagado);

@@ -23,9 +23,9 @@ public class MoraService {
     }
 
     public InteresMora aplicarMora(Factura factura) {
-        if (factura == null) throw new ServiCartException("La factura no puede ser nula", e);
-        if (factura.getEstado() == EstadoFactura.PAGADA) throw new ServiCartException("No se puede aplicar mora a una factura ya pagada", e);
-        if (!factura.estaVencida()) throw new ServiCartException("La factura aún no está vencida", e);
+        if (factura == null) throw new ServiCartException("La factura no puede ser nula");
+        if (factura.getEstado() == EstadoFactura.PAGADA) throw new ServiCartException("No se puede aplicar mora a una factura ya pagada");
+        if (!factura.estaVencida()) throw new ServiCartException("La factura aún no está vencida");
 
         LocalDateTime ahora  = LocalDateTime.now();
         long dias = ChronoUnit.DAYS.between(factura.getFechaVencimiento(), ahora);

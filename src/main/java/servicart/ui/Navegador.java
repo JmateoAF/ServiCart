@@ -21,7 +21,7 @@ public class Navegador {
             Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource(rutaFXML)));
             stage.getScene().setRoot(root);
         } catch (IOException e) {
-            throw new ServiCartException("No se pudo cargar la vista: " + rutaFXML, e);
+            throw new ServiCartException("No se pudo cargar la vista: " + rutaFXML);
         }
     }
 
@@ -36,7 +36,7 @@ public class Navegador {
             stage.getScene().setRoot(root);
             return loader.getController();
         } catch (IOException e) {
-            throw new ServiCartException("No se pudo cargar la vista: " + rutaFXML, e);
+            throw new ServiCartException("No se pudo cargar la vista: " + rutaFXML);
         }
     }
 }

@@ -11,9 +11,7 @@ import servicart.domain.models.entities.NotificadorEmail;
 import servicart.domain.models.entities.NotificadorSMS;
 import servicart.domain.models.entities.NotificadorPantalla;
 import servicart.domain.services.FacturacionService;
-import servicart.exceptions.ServiCartException;
 import servicart.ui.Navegador;
-
 import java.util.Objects;
 
 /* Punto de arranque

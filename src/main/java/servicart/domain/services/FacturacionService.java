@@ -23,8 +23,8 @@ public class FacturacionService extends SujetoNotificable {
     }
 
     public Factura emitirFactura(Contrato contrato, double consumo) {
-        if (contrato == null) throw new ServiCartException("El contrato no puede ser nulo", e);
-        if (!contrato.estaActivo()) throw new ServiCartException("No se puede facturar un contrato terminado", e);
+        if (contrato == null) throw new ServiCartException("El contrato no puede ser nulo");
+        if (!contrato.estaActivo()) throw new ServiCartException("No se puede facturar un contrato terminado");
 
         double monto = contrato.getServicio().calcularMonto(consumo);
         LocalDateTime ahora = LocalDateTime.now();
