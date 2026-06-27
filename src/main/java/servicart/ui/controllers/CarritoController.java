@@ -52,7 +52,7 @@ public class CarritoController {
         HBox fila = new HBox(10);
         fila.setPadding(new Insets(6));
 
-        String descripcion = abono.getFactura().getContrato().getServicio().getEmpresa().name() + " – " + abono.getFactura().getContrato().getServicio().getTipo().name();
+        String descripcion = abono.getDescripcionServicio();
 
         Label lblDesc  = new Label(descripcion);
         Label lblMonto = new Label("$" + String.format("%.2f", abono.getMonto()));

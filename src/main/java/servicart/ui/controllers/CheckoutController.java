@@ -12,6 +12,7 @@ import servicart.domain.models.enums.ModalidadPago;
 import servicart.domain.services.CheckoutService;
 import servicart.domain.services.FacturacionService;
 import servicart.exceptions.ServiCartException;
+import servicart.ui.AppContext;
 import servicart.ui.Navegador;
 import servicart.ui.Sesion;
 
@@ -24,7 +25,7 @@ public class CheckoutController {
 
     @FXML
     public void initialize() {
-        checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), new FacturacionService(FactoryDAO.facturaDAO()));
+        checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), AppContext.getFacturacionService());
         cmbMetodoPago.getItems().setAll("Tarjeta de crédito", "Tarjeta de débito", "PayPal", "Transferencia bancaria", "Débito automático");
         cmbMetodoPago.setValue("Tarjeta de crédito");
         cargarResumen();

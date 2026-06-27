@@ -7,10 +7,7 @@ import javafx.stage.Stage;
 import servicart.data.CatalogoSeeder;
 import servicart.data.FactoryDAO;
 import servicart.data.sqlite.ConexionSQLite;
-import servicart.domain.models.entities.NotificadorEmail;
-import servicart.domain.models.entities.NotificadorSMS;
-import servicart.domain.models.entities.NotificadorPantalla;
-import servicart.domain.services.FacturacionService;
+import servicart.ui.AppContext;
 import servicart.ui.ManejadorTema;
 import servicart.ui.Navegador;
 import java.util.Objects;
@@ -32,53 +29,28 @@ void main() {
     new CatalogoSeeder(FactoryDAO.servicioCatalogoDAO()).sembrar();
 
     //Configurar Observer: al emitir facturas se notifica por email + SMS
-    FacturacionService facturacionService = new FacturacionService(FactoryDAO.facturaDAO());
-    facturacionService.agregarObservador(new NotificadorEmail());
-    facturacionService.agregarObservador(new NotificadorSMS());
-    facturacionService.agregarObservador(new NotificadorPantalla(msg -> System.out.println("[PANTALLA] " + msg)));
+    AppContext.inicializar();
 
     //Lanzar JavaFX
-/*    Platform.startup(() -> {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/cliente/loginCliente.fxml")));
-            Stage stage = new Stage();
-            stage.setTitle("ServiCart");
-            stage.setScene(new Scene(root));
-            ManejadorTema.inicializar(stage.getScene());
-            Navegador.inicializar(stage);
-            stage.setMinWidth(700);
-            stage.setMinHeight(500);
-            stage.setMaximized(true);
-            stage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("assets/icon/marcoDorado.png"))));
-
-            // Inicializar el Navegador con el Stage principal
-            Navegador.inicializar(stage);
-            stage.show();
-        } catch (Exception e) {
-            System.err.println("Error al iniciar la UI: " + e.getMessage());
-        }
-    });*/
-
     Platform.startup(() -> {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/cliente/loginCliente.fxml")));
 
             Stage stage = new Stage();
             stage.setTitle("ServiCart");
-
             Scene scene = new Scene(root);
             stage.setScene(scene);
 
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("assets/icon/marcoDorado.png"))));
+            Navegador.inicializar(stage);
+            ManejadorTema.inicializar(scene);
 
+            stage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("assets/icon/marcoDorado.png"), "Ícono no encontrado")));
             stage.setMinWidth(700);
             stage.setMinHeight(500);
-
-            stage.sizeToScene();
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error al iniciar la UI: " + e.getMessage());
         }
     });
 }

@@ -15,7 +15,7 @@ Si el corte se prolonga demasiado -> el ContratoService
 puede terminar el contrato por causa EMPRESA */
 
 public class CorteService {
-    private final CrudDAO<CorteServicio> corteDAO;
+    public final CrudDAO<CorteServicio> corteDAO;
 
     public CorteService(CrudDAO<CorteServicio> corteDAO) {
         this.corteDAO = corteDAO;
@@ -23,6 +23,9 @@ public class CorteService {
 
     public CorteServicio cortarServicio(Contrato contrato, Factura factura) {
         if (!factura.superaFechaCorte()) throw new ServiCartException("La factura aún no superó la fecha de corte");
+
+        //Verificar que no haya ya un corte activo para este contrato
+        if (tieneCortePendiente(contrato.getId())) throw new ServiCartException("El servicio ya está cortado para este contrato");
 
         CorteServicio corte = new CorteServicio(LocalDateTime.now(), contrato, factura);
         corteDAO.save(corte);

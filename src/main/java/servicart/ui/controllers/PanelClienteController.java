@@ -11,20 +11,20 @@ import servicart.domain.models.enums.EstadoFactura;
 import servicart.domain.models.enums.ModalidadPago;
 import servicart.domain.models.catalog.ServicioCatalogo;
 import servicart.domain.services.ContratoService;
+import servicart.domain.services.CorteService;
 import servicart.domain.services.FacturacionService;
 import servicart.dtos.ClienteDTO;
 import servicart.dtos.FacturaDTO;
 import servicart.dtos.FacturaMapper;
+import servicart.ui.AppContext;
 import servicart.ui.Navegador;
 import servicart.ui.Sesion;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class PanelClienteController {
-    @FXML
-    private VBox contenedorServicios;
-    @FXML
-    private Label lblMensaje;
+    @FXML private VBox contenedorServicios;
+    @FXML private Label lblMensaje;
 
     private ContratoService contratoService;
     private FacturacionService facturacionService;
@@ -32,7 +32,7 @@ public class PanelClienteController {
     @FXML
     public void initialize() {
         contratoService = new ContratoService(FactoryDAO.contratoDAO());
-        facturacionService = new FacturacionService(FactoryDAO.facturaDAO());
+        facturacionService = AppContext.getFacturacionService();
         cargarTarjetas();
     }
 
@@ -151,8 +151,14 @@ public class PanelClienteController {
     }
 
     private void onReactivar(Contrato contrato, double costoReactivacion) {
-        mostrarMensaje("Reactivación solicitada, costo: $" + costoReactivacion);
-        cargarTarjetas();
+        //Buscar el corte activo para este contrato
+        CorteService corteService = new CorteService(FactoryDAO.corteServicioDAO());
+
+        corteService.corteDAO.findAll().stream().filter(c -> c.getContrato().getId() == contrato.getId() && c.estadoCortado()).findFirst()
+                .ifPresentOrElse(corte -> {
+                    corteService.reactivarServicio(corte, costoReactivacion);
+                    mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
+                    cargarTarjetas(); }, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
     }
 
     @FXML

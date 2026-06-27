@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class Abono implements Serializable, Identificable {
     private int id;
-    private double monto;
+    private final double monto;
     private final LocalDateTime fechaPago;
     private boolean pagoRealizado;
     private final Factura factura;
@@ -25,7 +25,6 @@ public class Abono implements Serializable, Identificable {
     public void setId(int id) {this.id = id;}
 
     public double getMonto() { return monto; }
-    public void setMonto(double monto) { this.monto = monto; }
 
     public LocalDateTime getFechaPago() { return fechaPago; }
 
@@ -35,4 +34,6 @@ public class Abono implements Serializable, Identificable {
     public Factura getFactura() { return factura; }
 
     public ModalidadPago getModalidadPago() { return modalidadPago; }
+
+    public String getDescripcionServicio() { return factura.getContrato().getServicio().getEmpresa().name() + " – " + factura.getContrato().getServicio().getTipo().name(); }
 }

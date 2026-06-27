@@ -45,7 +45,7 @@ public class ClienteServices {
         if (c == null) throw new ServiCartException("El cliente no puede ser nulo");
         if (c.getCedula() == null || c.getCedula().isBlank()) throw new ServiCartException("La cédula es obligatoria");
         if (c.getNombre() == null || c.getNombre().isBlank()) throw new ServiCartException("El nombre es obligatorio");
-        if (c.getEmail()  == null || c.getEmail().isBlank()) throw new ServiCartException("El email es obligatorio");
-        if (c.getCelular()== null || c.getCelular().isBlank()) throw new ServiCartException("El celular es obligatorio");
+        if (c.getEmail() == null || !c.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) throw new ServiCartException("El email no tiene un formato válido");
+        if (c.getCelular() == null || !c.getCelular().matches("\\d{10}")) throw new ServiCartException("El celular debe tener 10 dígitos");
     }
 }

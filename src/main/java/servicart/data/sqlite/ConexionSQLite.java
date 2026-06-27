@@ -45,8 +45,10 @@ public class ConexionSQLite {
                     sql.setLength(0);
                 }
             }
-        } catch (IOException | SQLException e) {
-            System.err.println("Error al ejecutar el script");
+        } catch (IOException e) {
+            throw new RuntimeException("No se encontró el script SQL: " + rutaArchivo, e);
+        } catch (SQLException e) {
+            throw new PersistenciaException("Error al ejecutar el script SQL: " + rutaArchivo, e);
         }
     }
 }

@@ -1,6 +1,8 @@
-package servicart.domain.models.entities;
+package servicart.domain.services.notifiers;
 
 import servicart.domain.interfaces.Observador;
+import servicart.domain.models.entities.Factura;
+
 import java.util.function.Consumer;
 
 /* Canal PANTALLA — puente al Controller sin acoplar el dominio a JavaFX
