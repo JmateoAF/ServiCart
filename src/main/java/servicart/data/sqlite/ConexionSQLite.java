@@ -1,6 +1,6 @@
 package servicart.data.sqlite;
 
-import servicart.exeptions.PersistenciaException;
+import servicart.exceptions.PersistenciaException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

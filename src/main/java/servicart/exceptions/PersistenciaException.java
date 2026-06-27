@@ -1,4 +1,4 @@
-package servicart.exeptions;
+package servicart.exceptions;
 
 import java.sql.SQLException;
 

@@ -2,8 +2,8 @@ package servicart.data.sqlite;
 
 import servicart.domain.models.entities.Cliente;
 import servicart.data.interfaces.CrudDAO;
-import servicart.exeptions.EntidadNoEncontradaException;
-import servicart.exeptions.PersistenciaException;
+import servicart.exceptions.EntidadNoEncontradaException;
+import servicart.exceptions.PersistenciaException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

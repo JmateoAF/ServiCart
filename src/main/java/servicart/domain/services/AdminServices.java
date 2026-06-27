@@ -4,7 +4,6 @@ import servicart.data.interfaces.AdminDAO;
 import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.domain.interfaces.LoginAdmin;
 import servicart.domain.models.entities.Administrador;
-
 import java.util.Optional;
 
 public class AdminServices implements LoginAdmin{
@@ -13,15 +12,10 @@ public class AdminServices implements LoginAdmin{
     public AdminServices() { this.adminDAO = new AdminSQLiteDAO(); }
 
     @Override
-    public boolean validarLogin(String nombre, String contrasena) {
-        if(nombre == null || nombre.isEmpty() || contrasena == null || contrasena.isEmpty()) {
-            return false;
-        }
+    public boolean validarLogin(String usuario, String contrasena) {
+        if(usuario == null || usuario.isBlank()) return false;
+        if(contrasena == null || contrasena.isBlank()) return false;
 
-        // Llamamos a la base de datos
-        Optional<Administrador> admin = adminDAO.credenciales(nombre, contrasena);
-
-        // Si me devolvió un objeto, el admin existe y la contraseña es correcta
-        return admin.isPresent();
+        return adminDAO.credenciales(usuario, contrasena).isPresent();
     }
 }

@@ -1,7 +1,6 @@
 package servicart.domain.models.entities;
 
 import servicart.domain.interfaces.Observador;
-
 import java.util.ArrayList;
 import java.util.List;
 
