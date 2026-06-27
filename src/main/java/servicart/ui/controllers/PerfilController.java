@@ -4,81 +4,79 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import servicart.data.FactoryDAO;
+import servicart.domain.models.entities.Cliente;
+import servicart.domain.services.ClienteServices;
+import servicart.dtos.ClienteDTO;
+import servicart.exceptions.ServiCartException;
+import servicart.ui.Navegador;
+import servicart.ui.Sesion;
 
 public class PerfilController {
-
-    // ============================================================
-    // Campos vinculados al FXML
-    // ============================================================
 
     @FXML private Label lblNombreUsuario;
     @FXML private Label lblEmailUsuario;
     @FXML private TextField txtNombre;
-    @FXML private TextField txtCedula;
     @FXML private TextField txtEmail;
-    @FXML private TextField txtTelefono;
+    @FXML private TextField txtCelular;
+    @FXML private TextField txtCedula;
     @FXML private Label lblMensaje;
-    @FXML private VBox listaServicios;
 
-    // ============================================================
-    // Métodos de navegación (sidebar)
-    // ============================================================
-
-    @FXML
-    private void onMisServicios(ActionEvent event) {
-        // TODO: navegar a la vista de servicios (panelCliente)
-    }
-
-    @FXML
-    private void onCarrito(ActionEvent event) {
-        // TODO: navegar al carrito
-    }
-
-    @FXML
-    private void onSalir(ActionEvent event) {
-        // TODO: cerrar sesión y volver al login
-    }
-
-    // ============================================================
-    // Métodos de acciones del perfil
-    // ============================================================
-
-    @FXML
-    private void onGuardarDatos(ActionEvent event) {
-        // TODO: guardar cambios en los datos personales
-        // Puedes obtener los valores con:
-        // String nombre = txtNombre.getText();
-        // String cedula = txtCedula.getText();
-        // ...
-        System.out.println("Guardando datos personales...");
-    }
-
-    @FXML
-    private void onCambiarPassword(ActionEvent event) {
-        // TODO: validar y cambiar la contraseña
-        // String actual = txtPassActual.getText();
-        // String nueva = txtPassNueva.getText();
-        // String confirmar = txtPassConfirmar.getText();
-        System.out.println("Cambiando contraseña...");
-    }
-
-    // ============================================================
-    // Método de inicialización (opcional)
-    // ============================================================
+    private ClienteServices clienteService;
 
     @FXML
     public void initialize() {
-        // Aquí puedes cargar datos reales del usuario
-        // Por ejemplo:
-        // lblNombreUsuario.setText("Nombre real");
-        // lblEmailUsuario.setText("email@ejemplo.com");
-        // txtNombre.setText("Nombre real");
-        // ...
-        System.out.println("PerfilController inicializado.");
+        clienteService = new ClienteServices(FactoryDAO.clienteDAO());
+        cargarDatos();
     }
 
-    public void onAgregarServicio(ActionEvent actionEvent) {
+    private void cargarDatos() {
+        ClienteDTO c = Sesion.getClienteDTO();
+        if (c == null) return;
 
+        lblNombreUsuario.setText(c.nombre());
+        lblEmailUsuario.setText(c.email());
+        txtNombre.setText(c.nombre());
+        txtEmail.setText(c.email());
+        txtCelular.setText(c.celular());
+        txtCedula.setText(c.cedula());
+        txtCedula.setEditable(false); // la cédula no se puede cambiar
+        lblMensaje.setVisible(false);
+    }
+
+    @FXML
+    private void onGuardarDatos(ActionEvent event) {
+        String nombre = txtNombre.getText().trim();
+        String email = txtEmail.getText().trim();
+        String celular = txtCelular.getText().trim();
+
+        if (nombre.isEmpty() || email.isEmpty() || celular.isEmpty()) {
+            mostrarMensaje("Todos los campos son obligatorios");
+
+            return;
+        }
+
+        try {
+            Cliente entidad = Sesion.getClienteEntity();
+            entidad.setNombre(nombre);
+            entidad.setEmail(email);
+            entidad.setCelular(celular);
+
+            clienteService.actualizar(entidad);
+            Sesion.iniciar(entidad); // refresca el DTO en sesión
+            mostrarMensaje("✓ Datos actualizados correctamente");
+            cargarDatos();
+        } catch (ServiCartException e) {
+            mostrarMensaje("Error al guardar: " + e.getMessage());
+        }
+    }
+
+    @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
+    @FXML private void onCarrito(ActionEvent e) { Navegador.irA("views/cliente/carrito.fxml"); }
+    @FXML private void onSalir(ActionEvent e) { Sesion.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); }
+
+    private void mostrarMensaje(String msg) {
+        lblMensaje.setText(msg);
+        lblMensaje.setVisible(true);
     }
 }

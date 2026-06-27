@@ -22,8 +22,8 @@ public class ContratoService {
 
     //Crea un nuevo contrato activo entre el cliente y el servicio
     public Contrato crearContrato(Cliente cliente, ServicioCatalogo servicio) {
-        if (cliente == null)  throw new ServiCartException("El cliente no puede ser nulo");
-        if (servicio == null) throw new ServiCartException("El servicio no puede ser nulo");
+        if (cliente == null)  throw new ServiCartException("El cliente no puede ser nulo", e);
+        if (servicio == null) throw new ServiCartException("El servicio no puede ser nulo", e);
 
         Contrato contrato = new Contrato(LocalDateTime.now(), null, CausaTerminacion.ACTIVO, servicio, cliente);
         contratoDAO.save(contrato);
@@ -33,8 +33,8 @@ public class ContratoService {
 
     //Termina el contrato por la causa indicada
     public void terminarContrato(Contrato contrato, CausaTerminacion causa) {
-        if (causa == CausaTerminacion.ACTIVO) throw new ServiCartException("La causa de terminación no puede ser ACTIVO");
-        if (!contrato.estaActivo()) throw new ServiCartException("El contrato ya está terminado");
+        if (causa == CausaTerminacion.ACTIVO) throw new ServiCartException("La causa de terminación no puede ser ACTIVO", e);
+        if (!contrato.estaActivo()) throw new ServiCartException("El contrato ya está terminado", e);
 
         contrato.setCausaTerminacion(causa);
         contrato.setFechaFin(java.time.LocalDateTime.now());

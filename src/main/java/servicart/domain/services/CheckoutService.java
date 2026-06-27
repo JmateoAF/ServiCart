@@ -22,7 +22,7 @@ public class CheckoutService {
     }
 
     public void procesarPago(Carrito carrito) {
-        if (carrito == null || carrito.estaVacio()) throw new ServiCartException("El carrito está vacío");
+        if (carrito == null || carrito.estaVacio()) throw new ServiCartException("El carrito está vacío", e);
 
         for (Abono abono : carrito.getAbonos()) {
             abono.setPagoRealizado(true);

@@ -1,129 +1,177 @@
-package servicart.ui.controllers;  // ajusta si tu paquete es otro
+package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import servicart.data.FactoryDAO;
+import servicart.domain.models.entities.*;
+import servicart.domain.models.enums.EstadoFactura;
+import servicart.domain.models.enums.ModalidadPago;
+import servicart.domain.models.catalog.ServicioCatalogo;
+import servicart.domain.services.ContratoService;
+import servicart.domain.services.FacturacionService;
+import servicart.dtos.ClienteDTO;
+import servicart.dtos.FacturaDTO;
+import servicart.dtos.FacturaMapper;
+import servicart.ui.Navegador;
+import servicart.ui.Sesion;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class PanelClienteController {
-    //Sidebar
-        @FXML private Button btnMisServicios;
-        @FXML private Button btnCarrito;
-        @FXML private Button btnPerfil;
-    //Contenedor general de servicios
-        @FXML private VBox contenedorServicios;
-   //Etapa
-   @FXML private VBox tarjetaEtapa;
-    @FXML private Label lblEmpresaEtapa;
-    @FXML private Label lblTipoEtapa;
-    @FXML private Label lblEstadoEtapa;
-    @FXML private Button btnToggleEtapa;
-    @FXML private VBox paneCortadoEtapa;
-    @FXML private Label lblCostoReactivacionEtapa;
-    @FXML private VBox facturasEtapa;
-    @FXML private Label lblPeriodoEtapa1;
-    @FXML private Label lblVencimientoEtapa1;
-    @FXML private Label lblCorteEtapa1;
-    @FXML private Label lblMontoOriginalEtapa1;
-    @FXML private HBox hboxMoraEtapa1;
-    @FXML private Label lblMoraEtapa1;
-    @FXML private TextField montoEtapa1;
-    @FXML private Button btnAnadirEtapa1;
+    @FXML
+    private VBox contenedorServicios;
+    @FXML
+    private Label lblMensaje;
 
-    //Centrosu
-    @FXML private VBox tarjetaCentrosur;
-    @FXML private Label lblEmpresaCentrosur;
-    @FXML private Label lblTipoCentrosur;
-    @FXML private Label lblEstadoCentrosur;
-    @FXML private Button btnToggleCentrosur;
-    @FXML private VBox paneCortadoCentrosur;
-    @FXML private Label lblCostoReactivacionCentrosur;
-    @FXML private VBox facturasCentrosur;
-    @FXML private Label lblPeriodoCentrosur1;
-    @FXML private Label lblVencimientoCentrosur1;
-    @FXML private Label lblCorteCentrosur1;
-    @FXML private Label lblMontoOriginalCentrosur1;
-    @FXML private HBox hboxMoraCentrosur1;
-    @FXML private Label lblMoraCentrosur1;
-    @FXML private TextField montoCentrosur1;
-    @FXML private Button btnAnadirCentrosur1;
-    //FibraMax
-    @FXML private VBox tarjetaFibramax;
-    @FXML private Label lblEmpresaFibramax;
-    @FXML private Label lblTipoFibramax;
-    @FXML private Label lblEstadoFibramax;
-    @FXML private Button btnToggleFibramax;
-    @FXML private VBox paneCortadoFibramax;
-    @FXML private Label lblCostoReactivacionFibramax;
-    @FXML private VBox facturasFibramax;
-    @FXML private Label lblPeriodoFibramax1;
-    @FXML private Label lblVencimientoFibramax1;
-    @FXML private Label lblCorteFibramax1;
-    @FXML private Label lblMontoOriginalFibramax1;
-    @FXML private HBox hboxMoraFibramax1;
-    @FXML private Label lblMoraFibramax1;
-    @FXML private TextField montoFibramax1;
-    @FXML private Button btnAnadirFibramax1;
-    //EMAC
-    @FXML private VBox tarjetaEmac;
-    @FXML private Label lblEmpresaEmac;
-    @FXML private Label lblTipoEmac;
-    @FXML private Label lblEstadoEmac;
-    @FXML private Button btnToggleEmac;
-    @FXML private VBox paneCortadoEmac;
-    @FXML private Label lblCostoReactivacionEmac;
-    @FXML private VBox facturasEmac;
-    @FXML private Label lblPeriodoEmac1;
-    @FXML private Label lblVencimientoEmac1;
-    @FXML private Label lblCorteEmac1;
-    @FXML private Label lblMontoOriginalEmac1;
-    @FXML private HBox hboxMoraEmac1;
-    @FXML private Label lblMoraEmac1;
-    @FXML private TextField montoEmac1;
-    @FXML private Button btnAnadirEmac1;
-    // Carrito lateral
-    @FXML private VBox paneCarritoVacio;
-    @FXML private VBox listaCarrito;
-    @FXML private Label lblTotal;
-    @FXML private Button btnCheckout;
-    @FXML private Button btnVaciarCarrito;
-    //Label mensaje
-    @FXML private Label lblMensaje;
+    private ContratoService contratoService;
+    private FacturacionService facturacionService;
 
-    // ---- Métodos onAction (ya los tienes, solo los enumero) ----
-    @FXML private void onMisServicios(ActionEvent event) { }
-    @FXML private void onCarrito(ActionEvent event) { }
-    @FXML private void onPerfil(ActionEvent event) { }
-    @FXML private void onSalir(ActionEvent event) { }
-    @FXML private void onToggleEtapa(ActionEvent event) { }
-    @FXML private void onToggleCentrosur(ActionEvent event) { }
-    @FXML private void onToggleFibramax(ActionEvent event) { }
-    @FXML private void onToggleEmac(ActionEvent event) { }
-    @FXML private void onAnadirEtapa1(ActionEvent event) { }
-    @FXML private void onCheckout(ActionEvent event) { }
-    @FXML private void onVaciarCarrito(ActionEvent event) { }
-
-    public void onReactivarEtapa(ActionEvent actionEvent) {
+    @FXML
+    public void initialize() {
+        contratoService = new ContratoService(FactoryDAO.contratoDAO());
+        facturacionService = new FacturacionService(FactoryDAO.facturaDAO());
+        cargarTarjetas();
     }
 
-    public void onReactivarCentrosur(ActionEvent actionEvent) {
+    private void cargarTarjetas() {
+        contenedorServicios.getChildren().clear();
+        ClienteDTO clienteDTO = Sesion.getClienteDTO();
+        List<Contrato> contratos = contratoService.buscarPorCliente(clienteDTO.cedula());
+
+        if (contratos.isEmpty()) {
+            lblMensaje.setText("No tienes servicios contratados");
+            lblMensaje.setVisible(true);
+
+            return;
+        }
+
+        for (Contrato contrato : contratos) {
+            List<Factura> facturas = facturacionService.buscarPorContrato(contrato.getId());
+            contenedorServicios.getChildren().add(crearTarjeta(contrato, facturas));
+        }
     }
 
-    public void onAnadirCentrosur1(ActionEvent actionEvent) {
+    private VBox crearTarjeta(Contrato contrato, List<Factura> facturas) {
+        ServicioCatalogo servicio = contrato.getServicio();
+
+        VBox card = new VBox(10);
+        card.setPadding(new Insets(15));
+        card.getStyleClass().add("tarjeta-servicio");
+
+        Label lblEmpresa = new Label(servicio.getEmpresa().name());
+        lblEmpresa.getStyleClass().add("tarjeta-empresa");
+
+        Label lblTipo = new Label(servicio.getTipo().name() + " · " + servicio.getTipoValor().name());
+        lblTipo.getStyleClass().add("tarjeta-tipo");
+
+        card.getChildren().addAll(lblEmpresa, lblTipo);
+
+        // Panel de corte (si aplica)
+        boolean tieneCorte = facturas.stream().anyMatch(Factura::superaFechaCorte);
+        if (tieneCorte) card.getChildren().add(crearPanelCorte(contrato, servicio));
+
+        // Facturas pendientes
+        List<Factura> pendientes = facturas.stream().filter(f -> f.getEstado() != EstadoFactura.PAGADA).toList();
+
+        if (pendientes.isEmpty()) card.getChildren().add(new Label("Sin facturas pendientes"));
+        else for (Factura f : pendientes) card.getChildren().add(crearFilaFactura(f));
+
+        return card;
     }
 
-    public void onReactivarFibramax(ActionEvent actionEvent) {
+    private HBox crearPanelCorte(Contrato contrato, ServicioCatalogo servicio) {
+        HBox panel = new HBox(10);
+        panel.getStyleClass().add("panel-cortado");
+
+        Label lbl = new Label("Servicio cortado — Costo reactivación: $" + servicio.getCostoReactivacion());
+
+        Button btnReactivar = new Button("Reactivar");
+        btnReactivar.setOnAction(e -> onReactivar(contrato, servicio.getCostoReactivacion()));
+
+        panel.getChildren().addAll(lbl, btnReactivar);
+
+        return panel;
     }
 
-    public void onAnadirFibramax1(ActionEvent actionEvent) {
+    private VBox crearFilaFactura(Factura factura) {
+        VBox fila = new VBox(6);
+        fila.getStyleClass().add("fila-factura");
+
+        FacturaDTO dto = FacturaMapper.toDTO(factura);
+
+        Label lblPeriodo = new Label("Período: " + dto.periodo());
+        Label lblVencimiento = new Label("Vence: " + dto.fechaVencimiento());
+        Label lblCorte = new Label("Corte: " + dto.fechaCorte());
+        Label lblMonto = new Label("Monto: $" + dto.montoOriginal());
+
+        fila.getChildren().addAll(lblPeriodo, lblVencimiento, lblCorte, lblMonto);
+
+        // Mora
+        if (factura.estaVencida() && dto.montoMora() > 0) {
+            Label lblMora = new Label("Mora: $" + dto.montoMora());
+            lblMora.getStyleClass().add("label-mora");
+            fila.getChildren().add(lblMora);
+        }
+
+        // Control para añadir abono al carrito
+        HBox hboxAbono = new HBox(8);
+        TextField txtMonto = new TextField();
+        txtMonto.setPromptText("Monto a abonar");
+        txtMonto.setPrefWidth(140);
+
+        ComboBox<ModalidadPago> cmbModalidad = new ComboBox<>();
+        cmbModalidad.getItems().setAll(ModalidadPago.values());
+        cmbModalidad.setValue(ModalidadPago.TC);
+
+        Button btnAnadir = new Button("Añadir al carrito");
+        btnAnadir.setOnAction(e -> onAnadirAbono(factura, txtMonto, cmbModalidad));
+
+        hboxAbono.getChildren().addAll(txtMonto, cmbModalidad, btnAnadir);
+        fila.getChildren().add(hboxAbono);
+
+        return fila;
     }
 
-    public void onReactivarEmac(ActionEvent actionEvent) {
+    private void onAnadirAbono(Factura factura, TextField txtMonto, ComboBox<ModalidadPago> cmbModalidad) {
+        try {
+            double monto = Double.parseDouble(txtMonto.getText().trim());
+            if (monto <= 0) throw new NumberFormatException();
+
+            Abono abono = new Abono(monto, LocalDateTime.now(), false, factura, cmbModalidad.getValue());
+
+            Sesion.getCarrito().agregarAbono(abono);
+            mostrarMensaje("Abono de $" + monto + " añadido al carrito.");
+            txtMonto.clear();
+        } catch (NumberFormatException e) {
+            mostrarMensaje("Ingrese un monto válido mayor a 0");
+        }
     }
 
-    public void onAnadirEmac1(ActionEvent actionEvent) {
+    private void onReactivar(Contrato contrato, double costoReactivacion) {
+        mostrarMensaje("Reactivación solicitada, costo: $" + costoReactivacion);
+        cargarTarjetas();
+    }
+
+    @FXML
+    private void onMisServicios(ActionEvent event) { cargarTarjetas(); }
+
+    @FXML
+    private void onCarrito(ActionEvent event) { Navegador.irA("views/cliente/carrito.fxml"); }
+
+    @FXML
+    private void onPerfil(ActionEvent event) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        Sesion.cerrar();
+        Navegador.irA("views/cliente/loginCliente.fxml");
+    }
+
+    private void mostrarMensaje(String msg) {
+        lblMensaje.setText(msg);
+        lblMensaje.setVisible(true);
     }
 }

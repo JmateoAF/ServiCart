@@ -2,49 +2,52 @@ package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.stage.Stage;
-import java.io.IOException;
-import java.util.Objects;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import servicart.domain.interfaces.LoginAdmin;
+import servicart.data.sqlite.AdminSQLiteDAO;
 import servicart.domain.services.AdminServices;
+import servicart.exceptions.ServiCartException;
+import servicart.ui.Navegador;
 
 public class LoginAdminController {
     @FXML private TextField txtUsuario;
     @FXML private PasswordField txtPassword;
+    @FXML private Label lblError;
 
-    private final LoginAdmin loginService;
+    private final AdminServices adminService = new AdminServices(new AdminSQLiteDAO());
 
-    public LoginAdminController() {
-        this.loginService = new AdminServices();
+    @FXML
+    public void initialize() {
+        lblError.setVisible(false);
     }
 
     @FXML
-    private void iniciarSesion(ActionEvent event){
-        String usuario = txtUsuario.getText();
+    private void onIniciarSesion(ActionEvent event) {
+        String usuario = txtUsuario.getText().trim();
         String contrasenia = txtPassword.getText();
 
-        boolean esValido = loginService.validarLogin(usuario, contrasenia);
+        if (usuario.isEmpty() || contrasenia.isEmpty()) {
+            mostrarError("Ingrese usuario y contraseña");
 
-        if (esValido) {
-            System.out.println("¡Login correcto! Bienvenido admin.");
-        } else {
-            System.out.println("Credenciales incorrectas o campos vacíos.");
+            return;
+        }
+
+        try {
+            if (adminService.validarLogin(usuario, contrasenia)) Navegador.irA("views/admin/panelAdmin.fxml");
+            else mostrarError("Usuario o contraseña incorrectos.");
+        } catch (ServiCartException e) {
+            mostrarError("Error al conectar con la base de datos.");
         }
     }
 
     @FXML
     private void irALoginCliente(ActionEvent event) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(ClassLoader.getSystemResource("views/cliente/loginCliente.fxml")));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.getScene().setRoot(root);
-        } catch (IOException e) {
-            System.out.println("Error al cambiar de vista: " + e.getMessage());
-        }
+        Navegador.irA("views/cliente/loginCliente.fxml");
+    }
+
+    private void mostrarError(String mensaje) {
+        lblError.setText(mensaje);
+        lblError.setVisible(true);
     }
 }

@@ -2,58 +2,81 @@ package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import servicart.domain.models.entities.Abono;
+import servicart.domain.models.entities.Carrito;
+import servicart.ui.Navegador;
+import servicart.ui.Sesion;
 
 public class CarritoController {
-
+    @FXML private VBox  listaItems;
+    @FXML private VBox  paneVacio;
     @FXML private Label lblCantidad;
-    @FXML private Label lblTotalFinal;
-    @FXML private VBox contenedorTabla;
-    @FXML private VBox listaItems;
-    @FXML private VBox paneVacio;
     @FXML private Label lblSubtotal;
-    @FXML private Label lblMora;
+    @FXML private Label lblTotalFinal;
     @FXML private Button btnCheckout;
-
 
     @FXML
     public void initialize() {
-        // Cargar datos del carrito (desde algún modelo compartido)
-        // Actualizar lblCantidad y lblTotalFinal
+        cargarCarrito();
+    }
+
+    private void cargarCarrito() {
+        Carrito carrito = Sesion.getCarrito();
+        listaItems.getChildren().clear();
+
+        if (carrito.estaVacio()) {
+            paneVacio.setVisible(true);
+            listaItems.setVisible(false);
+            btnCheckout.setDisable(true);
+
+            return;
+        }
+
+        paneVacio.setVisible(false);
+        listaItems.setVisible(true);
+        btnCheckout.setDisable(false);
+
+        for (Abono abono : carrito.getAbonos()) listaItems.getChildren().add(crearFilaItem(abono));
+
+        lblCantidad.setText(carrito.cantidadItems() + " ítem(s)");
+        lblSubtotal.setText("$" + String.format("%.2f", carrito.getTotal()));
+        lblTotalFinal.setText("$" + String.format("%.2f", carrito.getTotal()));
+    }
+
+    private HBox crearFilaItem(Abono abono) {
+        HBox fila = new HBox(10);
+        fila.setPadding(new Insets(6));
+
+        String descripcion = abono.getFactura().getContrato().getServicio().getEmpresa().name() + " – " + abono.getFactura().getContrato().getServicio().getTipo().name();
+
+        Label lblDesc  = new Label(descripcion);
+        Label lblMonto = new Label("$" + String.format("%.2f", abono.getMonto()));
+
+        Button btnEliminar = new Button("✕");
+        btnEliminar.setOnAction(e -> {
+            Sesion.getCarrito().quitarAbono(abono);
+            cargarCarrito();
+        });
+
+        fila.getChildren().addAll(lblDesc, lblMonto, btnEliminar);
+        return fila;
     }
 
     @FXML
-    private void onMisServicios(ActionEvent event) {
-        // Navegar a la vista de servicios
-    }
+    private void onCheckout(ActionEvent event) { Navegador.irA("views/cliente/checkout.fxml"); }
 
     @FXML
-    private void onPerfil(ActionEvent event) {
-        // Navegar al perfil
+    private void onVaciarCarrito(ActionEvent event) {
+        Sesion.getCarrito().vaciar();
+        cargarCarrito();
     }
 
-    @FXML
-    private void onSalir(ActionEvent event) {
-        // Cerrar sesión
-    }
-
-    @FXML
-    private void onEliminarItem(ActionEvent event) {
-        // Obtener el botón que disparó el evento
-        Button btn = (Button) event.getSource();
-        // Obtener el ítem asociado (por ejemplo, desde userData)
-        // Eliminar del carrito y actualizar vista
-    }
-
-    @FXML
-    private void onVolverServicios(ActionEvent event) {
-        // Volver a la vista de servicios (panelCliente)
-    }
-
-    @FXML
-    private void onCheckout(ActionEvent event) {
-        // Procesar pago
-    }
+    @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
+    @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
+    @FXML private void onSalir(ActionEvent e) { Sesion.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); }
 }
