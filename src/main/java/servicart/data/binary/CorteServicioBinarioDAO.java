@@ -1,14 +1,19 @@
 package servicart.data.binary;
 
-import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entities.CorteServicio;
 import servicart.domain.models.enums.EstadoCorte;
+import servicart.exceptions.EntidadNoEncontradaException;
 
 import java.util.List;
 
-public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio>
-        implements CrudDAO<CorteServicio> {
-
+/* Se eliminaron cortarServicio() y reactivar() que existían antes
+Cortar y reactivar son transiciones de estado del dominio -> CorteService:
+cortar: corteServicio.setEstadoCorte(CORTADO) -> update()
+reactivar: corteServicio.setEstadoCorte(ACTIVO) -> update()
+isActivo incluye ACTIVO y CORTADO (ambos son registros vigentes)
+Solo TERMINADO se excluye del findAll() normal
+delete() -> borrado lógico a TERMINADO (el DAO decide el HOW, el dominio el WHEN) */
+public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio> {
     public CorteServicioBinarioDAO() {
         super("bin/corteServicio.bin");
     }
@@ -23,10 +28,8 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio>
         return entidad.getEstadoCorte() == EstadoCorte.ACTIVO;
     }
 
-    /**
-     * Borrado lógico: cambia el estado a TERMINADO en lugar de eliminar.
-     * Si ya está TERMINADO, no se regraba el archivo.
-     */
+    /* Borrado lógico: cambia el estado a TERMINADO en lugar de eliminar.
+    Si ya está TERMINADO, no se regraba el archivo */
     @Override
     public void delete(String id) {
         List<CorteServicio> lista = (cache != null) ? cache : leerTodos();
@@ -34,48 +37,19 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio>
             if (getId(c).equals(id)) {
                 if (c.getEstadoCorte() == EstadoCorte.TERMINADO) {
                     cache = lista;
+
                     return;
                 }
+
                 c.setEstadoCorte(EstadoCorte.TERMINADO);
                 guardarTodos(lista);
                 cache = lista;
-                return;
-            }
-        }
-        throw new RuntimeException("CorteServicio con ID " + id + " no encontrado");
-    }
 
-    public void cortarServicio(String id) {
-        List<CorteServicio> lista = (cache != null) ? cache : leerTodos();
-        for (CorteServicio c : lista) {
-            if (getId(c).equals(id)) {
-                if (!isActivo(c)) {
-                    cache = lista;
-                    return;
-                }
-                c.setEstadoCorte(EstadoCorte.CORTADO);
-                guardarTodos(lista);
-                cache = lista;
                 return;
             }
         }
-        throw new RuntimeException("CorteServicio con ID " + id + " no encontrado");
-    }
-    public void reactivar(String id) {
-        List<CorteServicio> lista = (cache != null) ? cache : leerTodos();
-        for (CorteServicio c : lista) {
-            if (getId(c).equals(id)) {
-                if (isActivo(c)) {
-                    cache = lista;
-                    return;
-                }
-                c.setEstadoCorte(EstadoCorte.ACTIVO);
-                guardarTodos(lista);
-                cache = lista;
-                return;
-            }
-        }
-        throw new RuntimeException("CorteServicio con ID " + id + " no encontrado");
+
+        throw new EntidadNoEncontradaException(id);
     }
 }
 

@@ -1,50 +1,23 @@
 package servicart.data.binary;
 
-import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entities.Contrato;
 import servicart.domain.models.enums.CausaTerminacion;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-public class ContratoBinarioDAO extends GenericBinarioDAO<Contrato> implements CrudDAO<Contrato>  {
+/* Se eliminó terminarContrato(id, causa) que existía antes.
+Esa operación es responsabilidad del ContratoService
+ContratoService busca el contrato con findId()
+Le asigna la causa y la fechaFin
+Llama update() para persistir
+isActivo filtra contratos terminados de findAll() automáticamente
+Para "terminar" un contrato: el servicio llama update(), no delete() */
+public class ContratoBinarioDAO extends GenericBinarioDAO<Contrato> {
     public ContratoBinarioDAO() {
-        super("bin/contrato.bin");               // archivo único para esta entidad
+        super("bin/contrato.bin"); //Archivo único para esta entidad
     }
 
     @Override
-    protected String getId(Contrato entidad) {
-        return String.valueOf(entidad.getId());          // identificador natural
-    }
+    protected String getId(Contrato contrato) { return String.valueOf(contrato.getId()); } //Identificador natural
 
     @Override
-    protected boolean isActivo(Contrato entidad) {
-        return entidad.getCausaTerminacion() == CausaTerminacion.ACTIVO;     // borrado lógico: activo = 1
-    }
-
-    /**
-     * Borrado lógico: marca el campo activo a 0 en lugar de eliminar físicamente.
-     * Si ya estaba inactivo, no hace nada.
-     */
-    public void terminarContrato(String id, CausaTerminacion causa) {
-        List<Contrato> lista = (cache != null) ? cache : leerTodos();
-        for (Contrato c : lista) {
-            if (String.valueOf(c.getId()).equals(id)) {
-                if (!isActivo(c)){
-                    cache = lista;
-                    return;
-                }
-                c.setCausaTerminacion(causa);       // CLIENTE o EMPRESA
-                c.setFechaFin(fechaActual());
-                guardarTodos(lista);
-                cache = lista;
-                return;
-            }
-            }
-        throw new RuntimeException("Contrato no encontrado");
-    }
-
-    private LocalDateTime fechaActual() {
-        return LocalDateTime.now();
-    }
+    protected boolean isActivo(Contrato contrato) { return contrato.getCausaTerminacion() == CausaTerminacion.ACTIVO; } //Borrado lógico: activo = 1
 }

@@ -1,23 +1,17 @@
-/* ═══════════════════════════════════════════
-   ServiCart — TEMA CLARO
-   Paleta: fondo #f5f6fa, superficie #ffffff,
-           acento #b7791f, verde #27ae60, rojo #c0392b
-   ═══════════════════════════════════════════ */
-
-/* ─── Globals ─────────────────────────────── */
 .root {
     -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
     -fx-font-size: 13px;
 }
 
-/* ─── Fondos ──────────────────────────────── */
-.app-root { -fx-background-color: #f5f6fa; }
+.app-root {
+    -fx-background-color: #f5f6fa;
+}
 
 .navbar {
     -fx-background-color: #ffffff;
     -fx-border-color: #e2e8f0;
     -fx-border-width: 0 0 1 0;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 4, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.06), 4, 0, 0, 1);
 }
 
 .sidebar {
@@ -39,7 +33,7 @@
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-padding: 24;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 10, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.07), 10, 0, 0, 2);
 }
 
 .card-inner {
@@ -57,7 +51,6 @@
     -fx-border-color: transparent;
 }
 
-/* ─── Marca ──────────────────────────────── */
 .brand-label {
     -fx-text-fill: #b7791f;
     -fx-font-weight: bold;
@@ -72,15 +65,30 @@
     -fx-padding: 12 14 6 14;
 }
 
-/* ─── Texto ──────────────────────────────── */
-.txt-primary   { -fx-text-fill: #2d3748; }
-.txt-secondary { -fx-text-fill: #4a5568; }
-.txt-muted     { -fx-text-fill: #718096; }
-.txt-accent    { -fx-text-fill: #b7791f; }
-.txt-error     { -fx-text-fill: #c0392b; }
-.txt-success   { -fx-text-fill: #27ae60; }
+.txt-primary {
+    -fx-text-fill: #2d3748;
+}
 
-/* ─── Botón primario ─────────────────────── */
+.txt-secondary {
+    -fx-text-fill: #4a5568;
+}
+
+.txt-muted {
+    -fx-text-fill: #718096;
+}
+
+.txt-accent {
+    -fx-text-fill: #b7791f;
+}
+
+.txt-error {
+    -fx-text-fill: #c0392b;
+}
+
+.txt-success {
+    -fx-text-fill: #27ae60;
+}
+
 .btn-primary {
     -fx-background-color: #d69e2e;
     -fx-text-fill: #ffffff;
@@ -91,10 +99,15 @@
     -fx-padding: 10 0 10 0;
     -fx-cursor: hand;
 }
-.btn-primary:hover   { -fx-background-color: #b7791f; }
-.btn-primary:pressed { -fx-background-color: #975a16; }
 
-/* ─── Botón secundario ───────────────────── */
+.btn-primary:hover {
+    -fx-background-color: #b7791f;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #975a16;
+}
+
 .btn-secondary {
     -fx-background-color: transparent;
     -fx-text-fill: #718096;
@@ -105,9 +118,12 @@
     -fx-padding: 10 0 10 0;
     -fx-cursor: hand;
 }
-.btn-secondary:hover { -fx-background-color: #f7fafc; -fx-text-fill: #4a5568; }
 
-/* ─── Botón enlace ───────────────────────── */
+.btn-secondary:hover {
+    -fx-background-color: #f7fafc;
+    -fx-text-fill: #4a5568;
+}
+
 .btn-link {
     -fx-background-color: transparent;
     -fx-text-fill: #718096;
@@ -116,9 +132,11 @@
     -fx-cursor: hand;
     -fx-padding: 0;
 }
-.btn-link:hover { -fx-text-fill: #4a5568; }
 
-/* ─── Botón peligro ──────────────────────── */
+.btn-link:hover {
+    -fx-text-fill: #4a5568;
+}
+
 .btn-danger {
     -fx-background-color: transparent;
     -fx-text-fill: #c0392b;
@@ -130,9 +148,11 @@
     -fx-alignment: center-left;
     -fx-cursor: hand;
 }
-.btn-danger:hover { -fx-text-fill: #e74c3c; }
 
-/* ─── Botones sidebar ────────────────────── */
+.btn-danger:hover {
+    -fx-text-fill: #e74c3c;
+}
+
 .sidebar-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #718096;
@@ -144,7 +164,11 @@
     -fx-alignment: center-left;
     -fx-cursor: hand;
 }
-.sidebar-btn:hover { -fx-background-color: #edf2f7; -fx-text-fill: #4a5568; }
+
+.sidebar-btn:hover {
+    -fx-background-color: #edf2f7;
+    -fx-text-fill: #4a5568;
+}
 
 .sidebar-btn-active {
     -fx-background-color: #fefce8;
@@ -159,7 +183,6 @@
     -fx-cursor: hand;
 }
 
-/* ─── Botones navbar ─────────────────────── */
 .nav-btn {
     -fx-background-color: transparent;
     -fx-text-fill: #718096;
@@ -168,7 +191,10 @@
     -fx-padding: 5 14 5 14;
     -fx-cursor: hand;
 }
-.nav-btn:hover { -fx-text-fill: #4a5568; }
+
+.nav-btn:hover {
+    -fx-text-fill: #4a5568;
+}
 
 .nav-btn-active {
     -fx-background-color: #fefce8;
@@ -182,7 +208,6 @@
     -fx-cursor: hand;
 }
 
-/* ─── Toggle de tema ─────────────────────── */
 .btn-theme-toggle {
     -fx-background-color: #edf2f7;
     -fx-text-fill: #4a5568;
@@ -194,9 +219,11 @@
     -fx-padding: 3 10 3 10;
     -fx-cursor: hand;
 }
-.btn-theme-toggle:hover { -fx-background-color: #e2e8f0; }
 
-/* ─── Campos de formulario ───────────────── */
+.btn-theme-toggle:hover {
+    -fx-background-color: #e2e8f0;
+}
+
 .form-field {
     -fx-background-color: #ffffff;
     -fx-border-color: #cbd5e0;
@@ -208,7 +235,10 @@
     -fx-font-size: 14;
     -fx-padding: 8 10 8 10;
 }
-.form-field:focused { -fx-border-color: #d69e2e; }
+
+.form-field:focused {
+    -fx-border-color: #d69e2e;
+}
 
 .form-field-mono {
     -fx-background-color: #ffffff;
@@ -222,7 +252,10 @@
     -fx-padding: 8 10 8 10;
     -fx-font-family: 'Courier New';
 }
-.form-field-mono:focused { -fx-border-color: #d69e2e; }
+
+.form-field-mono:focused {
+    -fx-border-color: #d69e2e;
+}
 
 .form-field-readonly {
     -fx-background-color: #f7fafc;
@@ -241,7 +274,6 @@
     -fx-font-family: 'Courier New';
 }
 
-/* ─── Badges de estado ───────────────────── */
 .badge-access {
     -fx-text-fill: #276749;
     -fx-background-color: #f0fff4;
@@ -278,7 +310,6 @@
     -fx-background-radius: 10;
 }
 
-/* ─── Mensajes feedback ──────────────────── */
 .label-error {
     -fx-text-fill: #c0392b;
     -fx-background-color: #fdedec;
@@ -287,7 +318,10 @@
     -fx-background-radius: 4;
 }
 
-.label-success { -fx-text-fill: #27ae60; -fx-font-size: 11; }
+.label-success {
+    -fx-text-fill: #27ae60;
+    -fx-font-size: 11;
+}
 
 .label-info {
     -fx-text-fill: #b7791f;
@@ -303,7 +337,6 @@
     -fx-background-radius: 4;
 }
 
-/* ─── Tarjetas de servicios ──────────────── */
 .tarjeta-servicio {
     -fx-background-color: #ffffff;
     -fx-border-color: #e2e8f0;
@@ -311,7 +344,7 @@
     -fx-border-radius: 8;
     -fx-background-radius: 8;
     -fx-padding: 16;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 6, 0, 0, 1);
 }
 
 .tarjeta-empresa {
@@ -321,7 +354,10 @@
     -fx-font-family: 'Courier New';
 }
 
-.tarjeta-tipo { -fx-text-fill: #718096; -fx-font-size: 11; }
+.tarjeta-tipo {
+    -fx-text-fill: #718096;
+    -fx-font-size: 11;
+}
 
 .fila-factura {
     -fx-background-color: #f7fafc;
@@ -341,29 +377,39 @@
     -fx-background-radius: 4;
 }
 
-/* ─── Scrollbar ──────────────────────────── */
-.scroll-bar:horizontal,
-.scroll-bar:vertical              { -fx-background-color: #f5f6fa; }
+.scroll-bar:horizontal, .scroll-bar:vertical {
+    -fx-background-color: #f5f6fa;
+}
 
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track       { -fx-background-color: #edf2f7; -fx-border-color: transparent; }
+.scroll-bar:horizontal .track, .scroll-bar:vertical .track {
+    -fx-background-color: #edf2f7;
+    -fx-border-color: transparent;
+}
 
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb       { -fx-background-color: #cbd5e0; -fx-background-radius: 8; }
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: #cbd5e0;
+    -fx-background-radius: 8;
+}
 
-.scroll-bar:horizontal .thumb:hover,
-.scroll-bar:vertical .thumb:hover { -fx-background-color: #a0aec0; }
+.scroll-bar:horizontal .thumb:hover, .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #a0aec0;
+}
 
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button     { -fx-background-color: transparent; -fx-padding: 0; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
 
-.scroll-bar .increment-arrow,
-.scroll-bar .decrement-arrow      { -fx-shape: " "; -fx-padding: 0; }
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
 
-/* ─── Separador ──────────────────────────── */
-.separator .line { -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0; }
+.separator .line {
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1 0 0 0;
+}
 
-/* ─── ComboBox ───────────────────────────── */
 .combo-box {
     -fx-background-color: #ffffff;
     -fx-border-color: #cbd5e0;
@@ -371,16 +417,57 @@
     -fx-border-radius: 6;
     -fx-background-radius: 6;
 }
-.combo-box .list-cell             { -fx-background-color: #ffffff; -fx-text-fill: #2d3748; }
-.combo-box-popup .list-view       { -fx-background-color: #ffffff; -fx-border-color: #e2e8f0; }
-.combo-box-popup .list-cell       { -fx-background-color: #ffffff; -fx-text-fill: #2d3748; }
-.combo-box-popup .list-cell:hover { -fx-background-color: #fefce8; -fx-text-fill: #b7791f; }
-.combo-box .arrow                 { -fx-background-color: #718096; }
 
-/* ─── TableView ──────────────────────────── */
-.table-view                  { -fx-background-color: #ffffff; -fx-border-color: #e2e8f0; }
-.table-view .column-header   { -fx-background-color: #f7fafc; -fx-text-fill: #718096; -fx-border-color: #e2e8f0; }
-.table-row-cell              { -fx-background-color: #ffffff; -fx-text-fill: #4a5568; -fx-border-color: #f0f4f8; }
-.table-row-cell:odd          { -fx-background-color: #f7fafc; }
-.table-row-cell:selected     { -fx-background-color: #fefce8; -fx-text-fill: #b7791f; }
-.table-row-cell:hover        { -fx-background-color: #edf2f7; }
+.combo-box .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2d3748;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+}
+
+.combo-box-popup .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2d3748;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #fefce8;
+    -fx-text-fill: #b7791f;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #718096;
+}
+
+.table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f7fafc;
+    -fx-text-fill: #718096;
+    -fx-border-color: #e2e8f0;
+}
+
+.table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #4a5568;
+    -fx-border-color: #f0f4f8;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f7fafc;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #fefce8;
+    -fx-text-fill: #b7791f;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #edf2f7;
+}

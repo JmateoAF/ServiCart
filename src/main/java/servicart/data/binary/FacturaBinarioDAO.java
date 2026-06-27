@@ -1,34 +1,15 @@
 package servicart.data.binary;
 
-import servicart.data.interfaces.CrudDAO;
 import servicart.domain.models.entities.Factura;
-import servicart.domain.models.enums.EstadoFactura;
 
-import java.util.List;
-
-public class FacturaBinarioDAO extends GenericBinarioDAO<Factura> implements CrudDAO<Factura>  {
-    public FacturaBinarioDAO() {super("bin/factura.bin");               // archivo único para esta entidad
-    }
+/* Se eliminó facturaPagada(id) que existía antes.
+Marcar una factura como PAGADA es responsabilidad del FacturacionService:
+FacturacionService busca la factura con findId()
+Cambia el estado: factura.setEstado(EstadoFactura.PAGADA)
+Llama update() para persistir */
+public class FacturaBinarioDAO extends GenericBinarioDAO<Factura> {
+    public FacturaBinarioDAO() {super("bin/factura.bin"); } //Archivo único para esta entidad
 
     @Override
-    protected String getId(Factura entidad) {
-        return String.valueOf(entidad.getId());          // identificador natural
-    }
-
-    public void facturaPagada(String id) {
-        List<Factura> lista = (cache != null) ? cache : leerTodos();
-        for (Factura c : lista) {
-            if (getId(c).equals(id)) {
-                if (c.getEstado()== EstadoFactura.PAGADA) {          // ya pagada
-                    cache = lista;
-                    return;
-                }
-                c.setEstado(EstadoFactura.PAGADA);             // marcado lógico
-                guardarTodos(lista);
-                cache = lista;
-                return;
-            }
-        }
-        throw new RuntimeException("Factura con ID " + id + " no encontrado");
-    }
+    protected String getId(Factura entidad) { return String.valueOf(entidad.getId()); } // identificador natural
 }
