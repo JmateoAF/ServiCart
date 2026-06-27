@@ -1,18 +1,15 @@
 package servicart.domain.models.enums;
 
-/*
- * Enum que representa las empresas proveedoras de servicios.
- * Cada constante tiene un código numérico único que se usa para persistir
- * en archivos binarios (en lugar de guardar el nombre completo).
- * Los valores son fijos según la especificación:
- *   ETAPA = 1, CENTROSUR = 2, EMAC = 3, FIBRAMAX = 4.
- */
+/* Enum que representa las empresas proveedoras de servicios.
+Cada constante tiene un código numérico único que se usa para persistir
+en archivos binarios (en lugar de guardar el nombre completo).
+Los valores son fijos según la especificación: */
 
 public enum Empresa {
-    ETAPA(0),         // Llama automáticamente al constructor con código 1
-    CENTROSUR(1),     // Llama automáticamente al constructor con código 2
-    EMAC(2),          // Llama automáticamente al constructor con código 3
-    FIBRAMAX(3);      // Llama automáticamente al constructor con código 4
+    ETAPA(0),
+    CENTROSUR(1),
+    EMAC(2),
+    FIBRAMAX(3);
 
     private final int codigo;  // Código numérico asociado a la empresa
 
@@ -50,11 +47,9 @@ public enum Empresa {
      */
 
     public static Empresa fromCodigo(int codigo) {
-        for (Empresa e : values()) {        // Recorre todas las constantes del enum
-            if (e.codigo == codigo) {       // Si encuentra el código, devuelve la constante
-                return e;
-            }
-        }
+        for (Empresa e : values())       // Recorre todas las constantes del enum
+            if (e.codigo == codigo) return e;     // Si encuentra el código, devuelve la constante
+
         // Si no lo encuentra, el archivo está dañado o el código es incorrecto
         throw new IllegalArgumentException("Empresa no válida: " + codigo);
     }

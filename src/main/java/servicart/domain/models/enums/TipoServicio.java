@@ -21,11 +21,9 @@ public enum TipoServicio {
 
     // Convierte un código numérico de vuelta a su enum correspondiente
     public static TipoServicio fromCodigo(int codigo) {
-        for (TipoServicio ts : values()) {     // values() devuelve todas las constantes del enum
-            if (ts.codigo == codigo) {
-                return ts;
-            }
-        }
+        for (TipoServicio ts : values()) // values() devuelve todas las constantes del enum
+            if (ts.codigo == codigo) return ts;
+
         throw new IllegalArgumentException("Servicio no válido: " + codigo);
     }
 }

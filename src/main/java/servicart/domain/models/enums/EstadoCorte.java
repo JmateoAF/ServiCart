@@ -13,7 +13,7 @@ public enum EstadoCorte {
 
     public static EstadoCorte fromCodigo(int codigo) {
         for (EstadoCorte estado : EstadoCorte.values())
-            if (estado.getCodigo() == codigo) { return estado; }
+            if (estado.getCodigo() == codigo) return estado;
 
         throw new IllegalArgumentException("Error en el código: " + codigo);
     }

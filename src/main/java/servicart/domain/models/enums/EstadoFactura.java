@@ -2,7 +2,8 @@ package servicart.domain.models.enums;
 
 public enum EstadoFactura {
     PENDIENTE(0),
-    PAGADA(1);
+    PAGADA(1),
+    VENCIDA(2);
 
     private final int codigo;
 
@@ -12,7 +13,7 @@ public enum EstadoFactura {
 
     public static EstadoFactura fromCodigo(int codigo) {
         for (EstadoFactura estado : EstadoFactura.values())
-            if (estado.getCodigo() == codigo) { return estado; }
+            if (estado.getCodigo() == codigo) return estado;
 
         throw new IllegalArgumentException("Error en el código" + codigo);
     }

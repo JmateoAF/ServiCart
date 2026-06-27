@@ -12,7 +12,7 @@ public enum TipoValorFactura {
 
     public static TipoValorFactura fromCodigo(int codigo) {
         for (TipoValorFactura tipoValorFactura : TipoValorFactura.values())
-            if (tipoValorFactura.getCodigo() == codigo) { return tipoValorFactura; }
+            if (tipoValorFactura.getCodigo() == codigo) return tipoValorFactura;
 
         throw new IllegalArgumentException("Error en el tipo de factura" + codigo);
     }

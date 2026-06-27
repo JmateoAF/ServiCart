@@ -22,7 +22,6 @@ public class ServicioCatalogo implements Serializable {
     private double costoReactivacion;
     private double tasaInteresDiario;
     private final Empresa empresa;
-
     private CalculoStrategy estrategia;     // Estrategia de cálculo (transitoria o calculada)
 
     public ServicioCatalogo(int id, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario, Empresa empresa) {
@@ -37,31 +36,21 @@ public class ServicioCatalogo implements Serializable {
 
     // Asigna la estrategia correcta según el tipo de valor
     private void asignarEstrategia() {
-        if (tipoValor != null) {
-            if (tipoValor == TipoValorFactura.FIJO) {
-                this.estrategia = new CalculoFijo();
-            } else if (tipoValor == TipoValorFactura.VARIABLE) {
-                this.estrategia = new CalculoVariable();
-            }
-        }
-        // Si tipoValor es null (caso raro), estrategia se mantiene null
+        this.estrategia = switch (tipoValor) {
+            case FIJO -> new CalculoFijo();
+            case VARIABLE -> new CalculoVariable();
+        };
     }
 
     /**
      * Calcula el monto de la factura para un consumo dado.
      * Se basa en la estrategia asignada.
      */
-
-
     public double calcularMonto(double consumo) {
-        if (estrategia == null) {
-            throw new IllegalStateException("Estrategia de cálculo no asignada para el servicio " + id);
-        }
         return estrategia.calcular(consumo, this);
     }
 
     public int getId() { return id; }
-
     public void setId(int id) {this.id = id;}
 
     public double getTarifaFija() { return tarifaFija; }
