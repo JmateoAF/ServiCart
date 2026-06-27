@@ -35,7 +35,7 @@ public class ConexionBinario {
     /* Abre un flujo de entrada de bajo nivel sobre el archivo
      El llamador es responsable de envolverlo con ObjectInputStream si lo requiere */
     public InputStream newInputStream() throws IOException {
-        return Files.newInputStream(rutaArchivo);
+        return Files.newInputStream(rutaArchivo.toAbsolutePath());
     }
 
     /* Escribe contenido en el archivo de forma atómica.

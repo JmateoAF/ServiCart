@@ -11,22 +11,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<!--
-    loginCliente.fxml
-    CORRECCIONES:
-    - Eliminado el ChoiceBox de "Base de datos" (no debe exponerse al cliente)
-    - Añadido fx:id en el campo cédula y en el botón principal
-    - Añadido fx:id="lblError" para mostrar mensajes de error
-    - Versión JavaFX unificada a /26
-    - Añadido fx:controller correcto
--->
 <BorderPane prefHeight="600" prefWidth="800"
             style="-fx-background-color: #0f0f0f;"
             xmlns="http://javafx.com/javafx/26"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="servicart.ui.controllers.LoginClienteController">
 
-    <!-- ═══ NAVBAR ═══ -->
     <top>
         <HBox alignment="CENTER_LEFT" prefHeight="55"
               style="-fx-background-color: #161616;
@@ -37,8 +27,8 @@
                    style="-fx-text-fill: #e8c96d;
                           -fx-font-size: 15;
                           -fx-font-weight: bold;
-                          -fx-font-family: 'Courier New';" />
-            <Region HBox.hgrow="ALWAYS" />
+                          -fx-font-family: 'Courier New';"/>
+            <Region HBox.hgrow="ALWAYS"/>
             <!-- Inicio activo -->
             <Button text="Inicio"
                     style="-fx-background-color: #1f1f1f;
@@ -49,7 +39,7 @@
                            -fx-background-radius: 4;
                            -fx-font-size: 12;
                            -fx-padding: 5 14 5 14;
-                           -fx-cursor: hand;" />
+                           -fx-cursor: hand;"/>
             <Button text="Sobre Nosotros"
                     onAction="#irASobreNosotros"
                     style="-fx-background-color: transparent;
@@ -58,7 +48,9 @@
                            -fx-font-size: 12;
                            -fx-padding: 5 14 5 14;
                            -fx-cursor: hand;">
-                <HBox.margin><Insets left="8" /></HBox.margin>
+                <HBox.margin>
+                    <Insets left="8"/>
+                </HBox.margin>
             </Button>
         </HBox>
     </top>
@@ -86,13 +78,15 @@
                               -fx-alignment: center;
                               -fx-background-radius: 4;
                               -fx-padding: 5 0 5 0;">
-                    <VBox.margin><Insets bottom="24" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets bottom="24"/>
+                    </VBox.margin>
                 </Label>
 
                 <!-- Cédula -->
                 <Label text="CÉDULA"
                        style="-fx-text-fill: #555555;
-                              -fx-font-size: 10;" />
+                              -fx-font-size: 10;"/>
                 <TextField fx:id="txtCedula"
                            promptText="0102030405"
                            style="-fx-background-color: #1a1a1a;
@@ -105,7 +99,9 @@
                                   -fx-font-size: 15;
                                   -fx-padding: 8 10 8 10;
                                   -fx-font-family: 'Courier New';">
-                    <VBox.margin><Insets top="5" bottom="16" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets top="5" bottom="16"/>
+                    </VBox.margin>
                 </TextField>
 
                 <!-- Mensaje de error (oculto por defecto) -->
@@ -119,7 +115,9 @@
                               -fx-font-size: 11;
                               -fx-padding: 7 10 7 10;
                               -fx-background-radius: 4;">
-                    <VBox.margin><Insets bottom="10" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets bottom="10"/>
+                    </VBox.margin>
                 </Label>
 
                 <!-- Botón principal -->
@@ -136,11 +134,15 @@
                                -fx-background-radius: 6;
                                -fx-padding: 10 0 10 0;
                                -fx-cursor: hand;">
-                    <VBox.margin><Insets top="6" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets top="6"/>
+                    </VBox.margin>
                 </Button>
 
                 <Separator>
-                    <VBox.margin><Insets top="18" bottom="14" /></VBox.margin>
+                    <VBox.margin>
+                        <Insets top="18" bottom="14"/>
+                    </VBox.margin>
                 </Separator>
 
                 <!-- Enlace admin -->
@@ -153,7 +155,7 @@
                                -fx-alignment: center;
                                -fx-cursor: hand;
                                -fx-border-color: transparent;
-                               -fx-padding: 0;" />
+                               -fx-padding: 0;"/>
             </VBox>
         </StackPane>
     </center>

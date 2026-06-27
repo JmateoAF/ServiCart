@@ -2,6 +2,7 @@ package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,6 +17,7 @@ import servicart.ui.Sesion;
 import java.util.Optional;
 
 public class LoginClienteController {
+    public Button btnBuscar;
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
     @FXML private Label lblError;
