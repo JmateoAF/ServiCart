@@ -9,9 +9,9 @@ import servicart.exceptions.ServiCartException;
 
 import java.time.LocalDateTime;
 
-/* Sí se supera la fecha de corte → cortar el servicio.
-Para reactivar → el cliente paga el costo de reactivación.
-Si el corte se prolonga demasiado → el ContratoService
+/* Sí se supera la fecha de corte -> cortar el servicio.
+Para reactivar -> el cliente paga el costo de reactivación.
+Si el corte se prolonga demasiado -> el ContratoService
 puede terminar el contrato por causa EMPRESA */
 
 public class CorteService {
