@@ -32,7 +32,7 @@
             </Button>
             <Button onAction="#irASobreNosotros" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-cursor: hand;" text="Sobre Nosotros">
                 <HBox.margin>
-                    <Insets left="8" />
+                    <Insets left="10.0" />
                 </HBox.margin>
                 <font>
                     <Font size="20.0" />
