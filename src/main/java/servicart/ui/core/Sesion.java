@@ -1,4 +1,4 @@
-package servicart.ui;
+package servicart.ui.core;
 
 import servicart.domain.models.entities.Carrito;
 import servicart.domain.models.entities.Cliente;

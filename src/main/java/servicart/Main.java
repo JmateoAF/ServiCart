@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 import servicart.data.CatalogoSeeder;
 import servicart.data.FactoryDAO;
 import servicart.data.sqlite.ConexionSQLite;
-import servicart.ui.AppContext;
-import servicart.ui.ManejadorTema;
-import servicart.ui.Navegador;
+import servicart.ui.core.GestorNotificacion;
+import servicart.ui.core.ManejadorTema;
+import servicart.ui.core.Navegador;
 import java.util.Objects;
 
 //TRABAJO REALIZADO POR: JOSTIN AUCANCELA Y MARITZA QUISHPI
@@ -29,7 +29,7 @@ void main() {
     new CatalogoSeeder(FactoryDAO.servicioCatalogoDAO()).sembrar();
 
     //Configurar Observer: al emitir facturas se notifica por email + SMS
-    AppContext.inicializar();
+    GestorNotificacion.inicializar();
 
     //Lanzar JavaFX
     Platform.startup(() -> {

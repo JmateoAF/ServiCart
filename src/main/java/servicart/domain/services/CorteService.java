@@ -8,6 +8,7 @@ import servicart.domain.models.enums.EstadoCorte;
 import servicart.exceptions.ServiCartException;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /* Sí se supera la fecha de corte -> cortar el servicio.
 Para reactivar -> el cliente paga el costo de reactivación.
@@ -44,5 +45,9 @@ public class CorteService {
 
     public boolean tieneCortePendiente(int contratoId) {
         return corteDAO.findAll().stream().anyMatch(c -> c.getContrato().getId() == contratoId && c.getEstadoCorte() == EstadoCorte.CORTADO);
+    }
+
+    public Optional<CorteServicio> buscarCortePorContrato(int contratoId) {
+        return corteDAO.findAll().stream().filter(c -> c.getContrato().getId() == contratoId && c.estadoCortado()).findFirst();
     }
 }
