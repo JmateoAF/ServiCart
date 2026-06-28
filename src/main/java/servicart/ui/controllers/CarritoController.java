@@ -79,4 +79,8 @@ public class CarritoController {
     @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
     @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
     @FXML private void onSalir(ActionEvent e) { Sesion.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); }
+
+    public void onVolverServicios(ActionEvent actionEvent)  {
+        Navegador.irA("views/cliente/panelCliente.fxml");
+    }
 }
