@@ -10,11 +10,10 @@ import servicart.domain.models.entities.Abono;
 import servicart.domain.models.entities.Carrito;
 import servicart.domain.models.enums.ModalidadPago;
 import servicart.domain.services.CheckoutService;
-import servicart.domain.services.FacturacionService;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.AppContext;
-import servicart.ui.Navegador;
-import servicart.ui.Sesion;
+import servicart.ui.core.GestorNotificacion;
+import servicart.ui.core.Navegador;
+import servicart.ui.core.Sesion;
 
 public class CheckoutController {
     @FXML private VBox listaResumen;
@@ -25,7 +24,7 @@ public class CheckoutController {
 
     @FXML
     public void initialize() {
-        checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), AppContext.getFacturacionService());
+        checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), GestorNotificacion.getFacturacionService());
         cmbMetodoPago.getItems().setAll("Tarjeta de crédito", "Tarjeta de débito", "PayPal", "Transferencia bancaria", "Débito automático");
         cmbMetodoPago.setValue("Tarjeta de crédito");
         cargarResumen();

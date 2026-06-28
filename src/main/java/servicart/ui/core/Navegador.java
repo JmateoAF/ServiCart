@@ -1,10 +1,9 @@
-package servicart.ui;
+package servicart.ui.core;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.exceptions.ServiCartException;
-
 import java.io.IOException;
 import java.util.Objects;
 

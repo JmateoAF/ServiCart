@@ -9,8 +9,8 @@ import servicart.domain.models.entities.Cliente;
 import servicart.domain.services.ClienteServices;
 import servicart.dtos.ClienteDTO;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.Navegador;
-import servicart.ui.Sesion;
+import servicart.ui.core.Navegador;
+import servicart.ui.core.Sesion;
 
 public class PerfilController {
 

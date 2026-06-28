@@ -11,15 +11,17 @@ import servicart.data.FactoryDAO.Estrategia;
 import servicart.domain.models.entities.Cliente;
 import servicart.domain.services.ClienteServices;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.Navegador;
-import servicart.ui.Sesion;
+import servicart.ui.core.GestorTema;
+import servicart.ui.core.Navegador;
+import servicart.ui.core.Sesion;
 
 import java.util.Optional;
 
 public class LoginClienteController {
-    @FXML private Button btnBuscar;
+    @FXML private Button btnTema;
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
+    @FXML private Button btnBuscar;
     @FXML private Label lblError;
 
     @FXML
@@ -27,6 +29,7 @@ public class LoginClienteController {
         cmbBaseDatos.getItems().setAll("SQLite", "Binario");
         cmbBaseDatos.setValue("SQLite");
         lblError.setVisible(false);
+        GestorTema.configurar(btnTema);
     }
 
     @FXML
@@ -77,6 +80,7 @@ public class LoginClienteController {
         Navegador.irA("views/admin/loginAdmin.fxml");
     }
 
+    @FXML
     private void mostrarError(String mensaje) {
         lblError.setText(mensaje);
         lblError.setVisible(true);

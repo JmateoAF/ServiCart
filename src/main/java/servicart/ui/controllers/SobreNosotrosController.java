@@ -2,7 +2,7 @@ package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import servicart.ui.Navegador;
+import servicart.ui.core.Navegador;
 
 public class SobreNosotrosController {
     @FXML

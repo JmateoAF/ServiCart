@@ -1,4 +1,4 @@
-package servicart.ui;
+package servicart.ui.core;
 
 import servicart.data.FactoryDAO;
 import servicart.domain.services.notifiers.NotificadorEmail;
@@ -6,7 +6,7 @@ import servicart.domain.services.notifiers.NotificadorPantalla;
 import servicart.domain.services.notifiers.NotificadorSMS;
 import servicart.domain.services.FacturacionService;
 
-public final class AppContext {
+public final class GestorNotificacion {
     private static FacturacionService facturacionService;
 
     public static void inicializar() {

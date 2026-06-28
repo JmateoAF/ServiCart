@@ -1,4 +1,4 @@
-package servicart.ui;
+package servicart.ui.core;
 
 import javafx.scene.Scene;
 import servicart.exceptions.ServiCartException;

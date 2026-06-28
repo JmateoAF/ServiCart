@@ -16,9 +16,9 @@ import servicart.domain.services.FacturacionService;
 import servicart.dtos.ClienteDTO;
 import servicart.dtos.FacturaDTO;
 import servicart.dtos.FacturaMapper;
-import servicart.ui.AppContext;
-import servicart.ui.Navegador;
-import servicart.ui.Sesion;
+import servicart.ui.core.GestorNotificacion;
+import servicart.ui.core.Navegador;
+import servicart.ui.core.Sesion;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class PanelClienteController {
     @FXML
     public void initialize() {
         contratoService = new ContratoService(FactoryDAO.contratoDAO());
-        facturacionService = AppContext.getFacturacionService();
+        facturacionService = GestorNotificacion.getFacturacionService();
         cargarTarjetas();
     }
 
@@ -154,11 +154,10 @@ public class PanelClienteController {
         //Buscar el corte activo para este contrato
         CorteService corteService = new CorteService(FactoryDAO.corteServicioDAO());
 
-        corteService.corteDAO.findAll().stream().filter(c -> c.getContrato().getId() == contrato.getId() && c.estadoCortado()).findFirst()
-                .ifPresentOrElse(corte -> {
-                    corteService.reactivarServicio(corte, costoReactivacion);
-                    mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
-                    cargarTarjetas(); }, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
+        corteService.buscarCortePorContrato(contrato.getId()).ifPresentOrElse(corte -> {
+            corteService.reactivarServicio(corte, costoReactivacion);
+            mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
+            cargarTarjetas();}, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
     }
 
     @FXML

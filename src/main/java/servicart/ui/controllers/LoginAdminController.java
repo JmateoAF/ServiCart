@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import servicart.data.FactoryDAO;
 import servicart.domain.services.AdminServices;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.Navegador;
+import servicart.ui.core.Navegador;
 
 public class LoginAdminController {
     @FXML private TextField txtUsuario;
