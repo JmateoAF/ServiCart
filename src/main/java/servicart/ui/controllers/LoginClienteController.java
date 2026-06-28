@@ -11,13 +11,11 @@ import servicart.data.FactoryDAO.Estrategia;
 import servicart.domain.models.entities.Cliente;
 import servicart.domain.services.ClienteServices;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.core.GestorTema;
 import servicart.ui.core.Navegador;
 import servicart.ui.core.Sesion;
 import java.util.Optional;
 
 public class LoginClienteController {
-    @FXML private Button btnTema;
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
     @FXML private Button btnBuscar;
@@ -28,7 +26,6 @@ public class LoginClienteController {
         cmbBaseDatos.getItems().setAll("SQLite", "Binario");
         cmbBaseDatos.setValue("SQLite");
         lblError.setVisible(false);
-        GestorTema.configurar(btnTema);
     }
 
     @FXML

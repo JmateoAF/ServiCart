@@ -8,7 +8,6 @@ import servicart.data.CatalogoSeeder;
 import servicart.data.FactoryDAO;
 import servicart.data.sqlite.ConexionSQLite;
 import servicart.ui.core.GestorNotificacion;
-import servicart.ui.core.ManejadorTema;
 import servicart.ui.core.Navegador;
 import java.util.Objects;
 
@@ -42,7 +41,6 @@ void main() {
             stage.setScene(scene);
 
             Navegador.inicializar(stage);
-            ManejadorTema.inicializar(scene);
 
             stage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("assets/icon/marcoDorado.png"), "Ícono no encontrado")));
             stage.setMinWidth(700);
