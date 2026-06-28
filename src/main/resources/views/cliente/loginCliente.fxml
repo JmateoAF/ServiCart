@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="768.0" prefWidth="1368.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.LoginClienteController">
+<BorderPane stylesheets="@../../assets/css/styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.LoginClienteController">
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
             <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="SERVICART">
@@ -68,13 +68,10 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="txtCedula" promptText="0102030405" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-family: 'Courier New';">
+                <TextField fx:id="txtCedula" promptText="0102030405" style="-fx-font-size: 15; -fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-family: 'Courier New';">
                     <VBox.margin>
                         <Insets bottom="20.0" top="5.0" />
                     </VBox.margin>
-                    <font>
-                        <Font size="15.0" />
-                    </font>
                     <padding>
                         <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                     </padding>
@@ -85,19 +82,22 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cmbBaseDatos" maxWidth="1.7976931348623157E308" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; fx-border-radius: 5; -fx-background-radius: 5;">
+                <ComboBox fx:id="cmbBaseDatos" maxWidth="1.7976931348623157E308" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" styleClass="combo-box-popup">
                     <VBox.margin>
                         <Insets bottom="15.0" top="5.0" />
                     </VBox.margin>
                 </ComboBox>
 
-                <Label fx:id="lblError" managed="false" maxWidth="1.7976931348623157E308" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5;" visible="false" wrapText="true">
+                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="0.0" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5;" visible="false" wrapText="true">
                     <VBox.margin>
-                        <Insets bottom="15.0" top="5.0" />
+                        <Insets />
                     </VBox.margin>
                     <font>
                         <Font size="15.0" />
                     </font>
+                    <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                    </padding>
                 </Label>
 
                 <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" onAction="#onBuscarDeudas" style="-fx-font-size: 15px; -fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;" text="BUSCAR MIS DEUDAS">
@@ -107,9 +107,9 @@
                     <padding>
                         <Insets bottom="10.0" top="10.0" />
                     </padding>
-               <font>
-                  <Font size="15.0" />
-               </font>
+                    <font>
+                        <Font size="15.0" />
+                    </font>
                 </Button>
 
                 <Separator>
@@ -129,5 +129,4 @@
             </VBox>
         </StackPane>
     </center>
-
 </BorderPane>

@@ -18,14 +18,12 @@ import java.util.Optional;
 public class LoginClienteController {
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
-    @FXML private Button btnBuscar;
     @FXML private Label lblError;
 
     @FXML
     public void initialize() {
         cmbBaseDatos.getItems().setAll("SQLite", "Binario");
         cmbBaseDatos.setValue("SQLite");
-        lblError.setVisible(false);
     }
 
     @FXML
@@ -37,6 +35,7 @@ public class LoginClienteController {
 
             return;
         }
+
         if (!cedula.matches("\\d{10}")) {
             mostrarError("La cédula debe tener 10 dígitos");
 
@@ -50,10 +49,10 @@ public class LoginClienteController {
         // Buscar cliente en la base de datos elegida
         try {
             ClienteServices clienteService = new ClienteServices(FactoryDAO.clienteDAO());
-            Optional<Cliente> resultado   = clienteService.buscarId(cedula);
+            Optional<Cliente> resultado = clienteService.buscarId(cedula);
 
             if (resultado.isEmpty()) {
-                mostrarError("No se encontró ningún cliente con esa cédula");
+                mostrarError("No se encontró ningún cliente");
 
                 return;
             }
@@ -76,9 +75,14 @@ public class LoginClienteController {
         Navegador.irA("views/admin/loginAdmin.fxml");
     }
 
-    @FXML
     private void mostrarError(String mensaje) {
         lblError.setText(mensaje);
+        lblError.setPrefHeight(33);
+        javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(5, 0, 15, 0));
         lblError.setVisible(true);
+
+        javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+        pause.setOnFinished(e -> { lblError.setVisible(false); lblError.setPrefHeight(0); javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0)); });
+        pause.play();
     }
 }
