@@ -14,7 +14,6 @@ import servicart.exceptions.ServiCartException;
 import servicart.ui.core.GestorTema;
 import servicart.ui.core.Navegador;
 import servicart.ui.core.Sesion;
-
 import java.util.Optional;
 
 public class LoginClienteController {

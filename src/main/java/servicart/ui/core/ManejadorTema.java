@@ -33,8 +33,6 @@ public class ManejadorTema {
 
     public static boolean isDark() { return dark; }
 
-    public static String iconoActual() { return dark ? "claro" : "oscuro"; }
-
     private static void aplicarTema() {
         if (scene == null) return;
         scene.getStylesheets().clear();
