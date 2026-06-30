@@ -35,17 +35,14 @@ public class LoginClienteController {
             return;
         }
 
-        BaseDatosService.configurarBaseDatos(cmbBaseDatos.getValue());
-        CrudDAO<Cliente> dao = FactoryDAO.getDAO(Cliente.class);
-        ClienteServices clienteServices = new ClienteServices(dao);
+        ClienteServices clienteServices = new ClienteServices();
         ClienteDTO cliente = clienteServices.buscarId(cedula);
 
         if (cliente == null) {
             mostrarError("Cliente no encontrado.");
             return;
         }else{
-            //Sesion.setCliente(cliente); // guardas el objeto Cliente completo
-            Navegador.irA("views/cliente/panelCliente.fxml");
+            Navegador.irA("views/cliente/panelCliente.fxml",cliente);
         }
     }
 
