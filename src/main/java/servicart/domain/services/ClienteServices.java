@@ -18,11 +18,9 @@ public class ClienteServices {
 
     public void guardarCliente(Cliente cliente) { clienteDAO.save(cliente); }
 
-    public ClienteDTO buscarId(String cedula){ return clienteDAO.findId(cedula).map(mapper::aDTO).orElse(null);
+    public ClienteDTO buscarId(String cedula){ return clienteDAO.findId(cedula).map(mapper::aDTO).orElse(null); }
 
-    public List<Cliente> buscarTodos(){
-        return clienteDAO.findAll();
-    }
+    public List<Cliente> buscarTodos(){ return clienteDAO.findAll(); }
 
     public void actualizar(Cliente cliente){ clienteDAO.update(cliente); }
 

@@ -132,6 +132,12 @@ public class DatosSeeder {
     }
 
     public static <T> void ponerEnArchivo(CrudDAO<T> dao, List<T> datos) {
-        for (T entidad : datos) dao.save(entidad);
+        for (T entidad : datos) {
+            try { dao.save(entidad); // Intenta guardar (INSERT)
+            } catch (RuntimeException e) {
+                if (e.getMessage() != null && e.getMessage().startsWith("Ya existe un registro con ID")) {}
+                else throw e;
+            }
+        }
     }
 }

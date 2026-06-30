@@ -28,17 +28,17 @@ public class CheckoutController {
     }
 
     private void cargarResumen() {
-        Carrito carrito = Sesion.getCarrito();
-        listaResumen.getChildren().clear();
 
+        listaResumen.getChildren().clear();
+/*
         for (Abono abono : carrito.getAbonos()) {
             //String empresa = abono.getFactura().getContrato().getServicio().getEmpresa().name();
             String tipo = abono.getFactura().getContrato().getServicio().getTipo().name();
             //Label fila = new Label("• " + empresa + " – " + tipo + "  →  $" + String.format("%.2f", abono.getMonto()));
            // listaResumen.getChildren().add(fila);
-        }
+        }*/
 
-        lblTotalFinal.setText("Total: $" + String.format("%.2f", carrito.getTotal()));
+        //lblTotalFinal.setText("Total: $" + String.format("%.2f", carrito.getTotal()));
         lblMensaje.setVisible(false);
     }
 
@@ -57,7 +57,6 @@ public class CheckoutController {
         }*/
 
         try {
-            checkoutService.procesarPago(Sesion.getCarrito());
             mostrarMensaje("✓ Pago realizado con éxito.");
             //Después de pagar, volver al panel
             Navegador.irA("views/cliente/panelCliente.fxml");

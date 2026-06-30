@@ -137,7 +137,7 @@ public class PanelClienteController {
 
             Abono abono = new Abono(monto, LocalDateTime.now(), false, factura, cmbModalidad.getValue());
 
-            Sesion.getCarrito().agregarAbono(abono);
+
             mostrarMensaje("Abono de $" + monto + " añadido al carrito.");
             txtMonto.clear();
         } catch (NumberFormatException e) {
@@ -164,7 +164,7 @@ public class PanelClienteController {
 
     @FXML
     private void onSalir(ActionEvent event) {
-        Sesion.cerrar();
+
         Navegador.irA("views/cliente/loginCliente.fxml");
     }
 

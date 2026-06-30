@@ -25,26 +25,25 @@ public class CarritoController {
     }
 
     private void cargarCarrito() {
-        Carrito carrito = Sesion.getCarrito();
         listaItems.getChildren().clear();
 
-        if (carrito.estaVacio()) {
+/*        if (carrito.estaVacio()) {
             paneVacio.setVisible(true);
             listaItems.setVisible(false);
             btnCheckout.setDisable(true);
 
             return;
-        }
+        }*/
 
         paneVacio.setVisible(false);
         listaItems.setVisible(true);
         btnCheckout.setDisable(false);
 
-        for (Abono abono : carrito.getAbonos()) listaItems.getChildren().add(crearFilaItem(abono));
+   /*     for (Abono abono : carrito.getAbonos()) listaItems.getChildren().add(crearFilaItem(abono));
 
         lblCantidad.setText(carrito.cantidadItems() + " ítem(s)");
         lblSubtotal.setText("$" + String.format("%.2f", carrito.getTotal()));
-        lblTotalFinal.setText("$" + String.format("%.2f", carrito.getTotal()));
+        lblTotalFinal.setText("$" + String.format("%.2f", carrito.getTotal()));*/
     }
 
     private HBox crearFilaItem(Abono abono) {
@@ -58,7 +57,7 @@ public class CarritoController {
 
         Button btnEliminar = new Button("✕");
         btnEliminar.setOnAction(e -> {
-            Sesion.getCarrito().quitarAbono(abono);
+
             cargarCarrito();
         });
 
@@ -71,13 +70,12 @@ public class CarritoController {
 
     @FXML
     private void onVaciarCarrito(ActionEvent event) {
-        Sesion.getCarrito().vaciar();
+
         cargarCarrito();
     }
 
     @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
     @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
-    @FXML private void onSalir(ActionEvent e) { Sesion.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); }
 
     public void onVolverServicios(ActionEvent actionEvent)  {
         Navegador.irA("views/cliente/panelCliente.fxml");

@@ -35,8 +35,8 @@ public class LoginClienteController {
 
         BaseDatosService.configurarBaseDatos(cmbBaseDatos.getValue());
 
-        ClienteServices clienteServices = new ClienteServices();
-        ClienteDTO cliente = clienteServices.buscarId(cedula);
+        //ClienteServices clienteServices = new ClienteServices();
+        //ClienteDTO cliente = clienteServices.buscarId(cedula);
     }
 
     private boolean validarCedula(String cedula) {

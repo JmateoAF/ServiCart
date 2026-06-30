@@ -39,9 +39,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) return Optional.of(mapear(rs));
-            }
+            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
         } catch (SQLException e) {
             throw new PersistenciaException("Error al buscar el cliente: " + cedula, e);
         }

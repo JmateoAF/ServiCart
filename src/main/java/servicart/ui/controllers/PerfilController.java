@@ -31,17 +31,6 @@ public class PerfilController {
     }
 
     private void cargarDatos() {
-        ClienteDTO c = Sesion.getClienteDTO();
-        if (c == null) return;
-
-        lblNombreUsuario.setText(c.nombre());
-        lblEmailUsuario.setText(c.email());
-        txtNombre.setText(c.nombre());
-        txtEmail.setText(c.email());
-        txtCelular.setText(c.celular());
-        txtCedula.setText(c.cedula());
-        txtCedula.setEditable(false); // la cédula no se puede cambiar
-        lblMensaje.setVisible(false);
     }
 
     @FXML
@@ -57,11 +46,6 @@ public class PerfilController {
         }
 
         try {
-            entidad.setNombre(nombre);
-            entidad.setEmail(email);
-            entidad.setCelular(celular);
-
-            clienteService.actualizar(entidad);
             mostrarMensaje("✓ Datos actualizados correctamente");
             cargarDatos();
         } catch (ServiCartException e) {
