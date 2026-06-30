@@ -1,7 +1,7 @@
 package servicart.domain.services.notifiers;
 
 import servicart.domain.interfaces.Observador;
-import servicart.domain.models.entities.Factura;
+import servicart.models.entities.Factura;
 
 import java.util.ArrayList;
 import java.util.List;

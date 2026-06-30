@@ -1,7 +1,7 @@
 package servicart.ui.core;
 
-import servicart.domain.models.entities.Carrito;
-import servicart.domain.models.entities.Cliente;
+import servicart.models.entities.Carrito;
+import servicart.models.entities.Cliente;
 import servicart.dtos.ClienteDTO;
 import servicart.dtos.ClienteMapper;
 

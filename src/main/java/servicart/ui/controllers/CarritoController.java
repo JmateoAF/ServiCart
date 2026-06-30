@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import servicart.domain.models.entities.Abono;
-import servicart.domain.models.entities.Carrito;
+import servicart.models.entities.Abono;
+import servicart.models.entities.Carrito;
 import servicart.ui.core.Navegador;
 import servicart.ui.core.Sesion;
 

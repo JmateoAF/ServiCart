@@ -1,10 +1,10 @@
-package servicart.domain.models.catalog;
+package servicart.models.catalog;
 
 import servicart.domain.interfaces.CalculoStrategy;
 import servicart.domain.interfaces.Identificable;
-import servicart.domain.models.enums.Empresa;
-import servicart.domain.models.enums.TipoServicio;
-import servicart.domain.models.enums.TipoValorFactura;
+import servicart.models.entities.Empresa;
+import servicart.models.enums.TipoServicio;
+import servicart.models.enums.TipoValorFactura;
 import java.io.Serializable;
 
 /*
@@ -15,26 +15,27 @@ import java.io.Serializable;
 
 public class ServicioCatalogo implements Serializable, Identificable {
     private int id;
+    private Empresa empresa;
+    private TipoServicio tipo;
+    private TipoValorFactura tipoValor;
     private double tarifaFija;
     private double tarifaPorUnidad;
-    private TipoServicio tipo;                // AGUA, LUZ, BASURA, INTERNET
-    private TipoValorFactura tipoValor;       // FIJO o VARIABLE
     private double costoReactivacion;
     private double tasaInteresDiario;
-    private final Empresa empresa;
-    private CalculoStrategy estrategia;     // Estrategia de cálculo (transitoria o calculada)
+    private transient CalculoStrategy estrategia;    // Estrategia de cálculo (transitoria o calculada)
 
-    public ServicioCatalogo(int id, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario, Empresa empresa) {
-        this.id = id;
+    public ServicioCatalogo(Empresa empresa, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario) {
+        this.empresa = empresa;
         this.tipo = tipo;
         this.tipoValor = tipoValor;
         this.costoReactivacion = costoReactivacion;
         this.tasaInteresDiario = tasaInteresDiario;
-        this.empresa = empresa;
+        this.tarifaFija = 0.0;
+        this.tarifaPorUnidad = 0.0;
         asignarEstrategia();
     }
 
-    // Asigna la estrategia correcta según el tipo de valor
+    //Asigna la estrategia correcta según el tipo de valor
     private void asignarEstrategia() {
         this.estrategia = switch (tipoValor) {
             case FIJO -> new CalculoFijo();
@@ -42,10 +43,9 @@ public class ServicioCatalogo implements Serializable, Identificable {
         };
     }
 
-    /**
-     * Calcula el monto de la factura para un consumo dado.
-     * Se basa en la estrategia asignada.
-     */
+    /* Calcula el monto de la factura para un consumo dado.
+    Se basa en la estrategia asignada*/
+
     public double calcularMonto(double consumo) {
         return estrategia.calcular(consumo, this);
     }
@@ -53,11 +53,8 @@ public class ServicioCatalogo implements Serializable, Identificable {
     public int getId() { return id; }
     public void setId(int id) {this.id = id;}
 
-    public double getTarifaFija() { return tarifaFija; }
-    public void setTarifaFija(double tarifaFija) { this.tarifaFija = tarifaFija; }
-
-    public double getTarifaPorUnidad() { return tarifaPorUnidad; }
-    public void setTarifaPorUnidad(double tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
+    public Empresa getEmpresa() { return empresa; }
+    public void setEmpresa(Empresa empresa) { this.empresa = empresa; }
 
     public TipoServicio getTipo() { return tipo; }
     public void setTipo(TipoServicio tipo) { this.tipo = tipo; }
@@ -68,13 +65,16 @@ public class ServicioCatalogo implements Serializable, Identificable {
         asignarEstrategia();  // reasignar al cambiar el tipo
     }
 
+    public double getTarifaFija() { return tarifaFija; }
+    public void setTarifaFija(double tarifaFija) { this.tarifaFija = tarifaFija; }
+
+    public double getTarifaPorUnidad() { return tarifaPorUnidad; }
+
+    public void setTarifaPorUnidad(double tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
+
     public double getCostoReactivacion() { return costoReactivacion; }
     public void setCostoReactivacion(double costoReactivacion) { this.costoReactivacion = costoReactivacion; }
 
     public double getTasaInteresDiario() { return tasaInteresDiario; }
     public void setTasaInteresDiario(double tasaInteresDiario) { this.tasaInteresDiario = tasaInteresDiario; }
-
-    public Empresa getEmpresa() { return empresa; }
-
-    // La estrategia no necesita getter público, es interna
 }

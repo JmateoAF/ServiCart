@@ -1,10 +1,10 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.catalog.ServicioCatalogo;
-import servicart.domain.models.entities.Cliente;
-import servicart.domain.models.entities.Contrato;
-import servicart.domain.models.enums.CausaTerminacion;
+import servicart.models.catalog.ServicioCatalogo;
+import servicart.models.entities.Cliente;
+import servicart.models.entities.Contrato;
+import servicart.models.enums.CausaTerminacion;
 import servicart.exceptions.ServiCartException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ContratoService {
     //Termina el contrato por la causa indicada
     public void terminarContrato(Contrato contrato, CausaTerminacion causa) {
         if (causa == CausaTerminacion.ACTIVO) throw new ServiCartException("La causa de terminación no puede ser ACTIVO");
-        if (!contrato.estaActivo()) throw new ServiCartException("El contrato ya está terminado");
+        if (contrato.estaActivo()) throw new ServiCartException("El contrato ya está terminado");
 
         contrato.setCausaTerminacion(causa);
         contrato.setFechaFin(java.time.LocalDateTime.now());

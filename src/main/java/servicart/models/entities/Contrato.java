@@ -1,8 +1,8 @@
-package servicart.domain.models.entities;
+package servicart.models.entities;
 
 import servicart.domain.interfaces.Identificable;
-import servicart.domain.models.enums.CausaTerminacion;
-import servicart.domain.models.catalog.ServicioCatalogo;
+import servicart.models.enums.CausaTerminacion;
+import servicart.models.catalog.ServicioCatalogo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -38,5 +38,5 @@ public class Contrato implements Serializable, Identificable {
 
     public Cliente getCliente() { return cliente; }
 
-    public boolean estaActivo() { return causaTerminacion == CausaTerminacion.ACTIVO; }
+    public boolean estaActivo() { return causaTerminacion != CausaTerminacion.ACTIVO; }
 }

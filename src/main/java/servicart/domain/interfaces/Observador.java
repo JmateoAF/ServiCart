@@ -1,6 +1,6 @@
 package servicart.domain.interfaces;
 
-import servicart.domain.models.entities.Factura;
+import servicart.models.entities.Factura;
 
 public interface Observador {
     void actualizar(Factura factura);

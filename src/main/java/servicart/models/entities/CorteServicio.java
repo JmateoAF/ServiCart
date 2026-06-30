@@ -1,7 +1,7 @@
-package servicart.domain.models.entities;
+package servicart.models.entities;
 
 import servicart.domain.interfaces.Identificable;
-import servicart.domain.models.enums.EstadoCorte;
+import servicart.models.enums.EstadoCorte;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

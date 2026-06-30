@@ -1,4 +1,4 @@
-package servicart.domain.models.entities;
+package servicart.models.entities;
 
 import java.io.Serializable;
 

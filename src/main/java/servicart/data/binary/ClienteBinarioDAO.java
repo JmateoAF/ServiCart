@@ -1,8 +1,6 @@
 package servicart.data.binary;
 
-import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entities.Cliente;
-import servicart.exceptions.EntidadNoEncontradaException;
+import servicart.models.entities.Cliente;
 
 import java.util.List;
 

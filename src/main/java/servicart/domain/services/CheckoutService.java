@@ -1,9 +1,9 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entities.Abono;
-import servicart.domain.models.entities.Carrito;
-import servicart.domain.models.entities.Factura;
+import servicart.models.entities.Abono;
+import servicart.models.entities.Carrito;
+import servicart.models.entities.Factura;
 import servicart.exceptions.ServiCartException;
 import java.util.List;
 

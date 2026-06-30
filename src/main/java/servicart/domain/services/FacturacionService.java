@@ -1,8 +1,8 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entities.*;
-import servicart.domain.models.enums.EstadoFactura;
+import servicart.models.entities.*;
+import servicart.models.enums.EstadoFactura;
 import servicart.exceptions.ServiCartException;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class FacturacionService extends SujetoNotificable {
 
     public Factura emitirFactura(Contrato contrato, double consumo) {
         if (contrato == null) throw new ServiCartException("El contrato no puede ser nulo");
-        if (!contrato.estaActivo()) throw new ServiCartException("No se puede facturar un contrato terminado");
+        if (contrato.estaActivo()) throw new ServiCartException("No se puede facturar un contrato terminado");
 
         double monto = contrato.getServicio().calcularMonto(consumo);
         LocalDateTime ahora = LocalDateTime.now();

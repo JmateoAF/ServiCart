@@ -15,7 +15,7 @@ public class LoginAdminController {
     @FXML private PasswordField txtPassword;
     @FXML private Label lblError;
 
-    private final AdminServices adminService = new AdminServices(FactoryDAO.adminDAO());
+    //private final AdminServices adminService = new AdminServices(FactoryDAO.adminDAO());
 
     @FXML
     public void initialize() {
@@ -34,8 +34,8 @@ public class LoginAdminController {
         }
 
         try {
-            if (adminService.validarLogin(usuario, contrasenia)) Navegador.irA("views/admin/panelAdmin.fxml");
-            else mostrarError("Usuario o contraseña incorrectos.");
+            //if (adminService.validarLogin(usuario, contrasenia)) Navegador.irA("views/admin/panelAdmin.fxml");
+            //else mostrarError("Usuario o contraseña incorrectos.");
         } catch (ServiCartException e) {
             mostrarError("Error al conectar con la base de datos.");
         }

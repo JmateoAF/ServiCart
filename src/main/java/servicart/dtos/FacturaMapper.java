@@ -1,14 +1,14 @@
 package servicart.dtos;
 
-import servicart.domain.models.entities.Factura;
+import servicart.models.entities.Factura;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public final class FacturaMapper {
-    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+/*    private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static FacturaDTO toDTO(Factura f, double mora, boolean cortePendiente) {
-        String empresa = f.getContrato().getServicio().getEmpresa().name();
+        String empresa = f.getContrato().getServicio().getEmpresa();
         String tipo = f.getContrato().getServicio().getTipo().name();
         String periodo = f.getFechaEmision().format(DateTimeFormatter.ofPattern("MMMM yyyy"));
         String vencimiento = f.getFechaVencimiento().format(FMT);
@@ -22,5 +22,5 @@ public final class FacturaMapper {
         return toDTO(f, 0.0, false);
     }
 
-    public static List<FacturaDTO> toDTO(List<Factura> lista) { return lista.stream().map(FacturaMapper::toDTO).toList(); }
+    public static List<FacturaDTO> toDTO(List<Factura> lista) { return lista.stream().map(FacturaMapper::toDTO).toList(); }*/
 }

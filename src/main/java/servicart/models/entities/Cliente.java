@@ -1,4 +1,4 @@
-package servicart.domain.models.entities;
+package servicart.models.entities;
 
 import java.io.Serializable;
 
@@ -25,31 +25,15 @@ public class Cliente implements Serializable {
 
     public String getCedula() { return cedula; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public String getCelular() {
-        return celular;
-    }
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
+    public String getCelular() { return celular; }
+    public void setCelular(String celular) { this.celular = celular; }
 
-    public int getActivo() {
-        return activo;
-    }
-    public void setActivo(int activo) {
-        this.activo = activo;
-    }
-
-    public boolean estaActivo() { return this.activo == 1; }
+    public int getActivo() { return activo; }
+    public void setActivo(int activo) { this.activo = activo; }
 }

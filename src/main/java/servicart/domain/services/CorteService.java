@@ -1,10 +1,10 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.models.entities.Contrato;
-import servicart.domain.models.entities.CorteServicio;
-import servicart.domain.models.entities.Factura;
-import servicart.domain.models.enums.EstadoCorte;
+import servicart.models.entities.Contrato;
+import servicart.models.entities.CorteServicio;
+import servicart.models.entities.Factura;
+import servicart.models.enums.EstadoCorte;
 import servicart.exceptions.ServiCartException;
 
 import java.time.LocalDateTime;

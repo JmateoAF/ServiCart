@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.domain.models.entities.Factura;
+import servicart.models.entities.Factura;
 
 /* Se eliminó facturaPagada(id) que existía antes.
 Marcar una factura como PAGADA es responsabilidad del FacturacionService:

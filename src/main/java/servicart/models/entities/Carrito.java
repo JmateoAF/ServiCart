@@ -1,4 +1,4 @@
-package servicart.domain.models.entities;
+package servicart.models.entities;
 
 import servicart.domain.interfaces.Identificable;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Carrito implements Serializable, Identificable {
     private int id;
-    private final Cliente cliente;
+    private Cliente cliente;
     private final List<Abono> abonos;
 
     public Carrito(Cliente cliente) {
@@ -20,10 +20,11 @@ public class Carrito implements Serializable, Identificable {
     public void setId(int id) {this.id = id;}
 
     public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
     public List<Abono> getAbonos() { return Collections.unmodifiableList(abonos); }
 
-    public void agregarAbono(Abono abono) { if (abono != null) abonos.add(abono); }
+    public void agregarAbono(Abono abono) { if (abono != null && !abonos.contains(abono)) abonos.add(abono); }
 
     public void quitarAbono(Abono abono) { abonos.remove(abono); }
 

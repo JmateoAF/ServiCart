@@ -6,8 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import servicart.data.FactoryDAO;
-import servicart.data.FactoryDAO.Estrategia;
-import servicart.domain.models.entities.Cliente;
+import servicart.models.entities.Cliente;
+import servicart.domain.services.BaseDatosService;
 import servicart.domain.services.ClienteServices;
 import servicart.exceptions.ServiCartException;
 import servicart.ui.core.Navegador;
@@ -27,40 +27,60 @@ public class LoginClienteController {
 
     @FXML
     private void onBuscarDeudas(ActionEvent event) {
-        String cedula = txtCedula.getText().trim();
+        String cedula = txtCedula.getText();
 
-        if (cedula.isEmpty()) {
-            mostrarError("Ingrese su número de cédula");
-
+        if (!validarCedula(cedula)) {
+            mostrarError("Número de cedula no válida");
             return;
         }
 
-        if (!cedula.matches("\\d{10}")) {
-            mostrarError("La cédula debe tener 10 dígitos");
+        BaseDatosService.configurarBaseDatos(cmbBaseDatos.getValue());
 
-            return;
-        }
-
-        //Configurar la base de datos según elección del usuario
-        Estrategia estrategia = "SQLite".equals(cmbBaseDatos.getValue()) ? Estrategia.SQLITE : Estrategia.BINARIO;
-        FactoryDAO.configurar(estrategia);
-
-        // Buscar cliente en la base de datos elegida
         try {
-            ClienteServices clienteService = new ClienteServices(FactoryDAO.clienteDAO());
+            /*//ClienteServices clienteService = new ClienteServices(FactoryDAO.clienteDAO());
             Optional<Cliente> resultado = clienteService.buscarId(cedula);
 
             if (resultado.isEmpty()) {
                 mostrarError("No se encontró ningún cliente");
-
                 return;
             }
 
             //Iniciar sesión y navegar al panel
-            Sesion.iniciar(resultado.get());
+            Sesion.iniciar(resultado.get());*/
             Navegador.irA("views/cliente/panelCliente.fxml");
         } catch (ServiCartException e) {
             mostrarError("Error al conectar con la base de datos");
+        }
+    }
+
+    private boolean validarCedula(String cedula) {
+        if (cedula.isEmpty()) {
+            mostrarError("Ingrese su número de cédula");
+            return false;
+        }
+
+        if (cedula.length() != 10) {
+            mostrarError("La cédula debe tener 10 dígitos");
+            return false;
+        }
+
+        try {
+            int provincia = Integer.parseInt(cedula.substring(0, 2)), suma = 0, total, valor;
+            int digitoVerificador = Integer.parseInt(cedula.substring(9, 10));
+            int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+
+            if (provincia < 1 || provincia > 24) return false;
+
+            for (int i = 0; i < coeficientes.length; i++) {
+                valor = Integer.parseInt(cedula.substring(i, i + 1)) * coeficientes[i];
+                suma += (valor > 9) ? (valor - 9) : valor;
+            }
+
+            total = (suma % 10 == 0) ? 0 : (10 - (suma % 10));
+
+            return total == digitoVerificador;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -81,7 +101,11 @@ public class LoginClienteController {
         lblError.setVisible(true);
 
         javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-        pause.setOnFinished(e -> { lblError.setVisible(false); lblError.setPrefHeight(0); javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0)); });
+        pause.setOnFinished(e -> {
+            lblError.setVisible(false);
+            lblError.setPrefHeight(0);
+            javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0));
+        });
         pause.play();
     }
 }

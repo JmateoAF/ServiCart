@@ -1,4 +1,4 @@
-package servicart.domain.models.enums;
+package servicart.models.enums;
 
 public enum EstadoFactura {
     PENDIENTE(0),

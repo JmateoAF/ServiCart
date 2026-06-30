@@ -6,9 +6,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import servicart.data.FactoryDAO;
-import servicart.domain.models.entities.Abono;
-import servicart.domain.models.entities.Carrito;
-import servicart.domain.models.enums.ModalidadPago;
+import servicart.models.entities.Abono;
+import servicart.models.entities.Carrito;
+import servicart.models.enums.ModalidadPago;
 import servicart.domain.services.CheckoutService;
 import servicart.exceptions.ServiCartException;
 import servicart.ui.core.GestorNotificacion;
@@ -24,7 +24,7 @@ public class CheckoutController {
 
     @FXML
     public void initialize() {
-        checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), GestorNotificacion.getFacturacionService());
+        //checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), GestorNotificacion.getFacturacionService());
         cmbMetodoPago.getItems().setAll("Tarjeta de crédito", "Tarjeta de débito", "PayPal", "Transferencia bancaria", "Débito automático");
         cmbMetodoPago.setValue("Tarjeta de crédito");
         cargarResumen();
@@ -35,10 +35,10 @@ public class CheckoutController {
         listaResumen.getChildren().clear();
 
         for (Abono abono : carrito.getAbonos()) {
-            String empresa = abono.getFactura().getContrato().getServicio().getEmpresa().name();
+            //String empresa = abono.getFactura().getContrato().getServicio().getEmpresa().name();
             String tipo = abono.getFactura().getContrato().getServicio().getTipo().name();
-            Label fila = new Label("• " + empresa + " – " + tipo + "  →  $" + String.format("%.2f", abono.getMonto()));
-            listaResumen.getChildren().add(fila);
+            //Label fila = new Label("• " + empresa + " – " + tipo + "  →  $" + String.format("%.2f", abono.getMonto()));
+           // listaResumen.getChildren().add(fila);
         }
 
         lblTotalFinal.setText("Total: $" + String.format("%.2f", carrito.getTotal()));

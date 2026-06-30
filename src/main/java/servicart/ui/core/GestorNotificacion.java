@@ -10,7 +10,7 @@ public final class GestorNotificacion {
     private static FacturacionService facturacionService;
 
     public static void inicializar() {
-        facturacionService = new FacturacionService(FactoryDAO.facturaDAO());
+        //facturacionService = new FacturacionService(FactoryDAO.facturaDAO());
         facturacionService.agregarObservador(new NotificadorEmail());
         facturacionService.agregarObservador(new NotificadorSMS());
         facturacionService.agregarObservador(new NotificadorPantalla(msg -> System.out.println("[PANTALLA] " + msg)));

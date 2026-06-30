@@ -1,6 +1,6 @@
 package servicart.dtos;
 
-import servicart.domain.models.entities.Cliente;
+import servicart.models.entities.Cliente;
 import java.util.List;
 
 public final class ClienteMapper {

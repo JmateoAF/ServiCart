@@ -1,4 +1,4 @@
-package servicart.domain.models.enums;
+package servicart.models.enums;
 
 // Representa los tipos de servicios con un código numérico asociado
 public enum TipoServicio {

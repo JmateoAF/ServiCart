@@ -23,8 +23,8 @@ public class ConexionSQLite {
         // El try-with-resources asegura que esta conexión temporal se cierre al terminar
         try (Connection con = conectar()) {
             ejecutarScriptSQL(con, "sql/dbsetup.sql");
-            ejecutarScriptSQL(con, "sql/datosprueba.sql");
-            System.out.println("Base de datos inicializada con éxito.");
+            ejecutarScriptSQL(con, "sql/datosPrueba.sql");
+            System.out.println("Base de datos sql inicializada con éxito");
         } catch (SQLException e) {
             throw new PersistenciaException("Error al conectar durante la inicialización: ", e);
         }

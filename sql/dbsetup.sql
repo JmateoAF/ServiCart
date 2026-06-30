@@ -13,15 +13,21 @@ CREATE TABLE IF NOT EXISTS Administradores (
     contrasenia TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS Empresa (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS ServicioCatalogo (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    empresa INTEGER NOT NULL,
+    idEmpresa INTEGER NOT NULL,
     tipoServicio INTEGER NOT NULL,
     tipoValor INTEGER NOT NULL,
     tarifaFija REAL NOT NULL DEFAULT 0.0,
     tarifaPorUnidad REAL NOT NULL DEFAULT 0.0,
     costoReactivacion REAL NOT NULL,
-    tasaInteresDiario REAL NOT NULL DEFAULT 0.01
+    tasaInteresDiario REAL NOT NULL DEFAULT 0.01,
+    CONSTRAINT fkEmpresa FOREIGN KEY (idEmpresa) REFERENCES Empresa(id)
 );
 
 CREATE TABLE IF NOT EXISTS Contrato (
@@ -80,7 +86,7 @@ CREATE TABLE IF NOT EXISTS CorteServicio (
 
 CREATE TABLE IF NOT EXISTS Carrito (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    idCliente TEXT NOT NULL,
+    idCliente TEXT NOT NULL UNIQUE,
     CONSTRAINT fkCarritoCliente FOREIGN KEY (idCliente) REFERENCES Clientes(cedula)
 );
 

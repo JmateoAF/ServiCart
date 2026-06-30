@@ -4,8 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import servicart.data.FactoryDAO;
-import servicart.domain.models.entities.Cliente;
+import servicart.models.entities.Cliente;
 import servicart.domain.services.ClienteServices;
 import servicart.dtos.ClienteDTO;
 import servicart.exceptions.ServiCartException;
@@ -13,7 +14,8 @@ import servicart.ui.core.Navegador;
 import servicart.ui.core.Sesion;
 
 public class PerfilController {
-
+    public TextField txtTelefono;
+    @FXML private VBox listaServicios;
     @FXML private Label lblNombreUsuario;
     @FXML private Label lblEmailUsuario;
     @FXML private TextField txtNombre;
@@ -26,7 +28,7 @@ public class PerfilController {
 
     @FXML
     public void initialize() {
-        clienteService = new ClienteServices(FactoryDAO.clienteDAO());
+        //clienteService = new ClienteServices(FactoryDAO.clienteDAO());
         cargarDatos();
     }
 

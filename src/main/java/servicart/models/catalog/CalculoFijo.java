@@ -1,4 +1,4 @@
-package servicart.domain.models.catalog;
+package servicart.models.catalog;
 
 import servicart.domain.interfaces.CalculoStrategy;
 import java.io.Serializable;
