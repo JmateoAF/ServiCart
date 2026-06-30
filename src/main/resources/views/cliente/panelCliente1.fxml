@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!--
+    panelCliente1.fxml
+    CORRECCIONES:
+    - fx:id en labels de empresa/tipo/estado de cada tarjeta (poblar desde Contrato/Factura)
+    - Carrito lateral: ítems hardcodeados eliminados, VBox vacío para poblar dinámicamente
+    - ScrollPane en el carrito lateral para overflow
+    - fx:id="lblContadorCarrito" en el botón del sidebar
+    - Estado "Servicio cortado" (badge + botón reactivación) visible/managed desde controller
+    - fechaCorte visible en cada factura
+    - fx:id="lblMensaje" para feedback al usuario
+    - fx:id="paneCarritoVacio" para estado vacío del carrito
+    - Versión JavaFX unificada a /26
+-->
+<BorderPane prefHeight="640" prefWidth="960"
+            style="-fx-background-color: #0f0f0f;"
+            xmlns="http://javafx.com/javafx/26"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="servicart.ui.controllers.PanelClienteController">
+
+    <!-- ═══════════════════════════════════════════════
+         SIDEBAR IZQUIERDA
+    ════════════════════════════════════════════════ -->
+    <left>
+        <VBox prefWidth="162"
+              style="-fx-background-color: #111111;
+                     -fx-border-color: #1e1e1e;
+                     -fx-border-width: 0 1 0 0;">
+
+            <!-- Logo -->
+            <VBox alignment="CENTER_LEFT"
+                  style="-fx-border-color: #1e1e1e;
+                         -fx-border-width: 0 0 1 0;
+                         -fx-padding: 16 14 14 14;">
+                <Label text="⚡ SERVICART"
+                       style="-fx-text-fill: #e8c96d;
+                              -fx-font-size: 12;
+                              -fx-font-weight: bold;
+                              -fx-font-family: 'Courier New';" />
+            </VBox>
+
+            <Label text="MENÚ"
+                   style="-fx-text-fill: #333333;
+                          -fx-font-size: 9;
+                          -fx-font-family: 'Courier New';
+                          -fx-padding: 12 14 6 14;" />
+
+            <!-- Mis Servicios — ACTIVO -->
+            <Button fx:id="btnMisServicios"
+                    maxWidth="Infinity"
+                    text="⚡  Mis servicios"
+                    onAction="#onMisServicios"
+                    style="-fx-background-color: #1a1a0d;
+                           -fx-text-fill: #e8c96d;
+                           -fx-border-color: #e8c96d;
+                           -fx-border-width: 0 0 0 2;
+                           -fx-border-radius: 0;
+                           -fx-background-radius: 0;
+                           -fx-font-size: 11;
+                           -fx-padding: 9 14 9 12;
+                           -fx-alignment: center-left;
+                           -fx-cursor: hand;" />
+
+            <!-- Carrito con badge de cantidad -->
+            <Button fx:id="btnCarrito"
+                    maxWidth="Infinity"
+                    text="🛒  Carrito"
+                    onAction="#onCarrito"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: #555555;
+                           -fx-border-color: transparent;
+                           -fx-border-radius: 0;
+                           -fx-background-radius: 0;
+                           -fx-font-size: 11;
+                           -fx-padding: 9 14 9 14;
+                           -fx-alignment: center-left;
+                           -fx-cursor: hand;" />
+
+            <!-- Perfil -->
+            <Button fx:id="btnPerfil"
+                    maxWidth="Infinity"
+                    text="👤  Perfil"
+                    onAction="#onPerfil"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: #555555;
+                           -fx-border-color: transparent;
+                           -fx-border-radius: 0;
+                           -fx-background-radius: 0;
+                           -fx-font-size: 11;
+                           -fx-padding: 9 14 9 14;
+                           -fx-alignment: center-left;
+                           -fx-cursor: hand;" />
+
+            <Region VBox.vgrow="ALWAYS" />
+            <Separator style="-fx-background-color: #1e1e1e;" />
+
+            <!-- Salir → vuelve a loginCliente -->
+            <Button maxWidth="Infinity"
+                    text="⬅  Salir"
+                    onAction="#onSalir"
+                    style="-fx-background-color: transparent;
+                           -fx-text-fill: #c0392b;
+                           -fx-border-color: transparent;
+                           -fx-border-radius: 0;
+                           -fx-background-radius: 0;
+                           -fx-font-size: 11;
+                           -fx-padding: 9 14 9 14;
+                           -fx-alignment: center-left;
+                           -fx-cursor: hand;">
+                <VBox.margin><Insets bottom="6" /></VBox.margin>
+            </Button>
+        </VBox>
+    </left>
+
+    <!-- ═══════════════════════════════════════════════
+         CONTENIDO CENTRAL
+    ════════════════════════════════════════════════ -->
+    <center>
+        <HBox spacing="14"
+              style="-fx-background-color: #0f0f0f;
+                     -fx-padding: 20 18 18 18;">
+
+            <!-- ─── Columna Mis Servicios ─── -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+
+                <!-- Encabezado con mensaje de feedback -->
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="MIS SERVICIOS"
+                           style="-fx-text-fill: #444444;
+                                  -fx-font-size: 10;
+                                  -fx-font-family: 'Courier New';" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <!-- Feedback: "Añadido al carrito", "Error", etc. Oculto por defecto -->
+                    <Label fx:id="lblMensaje"
+                           managed="false"
+                           visible="false"
+                           style="-fx-font-size: 10;
+                                  -fx-padding: 3 10 3 10;
+                                  -fx-background-radius: 4;" />
+                </HBox>
+
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                            style="-fx-background: transparent;
+                                   -fx-background-color: transparent;
+                                   -fx-border-color: transparent;">
+                    <VBox fx:id="contenedorServicios" spacing="8">
+
+                        <!-- ══════════════════════════════════════
+                             TARJETA: ETAPA (Agua)
+                             Controller puebla: lblEmpresaEtapa, lblTipoEtapa,
+                             lblEstadoEtapa, facturasEtapa, paneCorteEtapa
+                        ══════════════════════════════════════ -->
+                        <VBox fx:id="tarjetaEtapa"
+                              style="-fx-background-color: #161616;
+                                     -fx-border-color: #252525;
+                                     -fx-border-width: 1;
+                                     -fx-border-radius: 8;
+                                     -fx-background-radius: 8;
+                                     -fx-padding: 12;">
+
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="💧" style="-fx-font-size: 15;" />
+                                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="lblEmpresaEtapa"
+                                           text="ETAPA"
+                                           style="-fx-text-fill: #e8c96d;
+                                                  -fx-font-size: 12;
+                                                  -fx-font-weight: bold;
+                                                  -fx-font-family: 'Courier New';" />
+                                    <Label fx:id="lblTipoEtapa"
+                                           text="Agua"
+                                           style="-fx-text-fill: #555555;
+                                                  -fx-font-size: 10;" />
+                                </VBox>
+                                <!-- Badge estado: "● Al día" / "● Con mora" / "● Cortado"
+                                     El controller cambia text y style según EstadoFactura/EstadoCorte -->
+                                <Label fx:id="lblEstadoEtapa"
+                                       text="● Con mora"
+                                       style="-fx-text-fill: #c0392b;
+                                              -fx-background-color: #2a1010;
+                                              -fx-font-size: 9;
+                                              -fx-padding: 3 7 3 7;
+                                              -fx-background-radius: 10;" />
+                                <Button fx:id="btnToggleEtapa"
+                                        text="▼"
+                                        onAction="#onToggleEtapa"
+                                        style="-fx-background-color: transparent;
+                                               -fx-text-fill: #444444;
+                                               -fx-border-color: transparent;
+                                               -fx-font-size: 10;
+                                               -fx-padding: 2 4 2 4;
+                                               -fx-cursor: hand;" />
+                            </HBox>
+
+                            <!-- Banner "Servicio cortado" — visible solo si EstadoCorte=CORTADO -->
+                            <VBox fx:id="paneCortadoEtapa"
+                                  managed="false" visible="false"
+                                  style="-fx-background-color: #2a1010;
+                                         -fx-border-color: #c0392b;
+                                         -fx-border-width: 1;
+                                         -fx-border-radius: 6;
+                                         -fx-background-radius: 6;
+                                         -fx-padding: 10;">
+                                <VBox.margin><Insets top="8" /></VBox.margin>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="⚠ Servicio cortado"
+                                           style="-fx-text-fill: #c0392b;
+                                                  -fx-font-size: 11;
+                                                  -fx-font-weight: bold;" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblCostoReactivacionEtapa"
+                                           text="Reactivación: $ 0.00"
+                                           style="-fx-text-fill: #888888;
+                                                  -fx-font-size: 10;" />
+                                </HBox>
+                                <Button maxWidth="Infinity"
+                                        text="Pagar reactivación"
+                                        onAction="#onReactivarEtapa"
+                                        style="-fx-background-color: #c0392b;
+                                               -fx-text-fill: #ffffff;
+                                               -fx-font-size: 11;
+                                               -fx-font-weight: bold;
+                                               -fx-border-radius: 4;
+                                               -fx-background-radius: 4;
+                                               -fx-padding: 6 0 6 0;
+                                               -fx-cursor: hand;">
+                                    <VBox.margin><Insets top="8" /></VBox.margin>
+                                </Button>
+                            </VBox>
+
+                            <!-- Facturas: el VBox existe; el controller lo puebla y controla visibilidad -->
+                            <VBox fx:id="facturasEtapa"
+                                  spacing="6"
+                                  style="-fx-border-color: #1e1e1e;
+                                         -fx-border-width: 1 0 0 0;
+                                         -fx-padding: 10 0 0 0;">
+                                <VBox.margin><Insets top="10" /></VBox.margin>
+                                <!-- PLANTILLA de factura — el controller crea nodos iguales dinámicamente.
+                                     Esta factura de ejemplo muestra la estructura visual esperada. -->
+                                <VBox spacing="4"
+                                      style="-fx-background-color: #111111;
+                                             -fx-border-radius: 6;
+                                             -fx-background-radius: 6;
+                                             -fx-padding: 10;">
+                                    <HBox>
+                                        <Label fx:id="lblPeriodoEtapa1"
+                                               text="Abril 2025"
+                                               style="-fx-text-fill: #888888;
+                                                      -fx-font-size: 11;
+                                                      -fx-font-weight: bold;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblVencimientoEtapa1"
+                                               text="Vence: 15 May"
+                                               style="-fx-text-fill: #444444;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <!-- Fecha de corte de servicio (de Factura.fechaCorte) -->
+                                    <HBox>
+                                        <Label text="Corte servicio"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblCorteEtapa1"
+                                               text="Corte: 30 May"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Monto original"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMontoOriginalEtapa1"
+                                               text="\$ 25.00"
+                                               style="-fx-text-fill: #aaaaaa;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <!-- Recargo mora: managed=false si no hay mora -->
+                                    <HBox fx:id="hboxMoraEtapa1">
+                                        <Label text="Recargo mora"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMoraEtapa1"
+                                               text="+ $ 2.00"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox spacing="6">
+                                        <VBox.margin><Insets top="4" /></VBox.margin>
+                                        <TextField fx:id="montoEtapa1"
+                                                   text="27.00"
+                                                   HBox.hgrow="ALWAYS"
+                                                   style="-fx-background-color: #1a1a1a;
+                                                          -fx-border-color: #2a2a2a;
+                                                          -fx-border-width: 1;
+                                                          -fx-border-radius: 4;
+                                                          -fx-background-radius: 4;
+                                                          -fx-text-fill: #cccccc;
+                                                          -fx-font-size: 11;
+                                                          -fx-padding: 5 8 5 8;
+                                                          -fx-font-family: 'Courier New';" />
+                                        <Button fx:id="btnAnadirEtapa1"
+                                                text="+ Añadir"
+                                                onAction="#onAnadirEtapa1"
+                                                style="-fx-background-color: #1c2a1c;
+                                                       -fx-text-fill: #4caf50;
+                                                       -fx-border-color: #2a3e2a;
+                                                       -fx-border-width: 1;
+                                                       -fx-border-radius: 4;
+                                                       -fx-background-radius: 4;
+                                                       -fx-font-size: 11;
+                                                       -fx-padding: 5 10 5 10;
+                                                       -fx-cursor: hand;" />
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- ══════════════════════════════════════
+                             TARJETA: CentroSur (Luz)
+                        ══════════════════════════════════════ -->
+                        <VBox fx:id="tarjetaCentrosur"
+                              style="-fx-background-color: #161616;
+                                     -fx-border-color: #252525;
+                                     -fx-border-width: 1;
+                                     -fx-border-radius: 8;
+                                     -fx-background-radius: 8;
+                                     -fx-padding: 12;">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="⚡" style="-fx-font-size: 15;" />
+                                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="lblEmpresaCentrosur"
+                                           text="CentroSur"
+                                           style="-fx-text-fill: #e8c96d;
+                                                  -fx-font-size: 12;
+                                                  -fx-font-weight: bold;
+                                                  -fx-font-family: 'Courier New';" />
+                                    <Label fx:id="lblTipoCentrosur"
+                                           text="Luz"
+                                           style="-fx-text-fill: #555555;
+                                                  -fx-font-size: 10;" />
+                                </VBox>
+                                <Label fx:id="lblEstadoCentrosur"
+                                       text="● Al día"
+                                       style="-fx-text-fill: #27ae60;
+                                              -fx-background-color: #0f2a18;
+                                              -fx-font-size: 9;
+                                              -fx-padding: 3 7 3 7;
+                                              -fx-background-radius: 10;" />
+                                <Button fx:id="btnToggleCentrosur"
+                                        text="▶"
+                                        onAction="#onToggleCentrosur"
+                                        style="-fx-background-color: transparent;
+                                               -fx-text-fill: #444444;
+                                               -fx-border-color: transparent;
+                                               -fx-font-size: 10;
+                                               -fx-padding: 2 4 2 4;
+                                               -fx-cursor: hand;" />
+                            </HBox>
+
+                            <VBox fx:id="paneCortadoCentrosur"
+                                  managed="false" visible="false"
+                                  style="-fx-background-color: #2a1010;
+                                         -fx-border-color: #c0392b;
+                                         -fx-border-width: 1;
+                                         -fx-border-radius: 6;
+                                         -fx-background-radius: 6;
+                                         -fx-padding: 10;">
+                                <VBox.margin><Insets top="8" /></VBox.margin>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="⚠ Servicio cortado"
+                                           style="-fx-text-fill: #c0392b;
+                                                  -fx-font-size: 11;
+                                                  -fx-font-weight: bold;" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblCostoReactivacionCentrosur"
+                                           text="Reactivación: $ 0.00"
+                                           style="-fx-text-fill: #888888;
+                                                  -fx-font-size: 10;" />
+                                </HBox>
+                                <Button maxWidth="Infinity"
+                                        text="Pagar reactivación"
+                                        onAction="#onReactivarCentrosur"
+                                        style="-fx-background-color: #c0392b;
+                                               -fx-text-fill: #ffffff;
+                                               -fx-font-size: 11;
+                                               -fx-font-weight: bold;
+                                               -fx-border-radius: 4;
+                                               -fx-background-radius: 4;
+                                               -fx-padding: 6 0 6 0;
+                                               -fx-cursor: hand;">
+                                    <VBox.margin><Insets top="8" /></VBox.margin>
+                                </Button>
+                            </VBox>
+
+                            <VBox fx:id="facturasCentrosur"
+                                  managed="false" visible="false"
+                                  spacing="6"
+                                  style="-fx-border-color: #1e1e1e;
+                                         -fx-border-width: 1 0 0 0;
+                                         -fx-padding: 10 0 0 0;">
+                                <VBox.margin><Insets top="10" /></VBox.margin>
+                                <VBox spacing="4"
+                                      style="-fx-background-color: #111111;
+                                             -fx-border-radius: 6;
+                                             -fx-background-radius: 6;
+                                             -fx-padding: 10;">
+                                    <HBox>
+                                        <Label fx:id="lblPeriodoCentrosur1"
+                                               text="Abril 2025"
+                                               style="-fx-text-fill: #888888;
+                                                      -fx-font-size: 11;
+                                                      -fx-font-weight: bold;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblVencimientoCentrosur1"
+                                               text="Vence: 20 May"
+                                               style="-fx-text-fill: #444444;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Corte servicio"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblCorteCentrosur1"
+                                               text="Corte: 05 Jun"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Monto original"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMontoOriginalCentrosur1"
+                                               text="\$ 15.00"
+                                               style="-fx-text-fill: #aaaaaa;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox fx:id="hboxMoraCentrosur1" managed="false" visible="false">
+                                        <Label text="Recargo mora"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMoraCentrosur1"
+                                               text="+ $ 0.00"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox spacing="6">
+                                        <VBox.margin><Insets top="4" /></VBox.margin>
+                                        <TextField fx:id="montoCentrosur1"
+                                                   text="15.00"
+                                                   HBox.hgrow="ALWAYS"
+                                                   style="-fx-background-color: #1a1a1a;
+                                                          -fx-border-color: #2a2a2a;
+                                                          -fx-border-width: 1;
+                                                          -fx-border-radius: 4;
+                                                          -fx-background-radius: 4;
+                                                          -fx-text-fill: #cccccc;
+                                                          -fx-font-size: 11;
+                                                          -fx-padding: 5 8 5 8;
+                                                          -fx-font-family: 'Courier New';" />
+                                        <Button fx:id="btnAnadirCentrosur1"
+                                                text="+ Añadir"
+                                                onAction="#onAnadirCentrosur1"
+                                                style="-fx-background-color: #1c2a1c;
+                                                       -fx-text-fill: #4caf50;
+                                                       -fx-border-color: #2a3e2a;
+                                                       -fx-border-width: 1;
+                                                       -fx-border-radius: 4;
+                                                       -fx-background-radius: 4;
+                                                       -fx-font-size: 11;
+                                                       -fx-padding: 5 10 5 10;
+                                                       -fx-cursor: hand;" />
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- ══════════════════════════════════════
+                             TARJETA: FibraMax (Internet)
+                        ══════════════════════════════════════ -->
+                        <VBox fx:id="tarjetaFibramax"
+                              style="-fx-background-color: #161616;
+                                     -fx-border-color: #252525;
+                                     -fx-border-width: 1;
+                                     -fx-border-radius: 8;
+                                     -fx-background-radius: 8;
+                                     -fx-padding: 12;">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="📡" style="-fx-font-size: 15;" />
+                                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="lblEmpresaFibramax"
+                                           text="FibraMax"
+                                           style="-fx-text-fill: #e8c96d;
+                                                  -fx-font-size: 12;
+                                                  -fx-font-weight: bold;
+                                                  -fx-font-family: 'Courier New';" />
+                                    <Label fx:id="lblTipoFibramax"
+                                           text="Internet"
+                                           style="-fx-text-fill: #555555;
+                                                  -fx-font-size: 10;" />
+                                </VBox>
+                                <Label fx:id="lblEstadoFibramax"
+                                       text="● Al día"
+                                       style="-fx-text-fill: #27ae60;
+                                              -fx-background-color: #0f2a18;
+                                              -fx-font-size: 9;
+                                              -fx-padding: 3 7 3 7;
+                                              -fx-background-radius: 10;" />
+                                <Button fx:id="btnToggleFibramax"
+                                        text="▶"
+                                        onAction="#onToggleFibramax"
+                                        style="-fx-background-color: transparent;
+                                               -fx-text-fill: #444444;
+                                               -fx-border-color: transparent;
+                                               -fx-font-size: 10;
+                                               -fx-padding: 2 4 2 4;
+                                               -fx-cursor: hand;" />
+                            </HBox>
+
+                            <VBox fx:id="paneCortadoFibramax"
+                                  managed="false" visible="false"
+                                  style="-fx-background-color: #2a1010;
+                                         -fx-border-color: #c0392b;
+                                         -fx-border-width: 1;
+                                         -fx-border-radius: 6;
+                                         -fx-background-radius: 6;
+                                         -fx-padding: 10;">
+                                <VBox.margin><Insets top="8" /></VBox.margin>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="⚠ Servicio cortado"
+                                           style="-fx-text-fill: #c0392b;
+                                                  -fx-font-size: 11;
+                                                  -fx-font-weight: bold;" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblCostoReactivacionFibramax"
+                                           text="Reactivación: $ 0.00"
+                                           style="-fx-text-fill: #888888;
+                                                  -fx-font-size: 10;" />
+                                </HBox>
+                                <Button maxWidth="Infinity"
+                                        text="Pagar reactivación"
+                                        onAction="#onReactivarFibramax"
+                                        style="-fx-background-color: #c0392b;
+                                               -fx-text-fill: #ffffff;
+                                               -fx-font-size: 11;
+                                               -fx-font-weight: bold;
+                                               -fx-border-radius: 4;
+                                               -fx-background-radius: 4;
+                                               -fx-padding: 6 0 6 0;
+                                               -fx-cursor: hand;">
+                                    <VBox.margin><Insets top="8" /></VBox.margin>
+                                </Button>
+                            </VBox>
+
+                            <VBox fx:id="facturasFibramax"
+                                  managed="false" visible="false"
+                                  spacing="6"
+                                  style="-fx-border-color: #1e1e1e;
+                                         -fx-border-width: 1 0 0 0;
+                                         -fx-padding: 10 0 0 0;">
+                                <VBox.margin><Insets top="10" /></VBox.margin>
+                                <VBox spacing="4"
+                                      style="-fx-background-color: #111111;
+                                             -fx-border-radius: 6;
+                                             -fx-background-radius: 6;
+                                             -fx-padding: 10;">
+                                    <HBox>
+                                        <Label fx:id="lblPeriodoFibramax1"
+                                               text="Abril 2025"
+                                               style="-fx-text-fill: #888888;
+                                                      -fx-font-size: 11;
+                                                      -fx-font-weight: bold;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblVencimientoFibramax1"
+                                               text="Vence: 05 May"
+                                               style="-fx-text-fill: #444444;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Corte servicio"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblCorteFibramax1"
+                                               text="Corte: 20 May"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Monto original"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMontoOriginalFibramax1"
+                                               text="\$ 32.00"
+                                               style="-fx-text-fill: #aaaaaa;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox fx:id="hboxMoraFibramax1" managed="false" visible="false">
+                                        <Label text="Recargo mora"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMoraFibramax1"
+                                               text="+ $ 0.00"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox spacing="6">
+                                        <VBox.margin><Insets top="4" /></VBox.margin>
+                                        <TextField fx:id="montoFibramax1"
+                                                   text="32.00"
+                                                   HBox.hgrow="ALWAYS"
+                                                   style="-fx-background-color: #1a1a1a;
+                                                          -fx-border-color: #2a2a2a;
+                                                          -fx-border-width: 1;
+                                                          -fx-border-radius: 4;
+                                                          -fx-background-radius: 4;
+                                                          -fx-text-fill: #cccccc;
+                                                          -fx-font-size: 11;
+                                                          -fx-padding: 5 8 5 8;
+                                                          -fx-font-family: 'Courier New';" />
+                                        <Button fx:id="btnAnadirFibramax1"
+                                                text="+ Añadir"
+                                                onAction="#onAnadirFibramax1"
+                                                style="-fx-background-color: #1c2a1c;
+                                                       -fx-text-fill: #4caf50;
+                                                       -fx-border-color: #2a3e2a;
+                                                       -fx-border-width: 1;
+                                                       -fx-border-radius: 4;
+                                                       -fx-background-radius: 4;
+                                                       -fx-font-size: 11;
+                                                       -fx-padding: 5 10 5 10;
+                                                       -fx-cursor: hand;" />
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                        <!-- ══════════════════════════════════════
+                             TARJETA: EMAC (Basura)
+                        ══════════════════════════════════════ -->
+                        <VBox fx:id="tarjetaEmac"
+                              style="-fx-background-color: #161616;
+                                     -fx-border-color: #252525;
+                                     -fx-border-width: 1;
+                                     -fx-border-radius: 8;
+                                     -fx-background-radius: 8;
+                                     -fx-padding: 12;">
+                            <HBox alignment="CENTER_LEFT" spacing="8">
+                                <Label text="🗑" style="-fx-font-size: 15;" />
+                                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                                    <Label fx:id="lblEmpresaEmac"
+                                           text="EMAC"
+                                           style="-fx-text-fill: #e8c96d;
+                                                  -fx-font-size: 12;
+                                                  -fx-font-weight: bold;
+                                                  -fx-font-family: 'Courier New';" />
+                                    <Label fx:id="lblTipoEmac"
+                                           text="Basura"
+                                           style="-fx-text-fill: #555555;
+                                                  -fx-font-size: 10;" />
+                                </VBox>
+                                <Label fx:id="lblEstadoEmac"
+                                       text="● Con mora"
+                                       style="-fx-text-fill: #c0392b;
+                                              -fx-background-color: #2a1010;
+                                              -fx-font-size: 9;
+                                              -fx-padding: 3 7 3 7;
+                                              -fx-background-radius: 10;" />
+                                <Button fx:id="btnToggleEmac"
+                                        text="▶"
+                                        onAction="#onToggleEmac"
+                                        style="-fx-background-color: transparent;
+                                               -fx-text-fill: #444444;
+                                               -fx-border-color: transparent;
+                                               -fx-font-size: 10;
+                                               -fx-padding: 2 4 2 4;
+                                               -fx-cursor: hand;" />
+                            </HBox>
+
+                            <VBox fx:id="paneCortadoEmac"
+                                  managed="false" visible="false"
+                                  style="-fx-background-color: #2a1010;
+                                         -fx-border-color: #c0392b;
+                                         -fx-border-width: 1;
+                                         -fx-border-radius: 6;
+                                         -fx-background-radius: 6;
+                                         -fx-padding: 10;">
+                                <VBox.margin><Insets top="8" /></VBox.margin>
+                                <HBox alignment="CENTER_LEFT" spacing="8">
+                                    <Label text="⚠ Servicio cortado"
+                                           style="-fx-text-fill: #c0392b;
+                                                  -fx-font-size: 11;
+                                                  -fx-font-weight: bold;" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="lblCostoReactivacionEmac"
+                                           text="Reactivación: $ 0.00"
+                                           style="-fx-text-fill: #888888;
+                                                  -fx-font-size: 10;" />
+                                </HBox>
+                                <Button maxWidth="Infinity"
+                                        text="Pagar reactivación"
+                                        onAction="#onReactivarEmac"
+                                        style="-fx-background-color: #c0392b;
+                                               -fx-text-fill: #ffffff;
+                                               -fx-font-size: 11;
+                                               -fx-font-weight: bold;
+                                               -fx-border-radius: 4;
+                                               -fx-background-radius: 4;
+                                               -fx-padding: 6 0 6 0;
+                                               -fx-cursor: hand;">
+                                    <VBox.margin><Insets top="8" /></VBox.margin>
+                                </Button>
+                            </VBox>
+
+                            <VBox fx:id="facturasEmac"
+                                  managed="false" visible="false"
+                                  spacing="6"
+                                  style="-fx-border-color: #1e1e1e;
+                                         -fx-border-width: 1 0 0 0;
+                                         -fx-padding: 10 0 0 0;">
+                                <VBox.margin><Insets top="10" /></VBox.margin>
+                                <VBox spacing="4"
+                                      style="-fx-background-color: #111111;
+                                             -fx-border-radius: 6;
+                                             -fx-background-radius: 6;
+                                             -fx-padding: 10;">
+                                    <HBox>
+                                        <Label fx:id="lblPeriodoEmac1"
+                                               text="Abril 2025"
+                                               style="-fx-text-fill: #888888;
+                                                      -fx-font-size: 11;
+                                                      -fx-font-weight: bold;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblVencimientoEmac1"
+                                               text="Vence: 30 Abr"
+                                               style="-fx-text-fill: #444444;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Corte servicio"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblCorteEmac1"
+                                               text="Corte: 15 May"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox>
+                                        <Label text="Monto original"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMontoOriginalEmac1"
+                                               text="\$ 8.00"
+                                               style="-fx-text-fill: #aaaaaa;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox fx:id="hboxMoraEmac1">
+                                        <Label text="Recargo mora"
+                                               style="-fx-text-fill: #555555;
+                                                      -fx-font-size: 10;" />
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="lblMoraEmac1"
+                                               text="+ $ 1.00"
+                                               style="-fx-text-fill: #c0392b;
+                                                      -fx-font-size: 10;" />
+                                    </HBox>
+                                    <HBox spacing="6">
+                                        <VBox.margin><Insets top="4" /></VBox.margin>
+                                        <TextField fx:id="montoEmac1"
+                                                   text="9.00"
+                                                   HBox.hgrow="ALWAYS"
+                                                   style="-fx-background-color: #1a1a1a;
+                                                          -fx-border-color: #2a2a2a;
+                                                          -fx-border-width: 1;
+                                                          -fx-border-radius: 4;
+                                                          -fx-background-radius: 4;
+                                                          -fx-text-fill: #cccccc;
+                                                          -fx-font-size: 11;
+                                                          -fx-padding: 5 8 5 8;
+                                                          -fx-font-family: 'Courier New';" />
+                                        <Button fx:id="btnAnadirEmac1"
+                                                text="+ Añadir"
+                                                onAction="#onAnadirEmac1"
+                                                style="-fx-background-color: #1c2a1c;
+                                                       -fx-text-fill: #4caf50;
+                                                       -fx-border-color: #2a3e2a;
+                                                       -fx-border-width: 1;
+                                                       -fx-border-radius: 4;
+                                                       -fx-background-radius: 4;
+                                                       -fx-font-size: 11;
+                                                       -fx-padding: 5 10 5 10;
+                                                       -fx-cursor: hand;" />
+                                    </HBox>
+                                </VBox>
+                            </VBox>
+                        </VBox>
+
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+
+            <!-- ─── Panel Carrito lateral ─── -->
+            <VBox prefWidth="224" spacing="10">
+                <Label text="CARRITO"
+                       style="-fx-text-fill: #444444;
+                              -fx-font-size: 10;
+                              -fx-font-family: 'Courier New';" />
+
+                <VBox VBox.vgrow="ALWAYS"
+                      style="-fx-background-color: #161616;
+                             -fx-border-color: #252525;
+                             -fx-border-width: 1;
+                             -fx-border-radius: 8;
+                             -fx-background-radius: 8;
+                             -fx-padding: 14;">
+
+                    <!-- Estado vacío — visible cuando no hay ítems -->
+                    <VBox fx:id="paneCarritoVacio"
+                          alignment="CENTER"
+                          spacing="6"
+                          style="-fx-padding: 20 0 20 0;">
+                        <Label text="🛒"
+                               style="-fx-font-size: 22;
+                                      -fx-opacity: 0.3;" />
+                        <Label text="Carrito vacío"
+                               style="-fx-text-fill: #333333;
+                                      -fx-font-size: 11;" />
+                    </VBox>
+
+                    <!-- Lista de ítems: VBox vacío, el controller añade HBox por cada Carrito -->
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                                maxHeight="220"
+                                style="-fx-background: transparent;
+                                       -fx-background-color: transparent;
+                                       -fx-border-color: transparent;">
+                        <VBox fx:id="listaCarrito" spacing="6" />
+                    </ScrollPane>
+
+                    <!-- Total -->
+                    <VBox>
+                        <VBox.margin><Insets top="10" /></VBox.margin>
+                        <Separator style="-fx-background-color: #252525;" />
+                        <HBox>
+                            <VBox.margin><Insets top="10" /></VBox.margin>
+                            <Label text="Total"
+                                   style="-fx-text-fill: #888888;
+                                          -fx-font-size: 12;" />
+                            <Region HBox.hgrow="ALWAYS" />
+                            <Label fx:id="lblTotal"
+                                   text="\$ 0.00"
+                                   style="-fx-text-fill: #e8c96d;
+                                          -fx-font-size: 13;
+                                          -fx-font-weight: bold;
+                                          -fx-font-family: 'Courier New';" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Botón checkout: deshabilitado si carrito vacío -->
+                    <Button fx:id="btnCheckout"
+                            maxWidth="Infinity"
+                            text="CHECKOUT  →"
+                            onAction="#onCheckout"
+                            disable="true"
+                            style="-fx-background-color: #e8c96d;
+                                   -fx-text-fill: #0f0f0f;
+                                   -fx-font-size: 12;
+                                   -fx-font-weight: bold;
+                                   -fx-font-family: 'Courier New';
+                                   -fx-border-radius: 6;
+                                   -fx-background-radius: 6;
+                                   -fx-padding: 10 0 10 0;
+                                   -fx-cursor: hand;">
+                        <VBox.margin><Insets top="12" /></VBox.margin>
+                    </Button>
+
+                    <!-- Vaciar carrito -->
+                    <Button fx:id="btnVaciarCarrito"
+                            maxWidth="Infinity"
+                            text="Vaciar carrito"
+                            onAction="#onVaciarCarrito"
+                            disable="true"
+                            style="-fx-background-color: transparent;
+                                   -fx-text-fill: #444444;
+                                   -fx-border-color: #222222;
+                                   -fx-border-width: 1;
+                                   -fx-border-radius: 6;
+                                   -fx-background-radius: 6;
+                                   -fx-font-size: 10;
+                                   -fx-padding: 6 0 6 0;
+                                   -fx-cursor: hand;">
+                        <VBox.margin><Insets top="6" /></VBox.margin>
+                    </Button>
+                </VBox>
+            </VBox>
+
+        </HBox>
+    </center>
+
+</BorderPane>

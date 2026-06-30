@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="800" prefHeight="600"
+            style="-fx-background-color: #0f0f0f;"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="servicart.ui.controllers.CheckoutController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12"
+              style="-fx-background-color: #161616;
+                     -fx-border-color: #222222;
+                     -fx-border-width: 0 0 1 0;
+                     -fx-padding: 12 20 12 20;">
+            <Label text="SERVICART"
+                   style="-fx-text-fill: #e8c96d;
+                          -fx-font-size: 15;
+                          -fx-font-weight: bold;
+                          -fx-font-family: 'Courier New';"/>
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane style="-fx-background-color: #0f0f0f;">
+            <VBox maxWidth="440"
+                  style="-fx-background-color: #161616;
+                         -fx-border-color: #252525;
+                         -fx-border-width: 1;
+                         -fx-border-radius: 10;
+                         -fx-background-radius: 10;
+                         -fx-padding: 24;">
+                <StackPane.margin>
+                    <Insets top="40" right="40" bottom="40" left="40"/>
+                </StackPane.margin>
+
+                <!-- Título -->
+                <Label text="CHECK OUT FINAL"
+                       maxWidth="Infinity"
+                       style="-fx-text-fill: #e8c96d;
+                              -fx-font-size: 14;
+                              -fx-font-family: 'Courier New';
+                              -fx-border-color: #222222;
+                              -fx-border-width: 0 0 1 0;
+                              -fx-padding: 0 0 14 0;
+                              -fx-alignment: center;"/>
+
+                <!-- Lista dinámica de ítems del carrito -->
+                <VBox fx:id="listaItemsResumen"
+                      style="-fx-padding: 20 0 0 0;"
+                      spacing="10"/>
+
+                <!-- Total a pagar -->
+                <HBox style="-fx-border-color: #2a2a2a;
+                             -fx-border-width: 1 0 0 0;
+                             -fx-padding: 12 0 0 0;">
+                    <VBox.margin><Insets top="16"/></VBox.margin>
+                    <Label text="Total a pagar"
+                           style="-fx-text-fill: #666666;
+                                  -fx-font-size: 16;"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="lblTotalFinal"
+                           text="0.00"
+                           style="-fx-text-fill: #e8c96d;
+                                  -fx-font-size: 16;
+                                  -fx-font-weight: bold;"/>
+                </HBox>
+
+                <!-- Método de pago -->
+                <Label text="Método de pago"
+                       style="-fx-text-fill: #555555;
+                              -fx-font-size: 12;">
+                    <VBox.margin><Insets top="16" bottom="8"/></VBox.margin>
+                </Label>
+
+                <ComboBox fx:id="cmbMetodoPago"
+                          promptText="Seleccione método de pago"
+                          maxWidth="Infinity"
+                          style="-fx-background-color: #1a1a1a;
+                                 -fx-border-color: #2e2e2e;
+                                 -fx-border-width: 1;
+                                 -fx-border-radius: 6;
+                                 -fx-background-radius: 6;
+                                 -fx-font-size: 13;"/>
+
+                <!-- Referencia de pago -->
+                <TextField fx:id="txtReferenciaPago"
+                           promptText="Número de tarjeta / cuenta PayPal..."
+                           style="-fx-background-color: #1a1a1a;
+                                  -fx-border-color: #2e2e2e;
+                                  -fx-border-width: 1;
+                                  -fx-border-radius: 6;
+                                  -fx-background-radius: 6;
+                                  -fx-text-fill: #cccccc;
+                                  -fx-prompt-text-fill: #3a3a3a;
+                                  -fx-font-size: 13;
+                                  -fx-padding: 10 14 10 14;
+                                  -fx-font-family: 'Courier New';">
+                    <VBox.margin><Insets top="10" bottom="10"/></VBox.margin>
+                </TextField>
+
+                <!-- Mensaje de feedback (oculto por defecto) -->
+                <Label fx:id="lblMensaje"
+                       visible="false"
+                       managed="false"
+                       maxWidth="Infinity"
+                       alignment="CENTER"
+                       style="-fx-text-fill: #e8c96d;
+                              -fx-font-size: 12;
+                              -fx-font-family: 'Courier New';
+                              -fx-padding: 6 0 6 0;">
+                    <VBox.margin><Insets bottom="10"/></VBox.margin>
+                </Label>
+
+                <!-- Botones de acción -->
+                <HBox spacing="10">
+                    <Button fx:id="btnCancelar"
+                            text="Cancelar"
+                            HBox.hgrow="ALWAYS"
+                            maxWidth="Infinity"
+                            onAction="#onCancelar"
+                            style="-fx-background-color: transparent;
+                                   -fx-text-fill: #555555;
+                                   -fx-border-color: #2a2a2a;
+                                   -fx-border-width: 1;
+                                   -fx-border-radius: 6;
+                                   -fx-background-radius: 6;
+                                   -fx-font-size: 13;
+                                   -fx-padding: 10 0 10 0;
+                                   -fx-cursor: hand;"/>
+                    <Button fx:id="btnConfirmarPago"
+                            text="Confirmar Pago"
+                            HBox.hgrow="ALWAYS"
+                            maxWidth="Infinity"
+                            onAction="#onConfirmarPago"
+                            style="-fx-background-color: #e8c96d;
+                                   -fx-text-fill: #0f0f0f;
+                                   -fx-font-size: 13;
+                                   -fx-font-weight: bold;
+                                   -fx-border-radius: 6;
+                                   -fx-background-radius: 6;
+                                   -fx-padding: 10 0 10 0;
+                                   -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

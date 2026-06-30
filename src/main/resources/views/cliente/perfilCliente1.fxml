@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="640" prefWidth="960"
+            style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="servicart.ui.controllers.PerfilController">
+    <left>
+        <VBox prefWidth="158"
+              style="-fx-background-color: #111111;                      -fx-border-color: #1e1e1e;                      -fx-border-width: 0 1 0 0;">
+            <VBox alignment="CENTER_LEFT"
+                  style="-fx-border-color: #1e1e1e;                          -fx-border-width: 0 0 1 0;                          -fx-padding: 16 14 14 14;">
+                <Label style="-fx-text-fill: #e8c96d;                               -fx-font-size: 12;                               -fx-font-weight: bold;                               -fx-font-family: 'Courier New';"
+                       text="⚡ SERVICART"/>
+            </VBox>
+
+
+            <Label style="-fx-text-fill: #333333;                           -fx-font-size: 9;                           -fx-font-family: 'Courier New';                           -fx-padding: 12 14 6 14;"
+                   text="MENÚ"/>
+
+            <Button maxWidth="Infinity" onAction="#onMisServicios"
+                    style="-fx-background-color: transparent;                            -fx-text-fill: #555555;                            -fx-border-color: transparent;                            -fx-border-radius: 0;                            -fx-background-radius: 0;                            -fx-font-size: 11;                            -fx-padding: 9 14 9 14;                            -fx-alignment: center-left;                            -fx-cursor: hand;"
+                    text="⚡  Mis servicios"/>
+
+            <Button maxWidth="Infinity" onAction="#onCarrito"
+                    style="-fx-background-color: transparent;                            -fx-text-fill: #555555;                            -fx-border-color: transparent;                            -fx-border-radius: 0;                            -fx-background-radius: 0;                            -fx-font-size: 11;                            -fx-padding: 9 14 9 14;                            -fx-alignment: center-left;                            -fx-cursor: hand;"
+                    text="Carrito"/>
+
+            <Button maxWidth="Infinity"
+                    style="-fx-background-color: #1a1a0d;                            -fx-text-fill: #e8c96d;                            -fx-border-color: #e8c96d;                            -fx-border-width: 0 0 0 2;                            -fx-border-radius: 0;                            -fx-background-radius: 0;                            -fx-font-size: 11;                            -fx-padding: 9 14 9 12;                            -fx-alignment: center-left;                            -fx-cursor: hand;"
+                    text="Perfil"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+            <Separator style="-fx-background-color: #1e1e1e;"/>
+            <Button maxWidth="Infinity" onAction="#onSalir"
+                    style="-fx-background-color: transparent;                            -fx-text-fill: #c0392b;                            -fx-border-color: transparent;                            -fx-border-radius: 0;                            -fx-background-radius: 0;                            -fx-font-size: 11;                            -fx-padding: 9 14 9 14;                            -fx-alignment: center-left;                            -fx-cursor: hand;"
+                    text="Salir">
+                <VBox.margin>
+                    <Insets bottom="6"/>
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </left>
+
+    <center>
+        <HBox alignment="TOP_CENTER" spacing="16"
+              style="-fx-background-color: #0f0f0f;                      -fx-padding: 24 32 24 32;">
+            }
+            <VBox spacing="14" HBox.hgrow="ALWAYS">
+
+                <!-- Avatar + nombre -->
+                <VBox alignment="CENTER" spacing="8"
+                      style="-fx-background-color: #161616;                              -fx-border-color: #252525;                              -fx-border-width: 1;                              -fx-border-radius: 10;                              -fx-background-radius: 10;                              -fx-padding: 22 16 18 16;">
+                    <Label style="-fx-font-size: 38;                                   -fx-background-color: #1e1e1e;                                   -fx-background-radius: 50;                                   -fx-padding: 14 16 14 16;"
+                           text="👤"/>
+                    <Label fx:id="lblNombreUsuario"
+                           style="-fx-text-fill: #e8c96d;                                   -fx-font-size: 14;                                   -fx-font-weight: bold;                                   -fx-font-family: 'Courier New';"
+                           text="Carlos Andrade"/>
+                    <Label fx:id="lblEmailUsuario"
+                           style="-fx-text-fill: #555555;                                   -fx-font-size: 11;"
+                           text="carlos.andrade@gmail.com"/>
+                    <Label style="-fx-text-fill: #27ae60;                                   -fx-background-color: #0f2a18;                                   -fx-font-size: 10;                                   -fx-padding: 3 10 3 10;                                   -fx-background-radius: 10;"
+                           text="● Cuenta activa"/>
+                </VBox>
+
+                <!-- Datos personales (solo lectura) -->
+                <VBox spacing="12"
+                      style="-fx-background-color: #161616;                              -fx-border-color: #252525;                              -fx-border-width: 1;                              -fx-border-radius: 10;                              -fx-background-radius: 10;                              -fx-padding: 16;">
+
+                    <Label style="-fx-text-fill: #444444;                                   -fx-font-size: 9;                                   -fx-font-family: 'Courier New';                                   -fx-border-color: #1e1e1e;                                   -fx-border-width: 0 0 1 0;                                   -fx-padding: 0 0 10 0;"
+                           text="DATOS PERSONALES"/>
+
+                    <VBox spacing="4">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="Nombre completo"/>
+                        <TextField fx:id="txtNombre" editable="false"
+                                   style="-fx-background-color: #1a1a1a;                                           -fx-border-color: #2a2a2a;                                           -fx-border-width: 1;                                           -fx-border-radius: 6;                                           -fx-background-radius: 6;                                           -fx-text-fill: #cccccc;                                           -fx-font-size: 12;                                           -fx-padding: 8 12 8 12;"
+                                   text="Carlos Andrade"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="Cédula / RUC"/>
+                        <TextField fx:id="txtCedula" editable="false"
+                                   style="-fx-background-color: #1a1a1a;                                           -fx-border-color: #2a2a2a;                                           -fx-border-width: 1;                                           -fx-border-radius: 6;                                           -fx-background-radius: 6;                                           -fx-text-fill: #cccccc;                                           -fx-font-size: 12;                                           -fx-padding: 8 12 8 12;                                           -fx-font-family: 'Courier New';"
+                                   text="0105XXXXXX"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="Correo electrónico"/>
+                        <TextField fx:id="txtEmail" editable="false"
+                                   style="-fx-background-color: #1a1a1a;                                           -fx-border-color: #2a2a2a;                                           -fx-border-width: 1;                                           -fx-border-radius: 6;                                           -fx-background-radius: 6;                                           -fx-text-fill: #cccccc;                                           -fx-font-size: 12;                                           -fx-padding: 8 12 8 12;"
+                                   text="carlos.andrade@gmail.com"/>
+                    </VBox>
+
+                    <VBox spacing="4">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="Teléfono"/>
+                        <TextField fx:id="txtTelefono" editable="false"
+                                   style="-fx-background-color: #1a1a1a;                                           -fx-border-color: #2a2a2a;                                           -fx-border-width: 1;                                           -fx-border-radius: 6;                                           -fx-background-radius: 6;                                           -fx-text-fill: #cccccc;                                           -fx-font-size: 12;                                           -fx-padding: 8 12 8 12;                                           -fx-font-family: 'Courier New';"
+                                   text="+593 99 XXX XXXX"/>
+                    </VBox>
+
+                    <!-- Mensaje de feedback general (oculto por defecto) -->
+                    <Label fx:id="lblMensaje" alignment="CENTER" managed="false" maxWidth="Infinity"
+                           style="-fx-text-fill: #e8c96d;                                   -fx-font-size: 11;                                   -fx-padding: 6 0 0 0;"
+                           visible="false"/>
+                </VBox>
+
+            </VBox>
+
+            <VBox prefWidth="300" spacing="14">
+
+                <Label style="-fx-text-fill: #444444;                               -fx-font-size: 9;                               -fx-font-family: 'Courier New';"
+                       text="SERVICIOS REGISTRADOS"/>
+
+                <ScrollPane fitToWidth="true"
+                            style="-fx-background: transparent;                                    -fx-background-color: transparent;                                    -fx-border-color: transparent;"
+                            VBox.vgrow="ALWAYS">
+                    <VBox fx:id="listaServicios" spacing="10"/>
+                </ScrollPane>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>

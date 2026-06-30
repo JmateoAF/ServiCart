@@ -9,8 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import servicart.models.entities.Abono;
 import servicart.models.entities.Carrito;
-import servicart.ui.core.Navegador;
-import servicart.ui.core.Sesion;
+import servicart.ui.Navegador;
 
 public class CarritoController {
     @FXML private VBox  listaItems;

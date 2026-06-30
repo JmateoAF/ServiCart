@@ -1,4 +1,4 @@
-package servicart.ui.core;
+package servicart.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -14,10 +14,10 @@ public class DatosSeeder {
     public static void iniciar() {
         try {
             //EMPRESA
-            Empresa emp1 = new Empresa("ETAPA", "contacto@etapa.com.ec", "2987500", "Agua potable Cuenca");
-            Empresa emp2 = new Empresa("CENTROSUR", "atencion@centrosur.com.ec", "2517100", "Electricidad Cuenca");
-            Empresa emp3 = new Empresa("EMAC", "info@emac.com.ec", "2421618", "Recolección de basura");
-            Empresa emp4 = new Empresa("FIBRAMAX", "soporte@fibramax.ec", "2800800", "Internet fibra óptica");
+            Empresa emp1 = new Empresa("ETAPA");
+            Empresa emp2 = new Empresa("CENTROSUR");
+            Empresa emp3 = new Empresa("EMAC");
+            Empresa emp4 = new Empresa("FIBRAMAX");
             ponerEnArchivo(new EmpresaBinarioDAO(), List.of(emp1, emp2, emp3, emp4));
 
             //CLIENTE

@@ -1,6 +1,5 @@
-package servicart.ui.core;
+package servicart.ui;
 
-import servicart.data.FactoryDAO;
 import servicart.domain.services.notifiers.NotificadorEmail;
 import servicart.domain.services.notifiers.NotificadorPantalla;
 import servicart.domain.services.notifiers.NotificadorSMS;

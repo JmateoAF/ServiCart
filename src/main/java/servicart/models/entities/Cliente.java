@@ -2,12 +2,6 @@ package servicart.models.entities;
 
 import java.io.Serializable;
 
-/* Eliminado solicitarTerminacionContrato()
-Terminar un contrato es un caso de uso del ContratoService, no
-una responsabilidad del objeto Cliente
-activo como int (0/1) se mantiene para compatibilidad con SQLite.
-El DAO hace la conversión; la entidad no sabe de la BD */
-
 public class Cliente implements Serializable {
     private final String cedula;
     private String nombre;

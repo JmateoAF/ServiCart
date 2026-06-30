@@ -5,13 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import servicart.data.FactoryDAO;
-import servicart.models.entities.Cliente;
-import servicart.domain.services.BaseDatosService;
 import servicart.domain.services.ClienteServices;
-import servicart.exceptions.ServiCartException;
-import servicart.ui.core.Navegador;
-import servicart.ui.core.Sesion;
+import servicart.domain.services.BaseDatosService;
+import servicart.dtos.ClienteDTO;
+import servicart.models.entities.Cliente;
+import servicart.ui.Navegador;
+
 import java.util.Optional;
 
 public class LoginClienteController {
@@ -36,21 +35,8 @@ public class LoginClienteController {
 
         BaseDatosService.configurarBaseDatos(cmbBaseDatos.getValue());
 
-        try {
-            /*//ClienteServices clienteService = new ClienteServices(FactoryDAO.clienteDAO());
-            Optional<Cliente> resultado = clienteService.buscarId(cedula);
-
-            if (resultado.isEmpty()) {
-                mostrarError("No se encontró ningún cliente");
-                return;
-            }
-
-            //Iniciar sesión y navegar al panel
-            Sesion.iniciar(resultado.get());*/
-            Navegador.irA("views/cliente/panelCliente.fxml");
-        } catch (ServiCartException e) {
-            mostrarError("Error al conectar con la base de datos");
-        }
+        ClienteServices clienteServices = new ClienteServices();
+        ClienteDTO cliente = clienteServices.buscarId(cedula);
     }
 
     private boolean validarCedula(String cedula) {

@@ -5,13 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import servicart.data.FactoryDAO;
 import servicart.models.entities.Cliente;
 import servicart.domain.services.ClienteServices;
 import servicart.dtos.ClienteDTO;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.core.Navegador;
-import servicart.ui.core.Sesion;
+import servicart.ui.Navegador;
 
 public class PerfilController {
     public TextField txtTelefono;
@@ -59,13 +57,11 @@ public class PerfilController {
         }
 
         try {
-            Cliente entidad = Sesion.getClienteEntity();
             entidad.setNombre(nombre);
             entidad.setEmail(email);
             entidad.setCelular(celular);
 
             clienteService.actualizar(entidad);
-            Sesion.iniciar(entidad); // refresca el DTO en sesión
             mostrarMensaje("✓ Datos actualizados correctamente");
             cargarDatos();
         } catch (ServiCartException e) {
@@ -75,7 +71,6 @@ public class PerfilController {
 
     @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
     @FXML private void onCarrito(ActionEvent e) { Navegador.irA("views/cliente/carrito.fxml"); }
-    @FXML private void onSalir(ActionEvent e) { Sesion.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); }
 
     private void mostrarMensaje(String msg) {
         lblMensaje.setText(msg);

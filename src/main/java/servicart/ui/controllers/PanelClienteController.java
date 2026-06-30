@@ -2,25 +2,16 @@ package servicart.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import servicart.data.FactoryDAO;
 import servicart.models.entities.*;
-import servicart.models.enums.EstadoFactura;
 import servicart.models.enums.ModalidadPago;
-import servicart.models.catalog.ServicioCatalogo;
 import servicart.domain.services.ContratoService;
-import servicart.domain.services.CorteService;
 import servicart.domain.services.FacturacionService;
-import servicart.dtos.ClienteDTO;
-import servicart.dtos.FacturaDTO;
-import servicart.dtos.FacturaMapper;
-import servicart.ui.core.GestorNotificacion;
-import servicart.ui.core.Navegador;
-import servicart.ui.core.Sesion;
+import servicart.ui.GestorNotificacion;
+import servicart.ui.Navegador;
+
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class PanelClienteController {
     public Label lblNombreCliente;
