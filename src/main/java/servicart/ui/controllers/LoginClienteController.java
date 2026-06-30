@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import servicart.data.FactoryDAO;
+import servicart.data.interfaces.CrudDAO;
 import servicart.domain.services.ClienteServices;
 import servicart.domain.services.BaseDatosService;
 import servicart.dtos.ClienteDTO;
@@ -34,9 +36,17 @@ public class LoginClienteController {
         }
 
         BaseDatosService.configurarBaseDatos(cmbBaseDatos.getValue());
+        CrudDAO<Cliente> dao = FactoryDAO.getDAO(Cliente.class);
+        ClienteServices clienteServices = new ClienteServices(dao);
+        ClienteDTO cliente = clienteServices.buscarId(cedula);
 
-        //ClienteServices clienteServices = new ClienteServices();
-        //ClienteDTO cliente = clienteServices.buscarId(cedula);
+        if (cliente == null) {
+            mostrarError("Cliente no encontrado.");
+            return;
+        }else{
+            //Sesion.setCliente(cliente); // guardas el objeto Cliente completo
+            Navegador.irA("views/cliente/panelCliente.fxml");
+        }
     }
 
     private boolean validarCedula(String cedula) {
