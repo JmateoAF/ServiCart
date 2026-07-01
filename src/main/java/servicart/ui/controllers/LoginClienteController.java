@@ -42,7 +42,7 @@ public class LoginClienteController {
             mostrarError("Cliente no encontrado.");
             return;
         }else{
-            Navegador.irA("views/cliente/panelCliente.fxml",cliente);
+            Navegador.irA("views/cliente/panelCliente.fxml");
         }
     }
 
