@@ -8,6 +8,7 @@ import servicart.models.enums.CausaTerminacion;
 import servicart.exceptions.ServiCartException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /* El contrato se podrá dar por terminado por dos razones:
 por solicitud del cliente,
@@ -47,5 +48,8 @@ public class ContratoService {
 
     public List<Contrato> buscarActivos() {
         return contratoDAO.findAll(); // isActivo ya filtra los terminados en el DAO
+    }
+    public Optional<Contrato> buscarPorId(String id) {
+        return contratoDAO.findId(id);
     }
 }

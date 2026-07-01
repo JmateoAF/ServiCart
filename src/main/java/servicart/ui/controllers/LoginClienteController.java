@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import servicart.domain.services.ClienteServices;
 import servicart.dtos.ClienteResponseDTO;
 import servicart.ui.Navegador;
+import servicart.ui.viewmodels.cliente.LoginClienteInputModel;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
@@ -22,20 +23,30 @@ public class LoginClienteController {
 
     @FXML
     private void onBuscarDeudas(ActionEvent event) {
-        String cedula = txtCedula.getText();
+        // 1. Construir InputModel desde los controles FXML
+        LoginClienteInputModel input = new LoginClienteInputModel();
+        input.setCedula(txtCedula.getText().trim());
+        input.setBaseDatos(cmbBaseDatos.getValue());
 
-        if (!validarCedula(cedula)) {
-            mostrarError("Número de cedula no válida");
+        // 2. Validar la cédula (usando el modelo en lugar del String suelto)
+        if (!validarCedula(input.getCedula())) {
+            mostrarError("Número de cédula no válido");
             return;
         }
 
-        ClienteServices clienteServices = new ClienteServices();
-        ClienteResponseDTO cliente = clienteServices.buscarId(cedula);
+        // 3. Configurar base de datos (opcional, según lo tenías antes)
+        // BaseDatosService.configurarBaseDatos(input.getBaseDatos());
 
+        // 4. Llamar al servicio (aquí no necesitas un mapper extra porque el servicio espera un String)
+        ClienteServices clienteServices = new ClienteServices();
+        ClienteResponseDTO cliente = clienteServices.buscarId(input.getCedula());
+
+        // 5. Navegación o mensaje de error
         if (cliente == null) {
             mostrarError("Cliente no encontrado.");
-            return;
-        }else{
+        } else {
+            // Guardar cliente en sesión si es necesario
+            // Sesion.setCliente(cliente);
             Navegador.irA("views/cliente/panelCliente.fxml");
         }
     }

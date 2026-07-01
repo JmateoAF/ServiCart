@@ -3,6 +3,7 @@ package servicart.domain.services;
 import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.mappers.ClienteMapper;
+import servicart.dtos.ClienteRequestDTO;
 import servicart.dtos.ClienteResponseDTO;
 import servicart.models.entities.Cliente;
 import servicart.exceptions.EntidadNoEncontradaException;
@@ -16,7 +17,17 @@ public class ClienteServices {
         return FactoryDAO.getDAO(Cliente.class);
     }
 
-    public void guardarCliente(Cliente cliente) {
+    public void guardarCliente(ClienteRequestDTO dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("El DTO no puede ser nulo");
+        }
+        Cliente cliente = new Cliente(
+                dto.getCedula(),
+                dto.getNombre(),
+                dto.getEmail(),
+                dto.getCelular()
+        );
+        cliente.setActivo(dto.getActivo());
         getClienteDAO().save(cliente);
     }
 
@@ -30,7 +41,13 @@ public class ClienteServices {
         return getClienteDAO().findAll();
     }
 
-    public void actualizar(Cliente cliente) {
+    public void actualizarCliente(ClienteRequestDTO dto) {
+        Cliente cliente = getClienteDAO().findId(dto.getCedula())
+                .orElseThrow(() -> new EntidadNoEncontradaException(dto.getCedula()));
+        cliente.setNombre(dto.getNombre());
+        cliente.setEmail(dto.getEmail());
+        cliente.setCelular(dto.getCelular());
+        cliente.setActivo(dto.getActivo());
         getClienteDAO().update(cliente);
     }
 

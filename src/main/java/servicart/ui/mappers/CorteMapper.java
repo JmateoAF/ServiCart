@@ -6,7 +6,7 @@ import servicart.dtos.CorteRequestDTO;
 
 public class CorteMapper {
     public static CorteRequestDTO toRequest(CorteEjecutarInputModel input) {
-        int contratoId = Integer.parseInt(input.getContratoId().trim());
+        String contratoId = input.getContratoId().trim();
         return new CorteRequestDTO(
                 contratoId,
                 input.getMotivo() != null ? input.getMotivo().trim() : "",
