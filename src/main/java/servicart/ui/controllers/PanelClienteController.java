@@ -33,7 +33,7 @@ public class PanelClienteController {
 
 /*    private void cargarTarjetas() {
         contenedorServicios.getChildren().clear();
-        ClienteDTO clienteDTO = Sesion.getClienteDTO();
+        ClienteResponseDTO clienteDTO = Sesion.getClienteDTO();
         List<Contrato> contratos = contratoService.buscarPorCliente(clienteDTO.cedula());
 
         if (contratos.isEmpty()) {

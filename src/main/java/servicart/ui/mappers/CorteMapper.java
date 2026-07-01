@@ -1,0 +1,16 @@
+// Mapper
+package servicart.ui.mappers;
+
+import servicart.ui.viewmodels.admin.CorteEjecutarInputModel;
+import servicart.dtos.CorteRequestDTO;
+
+public class CorteMapper {
+    public static CorteRequestDTO toRequest(CorteEjecutarInputModel input) {
+        int contratoId = Integer.parseInt(input.getContratoId().trim());
+        return new CorteRequestDTO(
+                contratoId,
+                input.getMotivo() != null ? input.getMotivo().trim() : "",
+                input.getObservaciones() != null ? input.getObservaciones().trim() : ""
+        );
+    }
+}

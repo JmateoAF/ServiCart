@@ -5,15 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import servicart.data.FactoryDAO;
-import servicart.data.interfaces.CrudDAO;
 import servicart.domain.services.ClienteServices;
-import servicart.domain.services.BaseDatosService;
-import servicart.dtos.ClienteDTO;
-import servicart.models.entities.Cliente;
+import servicart.dtos.ClienteResponseDTO;
 import servicart.ui.Navegador;
-
-import java.util.Optional;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
@@ -36,7 +30,7 @@ public class LoginClienteController {
         }
 
         ClienteServices clienteServices = new ClienteServices();
-        ClienteDTO cliente = clienteServices.buscarId(cedula);
+        ClienteResponseDTO cliente = clienteServices.buscarId(cedula);
 
         if (cliente == null) {
             mostrarError("Cliente no encontrado.");

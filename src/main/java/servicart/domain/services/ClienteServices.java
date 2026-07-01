@@ -3,7 +3,7 @@ package servicart.domain.services;
 import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.mappers.ClienteMapper;
-import servicart.dtos.ClienteDTO;
+import servicart.dtos.ClienteResponseDTO;
 import servicart.models.entities.Cliente;
 import servicart.exceptions.EntidadNoEncontradaException;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ClienteServices {
         getClienteDAO().save(cliente);
     }
 
-    public ClienteDTO buscarId(String cedula) {
+    public ClienteResponseDTO buscarId(String cedula) {
         return getClienteDAO().findId(cedula)
                 .map(mapper::aDTO)
                 .orElse(null);
