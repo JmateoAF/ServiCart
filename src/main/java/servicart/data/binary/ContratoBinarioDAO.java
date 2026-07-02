@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
-import servicart.models.entities.Contrato;
-import servicart.models.enums.CausaTerminacion;
+import servicart.entities.Contrato;
+import servicart.entities.enums.CausaTerminacion;
 
 /* Se eliminó terminarContrato(id, causa) que existía antes.
 Esa operación es responsabilidad del ContratoService

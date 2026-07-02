@@ -1,7 +1,7 @@
 package servicart.data.binary;
 
-import servicart.models.entities.CorteServicio;
-import servicart.models.enums.EstadoCorte;
+import servicart.entities.CorteServicio;
+import servicart.entities.enums.EstadoCorte;
 import servicart.exceptions.EntidadNoEncontradaException;
 
 import java.util.List;

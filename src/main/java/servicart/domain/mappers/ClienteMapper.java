@@ -1,7 +1,7 @@
 package servicart.domain.mappers;
 
-import servicart.dtos.ClienteResponseDTO;
-import servicart.models.entities.Cliente;
+import servicart.ui.dtos.ClienteResponseDTO;
+import servicart.entities.Cliente;
 
 public class ClienteMapper {
     public Cliente aEntidad(ClienteResponseDTO dto) {

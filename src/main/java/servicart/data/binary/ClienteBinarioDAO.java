@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.models.entities.Cliente;
+import servicart.entities.Cliente;
 
 import java.util.List;
 

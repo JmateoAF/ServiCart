@@ -7,9 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import servicart.models.entities.Abono;
-import servicart.models.entities.Carrito;
-import servicart.ui.Navegador;
+import servicart.entities.Abono;
 
 public class CarritoController {
     @FXML private VBox  listaItems;

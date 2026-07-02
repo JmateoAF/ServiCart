@@ -1,12 +1,12 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.dtos.CorteRequestDTO;
-import servicart.dtos.ReactivacionRequestDTO;
-import servicart.models.entities.Contrato;
-import servicart.models.entities.CorteServicio;
-import servicart.models.entities.Factura;
-import servicart.models.enums.EstadoCorte;
+import servicart.ui.dtos.CorteRequestDTO;
+import servicart.ui.dtos.ReactivacionRequestDTO;
+import servicart.entities.Contrato;
+import servicart.entities.CorteServicio;
+import servicart.entities.Factura;
+import servicart.entities.enums.EstadoCorte;
 import servicart.exceptions.EntidadNoEncontradaException;
 import servicart.exceptions.ServiCartException;
 

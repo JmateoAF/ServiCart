@@ -1,8 +1,8 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.models.entities.*;
-import servicart.models.enums.EstadoFactura;
+import servicart.entities.*;
+import servicart.entities.enums.EstadoFactura;
 import servicart.exceptions.ServiCartException;
 
 import java.time.LocalDateTime;

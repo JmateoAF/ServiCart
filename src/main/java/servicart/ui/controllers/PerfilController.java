@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import servicart.domain.services.ClienteServices;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.Navegador;
 
 public class PerfilController {
     public TextField txtTelefono;

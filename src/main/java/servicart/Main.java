@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import servicart.ui.Navegador;
+import servicart.ui.controllers.Navegador;
 import java.util.Objects;
 
 //TRABAJO REALIZADO POR: JOSTIN AUCANCELA Y MARITZA QUISHPI

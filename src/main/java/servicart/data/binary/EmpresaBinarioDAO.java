@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.models.entities.Empresa;
+import servicart.entities.Empresa;
 
 public class EmpresaBinarioDAO extends GenericBinarioDAO<Empresa> {
     public EmpresaBinarioDAO() { super("bin/empresa.bin"); } // archivo único para esta entidad

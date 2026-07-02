@@ -2,7 +2,7 @@ package servicart.domain.services;
 
 import servicart.data.interfaces.AdminDAO;
 import servicart.domain.interfaces.LoginAdmin;
-import servicart.models.entities.Administrador;
+import servicart.entities.Administrador;
 
 public class AdminServices implements LoginAdmin{
     private final AdminDAO<Administrador> adminDAO;
@@ -11,9 +11,6 @@ public class AdminServices implements LoginAdmin{
 
     @Override
     public boolean validarLogin(String usuario, String contrasena) {
-        if(usuario == null || usuario.isBlank()) return false;
-        if(contrasena == null || contrasena.isBlank()) return false;
-
         return adminDAO.credenciales(usuario, contrasena).isPresent();
     }
 }

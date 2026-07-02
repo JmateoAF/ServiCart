@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import servicart.domain.services.BaseDatosService;
 import servicart.domain.services.ClienteServices;
-import servicart.dtos.ClienteResponseDTO;
-import servicart.ui.Navegador;
-import servicart.ui.viewmodels.cliente.LoginClienteInputModel;
+import servicart.ui.dtos.ClienteResponseDTO;
+import servicart.ui.viewmodels.cliente.LoginClienteModel;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
@@ -17,29 +17,26 @@ public class LoginClienteController {
 
     @FXML
     public void initialize() {
+        LoginClienteModel clienteModel = new LoginClienteModel();
         cmbBaseDatos.getItems().setAll("SQLite", "Binario");
         cmbBaseDatos.setValue("SQLite");
     }
 
     @FXML
     private void onBuscarDeudas(ActionEvent event) {
-        // 1. Construir InputModel desde los controles FXML
-        LoginClienteInputModel input = new LoginClienteInputModel();
-        input.setCedula(txtCedula.getText().trim());
-        input.setBaseDatos(cmbBaseDatos.getValue());
+        clienteModel.setCedula(txtCedula.getText().trim());
+        clienteModel.setBaseDatos(cmbBaseDatos.getValue());
 
-        // 2. Validar la cédula (usando el modelo en lugar del String suelto)
-        if (!validarCedula(input.getCedula())) {
+        if (!validarCedula(clienteModel.getCedula())) {
             mostrarError("Número de cédula no válido");
             return;
         }
 
-        // 3. Configurar base de datos (opcional, según lo tenías antes)
-        // BaseDatosService.configurarBaseDatos(input.getBaseDatos());
+        BaseDatosService.configurarBaseDatos(clienteModel.getBaseDatos());
 
         // 4. Llamar al servicio (aquí no necesitas un mapper extra porque el servicio espera un String)
         ClienteServices clienteServices = new ClienteServices();
-        ClienteResponseDTO cliente = clienteServices.buscarId(input.getCedula());
+        ClienteResponseDTO cliente = clienteServices.buscarId(clienteModel.getCedula());
 
         // 5. Navegación o mensaje de error
         if (cliente == null) {
@@ -49,6 +46,8 @@ public class LoginClienteController {
             // Sesion.setCliente(cliente);
             Navegador.irA("views/cliente/panelCliente.fxml");
         }
+
+        event.consume();
     }
 
     private boolean validarCedula(String cedula) {
@@ -85,11 +84,13 @@ public class LoginClienteController {
     @FXML
     private void irASobreNosotros(ActionEvent event) {
         Navegador.irA("views/cliente/sobreNosotros.fxml");
+        event.consume();
     }
 
     @FXML
     private void irALoginAdmin(ActionEvent event) {
         Navegador.irA("views/admin/loginAdmin.fxml");
+        event.consume();
     }
 
     private void mostrarError(String mensaje) {

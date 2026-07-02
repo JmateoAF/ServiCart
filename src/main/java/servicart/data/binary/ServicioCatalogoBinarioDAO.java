@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.models.catalog.ServicioCatalogo;
+import servicart.entities.ServicioCatalogo;
 
 /* Se eliminó inicializarDatos() que existía antes
 Poblar el catálogo con los 4 servicios iniciales (Agua, Luz, Basura, Internet)

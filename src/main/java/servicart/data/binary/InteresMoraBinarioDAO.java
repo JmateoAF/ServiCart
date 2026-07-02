@@ -1,6 +1,6 @@
 package servicart.data.binary;
 
-import servicart.models.entities.InteresMora;
+import servicart.entities.InteresMora;
 
 public class InteresMoraBinarioDAO  extends GenericBinarioDAO<InteresMora> {
     public InteresMoraBinarioDAO() { super("bin/InteresMora.bin"); } //Archivo único para esta entidad

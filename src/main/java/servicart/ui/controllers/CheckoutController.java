@@ -5,12 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import servicart.models.entities.Abono;
-import servicart.models.entities.Carrito;
-import servicart.models.enums.ModalidadPago;
+import servicart.entities.enums.ModalidadPago;
 import servicart.domain.services.CheckoutService;
 import servicart.exceptions.ServiCartException;
-import servicart.ui.Navegador;
 
 public class CheckoutController {
     @FXML private VBox listaResumen;

@@ -4,7 +4,7 @@ import servicart.data.binary.ClienteBinarioDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.data.sqlite.ClienteSQLiteDAO;
 import servicart.data.sqlite.ConexionSQLite;
-import servicart.models.entities.Cliente;
+import servicart.entities.Cliente;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,4 +44,6 @@ public class FactoryDAO {
         }
         return dao;
     }
+
+
 }

@@ -1,10 +1,10 @@
 package servicart.domain.services;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.models.catalog.ServicioCatalogo;
-import servicart.models.entities.Cliente;
-import servicart.models.entities.Contrato;
-import servicart.models.enums.CausaTerminacion;
+import servicart.entities.ServicioCatalogo;
+import servicart.entities.Cliente;
+import servicart.entities.Contrato;
+import servicart.entities.enums.CausaTerminacion;
 import servicart.exceptions.ServiCartException;
 import java.time.LocalDateTime;
 import java.util.List;

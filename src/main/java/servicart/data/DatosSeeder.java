@@ -2,9 +2,8 @@ package servicart.data;
 
 import servicart.data.binary.*;
 import servicart.data.interfaces.CrudDAO;
-import servicart.models.catalog.*;
-import servicart.models.entities.*;
-import servicart.models.enums.*;
+import servicart.entities.*;
+import servicart.entities.enums.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +12,10 @@ public class DatosSeeder {
 
     public static void iniciar() {
         try {
+            //ADMINISTRADOR
+            Administrador admin1 = new Administrador("admin", "pass1");
+            ponerEnArchivo(new AdminBinarioDAO(), List.of(admin1));
+
             //EMPRESA
             Empresa emp1 = new Empresa("ETAPA");
             Empresa emp2 = new Empresa("CENTROSUR");

@@ -4,12 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import servicart.models.entities.*;
-import servicart.models.enums.ModalidadPago;
+import servicart.entities.*;
+import servicart.entities.enums.ModalidadPago;
 import servicart.domain.services.ContratoService;
 import servicart.domain.services.FacturacionService;
-import servicart.ui.GestorNotificacion;
-import servicart.ui.Navegador;
 
 import java.time.LocalDateTime;
 

@@ -3,9 +3,9 @@ package servicart.domain.services;
 import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.mappers.ClienteMapper;
-import servicart.dtos.ClienteRequestDTO;
-import servicart.dtos.ClienteResponseDTO;
-import servicart.models.entities.Cliente;
+import servicart.ui.dtos.ClienteRequestDTO;
+import servicart.ui.dtos.ClienteResponseDTO;
+import servicart.entities.Cliente;
 import servicart.exceptions.EntidadNoEncontradaException;
 import java.util.List;
 
