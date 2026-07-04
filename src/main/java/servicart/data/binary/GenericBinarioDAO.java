@@ -140,7 +140,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     @Override
     public void delete(String id) {
         List<T> lista = (cache != null) ? cache : leerTodos();
-        boolean removido = lista.removeIf(e -> getId(e).equals(id));
+        lista.removeIf(e -> getId(e).equals(id));
         //if (!removido) throw new EntidadNoEncontradaException(id);
         guardarTodos(lista);
         cache = lista;
