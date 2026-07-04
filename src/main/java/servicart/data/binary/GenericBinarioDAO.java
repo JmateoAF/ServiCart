@@ -88,7 +88,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     @Override
     public Optional<T> findId(String id) {
         List<T> lista = (cache != null) ? cache : leerTodos();
-        return lista.stream().filter(e -> isActivo(e) && getId(e).equals(id)).findFirst();
+        return lista.stream().filter(e -> getId(e).equals(id)).findFirst();
     }
 
     @Override
