@@ -2,7 +2,7 @@
 package servicart.domain.mappers;
 
 import servicart.ui.viewmodels.admin.ServicioCatalogoInputModel;
-import servicart.ui.dtos.TarifaRequestDTO;
+import servicart.domain.dtos.TarifaRequestDTO;
 
 public class TarifaMapper {
     public static TarifaRequestDTO toRequest(ServicioCatalogoInputModel input) {

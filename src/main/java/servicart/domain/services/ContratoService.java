@@ -5,7 +5,6 @@ import servicart.entities.ServicioCatalogo;
 import servicart.entities.Cliente;
 import servicart.entities.Contrato;
 import servicart.entities.enums.CausaTerminacion;
-import servicart.exceptions.ServiCartException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -23,9 +22,6 @@ public class ContratoService {
 
     //Crea un nuevo contrato activo entre el cliente y el servicio
     public Contrato crearContrato(Cliente cliente, ServicioCatalogo servicio) {
-        if (cliente == null)  throw new ServiCartException("El cliente no puede ser nulo");
-        if (servicio == null) throw new ServiCartException("El servicio no puede ser nulo");
-
         Contrato contrato = new Contrato(LocalDateTime.now(), null, CausaTerminacion.ACTIVO, servicio, cliente);
         contratoDAO.save(contrato);
 
@@ -34,9 +30,6 @@ public class ContratoService {
 
     //Termina el contrato por la causa indicada
     public void terminarContrato(Contrato contrato, CausaTerminacion causa) {
-        if (causa == CausaTerminacion.ACTIVO) throw new ServiCartException("La causa de terminación no puede ser ACTIVO");
-        if (contrato.estaActivo()) throw new ServiCartException("El contrato ya está terminado");
-
         contrato.setCausaTerminacion(causa);
         contrato.setFechaFin(java.time.LocalDateTime.now());
         contratoDAO.update(contrato);

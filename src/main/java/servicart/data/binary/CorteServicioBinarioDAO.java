@@ -2,7 +2,6 @@ package servicart.data.binary;
 
 import servicart.entities.CorteServicio;
 import servicart.entities.enums.EstadoCorte;
-import servicart.exceptions.EntidadNoEncontradaException;
 
 import java.util.List;
 
@@ -48,8 +47,6 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio> {
                 return;
             }
         }
-
-        throw new EntidadNoEncontradaException(id);
     }
 }
 

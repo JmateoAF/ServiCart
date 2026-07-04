@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import servicart.domain.services.ClienteServices;
-import servicart.exceptions.ServiCartException;
 
 public class PerfilController {
     public TextField txtTelefono;
@@ -42,12 +41,6 @@ public class PerfilController {
             return;
         }
 
-        try {
-            mostrarMensaje("✓ Datos actualizados correctamente");
-            cargarDatos();
-        } catch (ServiCartException e) {
-            mostrarMensaje("Error al guardar: " + e.getMessage());
-        }
     }
 
     @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }

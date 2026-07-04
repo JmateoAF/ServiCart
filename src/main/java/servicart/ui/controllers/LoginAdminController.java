@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import servicart.exceptions.ServiCartException;
+import servicart.data.FactoryDAO;
+import servicart.domain.services.LoginAdminImp;
+import servicart.domain.services.BdService;
 
 public class LoginAdminController {
     @FXML private TextField txtUsuario;
@@ -17,31 +19,30 @@ public class LoginAdminController {
         String usuario = txtUsuario.getText().trim();
         String contrasenia = txtPassword.getText();
 
-        if (usuario.isEmpty() || contrasenia.isEmpty()) {
-            mostrarError("Ingrese usuario y contraseña");
-            return;
-        }
+        // 1) Se inicializan ambas bases (admin no elige, por ahora)
+        BdService.configurarBaseDatos("SQLite");
+        BdService.configurarBaseDatos("Binario");
 
-        
-        //if (adminService.validarLogin(usuario, contrasenia)) Navegador.irA("views/admin/panelAdmin.fxml");
-        //else mostrarError("Usuario o contraseña incorrectos");
+        // 2) Recién aquí se pide el DAO, ya con baseDatosActual seteada
+        LoginAdminImp loginAdminImp = new LoginAdminImp(FactoryDAO.getAdminDAO());
+
+        // 3) Dominio valida
+        if (loginAdminImp.validarLogin(usuario, contrasenia)) {
+            Navegador.irA("views/admin/home.fxml");
+        } else {
+            mostrarError("Credenciales inválidas");
+        }
+        event.consume();
     }
 
     @FXML
-    private void irALoginCliente(ActionEvent event) { Navegador.irA("views/cliente/loginCliente.fxml"); }
+    private void irALoginCliente(ActionEvent event) {
+        Navegador.irA("views/cliente/loginCliente.fxml");
+        event.consume();
+    }
 
     private void mostrarError(String mensaje) {
         lblError.setText(mensaje);
-        lblError.setPrefHeight(33);
-        javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(5, 0, 15, 0));
         lblError.setVisible(true);
-
-        javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-        pause.setOnFinished(e -> {
-            lblError.setVisible(false);
-            lblError.setPrefHeight(0);
-            javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0));
-        });
-        pause.play();
     }
 }

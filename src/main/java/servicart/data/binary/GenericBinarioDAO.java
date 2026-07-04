@@ -2,8 +2,6 @@ package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO; // ubicación real según el árbol
 import servicart.domain.interfaces.Identificable;
-import servicart.exceptions.EntidadNoEncontradaException;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +129,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
                 break;
             }
 
-        if (index == -1) throw new EntidadNoEncontradaException(id);
+        //if (index == -1) throw new EntidadNoEncontradaException(id);
 
         lista.set(index, entidad);
         guardarTodos(lista);
@@ -143,7 +141,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     public void delete(String id) {
         List<T> lista = (cache != null) ? cache : leerTodos();
         boolean removido = lista.removeIf(e -> getId(e).equals(id));
-        if (!removido) throw new EntidadNoEncontradaException(id);
+        //if (!removido) throw new EntidadNoEncontradaException(id);
         guardarTodos(lista);
         cache = lista;
     }

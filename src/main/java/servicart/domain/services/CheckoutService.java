@@ -4,7 +4,6 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Abono;
 import servicart.entities.Carrito;
 import servicart.entities.Factura;
-import servicart.exceptions.ServiCartException;
 import java.util.List;
 
 /* Válida que el carrito no esté vacío.
@@ -22,8 +21,6 @@ public class CheckoutService {
     }
 
     public void procesarPago(Carrito carrito) {
-        if (carrito == null || carrito.estaVacio()) throw new ServiCartException("El carrito está vacío");
-
         for (Abono abono : carrito.getAbonos()) {
             abono.setPagoRealizado(true);
             abonoDAO.save(abono);

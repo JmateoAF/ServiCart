@@ -1,7 +1,5 @@
 package servicart.data.sqlite;
 
-import servicart.exceptions.PersistenciaException;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,7 +24,7 @@ public class ConexionSQLite {
             ejecutarScriptSQL(con, "sql/datosPrueba.sql");
             System.out.println("Base de datos sql inicializada con éxito");
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al conectar durante la inicialización: ", e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -48,7 +46,7 @@ public class ConexionSQLite {
         } catch (IOException e) {
             throw new RuntimeException("No se encontró el script SQL: " + rutaArchivo, e);
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al ejecutar el script SQL: " + rutaArchivo, e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }

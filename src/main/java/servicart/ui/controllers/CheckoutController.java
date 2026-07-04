@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import servicart.entities.enums.ModalidadPago;
 import servicart.domain.services.CheckoutService;
-import servicart.exceptions.ServiCartException;
 
 public class CheckoutController {
     @FXML private VBox listaResumen;
@@ -53,13 +52,9 @@ public class CheckoutController {
             // La modalidad se asignó al crear el Abono, pero si se cambia aquí se puede hacer via setter
         }*/
 
-        try {
-            mostrarMensaje("✓ Pago realizado con éxito.");
+            mostrarMensaje("Pago realizado con éxito.");
             //Después de pagar, volver al panel
             Navegador.irA("views/cliente/panelCliente.fxml");
-        } catch (ServiCartException e) {
-            mostrarMensaje("Error al procesar el pago: " + e.getMessage());
-        }
     }
 
     @FXML

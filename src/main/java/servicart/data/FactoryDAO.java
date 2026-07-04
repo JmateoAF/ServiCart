@@ -1,49 +1,59 @@
 package servicart.data;
 
-import servicart.data.binary.ClienteBinarioDAO;
-import servicart.data.interfaces.CrudDAO;
-import servicart.data.sqlite.ClienteSQLiteDAO;
-import servicart.data.sqlite.ConexionSQLite;
-import servicart.entities.Cliente;
+import servicart.data.binary.*;
+import servicart.data.interfaces.*;
+import servicart.data.sqlite.*;
+import servicart.entities.*;
 
-import java.util.HashMap;
-import java.util.Map;
 /* Patrón Simple Factory para la capa de datos
  Centraliza la decisión de qué implementación (binaria o SQLite)
  se entrega a los servicios del dominio */
 
 public class FactoryDAO {
-    private static final Map<Class<?>, CrudDAO<?>> daoMap = new HashMap<>();
+    private static String baseDatosActual;
 
     public static void configurar(String nombreBd) {
-        daoMap.clear(); // Limpia registros anteriores
-
-        if ("SQLite".equalsIgnoreCase(nombreBd)) {
-            ConexionSQLite.inicializarBaseDeDatos(); // Crea las tablas si no existen
-            daoMap.put(Cliente.class, new ClienteSQLiteDAO()); // ← REGISTRO SQLite
-        } else if ("Binario".equalsIgnoreCase(nombreBd)) {
-            DatosSeeder.iniciar(); // Carga los datos de prueba
-            daoMap.put(Cliente.class, new ClienteBinarioDAO()); // ← REGISTRO Binario
-        } else {
-            throw new IllegalArgumentException("Tipo de base de datos no soportado: " + nombreBd);
-        }
+        baseDatosActual = nombreBd;
+        if ("SQLite".equalsIgnoreCase(nombreBd)) ConexionSQLite.inicializarBaseDeDatos();
+        else if ("Binario".equalsIgnoreCase(nombreBd)) DatosSeeder.iniciar();
     }
 
-    //daoMap: Un mapa que asocia clases de entidades con sus DAOs correspondientes.
-    //Sirve para no crear un getDao para cada entidad
-
-    // METODO GENÉRICO: Pide la clase de la entidad y devuelve el DAO correspondiente
     @SuppressWarnings("unchecked")
-    public static <T> CrudDAO<T> getDAO(Class<T> entityClass) {
-        CrudDAO<T> dao = (CrudDAO<T>) daoMap.get(entityClass);
-        if (dao == null) {
-            throw new IllegalStateException(
-                    "No hay DAO registrado para la entidad: " + entityClass.getSimpleName() +
-                            ". ¿Ejecutaste configurar() primero?"
-            );
+    public static <T> CrudDAO<T> getDAO(Class<T> entidad) {
+        boolean sqlite = "SQLite".equalsIgnoreCase(baseDatosActual);
+
+        if (entidad == Cliente.class) return (CrudDAO<T>) (sqlite ? new ClienteSQLiteDAO() : new ClienteBinarioDAO());
+
+        if (entidad == Contrato.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new ContratoSQLiteDAO() */ : new ContratoBinarioDAO());
         }
-        return dao;
+        if (entidad == Factura.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new FacturaSQLiteDAO() */ : new FacturaBinarioDAO());
+        }
+        if (entidad == Abono.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new AbonoSQLiteDAO() */ : new AbonoBinarioDAO());
+        }
+        if (entidad == Carrito.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new CarritoSQLiteDAO() */ : new CarritoBinarioDAO());
+        }
+        if (entidad == Empresa.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new EmpresaSQLiteDAO() */ : new EmpresaBinarioDAO());
+        }
+        if (entidad == CorteServicio.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new CorteServicioSQLiteDAO() */ : new CorteServicioBinarioDAO());
+        }
+        if (entidad == InteresMora.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new InteresMoraSQLiteDAO() */ : new InteresMoraBinarioDAO());
+        }
+        if (entidad == ServicioCatalogo.class) {
+            return (CrudDAO<T>) (sqlite ? null /* new ServicioCatalogoSQLiteDAO() */ : new ServicioCatalogoBinarioDAO());
+        }
+
+        return null;
     }
 
-
+    public static AdminDAO<Administrador> getAdminDAO() {
+        boolean sqlite = "SQLite".equalsIgnoreCase(baseDatosActual);
+        return sqlite ? new AdminSQLiteDAO() : new AdminBinarioDAO();
+    }
 }

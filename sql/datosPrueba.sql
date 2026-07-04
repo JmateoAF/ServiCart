@@ -3,16 +3,16 @@ PRAGMA foreign_keys = ON;
 INSERT OR IGNORE INTO Administradores(usuario, contrasenia)
 VALUES ('admin', 'admin123');
 
+INSERT OR IGNORE INTO Clientes(cedula, nombre, email, celular, activo) VALUES
+    ('0106807365', 'Jostin Aucancela', 'jmaf@mail.com', '0963304126', 1),
+    ('0107758666', 'Maritza Quishpi', 'bmqc@mail.com', '0987545680', 1),
+    ('0107645095', 'Mateo Capelo', 'cmcc@mail.com', '0983970282', 0);
+
 INSERT OR IGNORE INTO Empresa(nombre)VALUES
     ('ETAPA'),
     ('CENTROSUR'),
     ('EMAC'),
     ('FIBRAMAX');
-
-INSERT OR IGNORE INTO Clientes(cedula, nombre, email, celular, activo) VALUES
-    ('0102030405', 'Carlos Mendoza', 'carlos@mail.com', '0991234567', 1),
-    ('0908070605', 'Ana Lopez', 'ana@mail.com', '0987654321', 1),
-    ('1122334455', 'Luis Fernandez', 'luis@mail.com', '0971122334', 1);
 
 INSERT OR IGNORE INTO ServicioCatalogo(idEmpresa, tipoServicio, tipoValor, tarifaFija, tarifaPorUnidad, costoReactivacion, tasaInteresDiario) VALUES
     (1, 0, 1, 0.00, 0.85, 50.00, 0.0500),

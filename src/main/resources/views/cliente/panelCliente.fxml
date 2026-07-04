@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="640"
             prefWidth="960"
             style="-fx-background-color: #0f0f0f;"
@@ -34,7 +33,7 @@
                           -fx-padding: 12 14 6 14;"/>
 
             <Button fx:id="btnMisServicios" maxWidth="Infinity"
-                    text="Mis servicios" onAction="#onMisServicios"
+                    text="Mis servicios"
                     style="-fx-background-color: #1a1a0d;
                            -fx-text-fill: #e8c96d;
                            -fx-border-color: #e8c96d;
@@ -47,7 +46,7 @@
                            -fx-cursor: hand;"/>
 
             <Button fx:id="btnCarrito" maxWidth="Infinity"
-                    text="Carrito" onAction="#onCarrito"
+                    text="Carrito"
                     style="-fx-background-color: transparent;
                            -fx-text-fill: #555555;
                            -fx-border-color: transparent;

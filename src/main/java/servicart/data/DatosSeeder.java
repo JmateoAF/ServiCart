@@ -4,7 +4,6 @@ import servicart.data.binary.*;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.*;
 import servicart.entities.enums.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -138,7 +137,7 @@ public class DatosSeeder {
         for (T entidad : datos) {
             try { dao.save(entidad); // Intenta guardar (INSERT)
             } catch (RuntimeException e) {
-                if (e.getMessage() != null && e.getMessage().startsWith("Ya existe un registro con ID")) {}
+                if (e.getMessage() != null && e.getMessage().startsWith("Ya existe un registro con ID")) { }
                 else throw e;
             }
         }

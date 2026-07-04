@@ -1,8 +1,8 @@
-package servicart.ui.viewmodels.cliente;
+package servicart.ui.viewmodels;
 
-public class LoginClienteModel {
-    private String cedula;       // Coincide con Cliente.cedula
-    private String baseDatos;    // "SQLite" o "Binario", según el ComboBox
+public class LoginViewModel {
+    private String cedula;
+    private String baseDatos;  //1) SQLIte, 2) BInario
 
     public String getCedula() { return cedula; }
     public void setCedula(String cedula) { this.cedula = cedula; }

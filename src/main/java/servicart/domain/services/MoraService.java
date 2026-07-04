@@ -4,7 +4,6 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Factura;
 import servicart.entities.InteresMora;
 import servicart.entities.enums.EstadoFactura;
-import servicart.exceptions.ServiCartException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -25,12 +24,12 @@ public class MoraService {
     }
 
     public InteresMora aplicarMora(Factura factura) {
-        if (factura == null) throw new ServiCartException("La factura no puede ser nula");
+    /*    if (factura == null)
         if (factura.getEstado() == EstadoFactura.PAGADA)
-            throw new ServiCartException("No se puede aplicar mora a una factura ya pagada");
-        if (!factura.estaVencida()) throw new ServiCartException("La factura aún no está vencida");
+
+        if (!factura.estaVencida())
         boolean moraYaAplicada = interesMoraDAO.findAll().stream().anyMatch(m -> m.getFactura().getId() == factura.getId() && m.isAplicadoAFactura());
-        if (moraYaAplicada) throw new ServiCartException("Ya existe una mora aplicada a esta factura");
+        if (moraYaAplicada)*/
 
         LocalDateTime ahora  = LocalDateTime.now();
         long dias = ChronoUnit.DAYS.between(factura.getFechaVencimiento(), ahora);

@@ -1,7 +1,7 @@
 package servicart.domain.mappers;
 
 import servicart.ui.viewmodels.admin.CorteEjecutarInputModel;
-import servicart.ui.dtos.CorteRequestDTO;
+import servicart.domain.dtos.CorteRequestDTO;
 
 public class CorteMapper {
     public static CorteRequestDTO toRequest(CorteEjecutarInputModel input) {

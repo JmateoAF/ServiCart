@@ -2,9 +2,6 @@ package servicart.data.sqlite;
 
 import servicart.entities.Cliente;
 import servicart.data.interfaces.CrudDAO;
-import servicart.exceptions.EntidadNoEncontradaException;
-import servicart.exceptions.PersistenciaException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +25,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             stmt.setInt(5, c.getActivo());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenciaException("No se pudo guardar el cliente: " + c.getCedula(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -41,7 +38,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
             try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al buscar el cliente: " + cedula, e);
+            throw new RuntimeException(e.getMessage());
         }
 
         return Optional.empty();
@@ -55,7 +52,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) clientes.add(mapear(rs)); //Un solo punto de mapeo
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al listar los clientes", e);
+            throw new RuntimeException(e.getMessage());
         }
 
         return clientes;
@@ -72,9 +69,9 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
             stmt.setInt(4, c.getActivo());
             stmt.setString(5, c.getCedula());
 
-            if (stmt.executeUpdate() == 0) throw new EntidadNoEncontradaException(c.getCedula());
+            //if (stmt.executeUpdate() == 0)
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al actualizar el cliente: " + c.getCedula(), e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -86,9 +83,9 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
 
-            if (stmt.executeUpdate() == 0) throw new EntidadNoEncontradaException(cedula);
+            //if (stmt.executeUpdate() == 0)
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al dar de baja el cliente: " + cedula, e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 

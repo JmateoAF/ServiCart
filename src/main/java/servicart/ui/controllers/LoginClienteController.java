@@ -5,45 +5,55 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import servicart.domain.services.BaseDatosService;
-import servicart.domain.services.ClienteServices;
-import servicart.ui.dtos.ClienteResponseDTO;
-import servicart.ui.viewmodels.cliente.LoginClienteModel;
+import servicart.domain.dtos.LoginDTOEntrada;
+import servicart.domain.dtos.LoginDTOSalida;
+import servicart.domain.interfaces.LoginCliente;
+import servicart.domain.services.BdService;
+import servicart.ui.mappers.LoginMapperUI;
+import servicart.ui.viewmodels.LoginViewModel;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
     @FXML private ComboBox<String> cmbBaseDatos;
     @FXML private Label lblError;
 
+    private final LoginCliente loginCliente;
+
+    public LoginClienteController(LoginCliente loginCliente) {
+        this.loginCliente = loginCliente;
+    }
+
     @FXML
     public void initialize() {
-        LoginClienteModel clienteModel = new LoginClienteModel();
         cmbBaseDatos.getItems().setAll("SQLite", "Binario");
         cmbBaseDatos.setValue("SQLite");
     }
 
     @FXML
     private void onBuscarDeudas(ActionEvent event) {
-        clienteModel.setCedula(txtCedula.getText().trim());
-        clienteModel.setBaseDatos(cmbBaseDatos.getValue());
+        String cedula = txtCedula.getText().trim();
+        String baseDatos = cmbBaseDatos.getValue();
 
-        if (!validarCedula(clienteModel.getCedula())) {
-            mostrarError("Número de cédula no válido");
+        if (!validarCedula(cedula)) {
+            mostrarError("Número de cedula no válida");
+            event.consume();
             return;
         }
 
-        BaseDatosService.configurarBaseDatos(clienteModel.getBaseDatos());
+        BdService.configurarBaseDatos(baseDatos);
 
-        // 4. Llamar al servicio (aquí no necesitas un mapper extra porque el servicio espera un String)
-        ClienteServices clienteServices = new ClienteServices();
-        ClienteResponseDTO cliente = clienteServices.buscarId(clienteModel.getCedula());
+        LoginViewModel viewModel = new LoginViewModel();
+        viewModel.setCedula(cedula);
+        viewModel.setBaseDatos(baseDatos);
 
-        // 5. Navegación o mensaje de error
-        if (cliente == null) {
-            mostrarError("Cliente no encontrado.");
+        LoginDTOEntrada dtoEntrada = LoginMapperUI.viewModelADTO(viewModel);
+        LoginDTOSalida dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
+
+        if (dtoSalida == null) {
+            mostrarError("Usuario no encontrado");
+        } else if (dtoSalida.activo() == 0) {
+            mostrarError("El usuario está inactivo");
         } else {
-            // Guardar cliente en sesión si es necesario
-            // Sesion.setCliente(cliente);
             Navegador.irA("views/cliente/panelCliente.fxml");
         }
 
@@ -55,12 +65,10 @@ public class LoginClienteController {
             mostrarError("Ingrese su número de cédula");
             return false;
         }
-
         if (cedula.length() != 10) {
             mostrarError("La cédula debe tener 10 dígitos");
             return false;
         }
-
         try {
             int provincia = Integer.parseInt(cedula.substring(0, 2)), suma = 0, total, valor;
             int digitoVerificador = Integer.parseInt(cedula.substring(9, 10));
@@ -72,9 +80,7 @@ public class LoginClienteController {
                 valor = Integer.parseInt(cedula.substring(i, i + 1)) * coeficientes[i];
                 suma += (valor > 9) ? (valor - 9) : valor;
             }
-
             total = (suma % 10 == 0) ? 0 : (10 - (suma % 10));
-
             return total == digitoVerificador;
         } catch (NumberFormatException e) {
             return false;
@@ -104,6 +110,7 @@ public class LoginClienteController {
             lblError.setVisible(false);
             lblError.setPrefHeight(0);
             javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0));
+            e.consume();
         });
         pause.play();
     }

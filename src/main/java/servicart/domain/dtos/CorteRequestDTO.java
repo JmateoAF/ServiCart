@@ -1,4 +1,4 @@
-package servicart.ui.dtos;
+package servicart.domain.dtos;
 
 public class CorteRequestDTO {
     private final String contratoId;

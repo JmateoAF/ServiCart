@@ -2,7 +2,6 @@ package servicart.data.sqlite;
 
 import servicart.data.interfaces.AdminDAO;
 import servicart.entities.Administrador;
-import servicart.exceptions.PersistenciaException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +21,7 @@ public class AdminSQLiteDAO implements AdminDAO<Administrador> {
                 if (rs.next()) return Optional.of(new Administrador(rs.getString("usuario"), rs.getString("contrasenia")));
             }
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al validar credenciales de administrador", e);
+            throw new RuntimeException(e.getMessage());
         }
 
         return Optional.empty();
