@@ -23,9 +23,8 @@ public class DatosSeeder {
             ponerEnArchivo(new EmpresaBinarioDAO(), List.of(emp1, emp2, emp3, emp4));
 
             //CLIENTE
-            Cliente cl1 = new Cliente("0104636469", "Diego Quishpi", "diego.quishpi@mail.com", "0945825693");
-            Cliente cl2 = new Cliente("0102642568", "Elena Flores", "elena.flores@mail.com", "0984975208");
-            cl2.setActivo(0);
+            Cliente cl1 = new Cliente("0104636469", "Diego Quishpi", "diego.quishpi@mail.com", "0945825693", 1);
+            Cliente cl2 = new Cliente("0102642568", "Elena Flores", "elena.flores@mail.com", "0984975208", 0);
             ponerEnArchivo(new ClienteBinarioDAO(), List.of(cl1, cl2));
 
             //SERVICIO CATALOGO

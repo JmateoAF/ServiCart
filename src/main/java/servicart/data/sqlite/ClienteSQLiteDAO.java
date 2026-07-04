@@ -31,7 +31,7 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
     @Override
     public Optional<Cliente> findId(String cedula) {
-        String sql = "SELECT cedula, nombre, email, celular FROM Clientes WHERE cedula = ? AND activo = 1";
+        String sql = "SELECT * FROM Clientes WHERE cedula = ?";
 
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
@@ -91,6 +91,6 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
 
     //Único punto de conversión ResultSet -> Cliente
     private Cliente mapear(ResultSet rs) throws SQLException {
-        return new Cliente(rs.getString("cedula"), rs.getString("nombre"), rs.getString("email"), rs.getString("celular"));
+        return new Cliente(rs.getString("cedula"), rs.getString("nombre"), rs.getString("email"), rs.getString("celular"), rs.getInt("activo"));
     }
 }

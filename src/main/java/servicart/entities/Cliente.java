@@ -9,12 +9,12 @@ public class Cliente implements Serializable {
     private String celular;
     private int activo; //Activo = 1, Inactivo = 0
 
-    public Cliente(String cedula, String nombre, String email, String celular) {
+    public Cliente(String cedula, String nombre, String email, String celular, int activo) {
         this.cedula = cedula;
         this.nombre = nombre;
         this.email = email;
         this.celular = celular;
-        this.activo = 1;
+        this.activo = activo;
     }
 
     public String getCedula() { return cedula; }
