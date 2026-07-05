@@ -51,7 +51,7 @@
         <StackPane style="-fx-background-color: #0f0f0f;">
             <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="350.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;">
 
-                <Label maxWidth="1.7976931348623157E308" style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-family: 'Courier New'; -fx-alignment: center; -fx-background-radius: 5;" text="ACCESO CLIENTE">
+                <Label maxWidth="Infinity" style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-family: 'Courier New'; -fx-alignment: center; -fx-background-radius: 5;" text="ACCESO CLIENTE">
                     <VBox.margin>
                         <Insets bottom="50.0" />
                     </VBox.margin>
@@ -82,13 +82,13 @@
                         <Font size="15.0" />
                     </font>
                 </Label>
-                <ComboBox fx:id="cmbBaseDatos" maxWidth="1.7976931348623157E308" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" styleClass="combo-box-popup">
+                <ComboBox fx:id="cmbBaseDatos" maxWidth="Infinity" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" styleClass="combo-box-popup">
                     <VBox.margin>
                         <Insets bottom="15.0" top="5.0" />
                     </VBox.margin>
                 </ComboBox>
 
-                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="0.0" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5;" visible="false" wrapText="true">
+                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5;" visible="false" wrapText="true">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
@@ -100,7 +100,7 @@
                     </padding>
                 </Label>
 
-                <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" onAction="#onBuscarDeudas" style="-fx-font-size: 15px; -fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;" text="BUSCAR MIS DEUDAS">
+                <Button maxHeight="-Infinity" maxWidth="Infinity" onAction="#onBuscarDeudas" style="-fx-font-size: 15px; -fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;" text="BUSCAR MIS DEUDAS">
                     <VBox.margin>
                         <Insets top="10.0" />
                     </VBox.margin>
@@ -118,7 +118,7 @@
                     </VBox.margin>
                 </Separator>
 
-                <Button maxWidth="1.7976931348623157E308" onAction="#irALoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand;" text="Soy administrador">
+                <Button maxWidth="Infinity" onAction="#irALoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand;" text="Soy administrador">
                     <font>
                         <Font size="15.0" />
                     </font>

@@ -61,7 +61,7 @@
                <VBox.margin>
                   <Insets bottom="25.0" />
                </VBox.margin></Separator>
-                <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 1; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-line-spacing: 15; -fx-font-size: 15;" text="ServiCart es una plataforma de pago de servicios básicos mediante carrito de compras. Permite visualizar y pagar sus facturas de agua, luz, recolección de basura e internet" wrapText="true">
+                <Label alignment="CENTER" maxWidth="Infinity" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 1; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-line-spacing: 15; -fx-font-size: 15;" text="ServiCart es una plataforma de pago de servicios básicos mediante carrito de compras. Permite visualizar y pagar sus facturas de agua, luz, recolección de basura e internet" wrapText="true">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
