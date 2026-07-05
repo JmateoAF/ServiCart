@@ -24,10 +24,10 @@ public class PanelClienteController {
     public void initialize() {
         //contratoService = new ContratoService(FactoryDAO.contratoDAO());
         facturacionService = GestorNotificacion.getFacturacionService();
-        cargarTarjetas();
+        //cargarTarjetas();
     }
 
-    private void cargarTarjetas() {
+/*    private void cargarTarjetas() {
         contenedorServicios.getChildren().clear();
         ClienteResponseDTO clienteDTO = Sesion.getClienteDTO();
         List<Contrato> contratos = contratoService.buscarPorCliente(clienteDTO.cedula());
@@ -124,9 +124,9 @@ public class PanelClienteController {
         fila.getChildren().add(hboxAbono);
 
         return fila;
-    }
+    }*/
 
-    private void onAnadirAbono(Factura factura, TextField txtMonto, ComboBox<ModalidadPago> cmbModalidad) {
+/*    private void onAnadirAbono(Factura factura, TextField txtMonto, ComboBox<ModalidadPago> cmbModalidad) {
         try {
             double monto = Double.parseDouble(txtMonto.getText().trim());
             if (monto <= 0) throw new NumberFormatException();
@@ -139,9 +139,9 @@ public class PanelClienteController {
         } catch (NumberFormatException e) {
             mostrarMensaje("Ingrese un monto válido mayor a 0");
         }
-    }
+    }*/
 
-    private void onReactivar(Contrato contrato, double costoReactivacion) {
+/*    private void onReactivar(Contrato contrato, double costoReactivacion) {
         //Buscar el corte activo para este contrato
         CorteService corteService = new CorteService(FactoryDAO.corteServicioDAO());
 
@@ -149,8 +149,9 @@ public class PanelClienteController {
             corteService.reactivarServicio(corte, costoReactivacion);
             mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
             cargarTarjetas();}, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
-    }
+    }*/
 
+    @FXML
     private void onCarrito(ActionEvent event) {
         Navegador.irA("views/cliente/carrito.fxml");
         event.consume();

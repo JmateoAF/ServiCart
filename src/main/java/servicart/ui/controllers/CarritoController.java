@@ -10,38 +10,35 @@ import javafx.scene.layout.VBox;
 import servicart.entities.Abono;
 
 public class CarritoController {
-    @FXML private VBox  listaItems;
-    @FXML private VBox  paneVacio;
+    @FXML public Label lblMensaje;
+    @FXML private VBox listaItems;
+    @FXML private VBox paneVacio;
     @FXML private Label lblCantidad;
     @FXML private Label lblSubtotal;
     @FXML private Label lblTotalFinal;
-    @FXML private Button btnCheckout;
 
-    @FXML
-    public void initialize() {
-        cargarCarrito();
-    }
+    /*@FXML
+    public void initialize() { cargarCarrito(); }
 
     private void cargarCarrito() {
         listaItems.getChildren().clear();
 
-/*        if (carrito.estaVacio()) {
+        if (carrito.estaVacio()) {
             paneVacio.setVisible(true);
             listaItems.setVisible(false);
             btnCheckout.setDisable(true);
 
             return;
-        }*/
+        }
 
         paneVacio.setVisible(false);
         listaItems.setVisible(true);
-        btnCheckout.setDisable(false);
 
-   /*     for (Abono abono : carrito.getAbonos()) listaItems.getChildren().add(crearFilaItem(abono));
+        for (Abono abono : carrito.getAbonos()) listaItems.getChildren().add(crearFilaItem(abono));
 
         lblCantidad.setText(carrito.cantidadItems() + " ítem(s)");
         lblSubtotal.setText("$" + String.format("%.2f", carrito.getTotal()));
-        lblTotalFinal.setText("$" + String.format("%.2f", carrito.getTotal()));*/
+        lblTotalFinal.setText("$" + String.format("%.2f", carrito.getTotal()));
     }
 
     private HBox crearFilaItem(Abono abono) {
@@ -61,21 +58,39 @@ public class CarritoController {
 
         fila.getChildren().addAll(lblDesc, lblMonto, btnEliminar);
         return fila;
+    }*/
+
+    @FXML
+    private void onMisServicios(ActionEvent event) {
+        Navegador.irA("views/cliente/panelCliente.fxml");
+        event.consume();
     }
 
     @FXML
-    private void onCheckout(ActionEvent event) { Navegador.irA("views/cliente/checkout.fxml"); }
+    private void onPerfil(ActionEvent event) {
+        Navegador.irA("views/cliente/perfilCliente.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        Navegador.irA("views/cliente/loginCliente.fxml");
+        event.consume();
+    }
 
     @FXML
     private void onVaciarCarrito(ActionEvent event) {
-
-        cargarCarrito();
+        event.consume();
     }
 
-    @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
-    @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
+    @FXML
+    private void onCheckout(ActionEvent event) {
+        Navegador.irA("views/cliente/checkout.fxml");
+        event.consume();
+    }
 
-    public void onVolverServicios(ActionEvent actionEvent)  {
-        Navegador.irA("views/cliente/panelCliente.fxml");
+    private void mostrarMensaje(String msg) {
+        lblMensaje.setText(msg);
+        lblMensaje.setVisible(true);
     }
 }

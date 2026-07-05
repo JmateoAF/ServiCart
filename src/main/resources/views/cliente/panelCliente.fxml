@@ -21,16 +21,16 @@
 
             <Button maxWidth="Infinity" style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 5; -fx-font-size: 20; -fx-padding: 10 15 10 10; -fx-alignment: center-left; -fx-cursor: hand;" text="Mis servicios" />
 
-            <Button fx:id="btnCarrito" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Carrito" />
+            <Button maxWidth="Infinity" onAction="#onCarrito" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Carrito" />
 
-            <Button fx:id="btnPerfil" maxWidth="Infinity" onAction="#onPerfil" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Perfil" />
+            <Button maxWidth="Infinity" onAction="#onPerfil" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Perfil" />
 
             <Region VBox.vgrow="ALWAYS" />
             <Separator style="-fx-background-color: #1e1e1e;" />
 
-            <Button maxWidth="Infinity" onAction="#onSalir" style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text=" Salir">
+            <Button maxWidth="Infinity" onAction="#onSalir" style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Salir">
                 <VBox.margin>
-                    <Insets bottom="6" />
+                    <Insets />
                 </VBox.margin>
             </Button>
         </VBox>
