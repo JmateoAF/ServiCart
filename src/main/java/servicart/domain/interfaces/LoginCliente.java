@@ -1,8 +1,8 @@
 package servicart.domain.interfaces;
 
-import servicart.domain.dtos.LoginDTOEntrada;
-import servicart.domain.dtos.LoginDTOSalida;
+import servicart.domain.dtos.LoginClienteDTOEntrada;
+import servicart.domain.dtos.LoginClienteDTOSalida;
 
 public interface LoginCliente {
-    LoginDTOSalida validarLoginCliente(LoginDTOEntrada dto);
+    LoginClienteDTOSalida validarLoginCliente(LoginClienteDTOEntrada dto);
 }
