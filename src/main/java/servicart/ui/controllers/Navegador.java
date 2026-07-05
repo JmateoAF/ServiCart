@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.LoginClienteImp;
-import servicart.entities.Cliente;
+import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -14,7 +14,7 @@ public class Navegador {
     private static Stage stage;
     private static final LoginCliente loginCliente = new LoginClienteImp();
 
-    private static Cliente clientePendiente;
+    private static PerfilClienteViewModel clientePendiente;
     private static String baseDatosPendiente;
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
@@ -29,14 +29,15 @@ public class Navegador {
             throw new RuntimeException(e.getMessage());
         }
     }
-    public static void irA(String rutaFXML, Cliente cliente, String baseDatos) {
+
+    public static void irA(String rutaFXML, PerfilClienteViewModel cliente, String baseDatos) {
         clientePendiente = cliente;
         baseDatosPendiente = baseDatos;
         irA(rutaFXML);
     }
 
-    public static Cliente getClientePendiente() {
-        Cliente c = clientePendiente;
+    public static PerfilClienteViewModel getClientePendiente() {
+        PerfilClienteViewModel c = clientePendiente;
         clientePendiente = null;
         return c;
     }
