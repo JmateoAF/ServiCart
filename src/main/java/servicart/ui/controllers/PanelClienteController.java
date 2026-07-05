@@ -12,10 +12,8 @@ import servicart.domain.services.FacturacionService;
 import java.time.LocalDateTime;
 
 public class PanelClienteController {
-    public Label lblNombreCliente;
-    public Button btnPerfil;
-    public Button btnCarrito;
-    public Button btnMisServicios;
+    @FXML public Button btnCarrito;
+    @FXML public Button btnPerfil;
     @FXML private VBox contenedorServicios;
     @FXML private Label lblMensaje;
 
@@ -26,10 +24,10 @@ public class PanelClienteController {
     public void initialize() {
         //contratoService = new ContratoService(FactoryDAO.contratoDAO());
         facturacionService = GestorNotificacion.getFacturacionService();
-        //cargarTarjetas();
+        cargarTarjetas();
     }
 
-/*    private void cargarTarjetas() {
+    private void cargarTarjetas() {
         contenedorServicios.getChildren().clear();
         ClienteResponseDTO clienteDTO = Sesion.getClienteDTO();
         List<Contrato> contratos = contratoService.buscarPorCliente(clienteDTO.cedula());
@@ -45,8 +43,8 @@ public class PanelClienteController {
             List<Factura> facturas = facturacionService.buscarPorContrato(contrato.getId());
             contenedorServicios.getChildren().add(crearTarjeta(contrato, facturas));
         }
-    }*/
-/*
+    }
+
     private VBox crearTarjeta(Contrato contrato, List<Factura> facturas) {
         ServicioCatalogo servicio = contrato.getServicio();
 
@@ -73,9 +71,9 @@ public class PanelClienteController {
         else for (Factura f : pendientes) card.getChildren().add(crearFilaFactura(f));
 
         return card;
-    }*/
+    }
 
-/*    private HBox crearPanelCorte(Contrato contrato, ServicioCatalogo servicio) {
+    private HBox crearPanelCorte(Contrato contrato, ServicioCatalogo servicio) {
         HBox panel = new HBox(10);
         panel.getStyleClass().add("panel-cortado");
 
@@ -87,9 +85,9 @@ public class PanelClienteController {
         panel.getChildren().addAll(lbl, btnReactivar);
 
         return panel;
-    }*/
+    }
 
-/*    private VBox crearFilaFactura(Factura factura) {
+    private VBox crearFilaFactura(Factura factura) {
         VBox fila = new VBox(6);
         fila.getStyleClass().add("fila-factura");
 
@@ -126,7 +124,7 @@ public class PanelClienteController {
         fila.getChildren().add(hboxAbono);
 
         return fila;
-    }*/
+    }
 
     private void onAnadirAbono(Factura factura, TextField txtMonto, ComboBox<ModalidadPago> cmbModalidad) {
         try {
@@ -143,7 +141,7 @@ public class PanelClienteController {
         }
     }
 
-/*    private void onReactivar(Contrato contrato, double costoReactivacion) {
+    private void onReactivar(Contrato contrato, double costoReactivacion) {
         //Buscar el corte activo para este contrato
         CorteService corteService = new CorteService(FactoryDAO.corteServicioDAO());
 
@@ -151,19 +149,23 @@ public class PanelClienteController {
             corteService.reactivarServicio(corte, costoReactivacion);
             mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
             cargarTarjetas();}, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
-    }*/
+    }
 
-    //private void onMisServicios(ActionEvent event) { cargarTarjetas(); }
-
-    //private void onCarrito(ActionEvent event) { Navegador.irA("views/cliente/carrito.fxml"); }
+    private void onCarrito(ActionEvent event) {
+        Navegador.irA("views/cliente/carrito.fxml");
+        event.consume();
+    }
 
     @FXML
-    private void onPerfil(ActionEvent event) { Navegador.irA("views/cliente/perfilCliente.fxml"); }
+    private void onPerfil(ActionEvent event) {
+        Navegador.irA("views/cliente/perfilCliente.fxml");
+        event.consume();
+    }
 
     @FXML
     private void onSalir(ActionEvent event) {
-
         Navegador.irA("views/cliente/loginCliente.fxml");
+        event.consume();
     }
 
     private void mostrarMensaje(String msg) {
