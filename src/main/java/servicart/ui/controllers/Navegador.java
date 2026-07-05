@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.LoginClienteImp;
+import servicart.entities.Cliente;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -13,6 +14,8 @@ public class Navegador {
     private static Stage stage;
     private static final LoginCliente loginCliente = new LoginClienteImp();
 
+    private static Cliente clientePendiente;
+    private static String baseDatosPendiente;
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -25,6 +28,23 @@ public class Navegador {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+    public static void irA(String rutaFXML, Cliente cliente, String baseDatos) {
+        clientePendiente = cliente;
+        baseDatosPendiente = baseDatos;
+        irA(rutaFXML);
+    }
+
+    public static Cliente getClientePendiente() {
+        Cliente c = clientePendiente;
+        clientePendiente = null;
+        return c;
+    }
+
+    public static String getBaseDatosPendiente() {
+        String bd = baseDatosPendiente;
+        baseDatosPendiente = null;
+        return bd;
     }
 
     public static Object crearControlador(Class<?> claseControlador) {
