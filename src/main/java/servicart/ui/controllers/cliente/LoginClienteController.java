@@ -1,17 +1,18 @@
-package servicart.ui.controllers;
+package servicart.ui.controllers.cliente;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import servicart.domain.dtos.LoginClienteDTOEntrada;
-import servicart.domain.dtos.LoginClienteDTOSalida;
+import servicart.domain.dtos.entradas.LoginClienteDTOEntrada;
+import servicart.domain.dtos.salidas.LoginClienteDTOSalida;
 import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.BdService;
-import servicart.ui.mappers.LoginMapperUI;
-import servicart.ui.viewmodels.LoginViewModel;
-import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
+import servicart.ui.SesionCliente;
+import servicart.ui.controllers.Navegador;
+import servicart.ui.mappers.LoginClienteMapperUI;
+import servicart.ui.viewmodels.cliente.LoginClienteViewModel;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
@@ -43,26 +44,22 @@ public class LoginClienteController {
 
         BdService.configurarBaseDatos(baseDatos);
 
-        LoginViewModel viewModel = new LoginViewModel();
+        LoginClienteViewModel viewModel = new LoginClienteViewModel();
         viewModel.setCedula(cedula);
         viewModel.setBaseDatos(baseDatos);
 
-        LoginClienteDTOEntrada dtoEntrada = LoginMapperUI.viewModelADTO(viewModel);
+        LoginClienteDTOEntrada dtoEntrada = LoginClienteMapperUI.viewModelADTO(viewModel);
         LoginClienteDTOSalida dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
 
-        if (dtoSalida == null) {
+        viewModel = LoginClienteMapperUI.DTOAviewModel(dtoSalida);
+
+        if (viewModel.getCedula() == null) {
             mostrarError("Usuario no encontrado");
-        } else if (dtoSalida.activo() == 0) {
+        } else if (viewModel.getActivo() == 0) {
             mostrarError("El usuario está inactivo");
         } else {
-            PerfilClienteViewModel vm = new PerfilClienteViewModel();
-            vm.setNombre(dtoSalida.nombre());
-            vm.setCedula(dtoSalida.cedula());
-            vm.setEmail(dtoSalida.email());
-            vm.setTelefono(dtoSalida.celular());
-            vm.setActivo(dtoSalida.activo() == 1 ? "Activo" : "Inactivo");
-
-            Navegador.irA("views/cliente/panelCliente.fxml", vm, cmbBaseDatos.getValue());
+            SesionCliente.iniciarSesion(cedula);
+            Navegador.irA("views/cliente/panelCliente.fxml");
         }
 
         event.consume();

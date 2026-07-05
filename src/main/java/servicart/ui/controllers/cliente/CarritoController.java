@@ -1,13 +1,10 @@
-package servicart.ui.controllers;
+package servicart.ui.controllers.cliente;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import servicart.entities.Abono;
+import servicart.ui.controllers.Navegador;
 
 public class CarritoController {
     @FXML public Label lblMensaje;

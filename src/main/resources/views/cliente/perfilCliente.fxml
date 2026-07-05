@@ -15,9 +15,8 @@
             style="-fx-background-color: #0f0f0f;"
             xmlns="http://javafx.com/javafx/26"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="servicart.ui.controllers.PerfilController">
+            fx:controller="servicart.ui.controllers.cliente.PerfilClienteController">
 
-    <!-- ═══ SIDEBAR ═══ -->
     <left>
         <VBox prefWidth="162"
               style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
@@ -48,15 +47,12 @@
         </VBox>
     </left>
 
-    <!-- ═══ CONTENIDO ═══ -->
     <center>
         <HBox alignment="TOP_CENTER" spacing="16"
               style="-fx-background-color: #0f0f0f; -fx-padding: 22 32 22 22;">
 
-            <!-- Columna izquierda: datos personales -->
             <VBox spacing="12" HBox.hgrow="ALWAYS">
 
-                <!-- Avatar + nombre -->
                 <VBox alignment="CENTER" spacing="8"
                       style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20 16 16 16;">
                     <Label text="👤"
@@ -69,7 +65,6 @@
                            style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-size: 10; -fx-padding: 3 10 3 10; -fx-background-radius: 10;" />
                 </VBox>
 
-                <!-- Datos personales (solo lectura) -->
                 <VBox spacing="12"
                       style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 16;">
 
@@ -100,20 +95,19 @@
                                    style="-fx-background-color: #1a1a1a; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #cccccc; -fx-font-size: 12; -fx-padding: 8 12 8 12; -fx-font-family: 'Courier New';" />
                     </VBox>
 
-                    <Label fx:id="lblMensaje"
+                    <Label
                            alignment="CENTER" managed="false" maxWidth="Infinity"
                            style="-fx-text-fill: #e8c96d; -fx-font-size: 11; -fx-padding: 6 0 0 0;"
                            visible="false" />
                 </VBox>
             </VBox>
 
-            <!-- Columna derecha: servicios registrados -->
             <VBox prefWidth="220" spacing="10">
                 <Label text="SERVICIOS REGISTRADOS"
                        style="-fx-text-fill: #444444; -fx-font-size: 9; -fx-font-family: 'Courier New';" />
                 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
                             style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;">
-                    <VBox fx:id="listaServicios" spacing="10" />
+                    <VBox spacing="10" />
                 </ScrollPane>
             </VBox>
         </HBox>

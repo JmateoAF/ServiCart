@@ -16,7 +16,7 @@
             style="-fx-background-color: #0f0f0f;"
             xmlns="http://javafx.com/javafx/26"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="servicart.ui.controllers.CheckoutController">
+            fx:controller="servicart.ui.controllers.cliente.CheckoutController">
 
     <!-- ═══ NAVBAR ═══ -->
     <top>

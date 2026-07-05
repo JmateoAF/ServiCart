@@ -1,4 +1,4 @@
-package servicart.ui.controllers;
+package servicart.ui.controllers.admin;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,8 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import servicart.data.FactoryDAO;
-import servicart.domain.services.LoginAdminImp;
+import servicart.domain.services.admin.LoginAdminImp;
 import servicart.domain.services.BdService;
+import servicart.ui.controllers.Navegador;
 
 public class LoginAdminController {
     @FXML private TextField txtUsuario;
@@ -19,14 +20,11 @@ public class LoginAdminController {
         String usuario = txtUsuario.getText().trim();
         String contrasenia = txtPassword.getText();
 
-        // 1) Se inicializan ambas bases (admin no elige, por ahora)
         BdService.configurarBaseDatos("SQLite");
         BdService.configurarBaseDatos("Binario");
 
-        // 2) Recién aquí se pide el DAO, ya con baseDatosActual seteada
         LoginAdminImp loginAdminImp = new LoginAdminImp(FactoryDAO.getAdminDAO());
 
-        // 3) Dominio valida
         if (loginAdminImp.validarLogin(usuario, contrasenia)) {
             Navegador.irA("views/admin/home.fxml");
         } else {

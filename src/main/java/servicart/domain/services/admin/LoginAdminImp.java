@@ -1,4 +1,4 @@
-package servicart.domain.services;
+package servicart.domain.services.admin;
 
 import servicart.data.interfaces.AdminDAO;
 import servicart.domain.interfaces.LoginAdmin;

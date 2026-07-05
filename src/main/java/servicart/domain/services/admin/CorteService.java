@@ -1,8 +1,8 @@
-package servicart.domain.services;
+package servicart.domain.services.admin;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.dtos.CorteRequestDTO;
-import servicart.domain.dtos.ReactivacionRequestDTO;
+import servicart.domain.services.FacturacionService;
+import servicart.domain.services.cliente.ContratoService;
 import servicart.entities.Contrato;
 import servicart.entities.CorteServicio;
 import servicart.entities.Factura;

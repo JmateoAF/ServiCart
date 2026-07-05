@@ -3,9 +3,11 @@ package servicart.ui.controllers;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
-import servicart.domain.interfaces.LoginCliente;
-import servicart.domain.services.LoginClienteImp;
-import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
+import servicart.domain.interfaces.*;
+import servicart.domain.services.cliente.LoginClienteImp;
+import servicart.domain.services.cliente.PerfilClienteImp;
+import servicart.ui.controllers.cliente.LoginClienteController;
+import servicart.ui.controllers.cliente.PerfilClienteController;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -13,9 +15,7 @@ import java.util.Objects;
 public class Navegador {
     private static Stage stage;
     private static final LoginCliente loginCliente = new LoginClienteImp();
-
-    private static PerfilClienteViewModel clientePendiente;
-    private static String baseDatosPendiente;
+    private static final PerfilCliente perfilCliente = new PerfilClienteImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -30,26 +30,10 @@ public class Navegador {
         }
     }
 
-    public static void irA(String rutaFXML, PerfilClienteViewModel cliente, String baseDatos) {
-        clientePendiente = cliente;
-        baseDatosPendiente = baseDatos;
-        irA(rutaFXML);
-    }
-
-    public static PerfilClienteViewModel getClientePendiente() {
-        PerfilClienteViewModel c = clientePendiente;
-        clientePendiente = null;
-        return c;
-    }
-
-    public static String getBaseDatosPendiente() {
-        String bd = baseDatosPendiente;
-        baseDatosPendiente = null;
-        return bd;
-    }
-
     public static Object crearControlador(Class<?> claseControlador) {
         if (claseControlador == LoginClienteController.class) return new LoginClienteController(loginCliente);
+
+        if(claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente);
 
         try {
             return claseControlador.getDeclaredConstructor().newInstance();

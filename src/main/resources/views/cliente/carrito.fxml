@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.CarritoController">
+<BorderPane style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.cliente.CarritoController">
     <left>
         <VBox prefWidth="200.0" style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
              <Label maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 25; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 5 0;" text="SERVICART">

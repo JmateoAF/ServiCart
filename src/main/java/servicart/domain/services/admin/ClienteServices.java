@@ -1,4 +1,4 @@
-package servicart.domain.services;
+package servicart.domain.services.admin;
 
 import servicart.entities.Cliente;
 import servicart.data.interfaces.CrudDAO;

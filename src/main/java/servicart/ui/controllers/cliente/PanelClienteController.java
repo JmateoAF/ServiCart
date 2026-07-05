@@ -1,16 +1,14 @@
-package servicart.ui.controllers;
+package servicart.ui.controllers.cliente;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import servicart.entities.*;
-import servicart.entities.enums.ModalidadPago;
-import servicart.domain.services.ContratoService;
+import servicart.domain.services.cliente.ContratoService;
 import servicart.domain.services.FacturacionService;
+import servicart.ui.controllers.GestorNotificacion;
+import servicart.ui.controllers.Navegador;
 import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
-
-import java.time.LocalDateTime;
 
 public class PanelClienteController {
     @FXML public Button btnCarrito;
@@ -26,8 +24,8 @@ public class PanelClienteController {
     @FXML
     public void initialize() {
         //contratoService = new ContratoService(FactoryDAO.contratoDAO());
-        this.clienteVM = Navegador.getClientePendiente();
-        this.baseDatos = Navegador.getBaseDatosPendiente();
+        /*this.clienteVM = Navegador.getClientePendiente();
+        this.baseDatos = Navegador.getBaseDatosPendiente();*/
         facturacionService = GestorNotificacion.getFacturacionService();
         //cargarTarjetas();
     }
@@ -164,7 +162,7 @@ public class PanelClienteController {
 
     @FXML
     private void onPerfil(ActionEvent event) {
-        Navegador.irA("views/cliente/perfilCliente.fxml", clienteVM, baseDatos);
+        Navegador.irA("views/cliente/perfilCliente.fxml");
         event.consume();
     }
 

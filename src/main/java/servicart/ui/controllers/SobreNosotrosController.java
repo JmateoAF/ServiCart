@@ -7,5 +7,6 @@ public class SobreNosotrosController {
     @FXML
     private void onVolver(ActionEvent event) {
         Navegador.irA("views/cliente/loginCliente.fxml");
+        event.consume();
     }
 }
