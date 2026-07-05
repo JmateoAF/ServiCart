@@ -5,6 +5,7 @@ import servicart.ui.viewmodels.admin.ServicioCatalogoInputModel;
 import servicart.domain.dtos.TarifaRequestDTO;
 
 public class TarifaMapper {
+    // CAMBIAR Y NO USAR ServicioCatalogoInputModel
     public static TarifaRequestDTO toRequest(ServicioCatalogoInputModel input) {
         double tarifaFija = parseDouble(input.getTarifaFija());
         double tarifaPorUnidad = parseDouble(input.getTarifaPorUnidad());
