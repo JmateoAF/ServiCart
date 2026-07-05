@@ -5,10 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import servicart.domain.services.ClienteServices;
+import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
 
 public class PerfilController {
-    public TextField txtTelefono;
     @FXML private VBox listaServicios;
     @FXML private Label lblNombreUsuario;
     @FXML private Label lblEmailUsuario;
@@ -18,17 +17,26 @@ public class PerfilController {
     @FXML private TextField txtCedula;
     @FXML private Label lblMensaje;
 
-    private ClienteServices clienteService;
+    private PerfilClienteViewModel clienteVM;
+    private String baseDatos;
 
     @FXML
     public void initialize() {
-        //clienteService = new ClienteServices(FactoryDAO.clienteDAO());
+        this.clienteVM = Navegador.getClientePendiente();
+        this.baseDatos = Navegador.getBaseDatosPendiente();
         cargarDatos();
     }
 
     private void cargarDatos() {
+        lblNombreUsuario.setText(clienteVM.getNombre());
+        lblEmailUsuario.setText(clienteVM.getEmail());
+        txtNombre.setText(clienteVM.getNombre());
+        txtCedula.setText(clienteVM.getCedula());
+        txtEmail.setText(clienteVM.getEmail());
+        txtCelular.setText(clienteVM.getTelefono());
     }
-
+    // Solo el admin edita
+/*
     @FXML
     private void onGuardarDatos(ActionEvent event) {
         String nombre = txtNombre.getText().trim();
@@ -42,12 +50,16 @@ public class PerfilController {
         }
 
     }
-
+*/
     @FXML private void onMisServicios(ActionEvent e) { Navegador.irA("views/cliente/panelCliente.fxml"); }
     @FXML private void onCarrito(ActionEvent e) { Navegador.irA("views/cliente/carrito.fxml"); }
-
+/*
     private void mostrarMensaje(String msg) {
         lblMensaje.setText(msg);
         lblMensaje.setVisible(true);
     }
+
+ */
+@FXML private void onSalir(ActionEvent e) { Navegador.irA("views/cliente/loginCliente.fxml"); }
+
 }

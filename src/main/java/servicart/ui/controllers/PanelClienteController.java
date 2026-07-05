@@ -8,6 +8,7 @@ import servicart.entities.*;
 import servicart.entities.enums.ModalidadPago;
 import servicart.domain.services.ContratoService;
 import servicart.domain.services.FacturacionService;
+import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
 
 import java.time.LocalDateTime;
 
@@ -19,10 +20,14 @@ public class PanelClienteController {
 
     private ContratoService contratoService;
     private FacturacionService facturacionService;
+    private PerfilClienteViewModel clienteVM;
+    private String baseDatos;
 
     @FXML
     public void initialize() {
         //contratoService = new ContratoService(FactoryDAO.contratoDAO());
+        this.clienteVM = Navegador.getClientePendiente();
+        this.baseDatos = Navegador.getBaseDatosPendiente();
         facturacionService = GestorNotificacion.getFacturacionService();
         //cargarTarjetas();
     }
@@ -159,7 +164,7 @@ public class PanelClienteController {
 
     @FXML
     private void onPerfil(ActionEvent event) {
-        Navegador.irA("views/cliente/perfilCliente.fxml");
+        Navegador.irA("views/cliente/perfilCliente.fxml", clienteVM, baseDatos);
         event.consume();
     }
 

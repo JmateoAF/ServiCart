@@ -11,6 +11,7 @@ import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.BdService;
 import servicart.ui.mappers.LoginMapperUI;
 import servicart.ui.viewmodels.LoginViewModel;
+import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
 
 public class LoginClienteController {
     @FXML private TextField txtCedula;
@@ -54,7 +55,14 @@ public class LoginClienteController {
         } else if (dtoSalida.activo() == 0) {
             mostrarError("El usuario está inactivo");
         } else {
-            Navegador.irA("views/cliente/panelCliente.fxml");
+            PerfilClienteViewModel vm = new PerfilClienteViewModel();
+            vm.setNombre(dtoSalida.nombre());
+            vm.setCedula(dtoSalida.cedula());
+            vm.setEmail(dtoSalida.email());
+            vm.setTelefono(dtoSalida.celular());
+            vm.setActivo(dtoSalida.activo() == 1 ? "Activo" : "Inactivo");
+
+            Navegador.irA("views/cliente/panelCliente.fxml", vm, cmbBaseDatos.getValue());
         }
 
         event.consume();
