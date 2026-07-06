@@ -4,6 +4,8 @@ import servicart.data.binary.*;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.*;
 import servicart.entities.enums.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.BiPredicate;
@@ -20,7 +22,7 @@ public class DatosSeeder {
             Empresa emp2 = new Empresa("CENTROSUR");
             Empresa emp3 = new Empresa("EMAC");
             Empresa emp4 = new Empresa("FIBRAMAX");
-            CrudDAO<Empresa> empresaDAO = new EmpresaBinarioDAO();
+            EmpresaBinarioDAO empresaDAO =  new EmpresaBinarioDAO();
             ponerEnArchivo(empresaDAO, List.of(emp1, emp2, emp3, emp4),
                     (existente, nuevo) -> existente.getNombre().equals(nuevo.getNombre()));
 
@@ -156,14 +158,11 @@ public class DatosSeeder {
         }
     }
 
-    public static <T> void ponerEnArchivo(CrudDAO<T> dao, List<T> datos,
-                                          BiPredicate<T, T> mismaClaveNatural) {
-        List<T> existentes = dao.findAll();
+    public static <T extends Serializable> void ponerEnArchivo(GenericBinarioDAO<T> dao, List<T> datos, BiPredicate<T, T> mismaClaveNatural) {
+        List<T> existentes = dao.findAllSinFiltro();
         for (T entidad : datos) {
             boolean yaExiste = existentes.stream().anyMatch(e -> mismaClaveNatural.test(e, entidad));
-            if (!yaExiste) {
-                dao.save(entidad);
-            }
+            if (!yaExiste) dao.save(entidad);
         }
     }
 

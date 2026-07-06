@@ -1,179 +1,95 @@
+// ui.controllers.cliente.PanelClienteController
 package servicart.ui.controllers.cliente;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import servicart.domain.services.cliente.ContratoClienteImp;
-import servicart.domain.services.FacturacionService;
-import servicart.ui.controllers.GestorNotificacion;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import servicart.domain.dtos.entradas.AgregarAbonoDTOEntrada;
+import servicart.domain.dtos.entradas.PanelClienteDTOEntrada;
+import servicart.domain.dtos.salidas.ServicioContratadoDTOSalida;
+import servicart.domain.interfaces.PanelCliente;
+import servicart.ui.SesionCliente;
 import servicart.ui.controllers.Navegador;
-import servicart.ui.viewmodels.cliente.PerfilClienteViewModel;
+import servicart.ui.mappers.PanelClienteMapperUI;
+import servicart.ui.viewmodels.cliente.FacturaPendienteViewModel;
+import servicart.ui.viewmodels.cliente.ServicioContratadoViewModel;
+
+import java.util.List;
 
 public class PanelClienteController {
-    @FXML public Button btnCarrito;
-    @FXML public Button btnPerfil;
     @FXML private VBox contenedorServicios;
     @FXML private Label lblMensaje;
 
-    private ContratoClienteImp contratoClienteImp;
-    private FacturacionService facturacionService;
-    private PerfilClienteViewModel clienteVM;
-    private String baseDatos;
+    private final PanelCliente panelCliente;
 
-    @FXML
-    public void initialize() {
-        //contratoService = new ContratoService(FactoryDAO.contratoDAO());
-        /*this.clienteVM = Navegador.getClientePendiente();
-        this.baseDatos = Navegador.getBaseDatosPendiente();*/
-        facturacionService = GestorNotificacion.getFacturacionService();
-        //cargarTarjetas();
+    public PanelClienteController(PanelCliente panelCliente) {
+        this.panelCliente = panelCliente;
     }
 
-/*    private void cargarTarjetas() {
+    @FXML
+    public void initialize() { cargarServicios(); }
+
+    private void cargarServicios() {
+        String cedula = SesionCliente.getCedulaActual();
+        List<ServicioContratadoDTOSalida> dtos = panelCliente.listarServiciosContratados(new PanelClienteDTOEntrada(cedula));
+        List<ServicioContratadoViewModel> vms = dtos.stream().map(PanelClienteMapperUI::DTOAviewModel).toList();
+
         contenedorServicios.getChildren().clear();
-        ClienteResponseDTO clienteDTO = Sesion.getClienteDTO();
-        List<Contrato> contratos = contratoService.buscarPorCliente(clienteDTO.cedula());
 
-        if (contratos.isEmpty()) {
+        if (vms.isEmpty()) {
             lblMensaje.setText("No tienes servicios contratados");
-            lblMensaje.setVisible(true);
-
             return;
         }
-
-        for (Contrato contrato : contratos) {
-            List<Factura> facturas = facturacionService.buscarPorContrato(contrato.getId());
-            contenedorServicios.getChildren().add(crearTarjeta(contrato, facturas));
-        }
+        lblMensaje.setText("");
+        vms.forEach(vm -> contenedorServicios.getChildren().add(crearTarjetaServicio(vm)));
     }
 
-    private VBox crearTarjeta(Contrato contrato, List<Factura> facturas) {
-        ServicioCatalogo servicio = contrato.getServicio();
+    private VBox crearTarjetaServicio(ServicioContratadoViewModel vm) {
+        VBox tarjeta = new VBox(8);
+        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 15;");
 
-        VBox card = new VBox(10);
-        card.setPadding(new Insets(15));
-        card.getStyleClass().add("tarjeta-servicio");
+        Label titulo = new Label(vm.getNombreServicio() + " – " + vm.getEmpresa());
+        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 18; -fx-font-family: 'Courier New';");
 
-        Label lblEmpresa = new Label(servicio.getEmpresa().name());
-        lblEmpresa.getStyleClass().add("tarjeta-empresa");
+        Label estado = new Label("Estado: " + vm.getEstadoContrato());
+        estado.setStyle("-fx-text-fill: #888888;");
 
-        Label lblTipo = new Label(servicio.getTipo().name() + " · " + servicio.getTipoValor().name());
-        lblTipo.getStyleClass().add("tarjeta-tipo");
+        Label deuda = new Label("Deuda total: " + vm.getDeudaTotal());
+        deuda.setStyle("-fx-text-fill: #c0392b; -fx-font-weight: bold;");
 
-        card.getChildren().addAll(lblEmpresa, lblTipo);
-
-        // Panel de corte (si aplica)
-        boolean tieneCorte = facturas.stream().anyMatch(Factura::superaFechaCorte);
-        if (tieneCorte) card.getChildren().add(crearPanelCorte(contrato, servicio));
-
-        // Facturas pendientes
-        List<Factura> pendientes = facturas.stream().filter(f -> f.getEstado() != EstadoFactura.PAGADA).toList();
-
-        if (pendientes.isEmpty()) card.getChildren().add(new Label("Sin facturas pendientes"));
-        else for (Factura f : pendientes) card.getChildren().add(crearFilaFactura(f));
-
-        return card;
+        tarjeta.getChildren().addAll(titulo, estado, deuda);
+        vm.getListaFacturas().forEach(f -> tarjeta.getChildren().add(crearFilaFactura(f)));
+        return tarjeta;
     }
 
-    private HBox crearPanelCorte(Contrato contrato, ServicioCatalogo servicio) {
-        HBox panel = new HBox(10);
-        panel.getStyleClass().add("panel-cortado");
+    private HBox crearFilaFactura(FacturaPendienteViewModel factura) {
+        HBox fila = new HBox(10);
+        fila.setStyle("-fx-alignment: center-left;");
 
-        Label lbl = new Label("Servicio cortado — Costo reactivación: $" + servicio.getCostoReactivacion());
+        Label info = new Label("Factura #" + factura.getIdFactura() + " – " + factura.getMonto() + " – vence " + factura.getFechaVencimiento());
+        info.setStyle("-fx-text-fill: #aaaaaa;");
+        HBox.setHgrow(info, Priority.ALWAYS);
 
-        Button btnReactivar = new Button("Reactivar");
-        btnReactivar.setOnAction(e -> onReactivar(contrato, servicio.getCostoReactivacion()));
+        Button btn = new Button("Agregar al carrito");
+        btn.setStyle("-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-cursor: hand;");
+        btn.setOnAction(e -> onAgregarAlCarrito(factura));
 
-        panel.getChildren().addAll(lbl, btnReactivar);
-
-        return panel;
-    }
-
-    private VBox crearFilaFactura(Factura factura) {
-        VBox fila = new VBox(6);
-        fila.getStyleClass().add("fila-factura");
-
-        FacturaDTO dto = FacturaMapper.toDTO(factura);
-
-        Label lblPeriodo = new Label("Período: " + dto.periodo());
-        Label lblVencimiento = new Label("Vence: " + dto.fechaVencimiento());
-        Label lblCorte = new Label("Corte: " + dto.fechaCorte());
-        Label lblMonto = new Label("Monto: $" + dto.montoOriginal());
-
-        fila.getChildren().addAll(lblPeriodo, lblVencimiento, lblCorte, lblMonto);
-
-        // Mora
-        if (factura.estaVencida() && dto.montoMora() > 0) {
-            Label lblMora = new Label("Mora: $" + dto.montoMora());
-            lblMora.getStyleClass().add("label-mora");
-            fila.getChildren().add(lblMora);
-        }
-
-        // Control para añadir abono al carrito
-        HBox hboxAbono = new HBox(8);
-        TextField txtMonto = new TextField();
-        txtMonto.setPromptText("Monto a abonar");
-        txtMonto.setPrefWidth(140);
-
-        ComboBox<ModalidadPago> cmbModalidad = new ComboBox<>();
-        cmbModalidad.getItems().setAll(ModalidadPago.values());
-        cmbModalidad.setValue(ModalidadPago.TC);
-
-        Button btnAnadir = new Button("Añadir al carrito");
-        btnAnadir.setOnAction(e -> onAnadirAbono(factura, txtMonto, cmbModalidad));
-
-        hboxAbono.getChildren().addAll(txtMonto, cmbModalidad, btnAnadir);
-        fila.getChildren().add(hboxAbono);
-
+        fila.getChildren().addAll(info, btn);
         return fila;
-    }*/
-
-/*    private void onAnadirAbono(Factura factura, TextField txtMonto, ComboBox<ModalidadPago> cmbModalidad) {
-        try {
-            double monto = Double.parseDouble(txtMonto.getText().trim());
-            if (monto <= 0) throw new NumberFormatException();
-
-            Abono abono = new Abono(monto, LocalDateTime.now(), false, factura, cmbModalidad.getValue());
-
-
-            mostrarMensaje("Abono de $" + monto + " añadido al carrito.");
-            txtMonto.clear();
-        } catch (NumberFormatException e) {
-            mostrarMensaje("Ingrese un monto válido mayor a 0");
-        }
-    }*/
-
-/*    private void onReactivar(Contrato contrato, double costoReactivacion) {
-        //Buscar el corte activo para este contrato
-        CorteService corteService = new CorteService(FactoryDAO.corteServicioDAO());
-
-        corteService.buscarCortePorContrato(contrato.getId()).ifPresentOrElse(corte -> {
-            corteService.reactivarServicio(corte, costoReactivacion);
-            mostrarMensaje("Servicio reactivado. Costo: $" + costoReactivacion);
-            cargarTarjetas();}, () -> mostrarMensaje("No se encontró un corte activo para este servicio"));
-    }*/
-
-    @FXML
-    private void onCarrito(ActionEvent event) {
-        Navegador.irA("views/cliente/carrito.fxml");
-        event.consume();
     }
 
-    @FXML
-    private void onPerfil(ActionEvent event) {
-        Navegador.irA("views/cliente/perfilCliente.fxml");
-        event.consume();
+    private void onAgregarAlCarrito(FacturaPendienteViewModel factura) {
+        String cedula = SesionCliente.getCedulaActual();
+        double monto = Double.parseDouble(factura.getMonto().replace("$", "").trim());
+        panelCliente.agregarAbonoAlCarrito(new AgregarAbonoDTOEntrada(cedula, factura.getIdFactura(), monto));
+        cargarServicios();
     }
 
-    @FXML
-    private void onSalir(ActionEvent event) {
-        Navegador.irA("views/cliente/loginCliente.fxml");
-        event.consume();
-    }
-
-    private void mostrarMensaje(String msg) {
-        lblMensaje.setText(msg);
-        lblMensaje.setVisible(true);
-    }
+    @FXML private void onCarrito(ActionEvent e) { Navegador.irA("views/cliente/carritoCliente.fxml"); e.consume(); }
+    @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); e.consume(); }
+    @FXML private void onSalir(ActionEvent e) { SesionCliente.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); e.consume(); }
 }

@@ -97,6 +97,14 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
         return cache.stream().filter(this::isActivo).collect(Collectors.toList());
     }
 
+    /* Devuelve TODOS los registros sin filtrar por isActivo().
+    Uso exclusivo de infraestructura (DatosSeeder), para verificar existencia
+    real de un registro sin importar su estado lógico */
+    public List<T> findAllSinFiltro() {
+        if (cache == null) cache = leerTodos();
+        return new ArrayList<>(cache);
+    }
+
     @Override
     public void save(T entidad) {
         List<T> lista = (cache != null) ? cache : leerTodos();
@@ -129,8 +137,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
                 break;
             }
 
-        //if (index == -1) throw new EntidadNoEncontradaException(id);
-
+        if (index == -1) throw new RuntimeException("No existe un registro con ID " + id + " para actualizar");
         lista.set(index, entidad);
         guardarTodos(lista);
         cache = lista;

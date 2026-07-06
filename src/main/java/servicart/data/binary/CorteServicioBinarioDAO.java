@@ -24,7 +24,7 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio> {
 
     @Override
     protected boolean isActivo(CorteServicio entidad) {
-        return entidad.getEstadoCorte() == EstadoCorte.ACTIVO;
+        return entidad.getEstadoCorte() != EstadoCorte.TERMINADO;
     }
 
     /* Borrado lógico: cambia el estado a TERMINADO en lugar de eliminar.

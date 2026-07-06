@@ -6,8 +6,10 @@ import javafx.stage.Stage;
 import servicart.domain.interfaces.*;
 import servicart.domain.services.cliente.ContratoClienteImp;
 import servicart.domain.services.cliente.LoginClienteImp;
+import servicart.domain.services.cliente.PanelClienteImp;
 import servicart.domain.services.cliente.PerfilClienteImp;
 import servicart.ui.controllers.cliente.LoginClienteController;
+import servicart.ui.controllers.cliente.PanelClienteController;
 import servicart.ui.controllers.cliente.PerfilClienteController;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ public class Navegador {
     private static final LoginCliente loginCliente = new LoginClienteImp();
     private static final PerfilCliente perfilCliente = new PerfilClienteImp();
     private static final ContratoCliente contratoCliente = new ContratoClienteImp();
+    private static final PanelCliente panelCliente = new PanelClienteImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -34,7 +37,7 @@ public class Navegador {
 
     public static Object crearControlador(Class<?> claseControlador) {
         if (claseControlador == LoginClienteController.class) return new LoginClienteController(loginCliente);
-
+        if (claseControlador == PanelClienteController.class) return new PanelClienteController(panelCliente);
         if(claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
 
         try {

@@ -27,21 +27,21 @@ public class FactoryDAO {
         if (entidad == Contrato.class) return (CrudDAO<T>) (sqlite ? new ContratoSQLiteDAO() : new ContratoBinarioDAO());
 
         if (entidad == Factura.class) {
-            return (CrudDAO<T>) (sqlite ? null /* new FacturaSQLiteDAO() */ : new FacturaBinarioDAO());
+            return (CrudDAO<T>) (sqlite ? new FacturaSQLiteDAO() : new FacturaBinarioDAO());
         }
         if (entidad == Abono.class) {
-            return (CrudDAO<T>) (sqlite ? null /* new AbonoSQLiteDAO() */ : new AbonoBinarioDAO());
+            return (CrudDAO<T>) (sqlite ? new AbonoSQLiteDAO() : new AbonoBinarioDAO());
         }
         if (entidad == Carrito.class) {
-            return (CrudDAO<T>) (sqlite ? null /* new CarritoSQLiteDAO() */ : new CarritoBinarioDAO());
+            return (CrudDAO<T>) (sqlite ? new CarritoSQLiteDAO() : new CarritoBinarioDAO());
         }
         if (entidad == Empresa.class) return (CrudDAO<T>) (sqlite ? new EmpresaSQLiteDAO() : new EmpresaBinarioDAO());
 
         if (entidad == CorteServicio.class) {
-            return (CrudDAO<T>) (sqlite ? null /* new CorteServicioSQLiteDAO() */ : new CorteServicioBinarioDAO());
+            return (CrudDAO<T>) (sqlite ? new CorteServicioSQLiteDAO() : new CorteServicioBinarioDAO());
         }
         if (entidad == InteresMora.class) {
-            return (CrudDAO<T>) (sqlite ? null /* new InteresMoraSQLiteDAO() */ : new InteresMoraBinarioDAO());
+            return (CrudDAO<T>) (sqlite ? new InteresMoraSQLiteDAO(): new InteresMoraBinarioDAO());
         }
         if (entidad == ServicioCatalogo.class) {
             return (CrudDAO<T>) (sqlite ? new ServicioCatalogoSQLiteDAO() : new ServicioCatalogoBinarioDAO());
