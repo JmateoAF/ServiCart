@@ -2,7 +2,7 @@ package servicart.domain.services.admin;
 
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.services.FacturacionService;
-import servicart.domain.services.cliente.ContratoService;
+import servicart.domain.services.cliente.ContratoClienteImp;
 import servicart.entities.Contrato;
 import servicart.entities.CorteServicio;
 import servicart.entities.Factura;
@@ -13,15 +13,15 @@ import java.util.Optional;
 
 public class CorteService {
     private final CrudDAO<CorteServicio> corteDAO;
-    private final ContratoService contratoService;      // nuevo
+    private final ContratoClienteImp contratoClienteImp;      // nuevo
     private final FacturacionService facturacionService; // nuevo
 
     // Constructor ampliado
     public CorteService(CrudDAO<CorteServicio> corteDAO,
-                        ContratoService contratoService,
+                        ContratoClienteImp contratoClienteImp,
                         FacturacionService facturacionService) {
         this.corteDAO = corteDAO;
-        this.contratoService = contratoService;
+        this.contratoClienteImp = contratoClienteImp;
         this.facturacionService = facturacionService;
     }
 

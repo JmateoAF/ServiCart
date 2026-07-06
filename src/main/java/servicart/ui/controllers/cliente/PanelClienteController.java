@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import servicart.domain.services.cliente.ContratoService;
+import servicart.domain.services.cliente.ContratoClienteImp;
 import servicart.domain.services.FacturacionService;
 import servicart.ui.controllers.GestorNotificacion;
 import servicart.ui.controllers.Navegador;
@@ -16,7 +16,7 @@ public class PanelClienteController {
     @FXML private VBox contenedorServicios;
     @FXML private Label lblMensaje;
 
-    private ContratoService contratoService;
+    private ContratoClienteImp contratoClienteImp;
     private FacturacionService facturacionService;
     private PerfilClienteViewModel clienteVM;
     private String baseDatos;

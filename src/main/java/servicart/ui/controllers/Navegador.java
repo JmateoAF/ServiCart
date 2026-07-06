@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.*;
+import servicart.domain.services.cliente.ContratoClienteImp;
 import servicart.domain.services.cliente.LoginClienteImp;
 import servicart.domain.services.cliente.PerfilClienteImp;
 import servicart.ui.controllers.cliente.LoginClienteController;
@@ -16,6 +17,7 @@ public class Navegador {
     private static Stage stage;
     private static final LoginCliente loginCliente = new LoginClienteImp();
     private static final PerfilCliente perfilCliente = new PerfilClienteImp();
+    private static final ContratoCliente contratoCliente = new ContratoClienteImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -26,14 +28,14 @@ public class Navegador {
             Parent root = loader.load();
             stage.getScene().setRoot(root);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("Error al cargar" + rutaFXML, e);
         }
     }
 
     public static Object crearControlador(Class<?> claseControlador) {
         if (claseControlador == LoginClienteController.class) return new LoginClienteController(loginCliente);
 
-        if(claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente);
+        if(claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
 
         try {
             return claseControlador.getDeclaredConstructor().newInstance();
