@@ -6,13 +6,6 @@ import servicart.entities.enums.EstadoFactura;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/* Aplica el patrón Observer:
-al emitir una factura notifica a todos los canales suscritos
-(email, SMS, pantalla).
-El Main suscribe los observadores:
-facturacionService.agregarObservador(new NotificadorEmail());
-facturacionService.agregarObservador(new NotificadorSMS()); */
-
 public class FacturacionService extends SujetoNotificable {
     private final CrudDAO<Factura> facturaDAO;
 

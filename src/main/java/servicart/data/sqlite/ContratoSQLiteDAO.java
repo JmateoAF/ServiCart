@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +22,8 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     public void save(Contrato c) {
         String sql = "INSERT INTO Contrato (fechaInicio, fechaFin, causaTerminacion, idServicio, idCliente) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setTimestamp(1, Timestamp.valueOf(c.getFechaInicio()));
-            stmt.setTimestamp(2, c.getFechaFin() != null ? Timestamp.valueOf(c.getFechaFin()) : null);
+            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaInicio()));
+            stmt.setString(2, c.getFechaFin() != null ? FechaSQLiteUtil.formatear(c.getFechaFin()) : null);
             stmt.setInt(3, c.getCausaTerminacion().getCodigo());
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
@@ -49,7 +48,7 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     @Override
     public List<Contrato> findAll() {
         List<Contrato> contratos = new ArrayList<>();
-        // Mismo criterio que ContratoBinarioDAO.isActivo(): solo contratos vigentes
+        // Solo contratos vigentes (causaTerminacion = 0)
         String sql = "SELECT * FROM Contrato WHERE causaTerminacion = 0";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) contratos.add(mapear(rs));
@@ -63,8 +62,8 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     public void update(Contrato c) {
         String sql = "UPDATE Contrato SET fechaInicio=?, fechaFin=?, causaTerminacion=?, idServicio=?, idCliente=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setTimestamp(1, Timestamp.valueOf(c.getFechaInicio()));
-            stmt.setTimestamp(2, c.getFechaFin() != null ? Timestamp.valueOf(c.getFechaFin()) : null);
+            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaInicio()));
+            stmt.setString(2, c.getFechaFin() != null ? FechaSQLiteUtil.formatear(c.getFechaFin()) : null);
             stmt.setInt(3, c.getCausaTerminacion().getCodigo());
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
@@ -77,8 +76,7 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
 
     @Override
     public void delete(String id) {
-        // Igual que en Binario: "terminar" contrato es responsabilidad del Service vía update().
-        // Este método solo cumple el contrato de CrudDAO (borrado físico), no se usa para cancelar.
+        // Borrado físico (no se usa para cancelar contratos)
         String sql = "DELETE FROM Contrato WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
@@ -89,30 +87,26 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     }
 
     private Contrato mapear(ResultSet rs) throws SQLException {
-        Cliente cliente = clienteDAO.findId(rs.getString("idCliente"))
-                .orElseThrow(() -> {
-                    try {
-                        return new RuntimeException("Cliente no encontrado para el contrato " + rs.getInt("id"));
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        int id = rs.getInt("id");
+        String cedulaCliente = rs.getString("idCliente");
+        int idServicio = rs.getInt("idServicio");
 
-        ServicioCatalogo servicio = servicioDAO.findId(String.valueOf(rs.getInt("idServicio")))
-                .orElseThrow(() -> {
-                    try {
-                        return new RuntimeException("Servicio no encontrado para el contrato " + rs.getInt("id"));
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+        LocalDateTime fechaInicio = FechaSQLiteUtil.parsear(rs.getString("fechaInicio"));
+        LocalDateTime fechaFin = null;
+        String fechaFinStr = rs.getString("fechaFin");
+        if (fechaFinStr != null) {
+            fechaFin = FechaSQLiteUtil.parsear(fechaFinStr);
+        }
+        CausaTerminacion causa = CausaTerminacion.fromCodigo(rs.getInt("causaTerminacion"));
 
-        LocalDateTime fechaInicio = rs.getTimestamp("fechaInicio").toLocalDateTime();
-        Timestamp fechaFinTs = rs.getTimestamp("fechaFin");
-        LocalDateTime fechaFin = fechaFinTs != null ? fechaFinTs.toLocalDateTime() : null;
+        Cliente cliente = clienteDAO.findId(cedulaCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado para el contrato " + id));
 
-        Contrato contrato = new Contrato(fechaInicio, fechaFin, CausaTerminacion.fromCodigo(rs.getInt("causaTerminacion")), servicio, cliente);
-        contrato.setId(rs.getInt("id"));
+        ServicioCatalogo servicio = servicioDAO.findId(String.valueOf(idServicio))
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado para el contrato " + id));
+
+        Contrato contrato = new Contrato(fechaInicio, fechaFin, causa, servicio, cliente);
+        contrato.setId(id);
         return contrato;
     }
 }

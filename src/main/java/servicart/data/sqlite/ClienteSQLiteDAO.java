@@ -47,10 +47,12 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
     @Override
     public List<Cliente> findAll() {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT cedula, nombre, email, celular FROM Clientes WHERE activo = 1";
+        String sql = "SELECT * FROM Clientes WHERE activo = 1";  // ← corregido
 
-        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) clientes.add(mapear(rs)); //Un solo punto de mapeo
+        try (Connection con = ConexionSQLite.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) clientes.add(mapear(rs));
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
