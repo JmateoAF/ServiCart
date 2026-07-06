@@ -37,7 +37,6 @@ public class LoginClienteController {
         String baseDatos = cmbBaseDatos.getValue();
 
         if (!validarCedula(cedula)) {
-            mostrarError("Número de cedula no válida");
             event.consume();
             return;
         }
@@ -51,11 +50,15 @@ public class LoginClienteController {
         LoginClienteDTOEntrada dtoEntrada = LoginClienteMapperUI.viewModelADTO(viewModel);
         LoginClienteDTOSalida dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
 
+        if(dtoSalida == null) {
+            mostrarError("Usuario no encontrado");
+            event.consume();
+            return;
+        }
+
         viewModel = LoginClienteMapperUI.DTOAviewModel(dtoSalida);
 
-        if (viewModel.getCedula() == null) {
-            mostrarError("Usuario no encontrado");
-        } else if (viewModel.getActivo() == 0) {
+        if (viewModel.getActivo() == 0) {
             mostrarError("El usuario está inactivo");
         } else {
             SesionCliente.iniciarSesion(cedula);
@@ -86,7 +89,13 @@ public class LoginClienteController {
                 suma += (valor > 9) ? (valor - 9) : valor;
             }
             total = (suma % 10 == 0) ? 0 : (10 - (suma % 10));
-            return total == digitoVerificador;
+
+            if (total != digitoVerificador) {
+                mostrarError("Número de cédula no válida");
+                return false;
+            }
+
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }

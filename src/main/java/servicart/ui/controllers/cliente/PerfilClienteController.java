@@ -35,8 +35,6 @@ public class PerfilClienteController {
         PerfilClienteDTOEntrada dtoEntrada = new PerfilClienteDTOEntrada(cedula);
         PerfilClienteDTOSalida dtoSalida = perfilCliente.buscarPerfil(dtoEntrada);
 
-        if (dtoSalida == null) return; // no debería pasar si ya inició sesión antes
-
         PerfilClienteViewModel clienteVM = PerfilClienteMapperUI.dtoAViewModel(dtoSalida);
 
         lblNombreUsuario.setText(clienteVM.getNombre());
