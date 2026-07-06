@@ -1,11 +1,11 @@
 package servicart.data.sqlite;
 
+import servicart.data.FechaSQLite;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Contrato;
 import servicart.entities.Factura;
 import servicart.entities.enums.EstadoFactura;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +18,9 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
         String sql = "INSERT INTO Factura (fechaEmision, fechaVencimiento, fechaCorte, valorTotal, estado, idContrato) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = ConexionSQLite.conectar();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(f.getFechaEmision()));
-            stmt.setString(2, FechaSQLiteUtil.formatear(f.getFechaVencimiento()));
-            stmt.setString(3, FechaSQLiteUtil.formatear(f.getFechaCorte()));
+            stmt.setString(1, FechaSQLite.formatear(f.getFechaEmision()));
+            stmt.setString(2, FechaSQLite.formatear(f.getFechaVencimiento()));
+            stmt.setString(3, FechaSQLite.formatear(f.getFechaCorte()));
             stmt.setDouble(4, f.getValorTotal());
             stmt.setInt(5, f.getEstado().getCodigo());
             stmt.setInt(6, f.getContrato().getId());
@@ -59,9 +59,9 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
     public void update(Factura f) {
         String sql = "UPDATE Factura SET fechaEmision=?, fechaVencimiento=?, fechaCorte=?, valorTotal=?, estado=?, idContrato=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(f.getFechaEmision()));
-            stmt.setString(2, FechaSQLiteUtil.formatear(f.getFechaVencimiento()));
-            stmt.setString(3, FechaSQLiteUtil.formatear(f.getFechaCorte()));
+            stmt.setString(1, FechaSQLite.formatear(f.getFechaEmision()));
+            stmt.setString(2, FechaSQLite.formatear(f.getFechaVencimiento()));
+            stmt.setString(3, FechaSQLite.formatear(f.getFechaCorte()));
             stmt.setDouble(4, f.getValorTotal());
             stmt.setInt(5, f.getEstado().getCodigo());
             stmt.setInt(6, f.getContrato().getId());
@@ -88,9 +88,9 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
         Contrato contrato = contratoDAO.findId(String.valueOf(idContrato))
                 .orElseThrow(() -> new RuntimeException("Contrato no encontrado, id=" + idContrato));
         Factura f = new Factura(
-                FechaSQLiteUtil.parsear(rs.getString("fechaEmision")),
-                FechaSQLiteUtil.parsear(rs.getString("fechaVencimiento")),
-                FechaSQLiteUtil.parsear(rs.getString("fechaCorte")),
+                FechaSQLite.parsear(rs.getString("fechaEmision")),
+                FechaSQLite.parsear(rs.getString("fechaVencimiento")),
+                FechaSQLite.parsear(rs.getString("fechaCorte")),
                 rs.getDouble("valorTotal"),
                 contrato);
         f.setId(rs.getInt("id"));

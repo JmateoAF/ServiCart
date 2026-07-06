@@ -1,5 +1,6 @@
 package servicart.data.sqlite;
 
+import servicart.data.FechaSQLite;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Contrato;
 import servicart.entities.CorteServicio;
@@ -19,8 +20,8 @@ public class CorteServicioSQLiteDAO implements CrudDAO<CorteServicio> {
         String sql = "INSERT INTO CorteServicio (fechaCorte, fechaReactivacion, costoReactivacionPagado, estadoCorte, idContrato, idFactura) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = ConexionSQLite.conectar();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaCorte()));
-            stmt.setString(2, c.getFechaReactivacion() != null ? FechaSQLiteUtil.formatear(c.getFechaReactivacion()) : null);
+            stmt.setString(1, FechaSQLite.formatear(c.getFechaCorte()));
+            stmt.setString(2, c.getFechaReactivacion() != null ? FechaSQLite.formatear(c.getFechaReactivacion()) : null);
             stmt.setDouble(3, c.getCostoReactivacionPagado());
             stmt.setInt(4, c.getEstadoCorte().getCodigo());
             stmt.setInt(5, c.getContrato().getId());
@@ -61,8 +62,8 @@ public class CorteServicioSQLiteDAO implements CrudDAO<CorteServicio> {
     public void update(CorteServicio c) {
         String sql = "UPDATE CorteServicio SET fechaCorte=?, fechaReactivacion=?, costoReactivacionPagado=?, estadoCorte=?, idContrato=?, idFactura=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaCorte()));
-            stmt.setString(2, c.getFechaReactivacion() != null ? FechaSQLiteUtil.formatear(c.getFechaReactivacion()) : null);
+            stmt.setString(1, FechaSQLite.formatear(c.getFechaCorte()));
+            stmt.setString(2, c.getFechaReactivacion() != null ? FechaSQLite.formatear(c.getFechaReactivacion()) : null);
             stmt.setDouble(3, c.getCostoReactivacionPagado());
             stmt.setInt(4, c.getEstadoCorte().getCodigo());
             stmt.setInt(5, c.getContrato().getId());
@@ -97,14 +98,14 @@ public class CorteServicioSQLiteDAO implements CrudDAO<CorteServicio> {
                 .orElseThrow(() -> new RuntimeException("Factura no encontrada, id=" + idFactura));
 
         CorteServicio c = new CorteServicio(
-                FechaSQLiteUtil.parsear(rs.getString("fechaCorte")),
+                FechaSQLite.parsear(rs.getString("fechaCorte")),
                 contrato,
                 factura);
         c.setId(rs.getInt("id"));
 
         String fechaReactivacionStr = rs.getString("fechaReactivacion");
         if (fechaReactivacionStr != null) {
-            c.setFechaReactivacion(FechaSQLiteUtil.parsear(fechaReactivacionStr));
+            c.setFechaReactivacion(FechaSQLite.parsear(fechaReactivacionStr));
         }
         c.setCostoReactivacionPagado(rs.getDouble("costoReactivacionPagado"));
         c.setEstadoCorte(EstadoCorte.fromCodigo(rs.getInt("estadoCorte")));

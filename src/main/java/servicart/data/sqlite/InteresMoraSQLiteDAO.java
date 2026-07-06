@@ -1,5 +1,6 @@
 package servicart.data.sqlite;
 
+import servicart.data.FechaSQLite;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Factura;
 import servicart.entities.InteresMora;
@@ -18,7 +19,7 @@ public class InteresMoraSQLiteDAO implements CrudDAO<InteresMora> {
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, m.getDiasRetraso());
             stmt.setDouble(2, m.getInteresAcumulado());
-            stmt.setString(3, FechaSQLiteUtil.formatear(m.getFechaCalculo()));
+            stmt.setString(3, FechaSQLite.formatear(m.getFechaCalculo()));
             stmt.setInt(4, m.isAplicadoAFactura() ? 1 : 0);
             stmt.setInt(5, m.getFactura().getId());
             stmt.executeUpdate();
@@ -58,7 +59,7 @@ public class InteresMoraSQLiteDAO implements CrudDAO<InteresMora> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, m.getDiasRetraso());
             stmt.setDouble(2, m.getInteresAcumulado());
-            stmt.setString(3, FechaSQLiteUtil.formatear(m.getFechaCalculo()));
+            stmt.setString(3, FechaSQLite.formatear(m.getFechaCalculo()));
             stmt.setInt(4, m.isAplicadoAFactura() ? 1 : 0);
             stmt.setInt(5, m.getFactura().getId());
             stmt.setInt(6, m.getId());
@@ -87,7 +88,7 @@ public class InteresMoraSQLiteDAO implements CrudDAO<InteresMora> {
         InteresMora m = new InteresMora(
                 rs.getInt("diasRetraso"),
                 rs.getDouble("interesAcumulado"),
-                FechaSQLiteUtil.parsear(rs.getString("fechaCalculo")),
+                FechaSQLite.parsear(rs.getString("fechaCalculo")),
                 rs.getInt("aplicadoAFactura") == 1,
                 factura);
         m.setId(rs.getInt("id"));

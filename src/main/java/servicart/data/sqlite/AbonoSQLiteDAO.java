@@ -1,5 +1,6 @@
 package servicart.data.sqlite;
 
+import servicart.data.FechaSQLite;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Abono;
 import servicart.entities.Factura;
@@ -18,7 +19,7 @@ public class AbonoSQLiteDAO implements CrudDAO<Abono> {
         try (Connection con = ConexionSQLite.conectar();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setDouble(1, a.getMonto());
-            stmt.setString(2, FechaSQLiteUtil.formatear(a.getFechaPago()));
+            stmt.setString(2, FechaSQLite.formatear(a.getFechaPago()));
             stmt.setInt(3, a.isPagoRealizado() ? 1 : 0);
             stmt.setInt(4, a.getModalidadPago().getCodigo());
             stmt.setInt(5, a.getFactura().getId());
@@ -58,7 +59,7 @@ public class AbonoSQLiteDAO implements CrudDAO<Abono> {
         String sql = "UPDATE Abono SET monto=?, fechaPago=?, pagoRealizado=?, modalidadPago=?, idFactura=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setDouble(1, a.getMonto());
-            stmt.setString(2, FechaSQLiteUtil.formatear(a.getFechaPago()));
+            stmt.setString(2, FechaSQLite.formatear(a.getFechaPago()));
             stmt.setInt(3, a.isPagoRealizado() ? 1 : 0);
             stmt.setInt(4, a.getModalidadPago().getCodigo());
             stmt.setInt(5, a.getFactura().getId());
@@ -87,7 +88,7 @@ public class AbonoSQLiteDAO implements CrudDAO<Abono> {
 
         Abono a = new Abono(
                 rs.getDouble("monto"),
-                FechaSQLiteUtil.parsear(rs.getString("fechaPago")),
+                FechaSQLite.parsear(rs.getString("fechaPago")),
                 rs.getInt("pagoRealizado") == 1,
                 factura,
                 ModalidadPago.fromCodigo(rs.getInt("modalidadPago")));

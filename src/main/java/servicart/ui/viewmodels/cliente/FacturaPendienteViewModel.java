@@ -2,29 +2,31 @@ package servicart.ui.viewmodels.cliente;
 
 public class FacturaPendienteViewModel {
     private int idFactura;
-    private String numeroFactura;
-    private String monto;               // "$ 12.50"
-    private String fechaVencimiento;    // "15/07/2026"
-    private String diasMora;            // "12 días"
-    private String interesAcumulado;    // "+ $3.00"
-
-    public FacturaPendienteViewModel() {}
+    private double valorTotal;
+    private String periodoTexto;
+    private String fechaVencimientoTexto;
+    private String fechaCorteTexto;
+    private double interesAcumulado;
+    private boolean tieneMora;
 
     public int getIdFactura() { return idFactura; }
     public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
 
-    public String getNumeroFactura() { return numeroFactura; }
-    public void setNumeroFactura(String numeroFactura) { this.numeroFactura = numeroFactura; }
+    public double getValorTotal() { return valorTotal; }
+    public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }
 
-    public String getMonto() { return monto; }
-    public void setMonto(String monto) { this.monto = monto; }
+    public String getPeriodoTexto() { return periodoTexto; }
+    public void setPeriodoTexto(String periodoTexto) { this.periodoTexto = periodoTexto; }
 
-    public String getFechaVencimiento() { return fechaVencimiento; }
-    public void setFechaVencimiento(String fechaVencimiento) { this.fechaVencimiento = fechaVencimiento; }
+    public String getFechaVencimientoTexto() { return fechaVencimientoTexto; }
+    public void setFechaVencimientoTexto(String fechaVencimientoTexto) { this.fechaVencimientoTexto = fechaVencimientoTexto; }
 
-    public String getDiasMora() { return diasMora; }
-    public void setDiasMora(String diasMora) { this.diasMora = diasMora; }
+    public String getFechaCorteTexto() { return fechaCorteTexto; }
+    public void setFechaCorteTexto(String fechaCorteTexto) { this.fechaCorteTexto = fechaCorteTexto; }
 
-    public String getInteresAcumulado() { return interesAcumulado; }
-    public void setInteresAcumulado(String interesAcumulado) { this.interesAcumulado = interesAcumulado; }
+    public double getInteresAcumulado() { return interesAcumulado; }
+    public void setInteresAcumulado(double interesAcumulado) { this.interesAcumulado = interesAcumulado; }
+
+    public boolean isTieneMora() { return tieneMora; }
+    public void setTieneMora(boolean tieneMora) { this.tieneMora = tieneMora; }
 }

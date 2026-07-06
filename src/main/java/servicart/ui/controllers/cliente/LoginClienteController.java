@@ -120,11 +120,11 @@ public class LoginClienteController {
         lblError.setVisible(true);
 
         javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
-        pause.setOnFinished(e -> {
+        pause.setOnFinished(event -> {
             lblError.setVisible(false);
             lblError.setPrefHeight(0);
             javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0));
-            e.consume();
+            event.consume();
         });
         pause.play();
     }

@@ -6,16 +6,19 @@ import servicart.ui.viewmodels.cliente.FacturaPendienteViewModel;
 import servicart.ui.viewmodels.cliente.ServicioContratadoViewModel;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class PanelClienteMapperUI {
-    private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_CORTO = DateTimeFormatter.ofPattern("d MMM", Locale.US);
+    private static final DateTimeFormatter FORMATO_PERIODO = DateTimeFormatter.ofPattern("MMMM yyyy", new Locale("es", "ES"));
 
     public static ServicioContratadoViewModel DTOAviewModel(ServicioContratadoDTOSalida dto) {
         ServicioContratadoViewModel vm = new ServicioContratadoViewModel();
-        vm.setNombreServicio(dto.nombreServicio());
+        vm.setIdContrato(dto.idContrato());
+        vm.setNombreServicio(NombresServicio.legible(dto.nombreServicio()));
         vm.setEmpresa(dto.empresa());
-        vm.setEstadoContrato(dto.estadoContrato());
-        vm.setDeudaTotal(String.format("$ %.2f", dto.deudaTotal()));
+        vm.setDeudaTotal(dto.deudaTotal());
+        vm.setConMora(dto.facturasPendientes().stream().anyMatch(f -> f.diasMora() > 0));
         vm.setListaFacturas(dto.facturasPendientes().stream().map(PanelClienteMapperUI::facturaAViewModel).toList());
         return vm;
     }
@@ -23,9 +26,17 @@ public class PanelClienteMapperUI {
     private static FacturaPendienteViewModel facturaAViewModel(FacturaPendienteDTOSalida dto) {
         FacturaPendienteViewModel vm = new FacturaPendienteViewModel();
         vm.setIdFactura(dto.idFactura());
-        vm.setMonto(String.format("$ %.2f", dto.valorTotal()));
-        vm.setFechaVencimiento(dto.fechaVencimiento().format(FORMATO));
-        vm.setDiasMora(dto.diasMora() > 0 ? dto.diasMora() + " días" : "-");
+        vm.setValorTotal(dto.valorTotal());
+        vm.setPeriodoTexto(capitalizar(dto.fechaEmision().format(FORMATO_PERIODO)));
+        vm.setFechaVencimientoTexto(dto.fechaVencimiento().format(FORMATO_CORTO));
+        vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
+        vm.setInteresAcumulado(dto.interesAcumulado());
+        vm.setTieneMora(dto.diasMora() > 0);
         return vm;
+    }
+
+    private static String capitalizar(String texto) {
+        if (texto == null || texto.isEmpty()) return texto;
+        return Character.toUpperCase(texto.charAt(0)) + texto.substring(1);
     }
 }

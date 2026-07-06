@@ -1,5 +1,6 @@
 package servicart.data.sqlite;
 
+import servicart.data.FechaSQLite;
 import servicart.entities.Contrato;
 import servicart.entities.Cliente;
 import servicart.entities.ServicioCatalogo;
@@ -22,8 +23,8 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     public void save(Contrato c) {
         String sql = "INSERT INTO Contrato (fechaInicio, fechaFin, causaTerminacion, idServicio, idCliente) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaInicio()));
-            stmt.setString(2, c.getFechaFin() != null ? FechaSQLiteUtil.formatear(c.getFechaFin()) : null);
+            stmt.setString(1, FechaSQLite.formatear(c.getFechaInicio()));
+            stmt.setString(2, c.getFechaFin() != null ? FechaSQLite.formatear(c.getFechaFin()) : null);
             stmt.setInt(3, c.getCausaTerminacion().getCodigo());
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
@@ -62,8 +63,8 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     public void update(Contrato c) {
         String sql = "UPDATE Contrato SET fechaInicio=?, fechaFin=?, causaTerminacion=?, idServicio=?, idCliente=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, FechaSQLiteUtil.formatear(c.getFechaInicio()));
-            stmt.setString(2, c.getFechaFin() != null ? FechaSQLiteUtil.formatear(c.getFechaFin()) : null);
+            stmt.setString(1, FechaSQLite.formatear(c.getFechaInicio()));
+            stmt.setString(2, c.getFechaFin() != null ? FechaSQLite.formatear(c.getFechaFin()) : null);
             stmt.setInt(3, c.getCausaTerminacion().getCodigo());
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
@@ -91,11 +92,11 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
         String cedulaCliente = rs.getString("idCliente");
         int idServicio = rs.getInt("idServicio");
 
-        LocalDateTime fechaInicio = FechaSQLiteUtil.parsear(rs.getString("fechaInicio"));
+        LocalDateTime fechaInicio = FechaSQLite.parsear(rs.getString("fechaInicio"));
         LocalDateTime fechaFin = null;
         String fechaFinStr = rs.getString("fechaFin");
         if (fechaFinStr != null) {
-            fechaFin = FechaSQLiteUtil.parsear(fechaFinStr);
+            fechaFin = FechaSQLite.parsear(fechaFinStr);
         }
         CausaTerminacion causa = CausaTerminacion.fromCodigo(rs.getInt("causaTerminacion"));
 
