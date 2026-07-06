@@ -97,3 +97,21 @@ CREATE TABLE IF NOT EXISTS CarritoAbono (
     CONSTRAINT fkCarritoAbonoCarrito FOREIGN KEY (idCarrito) REFERENCES Carrito(id),
     CONSTRAINT fkCarritoAbonoAbono   FOREIGN KEY (idAbono) REFERENCES Abono(id)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_servicio_natural
+    ON ServicioCatalogo(idEmpresa, tipoServicio, tarifaFija, tarifaPorUnidad);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_contrato_natural
+    ON Contrato(idCliente, idServicio, fechaInicio);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_factura_natural
+    ON Factura(idContrato, fechaEmision);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_abono_natural
+    ON Abono(idFactura, fechaPago, monto);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_interesmora_natural
+    ON InteresMora(idFactura, fechaCalculo);
+
+CREATE UNIQUE INDEX IF NOT EXISTS ux_corteservicio_natural
+    ON CorteServicio(idContrato, fechaCorte);
