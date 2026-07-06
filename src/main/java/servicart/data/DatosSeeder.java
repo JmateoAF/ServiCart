@@ -153,7 +153,6 @@ public class DatosSeeder {
             System.out.println("Base de datos binaria inicializada con éxito");
         } catch (Exception e) {
             System.err.println("Error al sembrar los datos iniciales: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

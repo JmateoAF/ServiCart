@@ -38,5 +38,5 @@ public class Contrato implements Serializable, Identificable {
 
     public Cliente getCliente() { return cliente; }
 
-    public boolean estaActivo() { return causaTerminacion != CausaTerminacion.ACTIVO; }
+    public boolean estaActivo() { return causaTerminacion == CausaTerminacion.ACTIVO; }
 }
