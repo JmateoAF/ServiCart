@@ -7,21 +7,19 @@ import servicart.domain.dtos.entradas.ContratoDTOEntrada;
 import servicart.domain.dtos.salidas.ContratoDTOSalida;
 import servicart.domain.interfaces.ContratoCliente;
 import servicart.domain.mappers.ContratoMapperDomain;
+import servicart.domain.services.ContratoService;
 import servicart.entities.Contrato;
 import servicart.entities.enums.CausaTerminacion;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
 public class ContratoClienteImp implements ContratoCliente {
 
     @Override
     public List<ContratoDTOSalida> listarContratos(ContratoDTOEntrada dto) {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
-        assert contratoDAO != null;
+        ContratoService contratoService = new ContratoService(contratoDAO);
 
-        return contratoDAO.findAll().stream()
-                .filter(c -> c.getCliente().getCedula().equals(dto.cedula()))
+        return contratoService.buscarPorCliente(dto.cedula()).stream()
                 .map(ContratoMapperDomain::entidadADTO)
                 .toList();
     }
@@ -29,13 +27,11 @@ public class ContratoClienteImp implements ContratoCliente {
     @Override
     public void cancelarContrato(CancelarContratoDTOEntrada dto) {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
-        assert contratoDAO != null;
+        ContratoService contratoService = new ContratoService(contratoDAO);
 
-        Contrato contrato = contratoDAO.findId(String.valueOf(dto.idContrato()))
+        Contrato contrato = contratoService.buscarPorId(String.valueOf(dto.idContrato()))
                 .orElseThrow(() -> new RuntimeException("Contrato no encontrado: " + dto.idContrato()));
 
-        contrato.setCausaTerminacion(CausaTerminacion.CLIENTE);
-        contrato.setFechaFin(LocalDateTime.now());
-        contratoDAO.update(contrato);
+        contratoService.terminarContrato(contrato, CausaTerminacion.CLIENTE);
     }
 }
