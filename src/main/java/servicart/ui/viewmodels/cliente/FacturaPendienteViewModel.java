@@ -8,6 +8,7 @@ public class FacturaPendienteViewModel {
     private String fechaCorteTexto;
     private double interesAcumulado;
     private boolean tieneMora;
+    private String totalIndividualTexto;
 
     public int getIdFactura() { return idFactura; }
     public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
@@ -29,4 +30,7 @@ public class FacturaPendienteViewModel {
 
     public boolean isTieneMora() { return tieneMora; }
     public void setTieneMora(boolean tieneMora) { this.tieneMora = tieneMora; }
+
+    public String getTotalIndividualTexto() { return totalIndividualTexto; }
+    public void setTotalIndividualTexto(String totalIndividualTexto) { this.totalIndividualTexto = totalIndividualTexto; }
 }

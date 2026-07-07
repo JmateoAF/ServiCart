@@ -6,10 +6,12 @@ import java.util.List;
 public class ServicioContratadoViewModel {
     private int idContrato;
     private String nombreServicio;
-    private String icono;
     private String empresa;
-    private double deudaTotal;
     private boolean conMora;
+    private boolean estaCortado;
+    private double costoReactivacion;          // NUEVO: valor crudo, para cálculos
+    private String costoReactivacionTexto;      // solo para mostrar en pantalla
+    private String subtotalServicioTexto;
     private List<FacturaPendienteViewModel> listaFacturas;
 
     public ServicioContratadoViewModel() { listaFacturas = new ArrayList<>(); }
@@ -20,20 +22,24 @@ public class ServicioContratadoViewModel {
     public String getNombreServicio() { return nombreServicio; }
     public void setNombreServicio(String nombreServicio) { this.nombreServicio = nombreServicio; }
 
-    public String getIcono() { return icono; }
-    public void setIcono(String icono) { this.icono = icono; }
-
     public String getEmpresa() { return empresa; }
     public void setEmpresa(String empresa) { this.empresa = empresa; }
-
-    public double getDeudaTotal() { return deudaTotal; }
-    public void setDeudaTotal(double deudaTotal) { this.deudaTotal = deudaTotal; }
 
     public boolean isConMora() { return conMora; }
     public void setConMora(boolean conMora) { this.conMora = conMora; }
 
+    public boolean isEstaCortado() { return estaCortado; }
+    public void setEstaCortado(boolean estaCortado) { this.estaCortado = estaCortado; }
+
+    public double getCostoReactivacion() { return costoReactivacion; }
+    public void setCostoReactivacion(double costoReactivacion) { this.costoReactivacion = costoReactivacion; }
+
+    public String getCostoReactivacionTexto() { return costoReactivacionTexto; }
+    public void setCostoReactivacionTexto(String costoReactivacionTexto) { this.costoReactivacionTexto = costoReactivacionTexto; }
+
+    public String getSubtotalServicioTexto() { return subtotalServicioTexto; }
+    public void setSubtotalServicioTexto(String subtotalServicioTexto) { this.subtotalServicioTexto = subtotalServicioTexto; }
+
     public List<FacturaPendienteViewModel> getListaFacturas() { return listaFacturas; }
-    public void setListaFacturas(List<FacturaPendienteViewModel> listaFacturas) {
-        this.listaFacturas = listaFacturas;
-    }
+    public void setListaFacturas(List<FacturaPendienteViewModel> listaFacturas) { this.listaFacturas = listaFacturas; }
 }

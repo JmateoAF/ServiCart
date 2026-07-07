@@ -18,9 +18,9 @@ import java.util.Objects;
 public class Navegador {
     private static Stage stage;
     private static final LoginCliente loginCliente = new LoginClienteImp();
+    private static final PanelCliente panelCliente = new PanelClienteImp();
     private static final PerfilCliente perfilCliente = new PerfilClienteImp();
     private static final ContratoCliente contratoCliente = new ContratoClienteImp();
-    private static final PanelCliente panelCliente = new PanelClienteImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -37,8 +37,10 @@ public class Navegador {
 
     public static Object crearControlador(Class<?> claseControlador) {
         if (claseControlador == LoginClienteController.class) return new LoginClienteController(loginCliente);
+
         if (claseControlador == PanelClienteController.class) return new PanelClienteController(panelCliente);
-        if(claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
+
+        if (claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
 
         try {
             return claseControlador.getDeclaredConstructor().newInstance();

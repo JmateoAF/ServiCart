@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -31,12 +32,9 @@ public class PanelClienteController {
     @FXML private Label lblMensaje;
 
     private final PanelCliente panelCliente;
-    // Recuerda qué tarjetas quedaron expandidas, para no colapsarlas al refrescar
     private final Set<Integer> expandidos = new HashSet<>();
 
-    public PanelClienteController(PanelCliente panelCliente) {
-        this.panelCliente = panelCliente;
-    }
+    public PanelClienteController(PanelCliente panelCliente) { this.panelCliente = panelCliente; }
 
     @FXML
     public void initialize() { cargarServicios(); }
@@ -46,122 +44,188 @@ public class PanelClienteController {
         List<ServicioContratadoDTOSalida> dtos = panelCliente.listarServiciosContratados(new PanelClienteDTOEntrada(cedula));
         List<ServicioContratadoViewModel> vms = dtos.stream().map(PanelClienteMapperUI::DTOAviewModel).toList();
 
-        contenedorServicios.getChildren().clear();
+        contenedorServicios.getChildren().clear(); // <- FIX: faltaba, causaba tarjetas duplicadas
 
         if (vms.isEmpty()) {
             lblMensaje.setText("No tienes servicios contratados");
             return;
         }
         lblMensaje.setText("");
+
         vms.forEach(vm -> contenedorServicios.getChildren().add(crearTarjetaServicio(vm)));
+        contenedorServicios.getChildren().add(crearFilaTotal(vms));
     }
 
-    // ---- Tarjeta colapsable por servicio ----
     private VBox crearTarjetaServicio(ServicioContratadoViewModel vm) {
         VBox tarjeta = new VBox();
-        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
+        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;");
 
-        Label chevron = new Label(expandidos.contains(vm.getIdContrato()) ? "▼" : "▶");
-        chevron.setStyle("-fx-text-fill: #666666;");
+        Label lbl = new Label(expandidos.contains(vm.getIdContrato()) ? "▼" : "▶");
+        lbl.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
 
-        VBox contenidoExpandido = new VBox(10);
-        contenidoExpandido.setStyle("-fx-padding: 0 15 15 15;");
+        VBox contenidoExpandido = new VBox(15);
+        contenidoExpandido.setStyle("-fx-padding: 10;");
         contenidoExpandido.setVisible(expandidos.contains(vm.getIdContrato()));
         contenidoExpandido.setManaged(expandidos.contains(vm.getIdContrato()));
-        vm.getListaFacturas().forEach(f -> contenidoExpandido.getChildren().add(crearBloqueFactura(f, vm.getIdContrato())));
 
-        HBox header = crearHeaderTarjeta(vm, chevron);
-        header.setOnMouseClicked(e -> {
+        if (vm.isEstaCortado()) contenidoExpandido.getChildren().add(crearAvisoCorte(vm));
+        vm.getListaFacturas().forEach(f -> contenidoExpandido.getChildren().add(crearBloqueFactura(f)));
+        contenidoExpandido.getChildren().add(crearSubtotalServicio(vm)); // NUEVO
+
+        HBox header = crearHeaderTarjeta(vm, lbl);
+        header.setOnMouseClicked(event -> {
             boolean nuevoEstado = !contenidoExpandido.isVisible();
             contenidoExpandido.setVisible(nuevoEstado);
             contenidoExpandido.setManaged(nuevoEstado);
-            chevron.setText(nuevoEstado ? "▼" : "▶");
+            lbl.setText(nuevoEstado ? "▼" : "▶");
             if (nuevoEstado) expandidos.add(vm.getIdContrato());
             else expandidos.remove(vm.getIdContrato());
+            event.consume();
         });
 
         tarjeta.getChildren().addAll(header, contenidoExpandido);
         return tarjeta;
     }
 
-    private HBox crearHeaderTarjeta(ServicioContratadoViewModel vm, Label chevron) {
-        Label icono = new Label(vm.getIcono());
-        icono.setStyle("-fx-font-size: 16;");
+    private HBox crearSubtotalServicio(ServicioContratadoViewModel vm) {
+        Label titulo = new Label("Subtotal " + vm.getEmpresa());
+        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
+        Label valor = new Label(vm.getSubtotalServicioTexto());
+        valor.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
+        HBox fila = filaConEspaciador(titulo, valor);
+        fila.setStyle("-fx-border-color: #333333; -fx-border-width: 1 0 0 0; -fx-padding: 8 0 0 0;");
+        return fila;
+    }
 
+    private HBox crearHeaderTarjeta(ServicioContratadoViewModel vm, Label lbl) {
         Label titulo = new Label(vm.getEmpresa());
-        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 16;");
+        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 20;");
 
         Label subtitulo = new Label(vm.getNombreServicio());
-        subtitulo.setStyle("-fx-text-fill: #666666; -fx-font-size: 13;");
+        subtitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
 
         VBox textos = new VBox(2, titulo, subtitulo);
 
-        Label badge = new Label(vm.isConMora() ? "● Con mora" : "● Al día");
-        badge.setStyle(vm.isConMora()
-                ? "-fx-text-fill: #e74c3c; -fx-background-color: #2a1010; -fx-padding: 4 10 4 10; -fx-background-radius: 12; -fx-font-size: 12;"
-                : "-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-padding: 4 10 4 10; -fx-background-radius: 12; -fx-font-size: 12;");
+        Label badge = new Label(textoBadge(vm));
+        badge.setStyle(estiloBadge(vm) + " -fx-padding: 5 10 5 10; -fx-background-radius: 10; -fx-font-size: 15;");
 
         HBox espaciador = new HBox();
         HBox.setHgrow(espaciador, Priority.ALWAYS);
 
-        HBox header = new HBox(12, icono, textos, espaciador, badge, chevron);
+        HBox header = new HBox(10, textos, espaciador, badge, lbl); // FIX: textos ahora está incluido
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-padding: 15; -fx-cursor: hand;");
         return header;
     }
 
-    // ---- Bloque de una factura pendiente dentro de la tarjeta expandida ----
-    private VBox crearBloqueFactura(FacturaPendienteViewModel factura, int idContrato) {
-        VBox bloque = new VBox(6);
-        bloque.setStyle("-fx-background-color: #1a1a1a; -fx-border-color: #262626; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 12;");
+    // 3 estados: cortado (rojo) > con mora (amarillo) > al día (verde)
+    private String textoBadge(ServicioContratadoViewModel vm) {
+        if (vm.isEstaCortado()) return "Servicio cortado";
+        if (vm.isConMora()) return "Con mora";
+        return "Al día";
+    }
+
+    private String estiloBadge(ServicioContratadoViewModel vm) {
+        if (vm.isEstaCortado()) return "-fx-text-fill: #e74c3c; -fx-background-color: #2a1010;";
+        if (vm.isConMora()) return "-fx-text-fill: #e8b93d; -fx-background-color: #2a2410;";
+        return "-fx-text-fill: #27ae60; -fx-background-color: #0f2a18;";
+    }
+
+    // Aviso dentro de la tarjeta cuando el servicio ya está cortado
+    private VBox crearAvisoCorte(ServicioContratadoViewModel vm) {
+        VBox aviso = new VBox(5);
+        aviso.setStyle("-fx-background-color: #2a1010; -fx-border-color: #4a1c1c; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+
+        Label titulo = new Label("Servicio cortado por falta de pago");
+        titulo.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 15;");
+
+        Label detalle = new Label("Costo de reactivación: " + vm.getCostoReactivacionTexto()
+                + " (adicional a la deuda pendiente)");
+        detalle.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 15;");
+
+        aviso.getChildren().addAll(titulo, detalle);
+        return aviso;
+    }
+
+    private VBox crearBloqueFactura(FacturaPendienteViewModel factura) {
+        VBox bloque = new VBox(5);
+        bloque.setStyle("-fx-background-color: #111111; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
 
         Label periodo = new Label(factura.getPeriodoTexto());
-        periodo.setStyle("-fx-text-fill: #e0e0e0; -fx-font-weight: bold;");
+        periodo.setStyle("-fx-text-fill: #888888; -fx-font-weight: bold; -fx-font-size: 15;");
         Label vence = new Label("Vence: " + factura.getFechaVencimientoTexto());
-        vence.setStyle("-fx-text-fill: #888888;");
+        vence.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 15;");
         HBox filaPeriodo = filaConEspaciador(periodo, vence);
 
         Label lblCorteTitulo = new Label("Corte servicio");
-        lblCorteTitulo.setStyle("-fx-text-fill: #888888;");
+        lblCorteTitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
         Label corte = new Label("Corte: " + factura.getFechaCorteTexto());
-        corte.setStyle("-fx-text-fill: #e74c3c;");
+        corte.setStyle("-fx-text-fill: #c0392b; -fx-font-size: 15;");
         HBox filaCorte = filaConEspaciador(lblCorteTitulo, corte);
 
         Label lblMontoTitulo = new Label("Monto original");
-        lblMontoTitulo.setStyle("-fx-text-fill: #888888;");
+        lblMontoTitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
         Label monto = new Label(String.format("$ %.2f", factura.getValorTotal()));
-        monto.setStyle("-fx-text-fill: #e0e0e0;");
+        monto.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 15;");
         HBox filaMonto = filaConEspaciador(lblMontoTitulo, monto);
 
         bloque.getChildren().addAll(filaPeriodo, filaCorte, filaMonto);
 
         if (factura.getInteresAcumulado() > 0) {
             Label lblMoraTitulo = new Label("Recargo mora");
-            lblMoraTitulo.setStyle("-fx-text-fill: #888888;");
+            lblMoraTitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
             Label mora = new Label(String.format("+ $ %.2f", factura.getInteresAcumulado()));
-            mora.setStyle("-fx-text-fill: #e74c3c;");
+            mora.setStyle("-fx-text-fill: #c0392b; -fx-font-size: 15;");
             bloque.getChildren().add(filaConEspaciador(lblMoraTitulo, mora));
         }
 
-        // Campo vacío (sin prellenar) + botón, según lo pedido
+        Label lblTotalTitulo = new Label("Total esta factura");
+        lblTotalTitulo.setStyle("-fx-text-fill: #888888; -fx-font-weight: bold; -fx-font-size: 15;");
+        Label totalIndividual = new Label(factura.getTotalIndividualTexto());
+        totalIndividual.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
+        bloque.getChildren().add(filaConEspaciador(lblTotalTitulo, totalIndividual));
+
         TextField txtMonto = new TextField();
         txtMonto.setPromptText("0.00");
-        txtMonto.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #cccccc; -fx-border-color: #2a2a2a; -fx-border-radius: 5; -fx-background-radius: 5;");
+        txtMonto.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #cccccc; -fx-border-color: #2a2a2a; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;");
         HBox.setHgrow(txtMonto, Priority.ALWAYS);
 
         Label lblError = new Label();
-        lblError.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 11;");
+        lblError.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 15;");
         lblError.setVisible(false);
         lblError.setManaged(false);
 
-        Button btnAgregar = new Button("+ Añadir");
-        btnAgregar.setStyle("-fx-background-color: #27ae60; -fx-text-fill: #ffffff; -fx-cursor: hand;");
-        btnAgregar.setOnAction(e -> onAgregarAlCarrito(factura, txtMonto, lblError));
+        Button btnAgregar = new Button("Añadir");
+        btnAgregar.setStyle("-fx-background-color: #1c2a1c; -fx-text-fill: #4caf50; -fx-cursor: hand; -fx-font-size: 15;");
+        btnAgregar.setOnAction(event -> { onAgregarAlCarrito(factura, txtMonto, lblError); event.consume(); });
 
         HBox filaAccion = new HBox(10, txtMonto, btnAgregar);
-
         bloque.getChildren().addAll(filaAccion, lblError);
         return bloque;
+    }
+
+    private HBox crearFilaTotal(List<ServicioContratadoViewModel> vms) {
+        double total = vms.stream()
+                .flatMap(vm -> vm.getListaFacturas().stream())
+                .mapToDouble(f -> f.getValorTotal() + f.getInteresAcumulado())
+                .sum()
+                + vms.stream()
+                .filter(ServicioContratadoViewModel::isEstaCortado)
+                .mapToDouble(ServicioContratadoViewModel::getCostoReactivacion)
+                .sum();
+
+        Label lblTitulo = new Label("Total a pagar");
+        lblTitulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
+        Label lblTotal = new Label(String.format("$ %.2f", total));
+        lblTotal.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
+
+        HBox espaciador = new HBox();
+        HBox.setHgrow(espaciador, Priority.ALWAYS);
+        HBox fila = new HBox(10, lblTitulo, espaciador, lblTotal);
+        fila.setAlignment(Pos.CENTER_LEFT);
+        fila.setStyle("-fx-background-color: #161616; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 15;");
+        VBox.setMargin(fila, new Insets(10, 0, 0, 0));
+        return fila;
     }
 
     private HBox filaConEspaciador(Label izquierda, Label derecha) {
@@ -196,7 +260,7 @@ public class PanelClienteController {
 
         String cedula = SesionCliente.getCedulaActual();
         panelCliente.agregarAbonoAlCarrito(new AgregarAbonoDTOEntrada(cedula, factura.getIdFactura(), monto));
-        cargarServicios(); // recarga todo; los campos vuelven a nacer vacíos
+        cargarServicios();
     }
 
     private void mostrarErrorFila(Label lblError, String mensaje) {

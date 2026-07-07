@@ -17,8 +17,14 @@ public class PanelClienteMapperUI {
         vm.setIdContrato(dto.idContrato());
         vm.setNombreServicio(NombresServicio.legible(dto.nombreServicio()));
         vm.setEmpresa(dto.empresa());
-        vm.setDeudaTotal(dto.deudaTotal());
-        vm.setConMora(dto.facturasPendientes().stream().anyMatch(f -> f.diasMora() > 0));
+        vm.setEstaCortado(dto.estaCortado());
+
+        boolean hayMora = dto.facturasPendientes().stream().anyMatch(f -> f.diasMora() > 0);
+        vm.setConMora(hayMora && !dto.estaCortado());
+
+        vm.setCostoReactivacion(dto.costoReactivacion()); // NUEVO: valor crudo
+        vm.setCostoReactivacionTexto(String.format("$ %.2f", dto.costoReactivacion()));
+        vm.setSubtotalServicioTexto(String.format("$ %.2f", dto.deudaTotal()));
         vm.setListaFacturas(dto.facturasPendientes().stream().map(PanelClienteMapperUI::facturaAViewModel).toList());
         return vm;
     }
@@ -32,6 +38,7 @@ public class PanelClienteMapperUI {
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
         vm.setInteresAcumulado(dto.interesAcumulado());
         vm.setTieneMora(dto.diasMora() > 0);
+        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal() + dto.interesAcumulado()));
         return vm;
     }
 
