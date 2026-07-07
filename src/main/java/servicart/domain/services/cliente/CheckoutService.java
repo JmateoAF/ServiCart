@@ -7,9 +7,9 @@ import servicart.entities.Carrito;
 import servicart.entities.Factura;
 import java.util.List;
 
-/* Válida que el carrito no esté vacío.
-Marca cada abono como pagoRealizado = true y lo persiste.
-Si la suma de abonos cubre el total de la factura -> la marca PAGADA.
+/* Válida que el carrito no esté vacío
+Marca cada abono como pagoRealizado = true y lo persiste
+Si la suma de abonos cubre el total de la factura -> la marca PAGADA
 Vacía el carrito */
 
 public class CheckoutService {

@@ -5,7 +5,7 @@
     <file url="PROJECT" dialect="SQLite" />
   </component>
   <component name="SqlResolveMappings">
-    <file url="file://$PROJECT_DIR$/sql/datosPrueba.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;9e1e1927-baff-4480-9419-decd2f64ed5d&quot;    }   }  } }}" />
-    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;9e1e1927-baff-4480-9419-decd2f64ed5d&quot;    }   }  } }}" />
+    <file url="file://$PROJECT_DIR$/sql/datosPrueba.sql" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;e5de1545-2290-4625-a844-bb51df5d6355&quot;    }   }  } }}" />
+    <file url="PROJECT" scope="{&quot;node&quot;:{  &quot;@negative&quot;:&quot;1&quot;,  &quot;group&quot;:{   &quot;@kind&quot;:&quot;root&quot;,   &quot;node&quot;:{    &quot;name&quot;:{     &quot;@qname&quot;:&quot;e5de1545-2290-4625-a844-bb51df5d6355&quot;    }   }  } }}" />
   </component>
 </project>

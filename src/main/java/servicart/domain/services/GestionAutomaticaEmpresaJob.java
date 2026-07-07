@@ -3,12 +3,9 @@ package servicart.domain.services;
 import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.services.cliente.MoraService;
-import servicart.domain.services.notifiers.NotificadorEmail;
-import servicart.domain.services.notifiers.NotificadorSMS;
 import servicart.entities.*;
 import servicart.entities.enums.CausaTerminacion;
 import servicart.entities.enums.EstadoFactura;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -56,11 +53,10 @@ public class GestionAutomaticaEmpresaJob {
         }
     }
 
-    // 1) EMITIR FACTURAS — el día 20 de cada mes -----------------------
-
+    //1) EMITIR FACTURAS — el día 20 de cada mes
     private void emitirFacturasPendientes() {
-        // Regla de calendario: solo se emite el día 20. El resto de los
-        // días del mes esta tarea no hace nada (pero las otras 3 sí siguen corriendo).
+        // Regla de calendario: solo se emite el día 20, el resto de los
+        // días del mes esta tarea no hace nada (pero las otras 3 sí siguen corriendo)
         if (LocalDate.now().getDayOfMonth() != DIA_FACTURACION_MES) return;
 
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
@@ -69,7 +65,7 @@ public class GestionAutomaticaEmpresaJob {
 
         ContratoService contratoService = new ContratoService(contratoDAO);
         FacturacionService facturacionService = new FacturacionService(facturaDAO);
-        EmpresaService empresaService = new EmpresaService(empresaDAO, List.of(new NotificadorEmail(), new NotificadorSMS()));
+        EmpresaService empresaService = new EmpresaService(empresaDAO);
 
         YearMonth mesActual = YearMonth.now();
 
@@ -94,27 +90,27 @@ public class GestionAutomaticaEmpresaJob {
         };
     }
 
-    // 2) APLICAR MORA ---------------------------------------
-
+    //2) APLICAR MORA
     private void aplicarMoraAVencidas() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<InteresMora> interesDAO = FactoryDAO.getDAO(InteresMora.class);
         FacturacionService facturacionService = new FacturacionService(facturaDAO);
         MoraService moraService = new MoraService(interesDAO, facturaDAO, facturacionService);
 
+        assert facturaDAO != null;
         facturaDAO.findAll().stream()
                 .filter(f -> f.getEstado() != EstadoFactura.PAGADA) // antes: solo PENDIENTE
                 .filter(Factura::estaVencida)
                 .forEach(moraService::aplicarMora);
     }
 
-    // 3) CORTAR SERVICIOS MOROSOS  ----------------------------
-
+    //3) CORTAR SERVICIOS
     private void cortarServiciosMorosos() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
         CorteService corteService = new CorteService(corteDAO,facturaDAO);
 
+        assert facturaDAO != null;
         List<Factura> candidatas = facturaDAO.findAll().stream()
                 .filter(f -> f.getEstado() != EstadoFactura.PAGADA)
                 .filter(Factura::superaFechaCorte)
@@ -127,8 +123,7 @@ public class GestionAutomaticaEmpresaJob {
         }
     }
 
-    // 4) TERMINAR CONTRATOS CON CORTE PROLONGADO — sin cambios --------------
-
+    //4) TERMINAR CONTRATOS CON CORTE PROLONGADO
     private void terminarContratosPorCorteProlongado() {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
@@ -141,6 +136,7 @@ public class GestionAutomaticaEmpresaJob {
             long diasCortado = ChronoUnit.DAYS.between(corte.getFechaCorte(), LocalDateTime.now());
             if (diasCortado >= DIAS_CORTADO_PARA_TERMINAR) {
                 contratoService.terminarContrato(corte.getContrato(), CausaTerminacion.EMPRESA);
+                assert corteDAO != null;
                 corteDAO.delete(String.valueOf(corte.getId()));
             }
         }

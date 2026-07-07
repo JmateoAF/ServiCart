@@ -6,8 +6,8 @@ import javafx.beans.property.StringProperty;
 public class TarifaTablaViewModel {
     private final StringProperty servicio;
     private final StringProperty empresa;
-    private final StringProperty tarifa;    // ej. "$ 1.20 / m³" o "$ 29.99 fijo"
-    private final StringProperty tipo;      // "Fijo" / "Variable"
+    private final StringProperty tarifa; //Fija o variable
+    private final StringProperty tipo; //Fijo o variable
 
     public TarifaTablaViewModel(String servicio, String empresa, String tarifa, String tipo) {
         this.servicio = new SimpleStringProperty(servicio);

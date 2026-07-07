@@ -4,7 +4,7 @@ import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.dtos.entradas.CancelarContratoDTOEntrada;
 import servicart.domain.dtos.entradas.ContratoDTOEntrada;
-import servicart.domain.dtos.salidas.ContratoDTOSalida;
+import servicart.domain.dtos.retornos.ContratoDTORetorno;
 import servicart.domain.interfaces.ContratoCliente;
 import servicart.domain.mappers.ContratoMapperDomain;
 import servicart.domain.services.ContratoService;
@@ -15,7 +15,7 @@ import java.util.List;
 public class ContratoClienteImp implements ContratoCliente {
 
     @Override
-    public List<ContratoDTOSalida> listarContratos(ContratoDTOEntrada dto) {
+    public List<ContratoDTORetorno> listarContratos(ContratoDTOEntrada dto) {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         ContratoService contratoService = new ContratoService(contratoDAO);
 

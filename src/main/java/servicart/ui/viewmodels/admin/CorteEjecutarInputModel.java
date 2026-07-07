@@ -2,8 +2,8 @@ package servicart.ui.viewmodels.admin;
 
 public class CorteEjecutarInputModel {
     private String contratoId;
-    private String motivo;           // No está en CorteServicio actualmente, pero se usa en la UI
-    private String observaciones;    // Ídem
+    private String motivo; //No está en CorteServicio actualmente, pero se usa en la UI
+    private String observaciones;
 
     public String getContratoId() { return contratoId; }
     public void setContratoId(String contratoId) { this.contratoId = contratoId; }

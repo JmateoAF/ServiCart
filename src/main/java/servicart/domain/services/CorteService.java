@@ -4,7 +4,6 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Contrato;
 import servicart.entities.CorteServicio;
 import servicart.entities.Factura;
-import servicart.entities.ServicioCatalogo;
 import servicart.entities.enums.EstadoCorte;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,8 @@ public class CorteService {
         this.corteDAO = corteDAO;
         this.facturaDAO = facturaDAO;
     }
-    public CorteServicio cortarServicio(Contrato contrato, Factura factura) {
+
+    public void cortarServicio(Contrato contrato, Factura factura) {
         // el costo de reactivación ya fue aplicado, no se vuelve a sumar
         if (buscarCorteVigente(contrato.getId()).isPresent()) {
             throw new IllegalStateException("El contrato " + contrato.getId() + " ya tiene un corte vigente");
@@ -28,8 +28,8 @@ public class CorteService {
         corteDAO.save(corte);
 
        // aplicarCostoReactivacionAFactura(factura, contrato);
-        return corte;
     }
+
     private void aplicarCostoReactivacionAFactura(Factura factura, Contrato contrato) {
         double costoReactivacion = contrato.getServicio().getCostoReactivacion();
         // Se suma sobre el valorTotal actual (que ya puede incluir interés de MoraService),
@@ -37,6 +37,7 @@ public class CorteService {
         factura.setValorTotal(factura.getValorTotal() + costoReactivacion);
         facturaDAO.update(factura);
     }
+
     // Para cuando el cliente pague el costo de reactivación (flujo de checkout, no automático)
     public void reactivarServicio(CorteServicio corte, double costoPagado) {
         double costoRequerido = corte.getContrato().getServicio().getCostoReactivacion();

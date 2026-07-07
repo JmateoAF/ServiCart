@@ -12,12 +12,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600" prefWidth="800" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.admin.LoginAdminController">
+<BorderPane style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.admin.LoginAdminController">
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="55.0" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
             <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="SERVICART">
                 <font>
-                    <Font size="15.0" />
+                    <Font size="25.0" />
                 </font>
             </Label>
         </HBox>
@@ -25,71 +25,71 @@
 
     <center>
         <StackPane style="-fx-background-color: #0f0f0f;">
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="350.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 24;">
-                <Label alignment="CENTER" maxWidth="Infinity" style="-fx-font-family: 'Courier New'; -fx-background-color: #1e1c0f; -fx-background-radius: 4;" text="ACCESO ADMINISTRADOR" textAlignment="CENTER" textFill="#e8c96d">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="350.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
+                <Label alignment="CENTER" maxWidth="Infinity" style="-fx-font-family: 'Courier New'; -fx-background-color: #1e1c0f; -fx-background-radius: 5; -fx-font-family: 'Courier New';" text="ACCESO ADMINISTRADOR" textAlignment="CENTER" textFill="#e8c96d">
                     <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets bottom="50.0" />
                     </VBox.margin>
                     <padding>
                         <Insets bottom="5.0" top="5.0" />
                     </padding>
                     <font>
-                        <Font size="15.0" />
+                        <Font size="20.0" />
                     </font>
                 </Label>
 
-                <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="USUARIO">
+                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="USUARIO">
                     <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                     </VBox.margin>
                 </Label>
 
-                <TextField fx:id="txtUsuario" promptText="admin" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-padding: 8 10 8 10; -fx-font-family: 'Courier New';">
+                <TextField fx:id="txtUsuario" promptText="admin" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-padding: 5 10 5 10; -fx-font-family: 'Courier New';">
                     <VBox.margin>
-                        <Insets bottom="10" top="5" />
+                        <Insets bottom="20.0" top="5.0" />
                     </VBox.margin>
                     <font>
                         <Font size="15.0" />
                     </font>
                 </TextField>
 
-                <Label style="-fx-text-fill: #555555; -fx-font-size: 10;" text="CONTRASEÑA">
+                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="CONTRASEÑA">
                     <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                     </VBox.margin>
                 </Label>
 
-                <PasswordField fx:id="txtPassword" promptText="••••••••" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-padding: 8 10 8 10;">
+                <PasswordField fx:id="txtPassword" promptText="••••••••" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-padding: 5 10 5 10;">
                     <VBox.margin>
-                        <Insets bottom="12" top="5" />
+                        <Insets bottom="15.0" top="5.0" />
                     </VBox.margin>
                     <font>
                         <Font size="15.0" />
                     </font>
                 </PasswordField>
 
-                <Label fx:id="lblError" textFill="#e74c3c" visible="false" wrapText="true" style="-fx-background-color: #2a1010; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Courier New';">
+                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: #2a1010; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Courier New';" textFill="#e74c3c" visible="false" wrapText="true">
                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets />
                     </VBox.margin>
                     <font>
-                        <Font size="12.0" />
+                        <Font size="15.0" />
                     </font>
                 </Label>
 
-                <Button onAction="#onIniciarSesion" maxWidth="Infinity" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 12; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-padding: 9 0 9 0; -fx-cursor: hand;" text="INGRESAR">
+                <Button maxWidth="Infinity" onAction="#onIniciarSesion" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 15; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 0 10 0; -fx-cursor: hand;" text="INGRESAR">
                     <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="10.0" />
                     </VBox.margin>
                 </Button>
 
                 <Separator>
                     <VBox.margin>
-                        <Insets bottom="10.0" top="15.0" />
+                        <Insets bottom="10.0" top="20.0" />
                     </VBox.margin>
                 </Separator>
 
-                <Button maxWidth="Infinity" onAction="#irALoginCliente" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-font-size: 10; -fx-alignment: center; -fx-cursor: hand; -fx-border-color: transparent; -fx-padding: 0;" text="Soy cliente" />
+                <Button maxWidth="Infinity" onAction="#irALoginCliente" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-font-size: 15; -fx-alignment: center; -fx-cursor: hand; -fx-border-color: transparent;" text="Soy cliente" />
             </VBox>
         </StackPane>
     </center>

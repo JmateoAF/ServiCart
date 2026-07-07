@@ -4,12 +4,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class UsuarioTablaViewModel {
-    private int id;                    // no se muestra, pero se usa para acciones
+    private final int id; // no se muestra, pero se usa para acciones
     private final StringProperty cedula;
     private final StringProperty nombre;
     private final StringProperty email;
     private final StringProperty celular;
-    private final StringProperty activo;   // "Activo" / "Inactivo"
+    private final StringProperty activo;   //Activo o inactivo
 
     public UsuarioTablaViewModel(int id, String cedula, String nombre, String email, String celular, String activo) {
         this.id = id;

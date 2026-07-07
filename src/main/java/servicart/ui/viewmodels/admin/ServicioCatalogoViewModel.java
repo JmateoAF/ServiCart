@@ -3,15 +3,12 @@ package servicart.ui.viewmodels.admin;
 public class ServicioCatalogoViewModel {
     private String nombreServicio;
     private String empresaNombre;
-    private String tipoValor;         // "Fijo" / "Variable"
-    private String tarifa;            // formateada según tipo
+    private String tipoValor;         //Fijo o variable
+    private String tarifa;            //Formateada según tipo
     private String interesMora;
     private String diasParaCorte;
     private String costoReactivacion;
 
-    public ServicioCatalogoViewModel() {}
-
-    // Getters y Setters
     public String getNombreServicio() { return nombreServicio; }
     public void setNombreServicio(String nombreServicio) { this.nombreServicio = nombreServicio; }
 

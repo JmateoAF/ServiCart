@@ -4,12 +4,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /* Única responsabilidad: garantizar que la gestión automática de la
    empresa (GestionAutomaticaEmpresaJob) arranque una sola vez durante
-   la vida de la aplicación, y se detenga al cerrar. */
+   la vida de la aplicación, y se detenga al cerrar */
+
 public class GestorProcesosEmpresa {
     private static final AtomicBoolean iniciado = new AtomicBoolean(false);
     private static GestionAutomaticaEmpresaJob job;
-
-    private GestorProcesosEmpresa() { }
 
     public static void iniciarSiEsNecesario() {
         if (iniciado.compareAndSet(false, true)) {

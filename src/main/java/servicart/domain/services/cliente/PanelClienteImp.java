@@ -4,16 +4,14 @@ import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.dtos.entradas.AgregarAbonoDTOEntrada;
 import servicart.domain.dtos.entradas.PanelClienteDTOEntrada;
-import servicart.domain.dtos.salidas.ServicioContratadoDTOSalida;
+import servicart.domain.dtos.retornos.ServicioContratadoDTORetorno;
 import servicart.domain.interfaces.PanelCliente;
 import servicart.domain.mappers.PanelClienteMapperDomain;
 import servicart.domain.services.ContratoService;
 import servicart.domain.services.FacturacionService;
-import servicart.domain.services.cliente.PanelClienteService;
 import servicart.entities.*;
 import servicart.entities.enums.EstadoFactura;
 import servicart.entities.enums.ModalidadPago;
-
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -21,10 +19,9 @@ import java.util.List;
 public class PanelClienteImp implements PanelCliente {
 
     @Override
-    public List<ServicioContratadoDTOSalida> listarServiciosContratados(PanelClienteDTOEntrada dto) {
+    public List<ServicioContratadoDTORetorno> listarServiciosContratados(PanelClienteDTOEntrada dto) {
         ContratoService contratoService = new ContratoService(FactoryDAO.getDAO(Contrato.class));
         FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class));
-        PanelClienteService panelClienteService = new PanelClienteService();
 
         return contratoService.buscarPorCliente(dto.cedula()).stream()
                 .map(contrato -> {
@@ -33,8 +30,8 @@ public class PanelClienteImp implements PanelCliente {
                             .sorted(Comparator.comparing(Factura::getFechaEmision))
                             .toList();
 
-                    boolean estaCortado = panelClienteService.estaCortado(pendientes);
-                    double deudaTotal = panelClienteService.calcularDeudaTotal(pendientes);
+                    boolean estaCortado = estaCortado(pendientes);
+                    double deudaTotal = calcularDeudaTotal(pendientes);
 
                     return PanelClienteMapperDomain.entidadADTO(contrato, pendientes, estaCortado, deudaTotal);
                 })
@@ -69,5 +66,13 @@ public class PanelClienteImp implements PanelCliente {
         Abono abono = new Abono(dto.monto(), LocalDateTime.now(), false, factura, ModalidadPago.TC);
         abonoDAO.save(abono);
         carritoService.agregarAbono(cliente, abono);
+    }
+
+    public boolean estaCortado(List<Factura> pendientes) {
+        return pendientes.stream().anyMatch(Factura::superaFechaCorte);
+    }
+
+    public double calcularDeudaTotal(List<Factura> pendientes) {
+        return pendientes.stream().mapToDouble(Factura::getValorTotal).sum();
     }
 }

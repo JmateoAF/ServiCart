@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public class EmpresaService {
     private final CrudDAO<Empresa> empresaDAO;
-    private final List<Observador> observadoresEstandar;
+    //private final List<Observador> observadoresEstandar;
 
-    public EmpresaService(CrudDAO<Empresa> empresaDAO, List<Observador> observadoresEstandar) {
+    public EmpresaService(CrudDAO<Empresa> empresaDAO) {
         this.empresaDAO = empresaDAO;
-        this.observadoresEstandar = observadoresEstandar;
+        //this.observadoresEstandar = observadoresEstandar;
     }
 
     public Optional<Empresa> buscarPorNombre(String nombre) {
@@ -35,7 +35,7 @@ public class EmpresaService {
     }
 
     private Empresa conObservadoresSuscritos(Empresa empresa) {
-        observadoresEstandar.forEach(empresa::agregarObservador);
+        //observadoresEstandar.forEach(empresa::agregarObservador);
         return empresa;
     }
 }

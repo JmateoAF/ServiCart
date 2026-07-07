@@ -5,13 +5,6 @@ import servicart.entities.enums.EstadoCorte;
 
 import java.util.List;
 
-/* Se eliminaron cortarServicio() y reactivar() que existían antes
-Cortar y reactivar son transiciones de estado del dominio -> CorteService:
-cortar: corteServicio.setEstadoCorte(CORTADO) -> update()
-reactivar: corteServicio.setEstadoCorte(ACTIVO) -> update()
-isActivo incluye ACTIVO y CORTADO (ambos son registros vigentes)
-Solo TERMINADO se excluye del findAll() normal
-delete() -> borrado lógico a TERMINADO (el DAO decide el HOW, el dominio el WHEN) */
 public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio> {
     public CorteServicioBinarioDAO() {
         super("bin/corteServicio.bin");

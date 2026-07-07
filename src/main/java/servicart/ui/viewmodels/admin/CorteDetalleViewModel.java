@@ -7,13 +7,10 @@ public class CorteDetalleViewModel {
     private String deudaOriginal;
     private String interesAcumulado;
     private String costoReactivacion;
-    private String estado;          // "Cortado" / "En mora"
+    private String estado; //Cortado o en mora
     private String total;
-    private double progresoCorte;   // 0.0 a 1.0 para la barra de progreso
+    private double progresoCorte; //0.0 a 1.0 para la barra de progreso
 
-    public CorteDetalleViewModel() {}
-
-    // Getters y Setters
     public String getNombreCliente() { return nombreCliente; }
     public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
 

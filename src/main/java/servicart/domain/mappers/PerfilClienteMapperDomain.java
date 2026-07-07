@@ -1,10 +1,10 @@
 package servicart.domain.mappers;
 
-import servicart.domain.dtos.salidas.PerfilClienteDTOSalida;
+import servicart.domain.dtos.retornos.PerfilClienteDTORetorno;
 import servicart.entities.Cliente;
 
 public class PerfilClienteMapperDomain {
-    public static PerfilClienteDTOSalida entidadAPerfilDTO(Cliente cliente) {
-        return new PerfilClienteDTOSalida(cliente.getCedula(), cliente.getNombre(), cliente.getEmail(), cliente.getCelular(), cliente.getActivo());
+    public static PerfilClienteDTORetorno entidadAPerfilDTO(Cliente cliente) {
+        return new PerfilClienteDTORetorno(cliente.getCedula(), cliente.getNombre(), cliente.getEmail(), cliente.getCelular(), cliente.getActivo());
     }
 }

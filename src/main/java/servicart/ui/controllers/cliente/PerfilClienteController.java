@@ -15,8 +15,8 @@ import javafx.scene.layout.VBox;
 import servicart.domain.dtos.entradas.CancelarContratoDTOEntrada;
 import servicart.domain.dtos.entradas.PerfilClienteDTOEntrada;
 import servicart.domain.dtos.entradas.ContratoDTOEntrada;
-import servicart.domain.dtos.salidas.ContratoDTOSalida;
-import servicart.domain.dtos.salidas.PerfilClienteDTOSalida;
+import servicart.domain.dtos.retornos.ContratoDTORetorno;
+import servicart.domain.dtos.retornos.PerfilClienteDTORetorno;
 import servicart.domain.interfaces.ContratoCliente;
 import servicart.domain.interfaces.PerfilCliente;
 import servicart.ui.SesionCliente;
@@ -57,7 +57,7 @@ public class PerfilClienteController {
         String cedula = SesionCliente.getCedulaActual();
 
         PerfilClienteDTOEntrada dtoEntrada = new PerfilClienteDTOEntrada(cedula);
-        PerfilClienteDTOSalida dtoSalida = perfilCliente.buscarPerfil(dtoEntrada);
+        PerfilClienteDTORetorno dtoSalida = perfilCliente.buscarPerfil(dtoEntrada);
 
         if (dtoSalida == null) return;
 
@@ -74,7 +74,7 @@ public class PerfilClienteController {
     private void cargarContratos() {
         String cedula = SesionCliente.getCedulaActual();
 
-        List<ContratoDTOSalida> dtos = contratoCliente.listarContratos(new ContratoDTOEntrada(cedula));
+        List<ContratoDTORetorno> dtos = contratoCliente.listarContratos(new ContratoDTOEntrada(cedula));
 
         listaServicios.getChildren().clear();
 
@@ -84,19 +84,17 @@ public class PerfilClienteController {
             lblMensaje.setManaged(true);
             return;
         }
+
         lblMensaje.setVisible(false);
         lblMensaje.setManaged(false);
-
         lblMensaje.setVisible(false);
 
-        for (ContratoDTOSalida dto : dtos) {
+        for (ContratoDTORetorno dto : dtos) {
             ContratoViewModel vm = ContratoMapperUI.dtoAViewModel(dto);
             listaServicios.getChildren().add(crearTarjetaContrato(vm));
         }
     }
 
-    // Arma la tarjeta visual de un contrato: info del servicio + botón Cancelar.
-    // Mismo esquema de colores que el resto de la app (fondo oscuro, acento dorado).
     private HBox crearTarjetaContrato(ContratoViewModel vm) {
         Label lblTitulo = new Label(vm.getEmpresa() + " — " + vm.getTipoServicio());
         lblTitulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
@@ -109,7 +107,7 @@ public class PerfilClienteController {
         Button btnCancelar = new Button("Cancelar");
         btnCancelar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; " +
                 "-fx-border-color: #c0392b; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;");
-        btnCancelar.setOnAction(e -> onCancelarContrato(vm.getId()));
+        btnCancelar.setOnAction(event -> { onCancelarContrato(vm.getId()); event.consume(); });
 
         HBox fila = new HBox(info, crearEspaciador(), btnCancelar);
         fila.setAlignment(Pos.CENTER_LEFT);
@@ -131,12 +129,12 @@ public class PerfilClienteController {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Cancelar servicio");
         confirmacion.setHeaderText(null);
-        confirmacion.setContentText("¿Seguro que deseas cancelar este servicio? Esta acción no se puede deshacer.");
+        confirmacion.setContentText("¿Seguro que deseas cancelar este servicio? Esta acción no se puede deshacer");
 
         Optional<ButtonType> respuesta = confirmacion.showAndWait();
         if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
             contratoCliente.cancelarContrato(new CancelarContratoDTOEntrada(idContrato));
-            cargarContratos(); // recarga la lista: el contrato cancelado ya no aparece
+            cargarContratos();
         }
     }
 

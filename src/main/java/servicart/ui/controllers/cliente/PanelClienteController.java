@@ -12,7 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import servicart.domain.dtos.entradas.AgregarAbonoDTOEntrada;
 import servicart.domain.dtos.entradas.PanelClienteDTOEntrada;
-import servicart.domain.dtos.salidas.ServicioContratadoDTOSalida;
+import servicart.domain.dtos.retornos.ServicioContratadoDTORetorno;
 import servicart.domain.interfaces.PanelCliente;
 import servicart.ui.SesionCliente;
 import servicart.ui.controllers.Navegador;
@@ -40,10 +40,10 @@ public class PanelClienteController {
 
     private void cargarServicios() {
         String cedula = SesionCliente.getCedulaActual();
-        List<ServicioContratadoDTOSalida> dtos = panelCliente.listarServiciosContratados(new PanelClienteDTOEntrada(cedula));
+        List<ServicioContratadoDTORetorno> dtos = panelCliente.listarServiciosContratados(new PanelClienteDTOEntrada(cedula));
         List<ServicioContratadoViewModel> vms = dtos.stream().map(PanelClienteMapperUI::DTOAviewModel).toList();
 
-        contenedorServicios.getChildren().clear(); // <- FIX: faltaba, causaba tarjetas duplicadas
+        contenedorServicios.getChildren().clear();
 
         if (vms.isEmpty()) {
             lblMensaje.setText("No tienes servicios contratados");
@@ -111,13 +111,13 @@ public class PanelClienteController {
         HBox espaciador = new HBox();
         HBox.setHgrow(espaciador, Priority.ALWAYS);
 
-        HBox header = new HBox(10, textos, espaciador, badge, lbl); // FIX: textos ahora está incluido
+        HBox header = new HBox(10, textos, espaciador, badge, lbl);
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-padding: 15; -fx-cursor: hand;");
         return header;
     }
 
-    // 3 estados: cortado (rojo) > con mora (amarillo) > al día (verde)
+    //cortado rojo, con mora amarillo, al día verde
     private String textoBadge(ServicioContratadoViewModel vm) {
         if (vm.isEstaCortado()) return "Servicio cortado";
         if (vm.isConMora()) return "Con mora";
@@ -130,7 +130,6 @@ public class PanelClienteController {
         return "-fx-text-fill: #27ae60; -fx-background-color: #0f2a18;";
     }
 
-    // Aviso dentro de la tarjeta cuando el servicio ya está cortado
     private VBox crearAvisoCorte(ServicioContratadoViewModel vm) {
         VBox aviso = new VBox(5);
         aviso.setStyle("-fx-background-color: #2a1010; -fx-border-color: #4a1c1c; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
@@ -200,18 +199,16 @@ public class PanelClienteController {
 
         HBox filaAccion = new HBox(10, txtMonto, btnAgregar);
         bloque.getChildren().addAll(filaAccion, lblError);
+
         return bloque;
     }
 
     private HBox crearFilaTotal(List<ServicioContratadoViewModel> vms) {
         double total = vms.stream()
                 .flatMap(vm -> vm.getListaFacturas().stream())
-                .mapToDouble(f -> f.getValorTotal())
-                .sum()
-                + vms.stream()
-                .filter(ServicioContratadoViewModel::isEstaCortado)
-                .mapToDouble(ServicioContratadoViewModel::getCostoReactivacion)
-                .sum();
+                .mapToDouble(FacturaPendienteViewModel::getValorTotal).sum()
+                + vms.stream().filter(ServicioContratadoViewModel::isEstaCortado)
+                .mapToDouble(ServicioContratadoViewModel::getCostoReactivacion).sum();
 
         Label lblTitulo = new Label("Total a pagar");
         lblTitulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
@@ -224,6 +221,7 @@ public class PanelClienteController {
         fila.setAlignment(Pos.CENTER_LEFT);
         fila.setStyle("-fx-background-color: #161616; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 15;");
         VBox.setMargin(fila, new Insets(10, 0, 0, 0));
+
         return fila;
     }
 
@@ -237,6 +235,7 @@ public class PanelClienteController {
 
     private void onAgregarAlCarrito(FacturaPendienteViewModel factura, TextField txtMonto, Label lblError) {
         double monto;
+
         try {
             monto = Double.parseDouble(txtMonto.getText().trim().replace(",", "."));
         } catch (NumberFormatException ex) {
@@ -273,7 +272,22 @@ public class PanelClienteController {
         lblError.setManaged(false);
     }
 
-    @FXML private void onCarrito(ActionEvent e) { Navegador.irA("views/cliente/carrito.fxml"); e.consume(); }
-    @FXML private void onPerfil(ActionEvent e) { Navegador.irA("views/cliente/perfilCliente.fxml"); e.consume(); }
-    @FXML private void onSalir(ActionEvent e) { SesionCliente.cerrar(); Navegador.irA("views/cliente/loginCliente.fxml"); e.consume(); }
+    @FXML
+    private void onCarrito(ActionEvent event) {
+        Navegador.irA("views/cliente/carrito.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onPerfil(ActionEvent event) {
+        Navegador.irA("views/cliente/perfilCliente.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        SesionCliente.cerrar();
+        Navegador.irA("views/cliente/loginCliente.fxml");
+        event.consume();
+    }
 }

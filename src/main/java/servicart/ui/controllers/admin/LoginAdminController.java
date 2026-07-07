@@ -28,7 +28,7 @@ public class LoginAdminController {
         if (loginAdminImp.validarLogin(usuario, contrasenia)) {
             Navegador.irA("views/admin/home.fxml");
         } else {
-            mostrarError("Credenciales inválidas");
+            mostrarError();
         }
         event.consume();
     }
@@ -39,8 +39,19 @@ public class LoginAdminController {
         event.consume();
     }
 
-    private void mostrarError(String mensaje) {
-        lblError.setText(mensaje);
+    private void mostrarError() {
+        lblError.setText("Credenciales inválidas");
+        lblError.setPrefHeight(33);
+        javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(5, 0, 15, 0));
         lblError.setVisible(true);
+
+        javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+        pause.setOnFinished(event -> {
+            lblError.setVisible(false);
+            lblError.setPrefHeight(0);
+            javafx.scene.layout.VBox.setMargin(lblError, new javafx.geometry.Insets(0));
+            event.consume();
+        });
+        pause.play();
     }
 }

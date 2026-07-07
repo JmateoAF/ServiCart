@@ -1,8 +1,8 @@
 package servicart.domain.interfaces;
 
 import servicart.domain.dtos.entradas.LoginClienteDTOEntrada;
-import servicart.domain.dtos.salidas.LoginClienteDTOSalida;
+import servicart.domain.dtos.retornos.LoginClienteDTORetorno;
 
 public interface LoginCliente {
-    LoginClienteDTOSalida validarLoginCliente(LoginClienteDTOEntrada dto);
+    LoginClienteDTORetorno validarLoginCliente(LoginClienteDTOEntrada dto);
 }

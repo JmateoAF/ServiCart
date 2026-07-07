@@ -9,15 +9,14 @@ public class DashboardAdminViewModel {
     private int totalFacturas;
     private int totalCortes;
     private String rutaArchivos;
-    private ObservableList<UsuarioTablaViewModel> listaUsuarios;
-    private ObservableList<TarifaTablaViewModel> listaTarifas;
+    private final ObservableList<UsuarioTablaViewModel> listaUsuarios;
+    private final ObservableList<TarifaTablaViewModel> listaTarifas;
 
     public DashboardAdminViewModel() {
         listaUsuarios = FXCollections.observableArrayList();
         listaTarifas = FXCollections.observableArrayList();
     }
 
-    // Getters y Setters
     public int getTotalUsuarios() { return totalUsuarios; }
     public void setTotalUsuarios(int totalUsuarios) { this.totalUsuarios = totalUsuarios; }
 

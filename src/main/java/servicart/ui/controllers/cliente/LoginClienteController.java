@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import servicart.domain.dtos.entradas.LoginClienteDTOEntrada;
-import servicart.domain.dtos.salidas.LoginClienteDTOSalida;
+import servicart.domain.dtos.retornos.LoginClienteDTORetorno;
 import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.BdService;
 import servicart.domain.services.GestorProcesosEmpresa;
@@ -50,7 +50,7 @@ public class LoginClienteController {
         viewModel.setBaseDatos(baseDatos);
 
         LoginClienteDTOEntrada dtoEntrada = LoginClienteMapperUI.viewModelADTO(viewModel);
-        LoginClienteDTOSalida dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
+        LoginClienteDTORetorno dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
 
         if(dtoSalida == null) {
             mostrarError("Usuario no encontrado");

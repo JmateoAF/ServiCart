@@ -1,7 +1,7 @@
 package servicart.ui.mappers;
 
 public class NombresServicio {
-    public static String legible(String tipoServicio) {
+    public static String nombreServicio(String tipoServicio) {
         return switch (tipoServicio) {
             case "AGUA" -> "Agua Potable";
             case "LUZ" -> "Electricidad";

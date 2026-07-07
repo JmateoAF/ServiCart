@@ -1,13 +1,13 @@
 package servicart.domain.mappers;
 
-import servicart.domain.dtos.salidas.ContratoDTOSalida;
+import servicart.domain.dtos.retornos.ContratoDTORetorno;
 import servicart.entities.Contrato;
 import servicart.entities.ServicioCatalogo;
 
 public class ContratoMapperDomain {
-    public static ContratoDTOSalida entidadADTO(Contrato contrato) {
+    public static ContratoDTORetorno entidadADTO(Contrato contrato) {
         ServicioCatalogo servicio = contrato.getServicio();
-        return new ContratoDTOSalida(
+        return new ContratoDTORetorno(
                 contrato.getId(),
                 servicio.getEmpresa().getNombre(),
                 servicio.getTipo().name(),

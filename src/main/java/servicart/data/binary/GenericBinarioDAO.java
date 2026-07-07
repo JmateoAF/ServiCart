@@ -8,12 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Implementación base de CRUD sobre archivo binario.
- * Cada subclase define cómo obtener el ID y decide si una entidad está activa.
- * La serialización se maneja aquí (no en ConexionBinario).
- * @param <T> tipo de entidad serializable
- */
 public abstract class GenericBinarioDAO<T extends Serializable> implements CrudDAO<T> {
 
     /* Es {@code protected} para que las subclases puedan, si lo necesitan, realizar
@@ -37,16 +31,12 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     cambiar el criterio de activación, manteniéndolo oculto para el resto del sistema */
     protected boolean isActivo(T entidad) { return true; }
 
-    /**
-     * Lee la lista completa desde el archivo.
-     * Ahora utiliza InputStream crudo y lo envuelve explícitamente.
-     *
-     * Es {@code protected} para que las subclases puedan acceder a la lista cruda
-     * en operaciones complejas (cálculos, reportes, migraciones) sin depender
-     * únicamente de los métodos públicos CRUD.
-     *
-     * La anotación @SuppressWarnings("unchecked") la agregué para silenciar la advertencia del compilador en la línea
-     */
+    /* Lee la lista completa desde el archivo.
+    Ahora utiliza InputStream crudo y lo envuelve explícitamente.
+    Es {@code protected} para que las subclases puedan acceder a la lista cruda
+    en operaciones complejas (cálculos, reportes, migraciones) sin depender
+    únicamente de los métodos públicos CRUD.
+    La anotación @SuppressWarnings("unchecked") la agregué para silenciar la advertencia del compilador en la línea */
     @SuppressWarnings("unchecked")
     protected List<T> leerTodos() {
         try {

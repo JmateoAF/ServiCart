@@ -4,7 +4,7 @@ public class ServicioCatalogoInputModel {
     private String tarifaFija;
     private String tarifaPorUnidad;
     private String interesMoraDiario;
-    private String diasParaCorte;        // Este campo podría ser solo de presentación si no existe en la entidad
+    private String diasParaCorte;
     private String costoReactivacion;
 
     public String getTarifaFija() { return tarifaFija; }

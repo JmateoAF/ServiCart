@@ -1,7 +1,7 @@
 package servicart.ui.mappers;
 
 import servicart.domain.dtos.entradas.LoginClienteDTOEntrada;
-import servicart.domain.dtos.salidas.LoginClienteDTOSalida;
+import servicart.domain.dtos.retornos.LoginClienteDTORetorno;
 import servicart.ui.viewmodels.cliente.LoginClienteViewModel;
 
 public class LoginClienteMapperUI {
@@ -9,7 +9,7 @@ public class LoginClienteMapperUI {
         return new LoginClienteDTOEntrada(viewModel.getCedula(), viewModel.getBaseDatos(), viewModel.getActivo());
     }
 
-    public static LoginClienteViewModel DTOAviewModel(LoginClienteDTOSalida dto) {
+    public static LoginClienteViewModel DTOAviewModel(LoginClienteDTORetorno dto) {
         LoginClienteViewModel viewModel = new LoginClienteViewModel();
         viewModel.setCedula(dto.cedula());
         viewModel.setBaseDatos(dto.baseDatos());

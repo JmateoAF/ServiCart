@@ -1,8 +1,8 @@
 package servicart.domain.interfaces;
 
 import servicart.domain.dtos.entradas.PerfilClienteDTOEntrada;
-import servicart.domain.dtos.salidas.PerfilClienteDTOSalida;
+import servicart.domain.dtos.retornos.PerfilClienteDTORetorno;
 
 public interface PerfilCliente {
-    PerfilClienteDTOSalida buscarPerfil(PerfilClienteDTOEntrada dto);
+    PerfilClienteDTORetorno buscarPerfil(PerfilClienteDTOEntrada dto);
 }

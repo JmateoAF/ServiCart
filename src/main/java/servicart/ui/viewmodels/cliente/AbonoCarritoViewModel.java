@@ -2,9 +2,9 @@ package servicart.ui.viewmodels.cliente;
 
 public class AbonoCarritoViewModel {
     private int idAbono;
-    private String servicio;          // "Agua – ETAPA" o descripción
-    private String monto;             // "$ 15.00"
-    private String referenciaFactura; // número de factura
+    private String servicio;
+    private String monto;
+    private String referenciaFactura;
 
     public AbonoCarritoViewModel() {}
 

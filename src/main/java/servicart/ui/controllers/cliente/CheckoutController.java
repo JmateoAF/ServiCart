@@ -4,38 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import servicart.entities.enums.ModalidadPago;
-import servicart.domain.services.cliente.CheckoutService;
 import servicart.ui.controllers.Navegador;
 
 public class CheckoutController {
-    @FXML private VBox listaResumen;
-    @FXML private Label lblTotalFinal;
     @FXML private ComboBox<String> cmbMetodoPago;
     @FXML private Label lblMensaje;
-    private CheckoutService checkoutService;
 
     @FXML
     public void initialize() {
-        //checkoutService = new CheckoutService(FactoryDAO.abonoDAO(), GestorNotificacion.getFacturacionService());
         cmbMetodoPago.getItems().setAll("Tarjeta de crédito", "Tarjeta de débito", "PayPal", "Transferencia bancaria", "Débito automático");
         cmbMetodoPago.setValue("Tarjeta de crédito");
         cargarResumen();
     }
 
     private void cargarResumen() {
-
-        listaResumen.getChildren().clear();
-/*
-        for (Abono abono : carrito.getAbonos()) {
-            //String empresa = abono.getFactura().getContrato().getServicio().getEmpresa().name();
-            String tipo = abono.getFactura().getContrato().getServicio().getTipo().name();
-            //Label fila = new Label("• " + empresa + " – " + tipo + "  →  $" + String.format("%.2f", abono.getMonto()));
-           // listaResumen.getChildren().add(fila);
-        }*/
-
-        //lblTotalFinal.setText("Total: $" + String.format("%.2f", carrito.getTotal()));
         lblMensaje.setVisible(false);
     }
 
@@ -47,26 +29,13 @@ public class CheckoutController {
             return;
         }
 
-        //Asignar modalidad a cada abono según la selección
-        /*ModalidadPago modalidad = modalidadDesdeCombo(cmbMetodoPago.getValue());
-        for(Abono abono : Sesion.getCarrito().getAbonos()) {
-            // La modalidad se asignó al crear el Abono, pero si se cambia aquí se puede hacer via setter
-        }*/
+        mostrarMensaje("Pago realizado con éxito");
+        Navegador.irA("views/cliente/panelCliente.fxml");
 
-            mostrarMensaje("Pago realizado con éxito.");
-            //Después de pagar, volver al panel
-            Navegador.irA("views/cliente/panelCliente.fxml");
+        event.consume();
     }
 
-    @FXML
-    private void onCancelar(ActionEvent event) { Navegador.irA("views/cliente/carrito.fxml"); }
-
-    private void mostrarMensaje(String msg) {
-        lblMensaje.setText(msg);
-        lblMensaje.setVisible(true);
-    }
-
-    private ModalidadPago modalidadDesdeCombo(String valor) {
+    /*private ModalidadPago modalidadDesdeCombo(String valor) {
         return switch (valor) {
             case "Tarjeta de crédito" -> ModalidadPago.TC;
             case "Tarjeta de débito" -> ModalidadPago.TD;
@@ -74,5 +43,16 @@ public class CheckoutController {
             case "Transferencia bancaria" -> ModalidadPago.TRANSFERENCIA;
             default -> ModalidadPago.DEBITO;
         };
+    }*/
+
+    @FXML
+    private void onCancelar(ActionEvent event) {
+        Navegador.irA("views/cliente/carrito.fxml");
+        event.consume();
+    }
+
+    private void mostrarMensaje(String msg) {
+        lblMensaje.setText(msg);
+        lblMensaje.setVisible(true);
     }
 }

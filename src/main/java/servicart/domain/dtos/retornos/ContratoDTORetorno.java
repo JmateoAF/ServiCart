@@ -1,8 +1,8 @@
-package servicart.domain.dtos.salidas;
+package servicart.domain.dtos.retornos;
 
 import java.time.LocalDateTime;
 
-public record ContratoDTOSalida(
+public record ContratoDTORetorno(
         int id,
         String empresa,
         String tipoServicio,

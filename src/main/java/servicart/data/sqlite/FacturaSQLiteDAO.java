@@ -15,7 +15,8 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
 
     @Override
     public void save(Factura f) {
-        String sql = "INSERT INTO Factura (fechaEmision, fechaVencimiento, fechaCorte, valorBase, valorTotal, estado, idContrato) VALUES (?, ?, ?, ?, ?, ?, ?)";        try (Connection con = ConexionSQLite.conectar();
+        String sql = "INSERT INTO Factura (fechaEmision, fechaVencimiento, fechaCorte, valorBase, valorTotal, estado, idContrato) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection con = ConexionSQLite.conectar();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, FechaSQLite.formatear(f.getFechaEmision()));
             stmt.setString(2, FechaSQLite.formatear(f.getFechaVencimiento()));

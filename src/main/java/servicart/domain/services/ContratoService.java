@@ -9,19 +9,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-
 public class ContratoService {
     private final CrudDAO<Contrato> contratoDAO;
 
     public ContratoService(CrudDAO<Contrato> contratoDAO) {
         this.contratoDAO = contratoDAO;
     }
+
     public Contrato crearContrato(Cliente cliente, ServicioCatalogo servicio) {
         Contrato contrato = new Contrato(LocalDateTime.now(), null, CausaTerminacion.ACTIVO, servicio, cliente);
         contratoDAO.save(contrato);
 
         return contrato;
     }
+
     public void terminarContrato(Contrato contrato, CausaTerminacion causa) {
         contrato.setCausaTerminacion(causa);
         contrato.setFechaFin(LocalDateTime.now());
@@ -29,9 +30,7 @@ public class ContratoService {
     }
 
     public List<Contrato> buscarPorCliente(String cedula) {
-        return contratoDAO.findAll().stream()
-                .filter(c -> c.getCliente().getCedula().equals(cedula))
-                .toList();
+        return contratoDAO.findAll().stream().filter(c -> c.getCliente().getCedula().equals(cedula)).toList();
     }
 
     public List<Contrato> buscarActivos() {

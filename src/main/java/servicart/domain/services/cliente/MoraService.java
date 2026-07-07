@@ -5,9 +5,7 @@ import servicart.domain.services.FacturacionService;
 import servicart.entities.Factura;
 import servicart.entities.InteresMora;
 import servicart.entities.enums.EstadoFactura;
-
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 /* Aplica intereses progresivos por mora. A diferencia de la versión
@@ -15,7 +13,8 @@ import java.util.Optional;
    pagada — no solo una vez. Cada llamada RECALCULA el interés total
    desde fechaVencimiento hasta hoy (sobre valorBase, no sobre
    valorTotal, para no componer interés sobre interés) y actualiza
-   el mismo registro InteresMora en vez de crear uno nuevo cada día. */
+   el mismo registro InteresMora en vez de crear uno nuevo cada día */
+
 public class MoraService {
     private final CrudDAO<InteresMora> interesMoraDAO;
     private final CrudDAO<Factura> facturaDAO;
@@ -27,13 +26,13 @@ public class MoraService {
         this.facturaService = facturaService;
     }
 
-    public InteresMora aplicarMora(Factura factura) {
+    public void aplicarMora(Factura factura) {
         long diasRetraso = factura.diasDeRetraso();
-        if (diasRetraso <= 0) return null;
+        if (diasRetraso <= 0) return;
 
         double interesTotal = factura.interesAcumulado();
 
-        InteresMora mora = buscarPorFactura(factura.getId())
+        buscarPorFactura(factura.getId())
                 .map(existente -> actualizarRegistro(existente, (int) diasRetraso, interesTotal, LocalDateTime.now()))
                 .orElseGet(() -> crearRegistro((int) diasRetraso, interesTotal, LocalDateTime.now(), factura));
         factura.setValorTotal(factura.getValorBase() + interesTotal);
@@ -45,7 +44,6 @@ public class MoraService {
             facturaDAO.update(factura); // ya estaba vencida: solo persiste el nuevo valorTotal
         }
 
-        return mora;
     }
 
     private InteresMora actualizarRegistro(InteresMora mora, int diasRetraso, double interesTotal, LocalDateTime ahora) {

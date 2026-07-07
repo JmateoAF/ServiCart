@@ -1,8 +1,8 @@
-package servicart.domain.dtos.salidas;
+package servicart.domain.dtos.retornos;
 
 import java.util.List;
 
-public record ServicioContratadoDTOSalida(
+public record ServicioContratadoDTORetorno(
         int idContrato,
         String nombreServicio,
         String empresa,
@@ -10,5 +10,5 @@ public record ServicioContratadoDTOSalida(
         double deudaTotal,
         boolean estaCortado,
         double costoReactivacion,
-        List<FacturaPendienteDTOSalida> facturasPendientes
+        List<FacturaPendienteDTORetorno> facturasPendientes
 ) { }
