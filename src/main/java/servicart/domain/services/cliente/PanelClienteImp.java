@@ -9,6 +9,7 @@ import servicart.domain.interfaces.PanelCliente;
 import servicart.domain.mappers.PanelClienteMapperDomain;
 import servicart.domain.services.ContratoService;
 import servicart.domain.services.FacturacionService;
+import servicart.domain.services.cliente.PanelClienteService;
 import servicart.entities.*;
 import servicart.entities.enums.EstadoFactura;
 import servicart.entities.enums.ModalidadPago;
@@ -23,6 +24,7 @@ public class PanelClienteImp implements PanelCliente {
     public List<ServicioContratadoDTOSalida> listarServiciosContratados(PanelClienteDTOEntrada dto) {
         ContratoService contratoService = new ContratoService(FactoryDAO.getDAO(Contrato.class));
         FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class));
+        PanelClienteService panelClienteService = new PanelClienteService();
 
         return contratoService.buscarPorCliente(dto.cedula()).stream()
                 .map(contrato -> {
@@ -30,7 +32,11 @@ public class PanelClienteImp implements PanelCliente {
                             .filter(f -> f.getEstado() != EstadoFactura.PAGADA)
                             .sorted(Comparator.comparing(Factura::getFechaEmision))
                             .toList();
-                    return PanelClienteMapperDomain.entidadADTO(contrato, pendientes);
+
+                    boolean estaCortado = panelClienteService.estaCortado(pendientes);
+                    double deudaTotal = panelClienteService.calcularDeudaTotal(pendientes);
+
+                    return PanelClienteMapperDomain.entidadADTO(contrato, pendientes, estaCortado, deudaTotal);
                 })
                 .toList();
     }
@@ -42,13 +48,25 @@ public class PanelClienteImp implements PanelCliente {
         CrudDAO<Cliente> clienteDAO = FactoryDAO.getDAO(Cliente.class);
         CarritoService carritoService = new CarritoService(FactoryDAO.getDAO(Carrito.class));
 
-        assert facturaDAO != null;
-        Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura())).orElseThrow(() -> new RuntimeException("Factura no encontrada"));
-        assert clienteDAO != null;
-        Cliente cliente = clienteDAO.findId(dto.cedula()).orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        if (facturaDAO == null || abonoDAO == null || clienteDAO == null) {
+            throw new IllegalStateException("No se pudieron obtener los DAOs requeridos");
+        }
+
+        if (dto.monto() <= 0) {
+            throw new IllegalArgumentException("El monto del abono debe ser mayor a 0");
+        }
+
+        Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura()))
+                .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
+
+        if (factura.getEstado() == EstadoFactura.PAGADA) {
+            throw new IllegalStateException("La factura ya está pagada, no admite abonos");
+        }
+
+        Cliente cliente = clienteDAO.findId(dto.cedula())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
         Abono abono = new Abono(dto.monto(), LocalDateTime.now(), false, factura, ModalidadPago.TC);
-        assert abonoDAO != null;
         abonoDAO.save(abono);
         carritoService.agregarAbono(cliente, abono);
     }

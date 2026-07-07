@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -165,7 +164,7 @@ public class PanelClienteController {
 
         Label lblMontoTitulo = new Label("Monto original");
         lblMontoTitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
-        Label monto = new Label(String.format("$ %.2f", factura.getValorTotal()));
+        Label monto = new Label(String.format("$ %.2f", factura.getValorBase()));
         monto.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 15;");
         HBox filaMonto = filaConEspaciador(lblMontoTitulo, monto);
 
@@ -207,7 +206,7 @@ public class PanelClienteController {
     private HBox crearFilaTotal(List<ServicioContratadoViewModel> vms) {
         double total = vms.stream()
                 .flatMap(vm -> vm.getListaFacturas().stream())
-                .mapToDouble(f -> f.getValorTotal() + f.getInteresAcumulado())
+                .mapToDouble(f -> f.getValorTotal())
                 .sum()
                 + vms.stream()
                 .filter(ServicioContratadoViewModel::isEstaCortado)

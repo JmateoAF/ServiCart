@@ -8,18 +8,13 @@ import servicart.entities.Factura;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 public class PanelClienteMapperDomain {
 
-    public static ServicioContratadoDTOSalida entidadADTO(Contrato contrato, List<Factura> pendientes) {
-        boolean estaCortado = pendientes.stream().anyMatch(Factura::superaFechaCorte);
-
-        double costoReactivacion = contrato.getServicio().getCostoReactivacion();
-
-        double deudaTotal = pendientes.stream()
-                .mapToDouble(f -> f.getValorTotal() + calcularInteresEnVivo(f))
-                .sum();
-        if (estaCortado) deudaTotal += costoReactivacion; // el costo se suma UNA vez por servicio, no por factura
+    public static ServicioContratadoDTOSalida entidadADTO(
+            Contrato contrato,
+            List<Factura> pendientes,
+            boolean estaCortado,
+            double deudaTotal) {
 
         List<FacturaPendienteDTOSalida> facturasDTO = pendientes.stream()
                 .map(PanelClienteMapperDomain::facturaADTO)
@@ -32,35 +27,21 @@ public class PanelClienteMapperDomain {
                 contrato.estaActivo() ? "Activo" : "Terminado",
                 deudaTotal,
                 estaCortado,
-                costoReactivacion,
+                contrato.getServicio().getCostoReactivacion(),
                 facturasDTO
         );
     }
 
     private static FacturaPendienteDTOSalida facturaADTO(Factura factura) {
-        long dias = diasDeRetraso(factura);
-        double interesAcumulado = calcularInteresEnVivo(factura);
-
         return new FacturaPendienteDTOSalida(
                 factura.getId(),
+                factura.getValorBase(),
                 factura.getValorTotal(),
                 factura.getFechaEmision(),
                 factura.getFechaVencimiento(),
                 factura.getFechaCorte(),
-                dias,
-                interesAcumulado
+                factura.diasDeRetraso(),
+                factura.interesAcumulado()
         );
-    }
-
-    private static double calcularInteresEnVivo(Factura factura) {
-        if (!factura.estaVencida()) return 0.0;
-        long dias = diasDeRetraso(factura);
-        double tasa = factura.getContrato().getServicio().getTasaInteresDiario();
-        return factura.getValorTotal() * tasa * dias;
-    }
-
-    private static long diasDeRetraso(Factura factura) {
-        if (!factura.estaVencida()) return 0;
-        return ChronoUnit.DAYS.between(factura.getFechaVencimiento(), LocalDateTime.now());
     }
 }

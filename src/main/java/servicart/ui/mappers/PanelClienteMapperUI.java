@@ -22,7 +22,7 @@ public class PanelClienteMapperUI {
         boolean hayMora = dto.facturasPendientes().stream().anyMatch(f -> f.diasMora() > 0);
         vm.setConMora(hayMora && !dto.estaCortado());
 
-        vm.setCostoReactivacion(dto.costoReactivacion()); // NUEVO: valor crudo
+        vm.setCostoReactivacion(dto.costoReactivacion());
         vm.setCostoReactivacionTexto(String.format("$ %.2f", dto.costoReactivacion()));
         vm.setSubtotalServicioTexto(String.format("$ %.2f", dto.deudaTotal()));
         vm.setListaFacturas(dto.facturasPendientes().stream().map(PanelClienteMapperUI::facturaAViewModel).toList());
@@ -32,7 +32,13 @@ public class PanelClienteMapperUI {
     private static FacturaPendienteViewModel facturaAViewModel(FacturaPendienteDTOSalida dto) {
         FacturaPendienteViewModel vm = new FacturaPendienteViewModel();
         vm.setIdFactura(dto.idFactura());
+
+        // CORREGIDO: Antes se asignaba dto.valorTotal() al ValorBase de manera errónea
+        vm.setValorBase(dto.valorBase());
+
+        // CORREGIDO: Se agregó la asignación para el valor total numérico que faltaba
         vm.setValorTotal(dto.valorTotal());
+
         vm.setPeriodoTexto(capitalizar(dto.fechaEmision().format(FORMATO_PERIODO)));
         vm.setFechaVencimientoTexto(dto.fechaVencimiento().format(FORMATO_CORTO));
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));

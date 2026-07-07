@@ -4,6 +4,7 @@ import servicart.domain.interfaces.Identificable;
 import servicart.entities.enums.EstadoFactura;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Factura implements Serializable, Identificable {
     private int id;
@@ -12,7 +13,7 @@ public class Factura implements Serializable, Identificable {
     private final LocalDateTime fechaCorte;
     private final double valorBase;   // monto original del servicio, nunca cambia
     private double valorTotal;
-    private EstadoFactura estado;
+    private EstadoFactura estado; // Pagada, vencida, pendiente
     private final Contrato contrato;
 
 
@@ -24,6 +25,16 @@ public class Factura implements Serializable, Identificable {
         this.valorTotal = valorBase;
         this.contrato = contrato;
         this.estado = EstadoFactura.PENDIENTE;
+    }
+    public long diasDeRetraso() {
+        if (!estaVencida()) return 0;
+        return ChronoUnit.DAYS.between(fechaVencimiento, LocalDateTime.now());
+    }
+
+    public double interesAcumulado() {
+        if (!estaVencida()) return 0.0;
+        double tasa = contrato.getServicio().getTasaInteresDiario();
+        return valorBase * tasa * diasDeRetraso(); // sobre valorBase, igual que MoraService
     }
 
     public int getId() { return id; }

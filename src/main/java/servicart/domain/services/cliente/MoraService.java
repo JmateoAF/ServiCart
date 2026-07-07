@@ -28,16 +28,14 @@ public class MoraService {
     }
 
     public InteresMora aplicarMora(Factura factura) {
-        LocalDateTime ahora = LocalDateTime.now();
-        long diasRetraso = ChronoUnit.DAYS.between(factura.getFechaVencimiento(), ahora);
-        if (diasRetraso <= 0) return null; // aún no vence, nada que aplicar
+        long diasRetraso = factura.diasDeRetraso();
+        if (diasRetraso <= 0) return null;
 
-        double tasa = factura.getContrato().getServicio().getTasaInteresDiario();
-        double interesTotal = factura.getValorBase() * tasa * diasRetraso;
+        double interesTotal = factura.interesAcumulado();
 
         InteresMora mora = buscarPorFactura(factura.getId())
-                .map(existente -> actualizarRegistro(existente, (int) diasRetraso, interesTotal, ahora))
-                .orElseGet(() -> crearRegistro((int) diasRetraso, interesTotal, ahora, factura));
+                .map(existente -> actualizarRegistro(existente, (int) diasRetraso, interesTotal, LocalDateTime.now()))
+                .orElseGet(() -> crearRegistro((int) diasRetraso, interesTotal, LocalDateTime.now(), factura));
 
         factura.setValorTotal(factura.getValorBase() + interesTotal);
 

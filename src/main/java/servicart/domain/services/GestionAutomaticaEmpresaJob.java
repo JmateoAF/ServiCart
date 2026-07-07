@@ -94,7 +94,7 @@ public class GestionAutomaticaEmpresaJob {
         };
     }
 
-    // 2) APLICAR MORA — sin cambios ---------------------------------------
+    // 2) APLICAR MORA ---------------------------------------
 
     private void aplicarMoraAVencidas() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
@@ -108,12 +108,12 @@ public class GestionAutomaticaEmpresaJob {
                 .forEach(moraService::aplicarMora);
     }
 
-    // 3) CORTAR SERVICIOS MOROSOS — sin cambios ----------------------------
+    // 3) CORTAR SERVICIOS MOROSOS  ----------------------------
 
     private void cortarServiciosMorosos() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
-        CorteService corteService = new CorteService(corteDAO);
+        CorteService corteService = new CorteService(corteDAO,facturaDAO);
 
         List<Factura> candidatas = facturaDAO.findAll().stream()
                 .filter(f -> f.getEstado() != EstadoFactura.PAGADA)
@@ -132,8 +132,10 @@ public class GestionAutomaticaEmpresaJob {
     private void terminarContratosPorCorteProlongado() {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
+        CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
+
         ContratoService contratoService = new ContratoService(contratoDAO);
-        CorteService corteService = new CorteService(corteDAO);
+        CorteService corteService = new CorteService(corteDAO,facturaDAO);
 
         for (CorteServicio corte : corteService.buscarCortados()) {
             long diasCortado = ChronoUnit.DAYS.between(corte.getFechaCorte(), LocalDateTime.now());

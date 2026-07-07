@@ -21,7 +21,6 @@ public class FacturacionService extends SujetoNotificable {
 
         Factura factura = new Factura(ahora, vencimiento, corte,monto, contrato);
         facturaDAO.save(factura);
-
         // Observer, avisa a todos los canales suscritos
         notificarObservadores(factura);
 
