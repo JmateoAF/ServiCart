@@ -28,4 +28,10 @@ public class CarritoService {
         carrito.agregarAbono(abono);
         carritoDAO.update(carrito);
     }
+
+    public void vaciarCarrito(Cliente cliente) {
+        Carrito carrito = obtenerOCrearCarrito(cliente);
+        carrito.vaciar();
+        carritoDAO.update(carrito);
+    }
 }

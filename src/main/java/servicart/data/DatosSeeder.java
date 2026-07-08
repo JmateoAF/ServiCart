@@ -4,7 +4,6 @@ import servicart.data.binary.*;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.*;
 import servicart.entities.enums.*;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +24,7 @@ public class DatosSeeder {
             }
 
             if (existentes != null && !existentes.isEmpty()) {
-                System.out.println("Datos ya existentes en base de datos binaria");
+                System.out.println("Datos ya existentes");
                 return;
             }
 

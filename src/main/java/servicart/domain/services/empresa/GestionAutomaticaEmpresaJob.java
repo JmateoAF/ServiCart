@@ -65,7 +65,7 @@ public class GestionAutomaticaEmpresaJob {
 
         ContratoService contratoService = new ContratoService(contratoDAO);
         FacturacionService facturacionService = new FacturacionService(facturaDAO);
-        EmpresaService empresaService = new EmpresaService(empresaDAO);
+        EmpresaService empresaService = new EmpresaService(empresaDAO, List.of(new NotificadorService()));
 
         YearMonth mesActual = YearMonth.now();
 

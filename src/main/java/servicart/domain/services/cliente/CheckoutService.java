@@ -7,39 +7,39 @@ import servicart.entities.Carrito;
 import servicart.entities.Factura;
 import java.util.List;
 
-/* Válida que el carrito no esté vacío
-Marca cada abono como pagoRealizado = true y lo persiste
-Si la suma de abonos cubre el total de la factura -> la marca PAGADA
-Vacía el carrito */
-
 public class CheckoutService {
     private final CrudDAO<Abono> abonoDAO;
+    private final CrudDAO<Carrito> carritoDAO;
     private final FacturacionService facturacionService;
 
-    public CheckoutService(CrudDAO<Abono> abonoDAO, FacturacionService facturacionService) {
+    public CheckoutService(CrudDAO<Abono> abonoDAO, CrudDAO<Carrito> carritoDAO, FacturacionService facturacionService) {
         this.abonoDAO = abonoDAO;
+        this.carritoDAO = carritoDAO;
         this.facturacionService = facturacionService;
     }
 
     public void procesarPago(Carrito carrito) {
         for (Abono abono : carrito.getAbonos()) {
             abono.setPagoRealizado(true);
-            abonoDAO.save(abono);
+            abonoDAO.update(abono);
 
-            // Verificar si la factura queda saldada
             Factura factura = abono.getFactura();
-            double  totalPagado = calcularTotalPagado(factura);
+            double totalReal = factura.getValorBase() + factura.interesAcumulado();
+            double totalPagado = calcularTotalPagado(factura);
 
-            if (totalPagado >= factura.getValorTotal()) facturacionService.marcarComoPagada(factura);
+            if (totalPagado >= totalReal) {
+                facturacionService.marcarComoPagada(factura);
+            } else {
+                facturacionService.actualizarValorTotal(factura, totalReal);
+            }
         }
 
         carrito.vaciar();
+        carritoDAO.update(carrito);
     }
 
-    //Suma de todos los abonos realizados sobre una misma factura
     private double calcularTotalPagado(Factura factura) {
         List<Abono> abonos = abonoDAO.findAll();
-
         return abonos.stream().filter(a -> a.getFactura().getId() == factura.getId()).filter(Abono::isPagoRealizado).mapToDouble(Abono::getMonto).sum();
     }
 }

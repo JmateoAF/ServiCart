@@ -6,7 +6,7 @@ import servicart.entities.enums.EstadoFactura;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class FacturacionService extends SujetoNotificable {
+public class FacturacionService {
     private final CrudDAO<Factura> facturaDAO;
 
     public FacturacionService(CrudDAO<Factura> facturaDAO) {
@@ -19,11 +19,8 @@ public class FacturacionService extends SujetoNotificable {
         LocalDateTime vencimiento = ahora.plusDays(30);
         LocalDateTime corte = ahora.plusDays(45);
 
-        Factura factura = new Factura(ahora, vencimiento, corte,monto, contrato);
+        Factura factura = new Factura(ahora, vencimiento, corte, monto, contrato);
         facturaDAO.save(factura);
-        // Observer, avisa a todos los canales suscritos
-        notificarObservadores(factura);
-
         return factura;
     }
 
@@ -42,6 +39,11 @@ public class FacturacionService extends SujetoNotificable {
 
     public void marcarComoVencida(Factura factura) {
         factura.setEstado(EstadoFactura.VENCIDA);
+        facturaDAO.update(factura);
+    }
+
+    public void actualizarValorTotal(Factura factura, double nuevoValorTotal) {
+        factura.setValorTotal(nuevoValorTotal);
         facturaDAO.update(factura);
     }
 }

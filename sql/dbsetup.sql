@@ -1,16 +1,16 @@
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS Administradores (
+    usuario TEXT PRIMARY KEY,
+    contrasenia TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS Clientes (
     cedula TEXT PRIMARY KEY,
     nombre TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
     celular TEXT NOT NULL UNIQUE,
     activo INTEGER NOT NULL DEFAULT 1
-);
-
-CREATE TABLE IF NOT EXISTS Administradores (
-    usuario TEXT PRIMARY KEY,
-    contrasenia TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Empresa (
