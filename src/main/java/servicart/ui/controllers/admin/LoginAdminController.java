@@ -9,10 +9,8 @@ import servicart.domain.dtos.entradas.LoginAdminDTOEntrada;
 import servicart.domain.dtos.retornos.LoginAdminDTORetorno;
 import servicart.domain.interfaces.LoginAdmin;
 import servicart.domain.services.BdService;
-import servicart.ui.SesionCliente;
 import servicart.ui.controllers.Navegador;
 import servicart.ui.mappers.LoginAdminMapperUI;
-import servicart.ui.mappers.LoginClienteMapperUI;
 import servicart.ui.viewmodels.admin.LoginAdminViewModel;
 
 public class LoginAdminController {

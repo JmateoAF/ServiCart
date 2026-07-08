@@ -22,6 +22,4 @@ public class Empresa extends SujetoNotificable implements Serializable, Identifi
     public void setNombre(String nombre) { this.nombre = nombre; }
 
     public void emitirFactura(Factura factura) { if (factura != null) notificarObservadores(factura); }
-
-    public void enviarNotificacion(String mensaje) { System.out.println("Empresa " + nombre + " enviando notificación: " + mensaje); }
 }

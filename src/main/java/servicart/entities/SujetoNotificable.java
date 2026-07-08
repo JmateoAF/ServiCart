@@ -12,10 +12,6 @@ public abstract class SujetoNotificable {
 
     public void agregarObservador(Observador obs) { if (obs != null && !observadores.contains(obs)) observadores.add(obs); }
 
-    public void quitarObservador(Observador obs) {
-        observadores.remove(obs);
-    }
-
     // Avisa a todos los observadores suscritos
     protected void notificarObservadores(Factura factura) {
         // Copia defensiva: permite desuscribirse durante la notificación

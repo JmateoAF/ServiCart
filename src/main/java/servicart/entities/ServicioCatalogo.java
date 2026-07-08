@@ -6,6 +6,7 @@ import servicart.entities.enums.TipoServicio;
 import servicart.entities.enums.TipoValorFactura;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serial;
 import java.io.Serializable;
 
 public class ServicioCatalogo implements Serializable, Identificable {
@@ -37,7 +38,8 @@ public class ServicioCatalogo implements Serializable, Identificable {
         };
     }
 
-    // Se ejecuta automáticamente cada vez que Java deserializa este objeto desde el .bin
+    // Se ejecuta automáticamente cada vez que Java deserializa este objeto desde él .bin
+    @Serial
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         asignarEstrategia();
