@@ -7,13 +7,13 @@ import servicart.ui.viewmodels.cliente.ServicioContratadoViewModel;
 import java.time.format.DateTimeFormatter;
 
 public class PanelClienteMapperUI {
-    private static final DateTimeFormatter FORMATO_CORTO = DateTimeFormatter.ofPattern("dd MM");
-    private static final DateTimeFormatter FORMATO_PERIODO = DateTimeFormatter.ofPattern("MM yy");
+    private static final DateTimeFormatter FORMATO_CORTO = DateTimeFormatter.ofPattern("dd MMMM");
+    private static final DateTimeFormatter FORMATO_PERIODO = DateTimeFormatter.ofPattern("MMMM yy");
 
     public static ServicioContratadoViewModel DTOAviewModel(ServicioContratadoDTORetorno dto) {
         ServicioContratadoViewModel vm = new ServicioContratadoViewModel();
         vm.setIdContrato(dto.idContrato());
-        vm.setNombreServicio(NombresServicio.nombreServicio(dto.nombreServicio()));
+        vm.setNombreServicio(TipoServicios.nombreServicio(dto.nombreServicio()));
         vm.setEmpresa(dto.empresa());
         vm.setEstaCortado(dto.estaCortado());
         boolean hayMora = dto.facturasPendientes().stream().anyMatch(f -> f.diasMora() > 0);
@@ -35,7 +35,7 @@ public class PanelClienteMapperUI {
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
         vm.setInteresAcumulado(dto.interesAcumulado());
         vm.setTieneMora(dto.diasMora() > 0);
-        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal() + dto.interesAcumulado()));
+        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal()));
         return vm;
     }
 

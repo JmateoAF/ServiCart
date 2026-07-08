@@ -42,9 +42,4 @@ public class FactoryDAO {
 
         return null;
     }
-
-    public static AdminDAO<Administrador> getAdminDAO() {
-        boolean sqlite = "SQLite".equalsIgnoreCase(baseDatosActual);
-        return sqlite ? new AdminSQLiteDAO() : new AdminBinarioDAO();
-    }
 }

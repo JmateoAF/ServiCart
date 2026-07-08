@@ -1,4 +1,4 @@
-package servicart.domain.services;
+package servicart.domain.services.empresa;
 
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.ServicioCatalogo;
@@ -34,7 +34,7 @@ public class ContratoService {
     }
 
     public List<Contrato> buscarActivos() {
-        return contratoDAO.findAll();
+        return contratoDAO.findAll().stream().filter(Contrato::estaActivo).toList();
     }
 
     public Optional<Contrato> buscarPorId(String id) {

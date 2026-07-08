@@ -1,7 +1,6 @@
-package servicart.domain.services;
+package servicart.domain.services.empresa;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.interfaces.Observador;
 import servicart.entities.Empresa;
 
 import java.util.List;

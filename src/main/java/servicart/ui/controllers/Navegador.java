@@ -4,10 +4,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.*;
+import servicart.domain.services.admin.LoginAdminImp;
 import servicart.domain.services.cliente.ContratoClienteImp;
 import servicart.domain.services.cliente.LoginClienteImp;
 import servicart.domain.services.cliente.PanelClienteImp;
 import servicart.domain.services.cliente.PerfilClienteImp;
+import servicart.ui.controllers.admin.LoginAdminController;
 import servicart.ui.controllers.cliente.LoginClienteController;
 import servicart.ui.controllers.cliente.PanelClienteController;
 import servicart.ui.controllers.cliente.PerfilClienteController;
@@ -21,6 +23,7 @@ public class Navegador {
     private static final PanelCliente panelCliente = new PanelClienteImp();
     private static final PerfilCliente perfilCliente = new PerfilClienteImp();
     private static final ContratoCliente contratoCliente = new ContratoClienteImp();
+    private static final LoginAdmin loginAdmin = new LoginAdminImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -41,6 +44,8 @@ public class Navegador {
         if (claseControlador == PanelClienteController.class) return new PanelClienteController(panelCliente);
 
         if (claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
+
+        if (claseControlador == LoginAdminController.class) return new LoginAdminController(loginAdmin);
 
         try {
             return claseControlador.getDeclaredConstructor().newInstance();

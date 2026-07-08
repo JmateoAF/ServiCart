@@ -1,7 +1,7 @@
 package servicart.domain.services.cliente;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.domain.services.FacturacionService;
+import servicart.domain.services.empresa.FacturacionService;
 import servicart.entities.Factura;
 import servicart.entities.InteresMora;
 import servicart.entities.enums.EstadoFactura;

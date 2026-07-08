@@ -25,11 +25,11 @@ public class DatosSeeder {
             }
 
             if (existentes != null && !existentes.isEmpty()) {
-                System.out.println("Datos ya existentes");
+                System.out.println("Datos ya existentes en base de datos binaria");
                 return;
             }
 
-            Administrador admin1 = new Administrador("admin", "pass1");
+            Admin admin1 = new Admin("admin", "pass1");
             ponerEnArchivo(new AdminBinarioDAO(), List.of(admin1),
                     (existente, nuevo) -> existente.getUsuario().equals(nuevo.getUsuario()));
 

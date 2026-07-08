@@ -34,7 +34,7 @@ public class PanelClienteMapperDomain {
         return new FacturaPendienteDTORetorno(
                 factura.getId(),
                 factura.getValorBase(),
-                factura.getValorTotal(),
+                factura.getValorBase() + factura.interesAcumulado(),
                 factura.getFechaEmision(),
                 factura.getFechaVencimiento(),
                 factura.getFechaCorte(),

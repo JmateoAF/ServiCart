@@ -7,7 +7,7 @@ import servicart.domain.dtos.entradas.ContratoDTOEntrada;
 import servicart.domain.dtos.retornos.ContratoDTORetorno;
 import servicart.domain.interfaces.ContratoCliente;
 import servicart.domain.mappers.ContratoMapperDomain;
-import servicart.domain.services.ContratoService;
+import servicart.domain.services.empresa.ContratoService;
 import servicart.entities.Contrato;
 import servicart.entities.enums.CausaTerminacion;
 

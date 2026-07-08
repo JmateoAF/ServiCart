@@ -1,4 +1,4 @@
-package servicart.domain.services;
+package servicart.domain.services.empresa;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

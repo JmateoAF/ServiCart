@@ -1,7 +1,7 @@
 PRAGMA foreign_keys = ON;
 
 INSERT OR IGNORE INTO Administradores(usuario, contrasenia)
-VALUES ('admin', 'admin123');
+VALUES ('admin', 'pass1');
 
 INSERT OR IGNORE INTO Clientes(cedula, nombre, email, celular, activo) VALUES
     ('0106807365', 'Jostin Aucancela', 'jmaf@mail.com', '0963304126', 1),

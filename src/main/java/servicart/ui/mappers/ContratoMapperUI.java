@@ -11,7 +11,7 @@ public class ContratoMapperUI {
         ContratoViewModel vm = new ContratoViewModel();
         vm.setId(dto.id());
         vm.setEmpresa(dto.empresa());
-        vm.setTipoServicio(NombresServicio.nombreServicio(dto.tipoServicio()));
+        vm.setTipoServicio(TipoServicios.nombreServicio(dto.tipoServicio()));
         vm.setTarifaTexto(formatearTarifa(dto));
         vm.setFechaInicioTexto(dto.fechaInicio().format(FORMATO_FECHA));
         return vm;

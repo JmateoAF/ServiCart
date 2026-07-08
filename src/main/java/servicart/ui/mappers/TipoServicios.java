@@ -1,6 +1,6 @@
 package servicart.ui.mappers;
 
-public class NombresServicio {
+public class TipoServicios {
     public static String nombreServicio(String tipoServicio) {
         return switch (tipoServicio) {
             case "AGUA" -> "Agua Potable";

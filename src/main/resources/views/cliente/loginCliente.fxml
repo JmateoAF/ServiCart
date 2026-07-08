@@ -118,7 +118,7 @@
                     </VBox.margin>
                 </Separator>
 
-                <Button maxWidth="Infinity" onAction="#irALoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand;" text="Soy administrador">
+                <Button maxWidth="Infinity" onAction="#irALoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand;" text="Soy admin">
                     <font>
                         <Font size="15.0" />
                     </font>

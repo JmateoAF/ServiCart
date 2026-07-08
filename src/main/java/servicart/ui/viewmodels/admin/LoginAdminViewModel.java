@@ -1,15 +1,8 @@
-package servicart.entities;
+package servicart.ui.viewmodels.admin;
 
-import java.io.Serializable;
-
-public class Administrador implements Serializable {
+public class LoginAdminViewModel {
     private String usuario;
     private String contrasenia;
-
-    public Administrador(String usuario, String contrasenia) {
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-    }
 
     public String getUsuario() { return usuario; }
     public void setUsuario(String usuario) { this.usuario = usuario; }
