@@ -28,7 +28,7 @@ public class DatosSeeder {
                 return;
             }
 
-            Admin admin1 = new Admin("admin", "pass1");
+            Admin admin1 = new Admin("admin", "admin123");
             ponerEnArchivo(new AdminBinarioDAO(), List.of(admin1),
                     (existente, nuevo) -> existente.getUsuario().equals(nuevo.getUsuario()));
 

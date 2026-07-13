@@ -33,7 +33,6 @@ public class LoginAdminController {
         }
 
         BdService.configurarBaseDatos("SQLite");
-        BdService.configurarBaseDatos("Binario");
 
         LoginAdminViewModel avm = new LoginAdminViewModel();
         avm.setUsuario(usuario);
