@@ -6,16 +6,18 @@ import servicart.entities.Contrato;
 import servicart.entities.Factura;
 
 import java.util.List;
+import java.util.Map;
 public class PanelClienteMapperDomain {
 
     public static ServicioContratadoDTORetorno entidadADTO(
             Contrato contrato,
             List<Factura> pendientes,
             boolean estaCortado,
-            double deudaTotal) {
+            double deudaTotal,
+            Map<Integer, Double> saldosPendientes) {
 
         List<FacturaPendienteDTORetorno> facturasDTO = pendientes.stream()
-                .map(PanelClienteMapperDomain::facturaADTO)
+                .map(factura -> facturaADTO(factura, saldosPendientes.get(factura.getId())))
                 .toList();
 
         return new ServicioContratadoDTORetorno(
@@ -30,11 +32,11 @@ public class PanelClienteMapperDomain {
         );
     }
 
-    private static FacturaPendienteDTORetorno facturaADTO(Factura factura) {
+    private static FacturaPendienteDTORetorno facturaADTO(Factura factura, double saldoPendiente) {
         return new FacturaPendienteDTORetorno(
                 factura.getId(),
                 factura.getValorBase(),
-                factura.getValorBase() + factura.interesAcumulado(),
+                saldoPendiente,
                 factura.getFechaEmision(),
                 factura.getFechaVencimiento(),
                 factura.getFechaCorte(),

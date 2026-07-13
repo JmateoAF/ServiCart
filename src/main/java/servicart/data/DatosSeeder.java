@@ -132,19 +132,9 @@ public class DatosSeeder {
                             existente.getContrato().getId() == nuevo.getContrato().getId()
                                     && existente.getFechaEmision().equals(nuevo.getFechaEmision()));
 
-            // Abonos con fechas posteriores a la emisión de cada factura
-            Abono abono1 = new Abono(50.0, LocalDateTime.of(2026, 6, 21, 10, 30, 0), true, factura1, ModalidadPago.TC);
-            Abono abono2 = new Abono(35.0, LocalDateTime.of(2026, 6, 25, 14, 0, 0), true, factura2, ModalidadPago.TRANSFERENCIA);
-            Abono abono3 = new Abono(22.50, LocalDateTime.of(2026, 6, 10, 9, 45, 0), false, factura3, ModalidadPago.TD);
-            Abono abono4 = new Abono(24.75, LocalDateTime.of(2026, 6, 28, 11, 15, 0), false, factura4, ModalidadPago.PAYPAL);
-            Abono abono5 = new Abono(35.40, LocalDateTime.of(2026, 6, 25, 16, 20, 0), true, factura1, ModalidadPago.DEBITO);
-            Abono abono6 = new Abono(82.60, LocalDateTime.of(2026, 4, 25, 13, 0, 0), true, factura5, ModalidadPago.TC);
-
-            ponerEnArchivo(new AbonoBinarioDAO(), List.of(abono1, abono2, abono3, abono4, abono5, abono6),
-                    (existente, nuevo) ->
-                            existente.getFactura().getId() == nuevo.getFactura().getId()
-                                    && existente.getFechaPago().equals(nuevo.getFechaPago())
-                                    && existente.getMonto() == nuevo.getMonto());
+            // Sin abonos sembrados: sin pagos previos no hay riesgo de que una factura quede
+            // matemáticamente saldada por unos abonos de prueba pero con estado desalineado.
+            // Cada factura arranca solo con su valorBase/estado, tal como se declaró arriba.
 
             // Intereses: fecha de cálculo después del vencimiento
             InteresMora interes1 = new InteresMora(14, 8.75, LocalDateTime.of(2026, 6, 29, 0, 0, 0), false, factura3);
@@ -165,12 +155,9 @@ public class DatosSeeder {
                             existente.getContrato().getId() == nuevo.getContrato().getId()
                                     && existente.getFechaCorte().equals(nuevo.getFechaCorte()));
 
+            // Carritos vacíos: sin abonos sembrados no hay nada que agregarles
             Carrito carrito1 = new Carrito(cl1);
-            carrito1.agregarAbono(abono1);
-            carrito1.agregarAbono(abono5);
             Carrito carrito2 = new Carrito(cl2);
-            carrito2.agregarAbono(abono3);
-            carrito2.agregarAbono(abono4);
 
             ponerEnArchivo(new CarritoBinarioDAO(), List.of(carrito1, carrito2),
                     (existente, nuevo) ->

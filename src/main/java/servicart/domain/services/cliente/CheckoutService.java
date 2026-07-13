@@ -5,7 +5,6 @@ import servicart.domain.services.empresa.FacturacionService;
 import servicart.entities.Abono;
 import servicart.entities.Carrito;
 import servicart.entities.Factura;
-import java.util.List;
 
 public class CheckoutService {
     private final CrudDAO<Abono> abonoDAO;
@@ -24,22 +23,15 @@ public class CheckoutService {
             abonoDAO.update(abono);
 
             Factura factura = abono.getFactura();
-            double totalReal = factura.getValorBase() + factura.interesAcumulado();
-            double totalPagado = calcularTotalPagado(factura);
 
-            if (totalPagado >= totalReal) {
+            if (facturacionService.calcularSaldoPendiente(factura) <= 0) {
                 facturacionService.marcarComoPagada(factura);
             } else {
-                facturacionService.actualizarValorTotal(factura, totalReal);
+                facturacionService.actualizarValorTotal(factura, factura.getValorBase() + factura.interesAcumulado());
             }
         }
 
         carrito.vaciar();
         carritoDAO.update(carrito);
-    }
-
-    private double calcularTotalPagado(Factura factura) {
-        List<Abono> abonos = abonoDAO.findAll();
-        return abonos.stream().filter(a -> a.getFactura().getId() == factura.getId()).filter(Abono::isPagoRealizado).mapToDouble(Abono::getMonto).sum();
     }
 }

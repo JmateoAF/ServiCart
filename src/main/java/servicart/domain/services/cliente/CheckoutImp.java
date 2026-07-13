@@ -28,7 +28,7 @@ public class CheckoutImp implements Checkout {
 
         Cliente cliente = buscarCliente(dto.cedula());
         CarritoService carritoService = new CarritoService(carritoDAO);
-        FacturacionService facturacionService = new FacturacionService(facturaDAO);
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
         CheckoutService checkoutService = new CheckoutService(abonoDAO, carritoDAO, facturacionService);
 
         Carrito carrito = carritoService.obtenerOCrearCarrito(cliente);

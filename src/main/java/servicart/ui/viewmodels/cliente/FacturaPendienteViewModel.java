@@ -3,7 +3,7 @@ package servicart.ui.viewmodels.cliente;
 public class FacturaPendienteViewModel {
     private int idFactura;
     private double valorBase;
-    private double valorTotal;
+    private double saldoPendiente;
     private String periodoTexto;
     private String fechaVencimientoTexto;
     private String fechaCorteTexto;
@@ -17,8 +17,8 @@ public class FacturaPendienteViewModel {
     public double getValorBase() { return valorBase; }
     public void setValorBase(double valorBase) { this.valorBase = valorBase; }
 
-    public double getValorTotal() { return valorTotal; }
-    public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }
+    public double getSaldoPendiente() { return saldoPendiente; }
+    public void setSaldoPendiente(double saldoPendiente) { this.saldoPendiente = saldoPendiente; }
     public String getPeriodoTexto() { return periodoTexto; }
     public void setPeriodoTexto(String periodoTexto) { this.periodoTexto = periodoTexto; }
 

@@ -177,7 +177,7 @@ public class PanelClienteController {
             bloque.getChildren().add(filaConEspaciador(lblMoraTitulo, mora));
         }
 
-        Label lblTotalTitulo = new Label("Total esta factura");
+        Label lblTotalTitulo = new Label("Saldo pendiente");
         lblTotalTitulo.setStyle("-fx-text-fill: #888888; -fx-font-weight: bold; -fx-font-size: 15;");
         Label totalIndividual = new Label(factura.getTotalIndividualTexto());
         totalIndividual.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
@@ -206,7 +206,7 @@ public class PanelClienteController {
     private HBox crearFilaTotal(List<ServicioContratadoViewModel> vms) {
         double total = vms.stream()
                 .flatMap(vm -> vm.getListaFacturas().stream())
-                .mapToDouble(FacturaPendienteViewModel::getValorTotal).sum()
+                .mapToDouble(FacturaPendienteViewModel::getSaldoPendiente).sum()
                 + vms.stream().filter(ServicioContratadoViewModel::isEstaCortado)
                 .mapToDouble(ServicioContratadoViewModel::getCostoReactivacion).sum();
 
@@ -249,8 +249,8 @@ public class PanelClienteController {
             mostrarErrorFila(lblError, "El monto debe ser mayor a $0.00");
             return;
         }
-        if (monto > factura.getValorTotal()) {
-            mostrarErrorFila(lblError, "No puedes pagar más de lo que debes ($ " + String.format("%.2f", factura.getValorTotal()) + ")");
+        if (monto > factura.getSaldoPendiente()) {
+            mostrarErrorFila(lblError, "No puedes pagar más de lo que debes ($ " + String.format("%.2f", factura.getSaldoPendiente()) + ")");
             return;
         }
 

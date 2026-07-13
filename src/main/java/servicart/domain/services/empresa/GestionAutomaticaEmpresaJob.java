@@ -62,9 +62,10 @@ public class GestionAutomaticaEmpresaJob {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<Empresa> empresaDAO = FactoryDAO.getDAO(Empresa.class);
+        CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
 
         ContratoService contratoService = new ContratoService(contratoDAO);
-        FacturacionService facturacionService = new FacturacionService(facturaDAO);
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
         EmpresaService empresaService = new EmpresaService(empresaDAO, List.of(new NotificadorService()));
 
         YearMonth mesActual = YearMonth.now();
@@ -94,7 +95,8 @@ public class GestionAutomaticaEmpresaJob {
     private void aplicarMoraAVencidas() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<InteresMora> interesDAO = FactoryDAO.getDAO(InteresMora.class);
-        FacturacionService facturacionService = new FacturacionService(facturaDAO);
+        CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
         MoraService moraService = new MoraService(interesDAO, facturaDAO, facturacionService);
 
         assert facturaDAO != null;

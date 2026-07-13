@@ -29,13 +29,13 @@ public class PanelClienteMapperUI {
         FacturaPendienteViewModel vm = new FacturaPendienteViewModel();
         vm.setIdFactura(dto.idFactura());
         vm.setValorBase(dto.valorBase());
-        vm.setValorTotal(dto.valorTotal());
+        vm.setSaldoPendiente(dto.saldoPendiente());
         vm.setPeriodoTexto(capitalizar(dto.fechaEmision().format(FORMATO_PERIODO)));
         vm.setFechaVencimientoTexto(dto.fechaVencimiento().format(FORMATO_CORTO));
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
         vm.setInteresAcumulado(dto.interesAcumulado());
         vm.setTieneMora(dto.diasMora() > 0);
-        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal()));
+        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.saldoPendiente()));
         return vm;
     }
 

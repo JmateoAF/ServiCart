@@ -43,15 +43,8 @@ INSERT OR IGNORE INTO Factura(fechaEmision, fechaVencimiento, fechaCorte, valorB
      ('2026-04-01 00:00:00', '2026-04-30 23:59:59', '2026-05-15 00:00:00', 44.70, 44.70, 1, 1),
      ('2026-06-01 00:00:00', '2026-06-30 23:59:59', '2026-07-15 00:00:00', 55.20, 55.20, 2, 6);
 
-INSERT OR IGNORE INTO Abono(monto, fechaPago, pagoRealizado, modalidadPago, idFactura) VALUES
-    (30.00, '2026-06-15 10:30:00', 1, 0, 1),
-    (24.30, '2026-06-28 09:45:00', 1, 3, 1),
-    (35.00, '2026-06-20 14:00:00', 1, 3, 2),
-    (24.50, '2026-06-10 09:45:00', 0, 1, 3),
-    (12.00, '2026-06-28 11:15:00', 0, 2, 4),
-    (18.60, '2026-05-20 09:00:00', 1, 4, 5),
-    (44.70, '2026-04-25 13:00:00', 1, 0, 6),
-    (55.20, '2026-06-25 16:20:00', 0, 4, 7);
+-- Sin abonos sembrados: sin pagos previos no hay riesgo de que una factura quede
+-- matemáticamente saldada por unos abonos de prueba pero con estado desalineado.
 
 INSERT OR IGNORE INTO InteresMora(diasRetraso, interesAcumulado, fechaCalculo, aplicadoAFactura, idFactura) VALUES
     (14, 12.25, '2026-06-29 00:00:00', 0, 3),
@@ -65,9 +58,4 @@ INSERT OR IGNORE INTO Carrito(idCliente) VALUES
     ('0107758666'),
     ('0107645095');
 
-INSERT OR IGNORE INTO CarritoAbono(idCarrito, idAbono) VALUES
-    (1, 1),
-    (1, 2),
-    (2, 4),
-    (2, 5),
-    (3, 8);
+-- Carritos vacíos: sin abonos sembrados no hay nada que agregarles
