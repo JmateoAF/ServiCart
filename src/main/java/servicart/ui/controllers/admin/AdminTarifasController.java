@@ -54,14 +54,14 @@ public class AdminTarifasController {
     }
 
     private VBox crearTarjeta(ServicioCatalogoViewModel vm) {
-        VBox tarjeta = new VBox(8);
-        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 14;");
+        VBox tarjeta = new VBox(10);
+        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 15;");
 
         Label titulo = new Label(vm.getNombreServicio() + " — " + vm.getEmpresaNombre());
-        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 13; -fx-font-family: 'Courier New';");
+        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-family: 'Courier New';");
 
         Label badge = new Label(vm.getTipoValor());
-        badge.setStyle("-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 9; -fx-padding: 2 7 2 7; -fx-background-radius: 4;");
+        badge.setStyle("-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 15; -fx-padding: 0 5 0 5; -fx-background-radius: 4;");
 
         HBox header = new HBox(titulo, espaciador(), badge);
         header.setAlignment(Pos.CENTER_LEFT);
@@ -73,8 +73,8 @@ public class AdminTarifasController {
 
         Button btnEditar = new Button("Editar tarifa");
         btnEditar.setMaxWidth(Double.MAX_VALUE);
-        btnEditar.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 11; -fx-padding: 6 0 6 0; -fx-cursor: hand;");
-        VBox.setMargin(btnEditar, new Insets(4, 0, 0, 0));
+        btnEditar.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 0 5 0; -fx-cursor: hand;");
+        VBox.setMargin(btnEditar, new Insets(5, 0, 0, 0));
         btnEditar.setOnAction(event -> { cargarEnFormulario(vm); event.consume(); });
 
         tarjeta.getChildren().addAll(header, filaTarifa, filaInteres, filaDias, filaCosto, btnEditar);
@@ -83,9 +83,9 @@ public class AdminTarifasController {
 
     private HBox filaInfo(String etiqueta, String valor) {
         Label lblEtiqueta = new Label(etiqueta);
-        lblEtiqueta.setStyle("-fx-text-fill: #555555; -fx-font-size: 11;");
+        lblEtiqueta.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
         Label lblValor = new Label(valor);
-        lblValor.setStyle("-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 11;");
+        lblValor.setStyle("-fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15;");
         return new HBox(lblEtiqueta, espaciador(), lblValor);
     }
 

@@ -110,7 +110,7 @@ public class GestionAutomaticaEmpresaJob {
     private void cortarServiciosMorosos() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
-        CorteService corteService = new CorteService(corteDAO,facturaDAO);
+        CorteService corteService = new CorteService(corteDAO);
 
         assert facturaDAO != null;
         List<Factura> candidatas = facturaDAO.findAll().stream()
@@ -129,10 +129,9 @@ public class GestionAutomaticaEmpresaJob {
     private void terminarContratosPorCorteProlongado() {
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
-        CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
 
         ContratoService contratoService = new ContratoService(contratoDAO);
-        CorteService corteService = new CorteService(corteDAO,facturaDAO);
+        CorteService corteService = new CorteService(corteDAO);
 
         for (CorteServicio corte : corteService.buscarCortados()) {
             long diasCortado = ChronoUnit.DAYS.between(corte.getFechaCorte(), LocalDateTime.now());

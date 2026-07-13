@@ -84,7 +84,7 @@ public class AdminCortesImp implements AdminCortes {
     }
 
     private CorteService crearCorteService() {
-        return new CorteService(FactoryDAO.getDAO(CorteServicio.class), FactoryDAO.getDAO(Factura.class));
+        return new CorteService(FactoryDAO.getDAO(CorteServicio.class));
     }
 
     private FacturacionService crearFacturacionService() {

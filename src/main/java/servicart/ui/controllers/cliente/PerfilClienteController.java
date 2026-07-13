@@ -100,9 +100,9 @@ public class PerfilClienteController {
         lblTitulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
 
         Label lblDetalle = new Label(vm.getTarifaTexto() + "   ·   Desde " + vm.getFechaInicioTexto());
-        lblDetalle.setStyle("-fx-text-fill: #999999; -fx-font-size: 12;");
+        lblDetalle.setStyle("-fx-text-fill: #999999; -fx-font-size: 15;");
 
-        VBox info = new VBox(4, lblTitulo, lblDetalle);
+        VBox info = new VBox(5, lblTitulo, lblDetalle);
 
         Button btnCancelar = new Button("Cancelar");
         btnCancelar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; " +
@@ -112,7 +112,7 @@ public class PerfilClienteController {
         HBox fila = new HBox(info, crearEspaciador(), btnCancelar);
         fila.setAlignment(Pos.CENTER_LEFT);
         fila.setSpacing(15);
-        fila.setPadding(new Insets(12, 15, 12, 15));
+        fila.setPadding(new Insets(10, 15, 10, 15));
         fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; " +
                 "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
 

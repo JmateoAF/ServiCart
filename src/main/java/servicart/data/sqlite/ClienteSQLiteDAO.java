@@ -71,7 +71,7 @@ public class ClienteSQLiteDAO implements ClienteAdminDAO<Cliente> {
             stmt.setInt(4, c.getActivo());
             stmt.setString(5, c.getCedula());
 
-            //if (stmt.executeUpdate() == 0)
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -85,7 +85,7 @@ public class ClienteSQLiteDAO implements ClienteAdminDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
 
-            //if (stmt.executeUpdate() == 0)
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

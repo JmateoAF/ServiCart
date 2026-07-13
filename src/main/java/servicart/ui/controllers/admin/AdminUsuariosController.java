@@ -73,10 +73,10 @@ public class AdminUsuariosController {
         return new TableCell<>() {
             private final Button btnEditar = new Button("Editar");
             private final Button btnEstado = new Button();
-            private final HBox contenedor = new HBox(6, btnEditar, btnEstado);
+            private final HBox contenedor = new HBox(5, btnEditar, btnEstado);
 
             {
-                btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;");
+                btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
                 btnEditar.setOnAction(event -> { cargarEnFormulario(filaActual()); event.consume(); });
                 btnEstado.setOnAction(event -> { onCambiarEstado(filaActual()); event.consume(); });
             }
@@ -91,8 +91,8 @@ public class AdminUsuariosController {
                 boolean activo = "Activo".equals(filaActual().getActivo());
                 btnEstado.setText(activo ? "Desactivar" : "Activar");
                 btnEstado.setStyle(activo
-                        ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;"
-                        : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;");
+                        ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;"
+                        : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
                 setGraphic(contenedor);
             }
         };

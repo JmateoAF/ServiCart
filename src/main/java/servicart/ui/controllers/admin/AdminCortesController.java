@@ -95,7 +95,7 @@ public class AdminCortesController {
 
         if (filas.isEmpty()) {
             Label vacio = new Label(mostrandoCortados ? "No hay servicios cortados" : "No hay facturas en mora sin corte");
-            vacio.setStyle("-fx-text-fill: #444444; -fx-font-size: 11;");
+            vacio.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
             contenedorTarjetas.getChildren().add(vacio);
             return;
         }
@@ -104,19 +104,19 @@ public class AdminCortesController {
     }
 
     private VBox crearTarjeta(CorteDetalleViewModel vm) {
-        VBox tarjeta = new VBox(8);
+        VBox tarjeta = new VBox(10);
         String colorBorde = vm.isCortado() ? "#3a1a1a" : "#222222";
-        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: " + colorBorde + "; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;");
+        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: " + colorBorde + "; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;");
 
         Label titulo = new Label("👤 " + vm.getNombreCliente() + " — " + vm.getServicio());
-        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 12; -fx-font-family: 'Courier New';");
+        titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-family: 'Courier New';");
 
         Label estado = new Label(vm.isCortado()
                 ? "🔴 " + vm.getDiasMora() + " días — CORTADO"
                 : "⚠ " + vm.getDiasMora() + " días de mora");
         estado.setStyle(vm.isCortado()
-                ? "-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-font-size: 10; -fx-padding: 2 7 2 7; -fx-background-radius: 4;"
-                : "-fx-text-fill: #e07b39; -fx-background-color: #2a1a10; -fx-font-size: 10; -fx-padding: 2 7 2 7; -fx-background-radius: 4;");
+                ? "-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-font-size: 15; -fx-padding: 0 5 0 5; -fx-background-radius: 4;"
+                : "-fx-text-fill: #e07b39; -fx-background-color: #2a1a10; -fx-font-size: 15; -fx-padding: 0 5 0 5; -fx-background-radius: 4;");
 
         HBox header = new HBox(titulo, espaciador(), estado);
         header.setAlignment(Pos.CENTER_LEFT);
@@ -133,27 +133,27 @@ public class AdminCortesController {
         tarjeta.getChildren().add(crearBarraProgreso(vm));
 
         Label lblPie = new Label(vm.getPieTexto());
-        lblPie.setStyle("-fx-text-fill: #444444; -fx-font-size: 9;");
+        lblPie.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
         Label lblTotal = new Label((vm.isCortado() ? "Total con reactivación: $" : "Total: $") + vm.getTotal());
-        lblTotal.setStyle("-fx-text-fill: #444444; -fx-font-size: 9;");
+        lblTotal.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
         tarjeta.getChildren().add(new HBox(lblPie, espaciador(), lblTotal));
 
-        HBox acciones = new HBox(6);
-        VBox.setMargin(acciones, new Insets(4, 0, 0, 0));
+        HBox acciones = new HBox(5);
+        VBox.setMargin(acciones, new Insets(5, 0, 0, 0));
 
         Button btnDetalle = new Button("Ver detalle");
-        btnDetalle.setStyle("-fx-background-color: #1e1e1e; -fx-text-fill: #888888; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;");
+        btnDetalle.setStyle("-fx-background-color: #1e1e1e; -fx-text-fill: #888888; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
         btnDetalle.setOnAction(event -> { mostrarDetalle(vm); event.consume(); });
         acciones.getChildren().add(btnDetalle);
 
         if (vm.isCortado()) {
             Button btnReactivar = new Button("Reactivar servicio");
-            btnReactivar.setStyle("-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;");
+            btnReactivar.setStyle("-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
             btnReactivar.setOnAction(event -> { onReactivar(vm.getIdCorte(), vm.getNombreCliente(), parseCosto(vm.getCostoReactivacion())); event.consume(); });
             acciones.getChildren().add(btnReactivar);
         } else {
             Button btnForzar = new Button("Forzar corte");
-            btnForzar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 4 10 4 10; -fx-cursor: hand;");
+            btnForzar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
             btnForzar.setOnAction(event -> { onForzarCorte(vm.getIdContrato(), vm.getNombreCliente()); event.consume(); });
             acciones.getChildren().add(btnForzar);
         }
@@ -189,9 +189,9 @@ public class AdminCortesController {
 
     private HBox filaInfo(String etiqueta, String valor, String colorValor) {
         Label lblEtiqueta = new Label(etiqueta);
-        lblEtiqueta.setStyle("-fx-text-fill: #555555; -fx-font-size: 11;");
+        lblEtiqueta.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
         Label lblValor = new Label(valor);
-        lblValor.setStyle("-fx-text-fill: " + colorValor + "; -fx-font-family: 'Courier New'; -fx-font-size: 11;");
+        lblValor.setStyle("-fx-text-fill: " + colorValor + "; -fx-font-family: 'Courier New'; -fx-font-size: 15;");
         return new HBox(lblEtiqueta, espaciador(), lblValor);
     }
 
@@ -214,7 +214,7 @@ public class AdminCortesController {
 
                 CorteHistorialViewModel vm = getTableView().getItems().get(getIndex());
                 Button boton = new Button(vm.isCortado() ? "Reactivar" : "Forzar corte");
-                boton.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;");
+                boton.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
                 boton.setOnAction(event -> {
                     if (vm.isCortado()) onReactivar(vm.getIdCorte(), vm.getUsuario(), buscarCostoReactivacion(vm.getIdCorte()));
                     else onForzarCorte(vm.getIdContrato(), vm.getUsuario());
@@ -321,8 +321,8 @@ public class AdminCortesController {
         btnVerCortados.setStyle((mostrandoCortados ? estiloToggleActivo() : estiloToggleInactivo()) + "-fx-background-radius: 0 5 5 0;");
     }
 
-    private String estiloToggleActivo() { return "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 5 16 5 16; -fx-cursor: hand; "; }
-    private String estiloToggleInactivo() { return "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 11; -fx-padding: 5 16 5 16; -fx-cursor: hand; "; }
+    private String estiloToggleActivo() { return "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; "; }
+    private String estiloToggleInactivo() { return "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; "; }
 
     @FXML private void onDashboard(ActionEvent event) { Navegador.irA("views/admin/adminDashboard.fxml"); event.consume(); }
     @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }

@@ -39,6 +39,14 @@ public class AdminUsuariosImp implements AdminUsuarios {
             throw new IllegalArgumentException("Ya existe un usuario con la cédula " + dto.cedula());
         }
 
+        List<Cliente> existentes = clienteDAO.findAllSinFiltro();
+        if (existentes.stream().anyMatch(c -> c.getEmail().equalsIgnoreCase(dto.email()))) {
+            throw new IllegalArgumentException("Ya existe un usuario con el email " + dto.email());
+        }
+        if (existentes.stream().anyMatch(c -> c.getCelular().equals(dto.celular()))) {
+            throw new IllegalArgumentException("Ya existe un usuario con el celular " + dto.celular());
+        }
+
         clienteDAO.save(new Cliente(dto.cedula(), dto.nombre(), dto.email(), dto.celular(), 1));
     }
 
@@ -48,6 +56,16 @@ public class AdminUsuariosImp implements AdminUsuarios {
 
         Cliente cliente = clienteDAO.findId(dto.cedula())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + dto.cedula()));
+
+        List<Cliente> otros = clienteDAO.findAllSinFiltro().stream()
+                .filter(c -> !c.getCedula().equals(dto.cedula()))
+                .toList();
+        if (otros.stream().anyMatch(c -> c.getEmail().equalsIgnoreCase(dto.email()))) {
+            throw new IllegalArgumentException("Ya existe un usuario con el email " + dto.email());
+        }
+        if (otros.stream().anyMatch(c -> c.getCelular().equals(dto.celular()))) {
+            throw new IllegalArgumentException("Ya existe un usuario con el celular " + dto.celular());
+        }
 
         cliente.setNombre(dto.nombre());
         cliente.setEmail(dto.email());

@@ -54,12 +54,12 @@ public class CheckoutController {
 
     private HBox crearFilaItem(AbonoCarritoViewModel item) {
         Label servicio = new Label(item.getServicio());
-        servicio.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 13;");
+        servicio.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 15;");
         HBox espaciador = new HBox();
         HBox.setHgrow(espaciador, Priority.ALWAYS);
         Label monto = new Label(item.getMonto());
-        monto.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 13;");
-        return new HBox(8, servicio, espaciador, monto);
+        monto.setStyle("-fx-text-fill: #aaaaaa; -fx-font-size: 15;");
+        return new HBox(10, servicio, espaciador, monto);
     }
 
     @FXML

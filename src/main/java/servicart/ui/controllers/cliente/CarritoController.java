@@ -55,8 +55,8 @@ public class CarritoController {
         Label servicio = new Label(item.getServicio());
         servicio.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 15;");
         Label referencia = new Label(item.getReferenciaFactura());
-        referencia.setStyle("-fx-text-fill: #555555; -fx-font-size: 12;");
-        VBox textos = new VBox(2, servicio, referencia);
+        referencia.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
+        VBox textos = new VBox(0, servicio, referencia);
 
         Label monto = new Label(item.getMonto());
         monto.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
@@ -65,7 +65,7 @@ public class CarritoController {
         HBox.setHgrow(espaciador, Priority.ALWAYS);
 
         HBox fila = new HBox(10, textos, espaciador, monto);
-        fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 12;");
+        fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;");
         return fila;
     }
 

@@ -9,6 +9,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.BiPredicate;
 
+/* Datos mínimos indispensables: solo lo que la app no puede generar por sí sola
+(credenciales, catálogo, clientes y sus contratos/facturas). Abonos, intereses de
+mora y cortes de servicio NO se siembran aquí: el propio programa los calcula
+(MoraService, CorteService, GestionAutomaticaEmpresaJob) apenas arranca, a partir
+de las fechas de las facturas sembradas abajo. Como este método solo corre una vez
+(se salta si ya hay contratos guardados), las fechas se calculan relativas a "ahora"
+para que la demo siga siendo relevante sin importar cuándo se ejecute por primera vez */
 public class DatosSeeder {
 
     public static void iniciar() {
@@ -27,6 +34,8 @@ public class DatosSeeder {
                 System.out.println("Datos ya existentes");
                 return;
             }
+
+            LocalDateTime ahora = LocalDateTime.now();
 
             Admin admin1 = new Admin("admin", "admin123");
             ponerEnArchivo(new AdminBinarioDAO(), List.of(admin1),
@@ -65,15 +74,12 @@ public class DatosSeeder {
                             existente.getEmpresa().getNombre().equals(nuevo.getEmpresa().getNombre())
                                     && existente.getTipo() == nuevo.getTipo());
 
-            Contrato contrato1 = new Contrato(
-                    LocalDateTime.of(2024, 3, 15, 9, 0, 0),
-                    null, CausaTerminacion.ACTIVO, luz1, cl1);
-            Contrato contrato2 = new Contrato(
-                    LocalDateTime.of(2025, 1, 10, 14, 30, 0),
-                    null, CausaTerminacion.ACTIVO, internet1, cl1);
-            Contrato contrato3 = new Contrato(
-                    LocalDateTime.of(2024, 6, 20, 10, 0, 0),
-                    null, CausaTerminacion.ACTIVO, agua1, cl2);
+            // Contrato1 (LUZ) y Contrato2 (INTERNET) para el cliente activo de la demo;
+            // Contrato3 (AGUA) ya terminado, del cliente inactivo (para poder demostrar
+            // la reactivación de usuarios en el panel admin).
+            Contrato contrato1 = new Contrato(ahora.minusMonths(16), null, CausaTerminacion.ACTIVO, luz1, cl1);
+            Contrato contrato2 = new Contrato(ahora.minusMonths(10), null, CausaTerminacion.ACTIVO, internet1, cl1);
+            Contrato contrato3 = new Contrato(ahora.minusMonths(20), ahora.minusMonths(2), CausaTerminacion.CLIENTE, agua1, cl2);
 
             ponerEnArchivo(new ContratoBinarioDAO(), List.of(contrato1, contrato2, contrato3),
                     (existente, nuevo) ->
@@ -81,73 +87,27 @@ public class DatosSeeder {
                                     && existente.getServicio().getId() == nuevo.getServicio().getId()
                                     && existente.getFechaInicio().equals(nuevo.getFechaInicio()));
 
-            // Facturas con fechas consistentes: emisión, vencimiento, fecha máxima de pago.
-            Factura factura1 = new Factura(
-                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),       // emisión
-                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),    // vencimiento
-                    LocalDateTime.of(2026, 8, 4, 0, 0, 0), 85.40, contrato1); // max pago
-            factura1.setEstado(EstadoFactura.PENDIENTE);
+            // Tres facturas en tres estados distintos, para ver de inmediato (sin esperar
+            // al ciclo automático diario) los tres caminos del negocio:
+            //   1) pendiente y aún no vencida        -> se puede agregar al carrito y pagar
+            //   2) ya vencida pero sin corte todavía -> MoraService le calculará el interés al iniciar la app
+            //   3) ya pasó su fecha de corte         -> CorteService la cortará automáticamente al iniciar la app
+            // Todas nacen en estado PENDIENTE, igual que las crea FacturacionService.emitirFactura();
+            // es la propia gestión automática la que las hace avanzar a VENCIDA/cortada.
+            Factura facturaPendiente = new Factura(
+                    ahora.minusDays(10), ahora.plusDays(20), ahora.plusDays(35), 46.80, contrato1);
 
-            Factura factura2 = new Factura(
-                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),
-                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),
-                    LocalDateTime.of(2026, 8, 6, 0, 0, 0), 35.0, contrato2);
-            factura2.setEstado(EstadoFactura.PAGADA);
+            Factura facturaVencidaSinCortar = new Factura(
+                    ahora.minusDays(40), ahora.minusDays(10), ahora.plusDays(5), 35.0, contrato2);
 
-            // factura3: fechaMaxPago corregida a 2026-07-04 (posterior al vencimiento 2026-06-19)
-            Factura factura3 = new Factura(
-                    LocalDateTime.of(2026, 5, 20, 0, 0, 0),
-                    LocalDateTime.of(2026, 6, 19, 23, 59, 59),
-                    LocalDateTime.of(2026, 7, 4, 0, 0, 0), 22.50, contrato3);
-            factura3.setEstado(EstadoFactura.VENCIDA);
+            Factura facturaVencidaYaCortada = new Factura(
+                    ahora.minusDays(75), ahora.minusDays(45), ahora.minusDays(30), 44.10, contrato1);
 
-            Factura factura4 = new Factura(
-                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),
-                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),
-                    LocalDateTime.of(2026, 8, 6, 0, 0, 0), 24.75, contrato3);
-            factura4.setEstado(EstadoFactura.PENDIENTE);
-
-            Factura factura5 = new Factura(
-                    LocalDateTime.of(2026, 4, 20, 0, 0, 0),
-                    LocalDateTime.of(2026, 5, 20, 23, 59, 59),
-                    LocalDateTime.of(2026, 6, 4, 0, 0, 0), 82.60, contrato1);
-            factura5.setEstado(EstadoFactura.PAGADA);
-
-            ponerEnArchivo(new FacturaBinarioDAO(), List.of(factura1, factura2, factura3, factura4, factura5),
+            ponerEnArchivo(new FacturaBinarioDAO(),
+                    List.of(facturaPendiente, facturaVencidaSinCortar, facturaVencidaYaCortada),
                     (existente, nuevo) ->
                             existente.getContrato().getId() == nuevo.getContrato().getId()
                                     && existente.getFechaEmision().equals(nuevo.getFechaEmision()));
-
-            // Sin abonos sembrados: sin pagos previos no hay riesgo de que una factura quede
-            // matemáticamente saldada por unos abonos de prueba pero con estado desalineado.
-            // Cada factura arranca solo con su valorBase/estado, tal como se declaró arriba.
-
-            // Intereses: fecha de cálculo después del vencimiento
-            InteresMora interes1 = new InteresMora(14, 8.75, LocalDateTime.of(2026, 6, 29, 0, 0, 0), false, factura3);
-            // interes2 ahora calculado el 2026-08-01 (después del vencimiento 2026-07-20)
-            InteresMora interes2 = new InteresMora(8, 5.20, LocalDateTime.of(2026, 8, 1, 0, 0, 0), false, factura4);
-
-            ponerEnArchivo(new InteresMoraBinarioDAO(), List.of(interes1, interes2),
-                    (existente, nuevo) ->
-                            existente.getFactura().getId() == nuevo.getFactura().getId()
-                                    && existente.getFechaCalculo().equals(nuevo.getFechaCalculo()));
-
-            // Corte de servicio después del vencimiento de la factura relacionada
-            CorteServicio corte1 = new CorteServicio(LocalDateTime.of(2026, 6, 20, 8, 0, 0), contrato3, factura3);
-            corte1.setEstadoCorte(EstadoCorte.CORTADO);
-
-            ponerEnArchivo(new CorteServicioBinarioDAO(), List.of(corte1),
-                    (existente, nuevo) ->
-                            existente.getContrato().getId() == nuevo.getContrato().getId()
-                                    && existente.getFechaCorte().equals(nuevo.getFechaCorte()));
-
-            // Carritos vacíos: sin abonos sembrados no hay nada que agregarles
-            Carrito carrito1 = new Carrito(cl1);
-            Carrito carrito2 = new Carrito(cl2);
-
-            ponerEnArchivo(new CarritoBinarioDAO(), List.of(carrito1, carrito2),
-                    (existente, nuevo) ->
-                            existente.getCliente().getCedula().equals(nuevo.getCliente().getCedula()));
 
             System.out.println("Base de datos binaria inicializada con éxito");
         } catch (Exception e) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -20,36 +19,24 @@
 
     <center>
         <StackPane style="-fx-background-color: #0f0f0f;">
-            <VBox prefHeight="350.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
-                <StackPane.margin><Insets bottom="40" left="40" right="40" top="40" /></StackPane.margin>
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
 
-                <Label maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 20; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 0 0 15 0; -fx-alignment: center;" text="CHECK OUT FINAL">
-                    <VBox.margin><Insets bottom="14" /></VBox.margin>
-                </Label>
+                <Label maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 20; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 0 0 15 0; -fx-alignment: center;" text="CHECK OUT FINAL" />
 
-                <VBox fx:id="listaItemsResumen" spacing="6">
-                    <VBox.margin><Insets /></VBox.margin>
-                </VBox>
+                <VBox fx:id="listaItemsResumen" spacing="5" />
 
                 <HBox style="-fx-border-color: #2a2a2a; -fx-border-width: 1 0 0 0; -fx-padding: 10 0 0 0;">
-                    <VBox.margin><Insets /></VBox.margin>
                     <Label style="-fx-text-fill: #666666; -fx-font-size: 15;" text="Total a pagar" />
                     <Region HBox.hgrow="ALWAYS" />
                     <Label fx:id="lblTotalFinal" style="-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="0.00" />
                 </HBox>
 
-                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="Método de pago">
-                    <VBox.margin><Insets bottom="10.0" top="15.0" /></VBox.margin>
-                </Label>
+                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="Método de pago" />
                 <ComboBox fx:id="cmbMetodoPago" maxWidth="Infinity" promptText="Seleccione método de pago" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" />
 
-                <TextField fx:id="txtReferenciaPago" promptText="Número de tarjeta / cuenta PayPal..." style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #cccccc; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 15; -fx-padding: 10 15 10 15; -fx-font-family: 'Courier New';">
-                    <VBox.margin><Insets bottom="10" top="10" /></VBox.margin>
-                </TextField>
+                <TextField fx:id="txtReferenciaPago" promptText="Número de tarjeta / cuenta PayPal..." style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #cccccc; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 15; -fx-padding: 10 15 10 15; -fx-font-family: 'Courier New';" />
 
-                <Label fx:id="lblMensaje" alignment="CENTER" managed="false" maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-family: 'Courier New'; -fx-padding: 5 0 5 0;" visible="false">
-                    <VBox.margin><Insets bottom="10" /></VBox.margin>
-                </Label>
+                <Label fx:id="lblMensaje" alignment="CENTER" managed="false" maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-family: 'Courier New'; -fx-padding: 5 0 5 0;" visible="false" />
 
                 <HBox spacing="10">
                     <Button maxWidth="Infinity" onAction="#onCancelar" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 10 0 10 0; -fx-cursor: hand;" text="Cancelar" HBox.hgrow="ALWAYS" />

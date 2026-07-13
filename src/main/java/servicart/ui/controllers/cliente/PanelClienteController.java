@@ -92,7 +92,7 @@ public class PanelClienteController {
         Label valor = new Label(vm.getSubtotalServicioTexto());
         valor.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
         HBox fila = filaConEspaciador(titulo, valor);
-        fila.setStyle("-fx-border-color: #333333; -fx-border-width: 1 0 0 0; -fx-padding: 8 0 0 0;");
+        fila.setStyle("-fx-border-color: #333333; -fx-border-width: 1 0 0 0; -fx-padding: 10 0 0 0;");
         return fila;
     }
 
@@ -103,7 +103,7 @@ public class PanelClienteController {
         Label subtitulo = new Label(vm.getNombreServicio());
         subtitulo.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
 
-        VBox textos = new VBox(2, titulo, subtitulo);
+        VBox textos = new VBox(0, titulo, subtitulo);
 
         Label badge = new Label(textoBadge(vm));
         badge.setStyle(estiloBadge(vm) + " -fx-padding: 5 10 5 10; -fx-background-radius: 10; -fx-font-size: 15;");

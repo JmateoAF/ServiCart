@@ -23,7 +23,7 @@ public class PanelAdminImp implements PanelAdmin {
         List<Cliente> clientes = FactoryDAO.getDAO(Cliente.class).findAll();
         int usuariosActivos = (int) clientes.stream().filter(c -> c.getActivo() == 1).count();
 
-        CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class), FactoryDAO.getDAO(Factura.class));
+        CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
         Set<String> cedulasCortadas = corteService.buscarCortados().stream()
                 .map(corte -> corte.getContrato().getCliente().getCedula())
                 .collect(Collectors.toSet());

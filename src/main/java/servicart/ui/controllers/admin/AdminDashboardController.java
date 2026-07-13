@@ -104,8 +104,8 @@ public class AdminDashboardController {
 
     private String estiloToggle(boolean activo) {
         return activo
-                ? "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-padding: 6 16 6 16; -fx-cursor: hand;"
-                : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 6 16 6 16; -fx-cursor: hand;";
+                ? "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-padding: 5 15 5 15; -fx-cursor: hand;"
+                : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 5 15 5 15; -fx-cursor: hand;";
     }
 
     @FXML private void onDashboard(ActionEvent event) { Navegador.irA("views/admin/adminDashboard.fxml"); event.consume(); }
