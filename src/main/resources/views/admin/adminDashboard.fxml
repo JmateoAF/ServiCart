@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="660" prefWidth="1000" style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.admin.AdminDashboardController">
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1000.0" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 11 20 11 20;">
+            <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="SERVICART ADMIN">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="150" style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
+            <Label style="-fx-text-fill: #e8c96d; -fx-font-size: 11; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-padding: 0 14 12 14; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;" text="ADMIN" />
+
+            <Button fx:id="btnDashboard" onAction="#onDashboard" maxWidth="Infinity" style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-padding: 8 14 8 12; -fx-alignment: center-left; -fx-cursor: hand;" text="⊞ Dashboard">
+                <VBox.margin><Insets top="6" /></VBox.margin>
+            </Button>
+            <Button fx:id="btnUsuarios" onAction="#onUsuarios" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;" text="👥 Usuarios" />
+            <Button fx:id="btnTarifas" onAction="#onTarifas" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;" text="⚙ Tarifas" />
+            <Button fx:id="btnCortes" onAction="#onCortes" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;" text="⚠ Cortes/mora" />
+
+            <Region VBox.vgrow="ALWAYS" />
+
+            <Button fx:id="btnSalir" onAction="#onSalir" maxWidth="Infinity" style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-padding: 8 14 8 14; -fx-alignment: center-left; -fx-cursor: hand;" text="⬅ Salir" />
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
+            <VBox spacing="14" style="-fx-background-color: #0f0f0f; -fx-padding: 16 18 18 18;">
+
+                <!-- Toggle SQLite / Binario: cambiar de modo aquí reconfigura FactoryDAO para TODA
+                     la sesión de la app (login, panel cliente, checkout) — no es un efecto local
+                     de esta pantalla, ver Tooltip en los botones y AdminDashboardController -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <HBox maxWidth="-Infinity" style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6;">
+                        <Button fx:id="btnSQLite" onAction="#onSeleccionarSQLite" style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-padding: 6 16 6 16; -fx-cursor: hand; -fx-background-radius: 5 0 0 5;" text="SQLite">
+                            <font><Font size="15.0" /></font>
+                            <tooltip>
+                                <Tooltip text="Cambiar de modo aquí afecta a toda la sesión de la app (login, panel cliente, checkout), no solo a este dashboard." />
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="btnBinario" onAction="#onSeleccionarBinario" style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-padding: 6 16 6 16; -fx-cursor: hand; -fx-background-radius: 0 5 5 0;" text="Archivos binarios">
+                            <font><Font size="15.0" /></font>
+                            <tooltip>
+                                <Tooltip text="Cambiar de modo aquí afecta a toda la sesión de la app (login, panel cliente, checkout), no solo a este dashboard." />
+                            </tooltip>
+                        </Button>
+                    </HBox>
+
+                    <Label fx:id="lblModoActivo" style="-fx-text-fill: #555555; -fx-background-color: #1a1a1a; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-font-size: 10; -fx-font-family: 'Courier New'; -fx-padding: 3 10 3 10;" text="Modo: SQLite" />
+                </HBox>
+
+                <!-- Stat cards: criterio de negocio (usuarios activos, cortados, con mora) -->
+                <HBox spacing="8">
+                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                        <padding><Insets bottom="8.0" left="10.0" top="5.0" /></padding>
+                        <Label style="-fx-text-fill: #555555;" text="USUARIOS ACTIVOS"><font><Font size="10.0" /></font></Label>
+                        <Label fx:id="lblUsuariosActivos" style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-weight: bold;" text="0"><font><Font size="20.0" /></font></Label>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                        <padding><Insets bottom="8.0" left="10.0" top="5.0" /></padding>
+                        <Label style="-fx-text-fill: #555555;" text="CORTADOS"><font><Font size="10.0" /></font></Label>
+                        <Label fx:id="lblCortados" style="-fx-text-fill: #c0392b; -fx-font-family: 'Courier New'; -fx-font-weight: bold;" text="0"><font><Font size="20.0" /></font></Label>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;" HBox.hgrow="ALWAYS">
+                        <padding><Insets bottom="8.0" left="10.0" top="5.0" /></padding>
+                        <Label style="-fx-text-fill: #555555;" text="CON MORA"><font><Font size="10.0" /></font></Label>
+                        <Label fx:id="lblConMora" style="-fx-text-fill: #e07b39; -fx-font-family: 'Courier New'; -fx-font-weight: bold;" text="0"><font><Font size="20.0" /></font></Label>
+                    </VBox>
+                </HBox>
+
+                <!-- Tabla Usuarios -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" style="-fx-padding: 8 12 8 12; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10; -fx-font-family: 'Courier New';" text="USUARIOS" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button style="-fx-background-color: #1c2a1c; -fx-text-fill: #4caf50; -fx-border-color: #2a3e2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;" text="+ Nuevo" />
+                    </HBox>
+                    <TableView fx:id="tblUsuarios" prefHeight="170" style="-fx-background-color: transparent; -fx-control-inner-background: #161616; -fx-table-cell-border-color: #1e1e1e;">
+                        <columns>
+                            <TableColumn fx:id="colCedula" prefWidth="110" text="CÉDULA" />
+                            <TableColumn fx:id="colNombre" prefWidth="150" text="NOMBRE" />
+                            <TableColumn fx:id="colEmail" prefWidth="190" text="EMAIL" />
+                            <TableColumn fx:id="colEstado" prefWidth="90" text="ESTADO" />
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <!-- Tabla Tarifas -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT" style="-fx-padding: 8 12 8 12; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
+                        <Label style="-fx-text-fill: #555555; -fx-font-size: 10; -fx-font-family: 'Courier New';" text="TARIFAS" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button style="-fx-background-color: #1c2a1c; -fx-text-fill: #4caf50; -fx-border-color: #2a3e2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 10; -fx-padding: 3 8 3 8; -fx-cursor: hand;" text="EDITAR TARIFAS" />
+                    </HBox>
+                    <TableView fx:id="tblTarifas" prefHeight="150" style="-fx-background-color: transparent; -fx-control-inner-background: #161616; -fx-table-cell-border-color: #1e1e1e;">
+                        <columns>
+                            <TableColumn fx:id="colServicio" prefWidth="150" text="SERVICIO" />
+                            <TableColumn fx:id="colEmpresa" prefWidth="150" text="EMPRESA" />
+                            <TableColumn fx:id="colTarifa" prefWidth="120" text="TARIFA" />
+                            <TableColumn fx:id="colTipo" prefWidth="110" text="TIPO" />
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
