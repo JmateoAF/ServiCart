@@ -47,4 +47,11 @@ public class FactoryDAO {
         boolean sqlite = "SQLite".equalsIgnoreCase(baseDatosActual);
         return sqlite ? new AdminSQLiteDAO() : new AdminBinarioDAO();
     }
+
+    public static ClienteAdminDAO<Cliente> getClienteAdminDAO() {
+        boolean sqlite = "SQLite".equalsIgnoreCase(baseDatosActual);
+        return sqlite ? new ClienteSQLiteDAO() : new ClienteBinarioDAO();
+    }
+
+    public static String obtenerModoActual() { return baseDatosActual; }
 }

@@ -1,10 +1,11 @@
 package servicart.data.binary;
 
+import servicart.data.interfaces.ClienteAdminDAO;
 import servicart.entities.Cliente;
 
 import java.util.List;
 
-public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> {
+public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> implements ClienteAdminDAO<Cliente> {
     public ClienteBinarioDAO() { super("bin/clientes.bin"); }
 
     @Override

@@ -1,7 +1,7 @@
 package servicart.data.sqlite;
 
 import servicart.entities.Cliente;
-import servicart.data.interfaces.CrudDAO;
+import servicart.data.interfaces.ClienteAdminDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
+public class ClienteSQLiteDAO implements ClienteAdminDAO<Cliente> {
     @Override
     public void save(Cliente c) {
         String sql = "INSERT INTO Clientes (cedula, nombre, email, celular, activo) VALUES (?, ?, ?, ?, ?)";
@@ -89,6 +89,24 @@ public class ClienteSQLiteDAO implements CrudDAO<Cliente> {
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    // Igual que findAll() pero sin el filtro de borrado lógico: uso exclusivo del panel admin,
+    // que necesita ver (y poder reactivar) usuarios inactivos
+    @Override
+    public List<Cliente> findAllSinFiltro() {
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM Clientes";
+
+        try (Connection con = ConexionSQLite.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) clientes.add(mapear(rs));
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+        return clientes;
     }
 
     //Único punto de conversión ResultSet -> Cliente

@@ -54,30 +54,16 @@ public class DatosSeeder {
             agua1.setTarifaPorUnidad(0.85);
             ServicioCatalogo luz1 = new ServicioCatalogo(emp2, TipoServicio.LUZ, TipoValorFactura.VARIABLE, 10.0, 0.03);
             luz1.setTarifaPorUnidad(1.80);
-            ServicioCatalogo luz2 = new ServicioCatalogo(emp2, TipoServicio.LUZ, TipoValorFactura.VARIABLE, 10.0, 0.03);
-            luz2.setTarifaPorUnidad(1.85);
             ServicioCatalogo basura1 = new ServicioCatalogo(emp3, TipoServicio.BASURA, TipoValorFactura.FIJO, 5.0, 0.02);
             basura1.setTarifaFija(12.0);
-            ServicioCatalogo basura2 = new ServicioCatalogo(emp3, TipoServicio.BASURA, TipoValorFactura.FIJO, 5.0, 0.02);
-            basura2.setTarifaFija(12.50);
             ServicioCatalogo internet1 = new ServicioCatalogo(emp4, TipoServicio.INTERNET, TipoValorFactura.FIJO, 15.0, 0.04);
             internet1.setTarifaFija(35.0);
-            ServicioCatalogo internet2 = new ServicioCatalogo(emp4, TipoServicio.INTERNET, TipoValorFactura.FIJO, 15.0, 0.04);
-            internet2.setTarifaFija(45.0);
-            ServicioCatalogo agua2 = new ServicioCatalogo(emp1, TipoServicio.AGUA, TipoValorFactura.VARIABLE, 10.0, 0.05);
-            agua2.setTarifaPorUnidad(0.90);
-            ServicioCatalogo internet3 = new ServicioCatalogo(emp4, TipoServicio.INTERNET, TipoValorFactura.FIJO, 15.0, 0.04);
-            internet3.setTarifaFija(55.0);
-            ServicioCatalogo basura3 = new ServicioCatalogo(emp3, TipoServicio.BASURA, TipoValorFactura.FIJO, 5.0, 0.02);
-            basura3.setTarifaFija(13.0);
 
             ponerEnArchivo(new ServicioCatalogoBinarioDAO(),
-                    List.of(agua1, luz1, luz2, basura1, basura2, internet1, internet2, agua2, internet3, basura3),
+                    List.of(agua1, luz1, basura1, internet1),
                     (existente, nuevo) ->
                             existente.getEmpresa().getNombre().equals(nuevo.getEmpresa().getNombre())
-                                    && existente.getTipo() == nuevo.getTipo()
-                                    && existente.getTarifaFija() == nuevo.getTarifaFija()
-                                    && existente.getTarifaPorUnidad() == nuevo.getTarifaPorUnidad());
+                                    && existente.getTipo() == nuevo.getTipo());
 
             Contrato contrato1 = new Contrato(
                     LocalDateTime.of(2024, 3, 15, 9, 0, 0),
@@ -87,7 +73,7 @@ public class DatosSeeder {
                     null, CausaTerminacion.ACTIVO, internet1, cl1);
             Contrato contrato3 = new Contrato(
                     LocalDateTime.of(2024, 6, 20, 10, 0, 0),
-                    null, CausaTerminacion.ACTIVO, agua2, cl2);
+                    null, CausaTerminacion.ACTIVO, agua1, cl2);
 
             ponerEnArchivo(new ContratoBinarioDAO(), List.of(contrato1, contrato2, contrato3),
                     (existente, nuevo) ->

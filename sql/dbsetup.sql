@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS CarritoAbono (
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_servicio_natural
-    ON ServicioCatalogo(idEmpresa, tipoServicio, tarifaFija, tarifaPorUnidad);
+    ON ServicioCatalogo(idEmpresa, tipoServicio);
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_contrato_natural
     ON Contrato(idCliente, idServicio, fechaInicio);

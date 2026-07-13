@@ -4,8 +4,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.*;
+import servicart.domain.services.admin.AdminCortesImp;
+import servicart.domain.services.admin.AdminTarifasImp;
+import servicart.domain.services.admin.AdminUsuariosImp;
 import servicart.domain.services.admin.LoginAdminImp;
+import servicart.domain.services.admin.PanelAdminImp;
 import servicart.domain.services.cliente.*;
+import servicart.ui.controllers.admin.AdminCortesController;
+import servicart.ui.controllers.admin.AdminDashboardController;
+import servicart.ui.controllers.admin.AdminTarifasController;
+import servicart.ui.controllers.admin.AdminUsuariosController;
 import servicart.ui.controllers.admin.LoginAdminController;
 import servicart.ui.controllers.cliente.*;
 
@@ -21,6 +29,10 @@ public class Navegador {
     private static final CarritoCliente carritoCliente = new CarritoClienteImp();
     private static final Checkout checkout = new CheckoutImp();
     private static final LoginAdmin loginAdmin = new LoginAdminImp();
+    private static final PanelAdmin panelAdmin = new PanelAdminImp();
+    private static final AdminUsuarios adminUsuarios = new AdminUsuariosImp();
+    private static final AdminTarifas adminTarifas = new AdminTarifasImp();
+    private static final AdminCortes adminCortes = new AdminCortesImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
 
@@ -43,6 +55,14 @@ public class Navegador {
         if (claseControlador == PerfilClienteController.class) return new PerfilClienteController(perfilCliente, contratoCliente);
 
         if (claseControlador == LoginAdminController.class) return new LoginAdminController(loginAdmin);
+
+        if (claseControlador == AdminDashboardController.class) return new AdminDashboardController(panelAdmin);
+
+        if (claseControlador == AdminUsuariosController.class) return new AdminUsuariosController(adminUsuarios);
+
+        if (claseControlador == AdminTarifasController.class) return new AdminTarifasController(adminTarifas);
+
+        if (claseControlador == AdminCortesController.class) return new AdminCortesController(adminCortes);
 
         if (claseControlador == CarritoController.class) return new CarritoController(carritoCliente);
 

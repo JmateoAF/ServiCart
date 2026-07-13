@@ -4,11 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class DashboardAdminViewModel {
-    private int totalUsuarios;
-    private int totalContratos;
-    private int totalFacturas;
-    private int totalCortes;
-    private String rutaArchivos;
+    private int usuariosActivos;
+    private int cortados;
+    private int conMora;
+    private String modoActivo;
     private final ObservableList<UsuarioTablaViewModel> listaUsuarios;
     private final ObservableList<TarifaTablaViewModel> listaTarifas;
 
@@ -17,20 +16,17 @@ public class DashboardAdminViewModel {
         listaTarifas = FXCollections.observableArrayList();
     }
 
-    public int getTotalUsuarios() { return totalUsuarios; }
-    public void setTotalUsuarios(int totalUsuarios) { this.totalUsuarios = totalUsuarios; }
+    public int getUsuariosActivos() { return usuariosActivos; }
+    public void setUsuariosActivos(int usuariosActivos) { this.usuariosActivos = usuariosActivos; }
 
-    public int getTotalContratos() { return totalContratos; }
-    public void setTotalContratos(int totalContratos) { this.totalContratos = totalContratos; }
+    public int getCortados() { return cortados; }
+    public void setCortados(int cortados) { this.cortados = cortados; }
 
-    public int getTotalFacturas() { return totalFacturas; }
-    public void setTotalFacturas(int totalFacturas) { this.totalFacturas = totalFacturas; }
+    public int getConMora() { return conMora; }
+    public void setConMora(int conMora) { this.conMora = conMora; }
 
-    public int getTotalCortes() { return totalCortes; }
-    public void setTotalCortes(int totalCortes) { this.totalCortes = totalCortes; }
-
-    public String getRutaArchivos() { return rutaArchivos; }
-    public void setRutaArchivos(String rutaArchivos) { this.rutaArchivos = rutaArchivos; }
+    public String getModoActivo() { return modoActivo; }
+    public void setModoActivo(String modoActivo) { this.modoActivo = modoActivo; }
 
     public ObservableList<UsuarioTablaViewModel> getListaUsuarios() { return listaUsuarios; }
     public ObservableList<TarifaTablaViewModel> getListaTarifas() { return listaTarifas; }
