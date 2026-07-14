@@ -7,7 +7,14 @@ import servicart.entities.*;
 
 /* Patrón Simple Factory para la capa de datos
  Centraliza la decisión de qué implementación (binaria o SQLite)
- se entrega a los servicios del dominio */
+ se entrega a los servicios del dominio
+
+ Los servicios de dominio (*Imp) resuelven su DAO llamando a getDAO(...)/getClienteAdminDAO()/
+ getAdminDAO() en cada método, en vez de cachear el DAO una sola vez en su constructor. Es
+ intencional: el toggle SQLite/Binario del dashboard admin (AdminDashboardController ->
+ BdService.configurarBaseDatos) puede cambiar baseDatosActual en caliente durante la sesión;
+ si un servicio guardara su DAO en el constructor, un cambio de modo posterior no se
+ reflejaría en llamadas hechas después del cambio. */
 
 public class FactoryDAO {
     private static String baseDatosActual;

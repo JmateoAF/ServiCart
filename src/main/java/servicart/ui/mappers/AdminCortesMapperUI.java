@@ -20,7 +20,6 @@ public class AdminCortesMapperUI {
     public static CorteDetalleViewModel enMoraADetalle(FacturaEnMoraDTORetorno dto) {
         CorteDetalleViewModel vm = new CorteDetalleViewModel();
         vm.setIdContrato(dto.idContrato());
-        vm.setIdFactura(dto.idFactura());
         vm.setIdCorte(-1);
         vm.setCortado(false);
         vm.setNombreCliente(dto.cliente());
@@ -29,7 +28,6 @@ public class AdminCortesMapperUI {
         vm.setDeudaOriginal(String.format("%.2f", dto.deudaOriginal()));
         vm.setInteresAcumulado(String.format("+ $%.2f", dto.interesAcumulado()));
         vm.setCostoReactivacion(null);
-        vm.setEstado("En mora");
         vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado()));
         vm.setPieTexto(dto.diasMora() + "/" + dto.ventanaDias() + " días para corte");
         double ventana = dto.ventanaDias() <= 0 ? 1 : dto.ventanaDias();
@@ -40,7 +38,6 @@ public class AdminCortesMapperUI {
     public static CorteDetalleViewModel corteADetalle(CorteDTORetorno dto) {
         CorteDetalleViewModel vm = new CorteDetalleViewModel();
         vm.setIdContrato(dto.idContrato());
-        vm.setIdFactura(-1);
         vm.setIdCorte(dto.idCorte());
         vm.setCortado(true);
         vm.setNombreCliente(dto.cliente());
@@ -49,7 +46,6 @@ public class AdminCortesMapperUI {
         vm.setDeudaOriginal(String.format("%.2f", dto.deudaOriginal()));
         vm.setInteresAcumulado(String.format("+ $%.2f", dto.interesAcumulado()));
         vm.setCostoReactivacion(String.format("%.2f", dto.costoReactivacion()));
-        vm.setEstado("Cortado");
         vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado() + dto.costoReactivacion()));
         vm.setPieTexto("Servicio cortado");
         vm.setProgresoCorte(1.0);
@@ -58,14 +54,14 @@ public class AdminCortesMapperUI {
 
     public static CorteHistorialViewModel enMoraAHistorial(FacturaEnMoraDTORetorno dto) {
         return new CorteHistorialViewModel(
-                dto.idContrato(), dto.idFactura(), -1, false,
+                dto.idContrato(), -1, false,
                 dto.cliente(), nombreServicioCompleto(dto.empresa(), dto.servicio()),
                 String.valueOf(dto.diasMora()), String.format("%.2f", dto.interesAcumulado()), "En mora");
     }
 
     public static CorteHistorialViewModel corteAHistorial(CorteDTORetorno dto) {
         return new CorteHistorialViewModel(
-                dto.idContrato(), -1, dto.idCorte(), true,
+                dto.idContrato(), dto.idCorte(), true,
                 dto.cliente(), nombreServicioCompleto(dto.empresa(), dto.servicio()),
                 String.valueOf(dto.diasCortado()), String.format("%.2f", dto.interesAcumulado()), "Cortado");
     }

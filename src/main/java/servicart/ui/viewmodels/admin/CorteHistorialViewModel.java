@@ -5,7 +5,6 @@ import javafx.beans.property.StringProperty;
 
 public class CorteHistorialViewModel {
     private final int idContrato;
-    private final int idFactura; // -1 si no aplica (ya cortado)
     private final int idCorte;   // -1 si no aplica (aún no cortado)
     private final boolean cortado;
 
@@ -15,10 +14,9 @@ public class CorteHistorialViewModel {
     private final StringProperty interes;
     private final StringProperty estado;
 
-    public CorteHistorialViewModel(int idContrato, int idFactura, int idCorte, boolean cortado,
+    public CorteHistorialViewModel(int idContrato, int idCorte, boolean cortado,
                                     String usuario, String servicio, String diasMora, String interes, String estado) {
         this.idContrato = idContrato;
-        this.idFactura = idFactura;
         this.idCorte = idCorte;
         this.cortado = cortado;
         this.usuario = new SimpleStringProperty(usuario);
@@ -29,7 +27,6 @@ public class CorteHistorialViewModel {
     }
 
     public int getIdContrato() { return idContrato; }
-    public int getIdFactura() { return idFactura; }
     public int getIdCorte() { return idCorte; }
     public boolean isCortado() { return cortado; }
 
