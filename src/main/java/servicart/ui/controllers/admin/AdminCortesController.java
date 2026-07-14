@@ -8,33 +8,33 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import servicart.data.FactoryDAO;
 import servicart.domain.dtos.entradas.ForzarCorteDTOEntrada;
+import servicart.domain.dtos.entradas.PagarFacturaDTOEntrada;
 import servicart.domain.dtos.entradas.ReactivarCorteDTOEntrada;
 import servicart.domain.dtos.retornos.CorteDTORetorno;
 import servicart.domain.dtos.retornos.FacturaEnMoraDTORetorno;
 import servicart.domain.dtos.retornos.ResumenCortesDTORetorno;
 import servicart.domain.interfaces.AdminCortes;
+import servicart.domain.services.BdService;
+import servicart.entities.enums.ModalidadPago;
 import servicart.ui.controllers.Navegador;
 import servicart.ui.mappers.AdminCortesMapperUI;
 import servicart.ui.viewmodels.admin.CorteDetalleViewModel;
-import servicart.ui.viewmodels.admin.CorteHistorialViewModel;
 import servicart.ui.viewmodels.admin.CorteResumenViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class AdminCortesController {
+    @FXML private Button btnSQLite;
+    @FXML private Button btnBinario;
     @FXML private Label lblServiciosCortados;
     @FXML private Label lblEnMora;
     @FXML private Label lblInteresesGenerados;
@@ -43,14 +43,6 @@ public class AdminCortesController {
     @FXML private Button btnVerCortados;
     @FXML private VBox contenedorTarjetas;
 
-    @FXML private TableView<CorteHistorialViewModel> tblHistorial;
-    @FXML private TableColumn<CorteHistorialViewModel, String> colUsuario;
-    @FXML private TableColumn<CorteHistorialViewModel, String> colServicio;
-    @FXML private TableColumn<CorteHistorialViewModel, String> colDiasMora;
-    @FXML private TableColumn<CorteHistorialViewModel, String> colInteres;
-    @FXML private TableColumn<CorteHistorialViewModel, String> colEstado;
-    @FXML private TableColumn<CorteHistorialViewModel, Void> colAcciones;
-
     private final AdminCortes adminCortes;
     private boolean mostrandoCortados = false;
 
@@ -58,14 +50,38 @@ public class AdminCortesController {
 
     @FXML
     public void initialize() {
-        colUsuario.setCellValueFactory(new PropertyValueFactory<>("usuario"));
-        colServicio.setCellValueFactory(new PropertyValueFactory<>("servicio"));
-        colDiasMora.setCellValueFactory(new PropertyValueFactory<>("diasMora"));
-        colInteres.setCellValueFactory(new PropertyValueFactory<>("interes"));
-        colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
-        colAcciones.setCellFactory(columna -> crearCeldaAcciones());
-
         cargarTodo();
+        actualizarEstiloToggleBd(FactoryDAO.obtenerModoActual());
+    }
+
+    @FXML
+    private void onSeleccionarSQLite(ActionEvent event) {
+        cambiarModoBd("SQLite");
+        event.consume();
+    }
+
+    @FXML
+    private void onSeleccionarBinario(ActionEvent event) {
+        cambiarModoBd("Binario");
+        event.consume();
+    }
+
+    private void cambiarModoBd(String modo) {
+        BdService.configurarBaseDatos(modo);
+        cargarTodo();
+        actualizarEstiloToggleBd(modo);
+    }
+
+    private void actualizarEstiloToggleBd(String modoActivo) {
+        boolean sqlite = "SQLite".equalsIgnoreCase(modoActivo);
+        btnSQLite.setStyle(estiloToggleBd(sqlite) + " -fx-background-radius: 5 0 0 5;");
+        btnBinario.setStyle(estiloToggleBd(!sqlite) + " -fx-background-radius: 0 5 5 0;");
+    }
+
+    private String estiloToggleBd(boolean activo) {
+        return activo
+                ? "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;"
+                : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;";
     }
 
     private void cargarTodo() {
@@ -83,11 +99,6 @@ public class AdminCortesController {
 
         actualizarToggle();
         renderizarTarjetas(mostrandoCortados ? tarjetasCortados : tarjetasEnMora);
-
-        List<CorteHistorialViewModel> historial = new ArrayList<>();
-        historial.addAll(enMoraDtos.stream().map(AdminCortesMapperUI::enMoraAHistorial).toList());
-        historial.addAll(cortadosDtos.stream().map(AdminCortesMapperUI::corteAHistorial).toList());
-        tblHistorial.getItems().setAll(historial);
     }
 
     private void renderizarTarjetas(List<CorteDetalleViewModel> filas) {
@@ -141,10 +152,10 @@ public class AdminCortesController {
         HBox acciones = new HBox(5);
         VBox.setMargin(acciones, new Insets(5, 0, 0, 0));
 
-        Button btnDetalle = new Button("Ver detalle");
-        btnDetalle.setStyle("-fx-background-color: #1e1e1e; -fx-text-fill: #888888; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
-        btnDetalle.setOnAction(event -> { mostrarDetalle(vm); event.consume(); });
-        acciones.getChildren().add(btnDetalle);
+        Button btnPagar = new Button("Pagar");
+        btnPagar.setStyle("-fx-background-color: #1c2a1c; -fx-text-fill: #4caf50; -fx-border-color: #2a3e2a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
+        btnPagar.setOnAction(event -> { onPagar(vm.getIdFactura(), vm.getNombreCliente(), vm.getSaldoPendiente()); event.consume(); });
+        acciones.getChildren().add(btnPagar);
 
         if (vm.isCortado()) {
             Button btnReactivar = new Button("Reactivar servicio");
@@ -205,47 +216,32 @@ public class AdminCortesController {
         return costoReactivacionTexto == null ? 0 : Double.parseDouble(costoReactivacionTexto);
     }
 
-    private TableCell<CorteHistorialViewModel, Void> crearCeldaAcciones() {
-        return new TableCell<>() {
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) { setGraphic(null); return; }
+    // Pago rápido desde el panel admin: registra un abono ya resuelto (pagoRealizado=true)
+    // directamente sobre la factura, sin pasar por el carrito del cliente. Se asume transferencia
+    // porque es un pago que el admin está reconciliando manualmente, no una modalidad elegida por el cliente
+    private void onPagar(int idFactura, String nombreCliente, double saldoSugerido) {
+        TextInputDialog dialogo = new TextInputDialog(String.format("%.2f", saldoSugerido));
+        dialogo.setTitle("Registrar pago");
+        dialogo.setHeaderText(null);
+        dialogo.setContentText("Monto a pagar de " + nombreCliente + " (máximo $" + String.format("%.2f", saldoSugerido) + "):");
 
-                CorteHistorialViewModel vm = getTableView().getItems().get(getIndex());
-                Button boton = new Button(vm.isCortado() ? "Reactivar" : "Forzar corte");
-                boton.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
-                boton.setOnAction(event -> {
-                    if (vm.isCortado()) onReactivar(vm.getIdCorte(), vm.getUsuario(), buscarCostoReactivacion(vm.getIdCorte()));
-                    else onForzarCorte(vm.getIdContrato(), vm.getUsuario());
-                    event.consume();
-                });
-                setGraphic(boton);
-            }
-        };
-    }
+        Optional<String> respuesta = dialogo.showAndWait();
+        if (respuesta.isEmpty()) return;
 
-    // El historial no trae el costo de reactivación crudo (solo texto de tarjeta); se recalcula
-    // desde la lista de cortados para no tener que ampliar CorteHistorialViewModel con más campos
-    private double buscarCostoReactivacion(int idCorte) {
-        return adminCortes.listarCortados().stream()
-                .filter(c -> c.idCorte() == idCorte)
-                .map(CorteDTORetorno::costoReactivacion)
-                .findFirst()
-                .orElse(0.0);
-    }
+        double monto;
+        try {
+            monto = Double.parseDouble(respuesta.get().trim().replace(",", "."));
+        } catch (NumberFormatException ex) {
+            mostrarError("Ingresa un monto numérico válido");
+            return;
+        }
 
-    private void mostrarDetalle(CorteDetalleViewModel vm) {
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Detalle");
-        alerta.setHeaderText(vm.getNombreCliente() + " — " + vm.getServicio());
-        alerta.setContentText(
-                "Deuda original: $" + vm.getDeudaOriginal() + "\n"
-                + "Interés acumulado: " + vm.getInteresAcumulado() + "\n"
-                + (vm.isCortado()
-                    ? "Días cortado: " + vm.getDiasMora() + "\nCosto reactivación: $" + vm.getCostoReactivacion()
-                    : "Días de mora: " + vm.getDiasMora() + "\n" + vm.getPieTexto()));
-        alerta.showAndWait();
+        try {
+            adminCortes.pagarFactura(new PagarFacturaDTOEntrada(idFactura, monto, ModalidadPago.TRANSFERENCIA));
+            cargarTodo();
+        } catch (RuntimeException ex) {
+            mostrarError(ex.getMessage());
+        }
     }
 
     private void onForzarCorte(int idContrato, String nombreCliente) {
@@ -324,9 +320,9 @@ public class AdminCortesController {
     private String estiloToggleActivo() { return "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; "; }
     private String estiloToggleInactivo() { return "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; "; }
 
-    @FXML private void onDashboard(ActionEvent event) { Navegador.irA("views/admin/adminDashboard.fxml"); event.consume(); }
     @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
     @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
     @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
+    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
     @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
 }

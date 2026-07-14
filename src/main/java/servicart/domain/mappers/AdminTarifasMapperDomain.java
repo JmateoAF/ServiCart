@@ -18,6 +18,7 @@ public class AdminTarifasMapperDomain {
                 servicio.getTipoValor().name(),
                 tarifaBase,
                 servicio.getTasaInteresDiario() * 100,
-                servicio.getCostoReactivacion());
+                servicio.getCostoReactivacion(),
+                servicio.getDiasParaCorte());
     }
 }

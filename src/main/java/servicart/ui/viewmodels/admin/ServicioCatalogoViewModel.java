@@ -14,6 +14,7 @@ public class ServicioCatalogoViewModel {
     private double tarifaBaseValor;
     private double interesMoraPorcentajeValor;
     private double costoReactivacionValor;
+    private int diasParaCorteValor;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -47,4 +48,7 @@ public class ServicioCatalogoViewModel {
 
     public double getCostoReactivacionValor() { return costoReactivacionValor; }
     public void setCostoReactivacionValor(double costoReactivacionValor) { this.costoReactivacionValor = costoReactivacionValor; }
+
+    public int getDiasParaCorteValor() { return diasParaCorteValor; }
+    public void setDiasParaCorteValor(int diasParaCorteValor) { this.diasParaCorteValor = diasParaCorteValor; }
 }

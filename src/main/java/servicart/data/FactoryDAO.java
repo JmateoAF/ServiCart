@@ -11,7 +11,7 @@ import servicart.entities.*;
 
  Los servicios de dominio (*Imp) resuelven su DAO llamando a getDAO(...)/getClienteAdminDAO()/
  getAdminDAO() en cada método, en vez de cachear el DAO una sola vez en su constructor. Es
- intencional: el toggle SQLite/Binario del dashboard admin (AdminDashboardController ->
+ intencional: el toggle SQLite/Binario disponible en varias pantallas admin (vía
  BdService.configurarBaseDatos) puede cambiar baseDatosActual en caliente durante la sesión;
  si un servicio guardara su DAO en el constructor, un cambio de modo posterior no se
  reflejaría en llamadas hechas después del cambio. */

@@ -18,7 +18,7 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
 
     @Override
     public void save(ServicioCatalogo s) {
-        String sql = "INSERT INTO ServicioCatalogo (idEmpresa, tipoServicio, tipoValor, tarifaFija, tarifaPorUnidad, costoReactivacion, tasaInteresDiario) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ServicioCatalogo (idEmpresa, tipoServicio, tipoValor, tarifaFija, tarifaPorUnidad, costoReactivacion, tasaInteresDiario, diasParaCorte) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, s.getEmpresa().getId());
             stmt.setInt(2, s.getTipo().getCodigo());
@@ -27,6 +27,7 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
             stmt.setDouble(5, s.getTarifaPorUnidad());
             stmt.setDouble(6, s.getCostoReactivacion());
             stmt.setDouble(7, s.getTasaInteresDiario());
+            stmt.setInt(8, s.getDiasParaCorte());
             stmt.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
@@ -59,7 +60,7 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
 
     @Override
     public void update(ServicioCatalogo s) {
-        String sql = "UPDATE ServicioCatalogo SET idEmpresa=?, tipoServicio=?, tipoValor=?, tarifaFija=?, tarifaPorUnidad=?, costoReactivacion=?, tasaInteresDiario=? WHERE id=?";
+        String sql = "UPDATE ServicioCatalogo SET idEmpresa=?, tipoServicio=?, tipoValor=?, tarifaFija=?, tarifaPorUnidad=?, costoReactivacion=?, tasaInteresDiario=?, diasParaCorte=? WHERE id=?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, s.getEmpresa().getId());
             stmt.setInt(2, s.getTipo().getCodigo());
@@ -68,7 +69,8 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
             stmt.setDouble(5, s.getTarifaPorUnidad());
             stmt.setDouble(6, s.getCostoReactivacion());
             stmt.setDouble(7, s.getTasaInteresDiario());
-            stmt.setInt(8, s.getId());
+            stmt.setInt(8, s.getDiasParaCorte());
+            stmt.setInt(9, s.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
@@ -101,7 +103,8 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
                 TipoServicio.fromCodigo(rs.getInt("tipoServicio")),
                 TipoValorFactura.fromCodigo(rs.getInt("tipoValor")),
                 rs.getDouble("costoReactivacion"),
-                rs.getDouble("tasaInteresDiario")
+                rs.getDouble("tasaInteresDiario"),
+                rs.getInt("diasParaCorte")
         );
         servicio.setTarifaFija(rs.getDouble("tarifaFija"));
         servicio.setTarifaPorUnidad(rs.getDouble("tarifaPorUnidad"));

@@ -1,6 +1,7 @@
 package servicart.domain.interfaces;
 
 import servicart.domain.dtos.entradas.ForzarCorteDTOEntrada;
+import servicart.domain.dtos.entradas.PagarFacturaDTOEntrada;
 import servicart.domain.dtos.entradas.ReactivarCorteDTOEntrada;
 import servicart.domain.dtos.retornos.CorteDTORetorno;
 import servicart.domain.dtos.retornos.FacturaEnMoraDTORetorno;
@@ -14,4 +15,5 @@ public interface AdminCortes {
     List<CorteDTORetorno> listarCortados();
     void forzarCorte(ForzarCorteDTOEntrada dto);
     void reactivar(ReactivarCorteDTOEntrada dto);
+    void pagarFactura(PagarFacturaDTOEntrada dto);
 }

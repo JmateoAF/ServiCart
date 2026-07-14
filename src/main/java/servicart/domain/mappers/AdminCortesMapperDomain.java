@@ -33,6 +33,7 @@ public class AdminCortesMapperDomain {
         return new CorteDTORetorno(
                 corte.getId(),
                 corte.getContrato().getId(),
+                corte.getFactura().getId(),
                 corte.getContrato().getCliente().getNombre(),
                 corte.getContrato().getServicio().getEmpresa().getNombre(),
                 corte.getContrato().getServicio().getTipo().name(),

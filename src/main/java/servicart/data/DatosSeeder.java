@@ -59,13 +59,13 @@ public class DatosSeeder {
             ponerEnArchivo(new ClienteBinarioDAO(), List.of(cl1, cl2),
                     (existente, nuevo) -> existente.getCedula().equals(nuevo.getCedula()));
 
-            ServicioCatalogo agua1 = new ServicioCatalogo(emp1, TipoServicio.AGUA, TipoValorFactura.VARIABLE, 10.0, 0.05);
+            ServicioCatalogo agua1 = new ServicioCatalogo(emp1, TipoServicio.AGUA, TipoValorFactura.VARIABLE, 10.0, 0.05, 15);
             agua1.setTarifaPorUnidad(0.85);
-            ServicioCatalogo luz1 = new ServicioCatalogo(emp2, TipoServicio.LUZ, TipoValorFactura.VARIABLE, 10.0, 0.03);
+            ServicioCatalogo luz1 = new ServicioCatalogo(emp2, TipoServicio.LUZ, TipoValorFactura.VARIABLE, 10.0, 0.03, 15);
             luz1.setTarifaPorUnidad(1.80);
-            ServicioCatalogo basura1 = new ServicioCatalogo(emp3, TipoServicio.BASURA, TipoValorFactura.FIJO, 5.0, 0.02);
+            ServicioCatalogo basura1 = new ServicioCatalogo(emp3, TipoServicio.BASURA, TipoValorFactura.FIJO, 5.0, 0.02, 15);
             basura1.setTarifaFija(12.0);
-            ServicioCatalogo internet1 = new ServicioCatalogo(emp4, TipoServicio.INTERNET, TipoValorFactura.FIJO, 15.0, 0.04);
+            ServicioCatalogo internet1 = new ServicioCatalogo(emp4, TipoServicio.INTERNET, TipoValorFactura.FIJO, 15.0, 0.04, 15);
             internet1.setTarifaFija(35.0);
 
             ponerEnArchivo(new ServicioCatalogoBinarioDAO(),

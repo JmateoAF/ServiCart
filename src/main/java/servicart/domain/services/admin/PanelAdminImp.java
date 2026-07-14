@@ -2,15 +2,12 @@ package servicart.domain.services.admin;
 
 import servicart.data.FactoryDAO;
 import servicart.domain.dtos.retornos.ResumenAdminDTORetorno;
-import servicart.domain.dtos.retornos.TarifaDTORetorno;
-import servicart.domain.dtos.retornos.UsuarioDTORetorno;
 import servicart.domain.interfaces.PanelAdmin;
 import servicart.domain.mappers.PanelAdminMapperDomain;
 import servicart.domain.services.empresa.CorteService;
 import servicart.entities.Cliente;
 import servicart.entities.CorteServicio;
 import servicart.entities.Factura;
-import servicart.entities.ServicioCatalogo;
 
 import java.util.List;
 import java.util.Set;
@@ -35,19 +32,5 @@ public class PanelAdminImp implements PanelAdmin {
                 .collect(Collectors.toSet());
 
         return PanelAdminMapperDomain.resumenADTO(usuariosActivos, cedulasCortadas.size(), cedulasConMora.size(), FactoryDAO.obtenerModoActual());
-    }
-
-    @Override
-    public List<UsuarioDTORetorno> listarUsuarios() {
-        return FactoryDAO.getDAO(Cliente.class).findAll().stream()
-                .map(PanelAdminMapperDomain::usuarioADTO)
-                .toList();
-    }
-
-    @Override
-    public List<TarifaDTORetorno> listarTarifas() {
-        return FactoryDAO.getDAO(ServicioCatalogo.class).findAll().stream()
-                .map(PanelAdminMapperDomain::tarifaADTO)
-                .toList();
     }
 }

@@ -3,6 +3,7 @@ package servicart.domain.services.admin;
 import servicart.data.FactoryDAO;
 import servicart.data.interfaces.CrudDAO;
 import servicart.domain.dtos.entradas.ForzarCorteDTOEntrada;
+import servicart.domain.dtos.entradas.PagarFacturaDTOEntrada;
 import servicart.domain.dtos.entradas.ReactivarCorteDTOEntrada;
 import servicart.domain.dtos.retornos.CorteDTORetorno;
 import servicart.domain.dtos.retornos.FacturaEnMoraDTORetorno;
@@ -14,6 +15,7 @@ import servicart.domain.services.empresa.CorteService;
 import servicart.domain.services.empresa.FacturacionService;
 import servicart.entities.*;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -76,6 +78,31 @@ public class AdminCortesImp implements AdminCortes {
                 .orElseThrow(() -> new RuntimeException("Corte no encontrado: " + dto.idCorte()));
 
         corteService.reactivarServicio(corte, dto.montoPagado());
+    }
+
+    @Override
+    public void pagarFactura(PagarFacturaDTOEntrada dto) {
+        CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
+        CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
+        FacturacionService facturacionService = crearFacturacionService();
+
+        Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura()))
+                .orElseThrow(() -> new RuntimeException("Factura no encontrada: " + dto.idFactura()));
+
+        double saldoPendiente = facturacionService.calcularSaldoPendiente(factura);
+        if (dto.monto() <= 0) {
+            throw new IllegalArgumentException("El monto debe ser mayor a $0.00");
+        }
+        if (dto.monto() > saldoPendiente) {
+            throw new IllegalArgumentException("No puedes pagar más de lo que debe ($" + String.format("%.2f", saldoPendiente) + ")");
+        }
+
+        Abono abono = new Abono(dto.monto(), LocalDateTime.now(), true, factura, dto.modalidadPago());
+        abonoDAO.save(abono);
+
+        if (facturacionService.calcularSaldoPendiente(factura) <= 0) {
+            facturacionService.marcarComoPagada(factura);
+        }
     }
 
     private List<Factura> facturasVencidas() {

@@ -18,14 +18,16 @@ public class ServicioCatalogo implements Serializable, Identificable {
     private double tarifaPorUnidad;
     private double costoReactivacion;
     private double tasaInteresDiario;
+    private int diasParaCorte; // días entre el vencimiento y el corte del servicio; configurable por servicio
     private transient CalculoStrategy estrategia;
 
-    public ServicioCatalogo(Empresa empresa, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario) {
+    public ServicioCatalogo(Empresa empresa, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario, int diasParaCorte) {
         this.empresa = empresa;
         this.tipo = tipo;
         this.tipoValor = tipoValor;
         this.costoReactivacion = costoReactivacion;
         this.tasaInteresDiario = tasaInteresDiario;
+        this.diasParaCorte = diasParaCorte;
         this.tarifaFija = 0.0;
         this.tarifaPorUnidad = 0.0;
         asignarEstrategia();
@@ -73,4 +75,7 @@ public class ServicioCatalogo implements Serializable, Identificable {
 
     public double getTasaInteresDiario() { return tasaInteresDiario; }
     public void setTasaInteresDiario(double tasaInteresDiario) { this.tasaInteresDiario = tasaInteresDiario; }
+
+    public int getDiasParaCorte() { return diasParaCorte; }
+    public void setDiasParaCorte(int diasParaCorte) { this.diasParaCorte = diasParaCorte; }
 }

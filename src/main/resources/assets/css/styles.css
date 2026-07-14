@@ -38,3 +38,29 @@
     -fx-shape: " ";
     -fx-padding: 0;
 }
+
+/* Encabezado de TableView: por defecto Modena lo deja gris claro, que desentona
+   con el resto de la app (fondo oscuro). Lo oscurecemos junto con el resto de la tabla */
+.table-view .column-header-background {
+    -fx-background-color: #1a1a1a;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #222222 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #888888;
+    -fx-font-family: 'Courier New';
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #2a2410;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #e8c96d;
+}

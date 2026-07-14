@@ -3,6 +3,7 @@ package servicart.ui.viewmodels.admin;
 public class CorteDetalleViewModel {
     private int idContrato;
     private int idCorte;   // -1 si no aplica (aún no cortado)
+    private int idFactura;
     private boolean cortado;
     private String nombreCliente;
     private String servicio;
@@ -13,12 +14,19 @@ public class CorteDetalleViewModel {
     private String total;
     private String pieTexto; //"12/30 días para corte" o "Servicio cortado"
     private double progresoCorte; //0.0 a 1.0 para la barra de progreso
+    private double saldoPendiente; // deuda + interés, sin costo de reactivación; para prellenar el diálogo de pago
 
     public int getIdContrato() { return idContrato; }
     public void setIdContrato(int idContrato) { this.idContrato = idContrato; }
 
     public int getIdCorte() { return idCorte; }
     public void setIdCorte(int idCorte) { this.idCorte = idCorte; }
+
+    public int getIdFactura() { return idFactura; }
+    public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
+
+    public double getSaldoPendiente() { return saldoPendiente; }
+    public void setSaldoPendiente(double saldoPendiente) { this.saldoPendiente = saldoPendiente; }
 
     public boolean isCortado() { return cortado; }
     public void setCortado(boolean cortado) { this.cortado = cortado; }

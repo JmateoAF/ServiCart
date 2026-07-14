@@ -22,13 +22,13 @@
             <Label text="ADMIN"
                    style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 15 10 15;"/>
             <Region prefHeight="5"/>
-            <Button fx:id="btnDashboard" onAction="#onDashboard" text="⊞ Dashboard" maxWidth="Infinity"
-                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
             <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="👥 Usuarios" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
             <Button fx:id="btnTarifas" onAction="#onTarifas" text="⚙ Tarifas" maxWidth="Infinity"
                     style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 10;"/>
             <Button fx:id="btnCortes" onAction="#onCortes" text="⚠ Cortes/mora" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
+            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="🏢 Empresas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
             <Region VBox.vgrow="ALWAYS"/>
             <Button fx:id="btnSalir" onAction="#onSalir" text="⬅ Salir" maxWidth="Infinity"
@@ -66,10 +66,10 @@
                         </VBox>
                         <VBox spacing="5" HBox.hgrow="ALWAYS">
                             <Label text="DÍAS PARA CORTE" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
-                            <TextField fx:id="txtDiasCorte" editable="false" disable="true" promptText="30"
-                                       style="-fx-background-color: #151515; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #777777; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;">
+                            <TextField fx:id="txtDiasCorte" promptText="15"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;">
                                 <tooltip>
-                                    <Tooltip text="Ventana fija del sistema entre vencimiento y corte (no es configurable por servicio)."/>
+                                    <Tooltip text="Días entre la fecha de vencimiento y el corte del servicio. Solo aplica a facturas emitidas después de guardar este cambio."/>
                                 </tooltip>
                             </TextField>
                         </VBox>

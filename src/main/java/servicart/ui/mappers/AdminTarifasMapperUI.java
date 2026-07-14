@@ -4,9 +4,6 @@ import servicart.domain.dtos.retornos.TarifaDetalleDTORetorno;
 import servicart.ui.viewmodels.admin.ServicioCatalogoViewModel;
 
 public class AdminTarifasMapperUI {
-    // FacturacionService fija vencimiento = emisión+30 días y corte = emisión+45 días:
-    // la ventana entre vencimiento y corte es siempre de 15 días, no es configurable por servicio
-    private static final int DIAS_VENTANA_CORTE = 15;
 
     public static ServicioCatalogoViewModel dtoAViewModel(TarifaDetalleDTORetorno dto) {
         ServicioCatalogoViewModel vm = new ServicioCatalogoViewModel();
@@ -21,12 +18,13 @@ public class AdminTarifasMapperUI {
                 : String.format("%.2f / %s", dto.tarifaBase(), unidad(dto.nombreServicio())));
 
         vm.setInteresMora(String.format("%.2f%%", dto.tasaInteresDiarioPorcentaje()));
-        vm.setDiasParaCorte(DIAS_VENTANA_CORTE + " días tras el vencimiento");
+        vm.setDiasParaCorte(dto.diasParaCorte() + " días tras el vencimiento");
         vm.setCostoReactivacion(String.format("%.2f", dto.costoReactivacion()));
 
         vm.setTarifaBaseValor(dto.tarifaBase());
         vm.setInteresMoraPorcentajeValor(dto.tasaInteresDiarioPorcentaje());
         vm.setCostoReactivacionValor(dto.costoReactivacion());
+        vm.setDiasParaCorteValor(dto.diasParaCorte());
 
         return vm;
     }

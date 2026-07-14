@@ -2,20 +2,24 @@ package servicart.ui.controllers.admin;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import servicart.data.FactoryDAO;
 import servicart.domain.dtos.entradas.CambiarEstadoUsuarioDTOEntrada;
 import servicart.domain.dtos.entradas.UsuarioDTOEntrada;
+import servicart.domain.dtos.retornos.ResumenAdminDTORetorno;
 import servicart.domain.dtos.retornos.UsuarioDTORetorno;
 import servicart.domain.interfaces.AdminUsuarios;
+import servicart.domain.interfaces.PanelAdmin;
+import servicart.domain.services.BdService;
 import servicart.ui.controllers.Navegador;
 import servicart.ui.mappers.AdminUsuariosMapperUI;
 import servicart.ui.viewmodels.admin.UsuarioTablaViewModel;
@@ -23,15 +27,14 @@ import servicart.ui.viewmodels.admin.UsuarioTablaViewModel;
 import java.util.List;
 
 public class AdminUsuariosController {
+    @FXML private Button btnSQLite;
+    @FXML private Button btnBinario;
+    @FXML private Label lblUsuariosActivos;
+    @FXML private Label lblCortados;
+    @FXML private Label lblConMora;
     @FXML private TextField txtBuscar;
     @FXML private Label lblConteo;
-    @FXML private TableView<UsuarioTablaViewModel> tblUsuarios;
-    @FXML private TableColumn<UsuarioTablaViewModel, String> colCedula;
-    @FXML private TableColumn<UsuarioTablaViewModel, String> colNombre;
-    @FXML private TableColumn<UsuarioTablaViewModel, String> colEmail;
-    @FXML private TableColumn<UsuarioTablaViewModel, String> colTelefono;
-    @FXML private TableColumn<UsuarioTablaViewModel, String> colEstado;
-    @FXML private TableColumn<UsuarioTablaViewModel, Void> colAcciones;
+    @FXML private VBox listaUsuarios;
 
     @FXML private TextField txtCedulaForm;
     @FXML private TextField txtNombreForm;
@@ -40,62 +43,84 @@ public class AdminUsuariosController {
     @FXML private ComboBox<String> cmbEstadoForm;
 
     private final AdminUsuarios adminUsuarios;
+    private final PanelAdmin panelAdmin;
     private boolean editando = false;
 
-    public AdminUsuariosController(AdminUsuarios adminUsuarios) { this.adminUsuarios = adminUsuarios; }
+    public AdminUsuariosController(AdminUsuarios adminUsuarios, PanelAdmin panelAdmin) {
+        this.adminUsuarios = adminUsuarios;
+        this.panelAdmin = panelAdmin;
+    }
 
     @FXML
     public void initialize() {
-        colCedula.setCellValueFactory(new PropertyValueFactory<>("cedula"));
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colTelefono.setCellValueFactory(new PropertyValueFactory<>("celular"));
-        colEstado.setCellValueFactory(new PropertyValueFactory<>("activo"));
-        colAcciones.setCellFactory(columna -> crearCeldaAcciones());
-
         cmbEstadoForm.getItems().setAll("Activo", "Inactivo");
 
         txtBuscar.textProperty().addListener((obs, viejo, nuevo) -> cargarUsuarios());
 
         limpiarFormulario();
+        cargarResumen();
         cargarUsuarios();
+        actualizarEstiloToggle(FactoryDAO.obtenerModoActual());
+    }
+
+    private void cargarResumen() {
+        ResumenAdminDTORetorno resumen = panelAdmin.obtenerResumen();
+        lblUsuariosActivos.setText(String.valueOf(resumen.usuariosActivos()));
+        lblCortados.setText(String.valueOf(resumen.cortados()));
+        lblConMora.setText(String.valueOf(resumen.conMora()));
     }
 
     private void cargarUsuarios() {
         List<UsuarioDTORetorno> dtos = adminUsuarios.listarUsuarios(txtBuscar.getText());
         List<UsuarioTablaViewModel> filas = dtos.stream().map(AdminUsuariosMapperUI::dtoAFila).toList();
 
-        tblUsuarios.getItems().setAll(filas);
+        listaUsuarios.getChildren().setAll(filas.stream().map(this::crearFilaUsuario).toList());
         lblConteo.setText(filas.size() + " registros");
     }
 
-    private TableCell<UsuarioTablaViewModel, Void> crearCeldaAcciones() {
-        return new TableCell<>() {
-            private final Button btnEditar = new Button("Editar");
-            private final Button btnEstado = new Button();
-            private final HBox contenedor = new HBox(5, btnEditar, btnEstado);
+    private HBox crearFilaUsuario(UsuarioTablaViewModel u) {
+        Label cedula = new Label(u.getCedula());
+        cedula.setPrefWidth(110);
+        cedula.setStyle("-fx-text-fill: #888888; -fx-font-family: 'Courier New'; -fx-font-size: 15;");
 
-            {
-                btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
-                btnEditar.setOnAction(event -> { cargarEnFormulario(filaActual()); event.consume(); });
-                btnEstado.setOnAction(event -> { onCambiarEstado(filaActual()); event.consume(); });
-            }
+        Label nombre = new Label(u.getNombre());
+        nombre.setPrefWidth(150);
+        nombre.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 15;");
 
-            private UsuarioTablaViewModel filaActual() { return getTableView().getItems().get(getIndex()); }
+        Label email = new Label(u.getEmail());
+        email.setPrefWidth(200);
+        email.setStyle("-fx-text-fill: #888888; -fx-font-size: 15;");
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) { setGraphic(null); return; }
+        Label celular = new Label(u.getCelular());
+        celular.setPrefWidth(110);
+        celular.setStyle("-fx-text-fill: #888888; -fx-font-family: 'Courier New'; -fx-font-size: 15;");
 
-                boolean activo = "Activo".equals(filaActual().getActivo());
-                btnEstado.setText(activo ? "Desactivar" : "Activar");
-                btnEstado.setStyle(activo
-                        ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;"
-                        : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
-                setGraphic(contenedor);
-            }
-        };
+        boolean activo = "Activo".equals(u.getActivo());
+        Label estado = new Label(u.getActivo());
+        estado.setPrefWidth(80);
+        estado.setStyle((activo ? "-fx-text-fill: #27ae60; -fx-background-color: #0f2a18;" : "-fx-text-fill: #c0392b; -fx-background-color: #2a1010;")
+                + " -fx-font-size: 15; -fx-padding: 0 10 0 10; -fx-background-radius: 10;");
+
+        Button btnEditar = new Button("Editar");
+        btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnEditar.setOnAction(event -> { cargarEnFormulario(u); event.consume(); });
+
+        Button btnEstado = new Button(activo ? "Desactivar" : "Activar");
+        btnEstado.setStyle((activo
+                ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a;"
+                : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28;")
+                + " -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnEstado.setOnAction(event -> { onCambiarEstado(u); event.consume(); });
+
+        HBox acciones = new HBox(10, btnEditar, btnEstado);
+
+        Region relleno = new Region();
+        HBox.setHgrow(relleno, Priority.ALWAYS);
+
+        HBox fila = new HBox(15, cedula, nombre, email, celular, estado, acciones, relleno);
+        fila.setAlignment(Pos.CENTER_LEFT);
+        fila.setStyle("-fx-padding: 10 15 10 15; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;");
+        return fila;
     }
 
     private void cargarEnFormulario(UsuarioTablaViewModel fila) {
@@ -112,12 +137,6 @@ public class AdminUsuariosController {
         boolean nuevoEstado = !"Activo".equals(fila.getActivo());
         adminUsuarios.cambiarEstado(new CambiarEstadoUsuarioDTOEntrada(fila.getCedula(), nuevoEstado));
         cargarUsuarios();
-    }
-
-    @FXML
-    private void onNuevoUsuario(ActionEvent event) {
-        limpiarFormulario();
-        event.consume();
     }
 
     @FXML
@@ -176,9 +195,40 @@ public class AdminUsuariosController {
         alerta.showAndWait();
     }
 
-    @FXML private void onDashboard(ActionEvent event) { Navegador.irA("views/admin/adminDashboard.fxml"); event.consume(); }
+    @FXML
+    private void onSeleccionarSQLite(ActionEvent event) {
+        cambiarModo("SQLite");
+        event.consume();
+    }
+
+    @FXML
+    private void onSeleccionarBinario(ActionEvent event) {
+        cambiarModo("Binario");
+        event.consume();
+    }
+
+    private void cambiarModo(String modo) {
+        BdService.configurarBaseDatos(modo);
+        cargarResumen();
+        cargarUsuarios();
+        actualizarEstiloToggle(modo);
+    }
+
+    private void actualizarEstiloToggle(String modoActivo) {
+        boolean sqlite = "SQLite".equalsIgnoreCase(modoActivo);
+        btnSQLite.setStyle(estiloToggle(sqlite) + " -fx-background-radius: 5 0 0 5;");
+        btnBinario.setStyle(estiloToggle(!sqlite) + " -fx-background-radius: 0 5 5 0;");
+    }
+
+    private String estiloToggle(boolean activo) {
+        return activo
+                ? "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;"
+                : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;";
+    }
+
     @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
     @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
     @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
+    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
     @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
 }

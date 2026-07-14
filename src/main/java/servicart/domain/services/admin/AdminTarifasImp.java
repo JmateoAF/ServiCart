@@ -24,6 +24,13 @@ public class AdminTarifasImp implements AdminTarifas {
     public void actualizarTarifa(ActualizarTarifaDTOEntrada dto) {
         CrudDAO<ServicioCatalogo> servicioDAO = FactoryDAO.getDAO(ServicioCatalogo.class);
 
+        if (dto.tarifaBase() < 0 || dto.tasaInteresDiarioPorcentaje() < 0 || dto.costoReactivacion() < 0) {
+            throw new IllegalArgumentException("Los valores no pueden ser negativos");
+        }
+        if (dto.diasParaCorte() <= 0) {
+            throw new IllegalArgumentException("Los días para corte deben ser mayores a 0");
+        }
+
         ServicioCatalogo servicio = servicioDAO.findId(String.valueOf(dto.idServicio()))
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado: " + dto.idServicio()));
 
@@ -34,6 +41,7 @@ public class AdminTarifasImp implements AdminTarifas {
 
         servicio.setTasaInteresDiario(dto.tasaInteresDiarioPorcentaje() / 100);
         servicio.setCostoReactivacion(dto.costoReactivacion());
+        servicio.setDiasParaCorte(dto.diasParaCorte());
 
         servicioDAO.update(servicio);
     }

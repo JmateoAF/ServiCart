@@ -1,9 +1,8 @@
-package servicart.domain.dtos.retornos;
+package servicart.domain.dtos.entradas;
 
-public record TarifaDetalleDTORetorno(
-        int id,
-        String nombreServicio,
-        String empresa,
+public record CrearServicioDTOEntrada(
+        int idEmpresa,
+        String tipoServicio,
         String tipoValor,
         double tarifaBase,
         double tasaInteresDiarioPorcentaje,

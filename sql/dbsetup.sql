@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS ServicioCatalogo (
     tarifaPorUnidad REAL NOT NULL DEFAULT 0.0,
     costoReactivacion REAL NOT NULL,
     tasaInteresDiario REAL NOT NULL DEFAULT 0.01,
+    diasParaCorte INTEGER NOT NULL DEFAULT 15,
     CONSTRAINT fkEmpresa FOREIGN KEY (idEmpresa) REFERENCES Empresa(id)
 );
 
@@ -108,8 +109,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_contrato_natural
 CREATE UNIQUE INDEX IF NOT EXISTS ux_factura_natural
     ON Factura(idContrato, fechaEmision);
 
-CREATE UNIQUE INDEX IF NOT EXISTS ux_abono_natural
-    ON Abono(idFactura, fechaPago, monto);
+-- Sin índice único de clave natural para Abono: a diferencia de Factura/Contrato/etc.,
+-- nunca se siembra por script (los pagos los genera la propia app), y (idFactura, fechaPago,
+-- monto) puede colisionar legítimamente si dos abonos reales coinciden en monto dentro del
+-- mismo segundo (fechaPago solo guarda hasta segundos) — el DAO binario tampoco impone esta
+-- restricción, así que aquí tampoco debería.
 
 CREATE UNIQUE INDEX IF NOT EXISTS ux_interesmora_natural
     ON InteresMora(idFactura, fechaCalculo);

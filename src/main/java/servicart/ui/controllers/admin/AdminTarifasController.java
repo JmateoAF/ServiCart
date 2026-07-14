@@ -100,7 +100,7 @@ public class AdminTarifasController {
         lblFormularioTitulo.setText("EDITAR TARIFA — " + vm.getNombreServicio());
         txtTarifaBase.setText(String.valueOf(vm.getTarifaBaseValor()));
         txtInteresMora.setText(String.valueOf(vm.getInteresMoraPorcentajeValor()));
-        txtDiasCorte.setText(vm.getDiasParaCorte());
+        txtDiasCorte.setText(String.valueOf(vm.getDiasParaCorteValor()));
         txtCostoReactivacion.setText(String.valueOf(vm.getCostoReactivacionValor()));
     }
 
@@ -115,13 +115,15 @@ public class AdminTarifasController {
         double tarifaBase;
         double interesMora;
         double costoReactivacion;
+        int diasParaCorte;
 
         try {
             tarifaBase = Double.parseDouble(txtTarifaBase.getText().trim().replace(",", "."));
             interesMora = Double.parseDouble(txtInteresMora.getText().trim().replace(",", "."));
             costoReactivacion = Double.parseDouble(txtCostoReactivacion.getText().trim().replace(",", "."));
+            diasParaCorte = Integer.parseInt(txtDiasCorte.getText().trim());
         } catch (NumberFormatException ex) {
-            mostrarError("Ingresa valores numéricos válidos");
+            mostrarError("Ingresa valores numéricos válidos (días para corte debe ser un número entero)");
             event.consume();
             return;
         }
@@ -131,8 +133,19 @@ public class AdminTarifasController {
             event.consume();
             return;
         }
+        if (diasParaCorte <= 0) {
+            mostrarError("Los días para corte deben ser mayores a 0");
+            event.consume();
+            return;
+        }
 
-        adminTarifas.actualizarTarifa(new ActualizarTarifaDTOEntrada(idSeleccionado, tarifaBase, interesMora, costoReactivacion));
+        try {
+            adminTarifas.actualizarTarifa(new ActualizarTarifaDTOEntrada(idSeleccionado, tarifaBase, interesMora, costoReactivacion, diasParaCorte));
+        } catch (RuntimeException ex) {
+            mostrarError(ex.getMessage());
+            event.consume();
+            return;
+        }
 
         limpiarFormulario();
         cargarTarifas();
@@ -161,9 +174,9 @@ public class AdminTarifasController {
         alerta.showAndWait();
     }
 
-    @FXML private void onDashboard(ActionEvent event) { Navegador.irA("views/admin/adminDashboard.fxml"); event.consume(); }
     @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
     @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
     @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
+    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
     @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
 }

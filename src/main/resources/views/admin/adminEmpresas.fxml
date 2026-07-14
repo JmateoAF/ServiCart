@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefWidth="1000" prefHeight="660"
+            style="-fx-background-color: #0f0f0f;"
+            stylesheets="@../../assets/css/styles.css"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="servicart.ui.controllers.admin.AdminEmpresasController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
+            <Label text="SERVICART ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-font-size: 25;"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="200"
+              style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
+            <Label text="ADMIN"
+                   style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 15 10 15;"/>
+            <Region prefHeight="5"/>
+            <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="👥 Usuarios" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
+            <Button fx:id="btnTarifas" onAction="#onTarifas" text="⚙ Tarifas" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
+            <Button fx:id="btnCortes" onAction="#onCortes" text="⚠ Cortes/mora" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
+            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="🏢 Empresas" maxWidth="Infinity"
+                    style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 10;"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Button fx:id="btnSalir" onAction="#onSalir" text="⬅ Salir" maxWidth="Infinity"
+                    style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
+            <VBox spacing="10" style="-fx-background-color: #0f0f0f; -fx-padding: 15 20 20 20;">
+
+                <!-- Empresas -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT"
+                          style="-fx-padding: 10 15 10 15; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
+                        <Label text="EMPRESAS" style="-fx-text-fill: #555555; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                    </HBox>
+                    <HBox spacing="15" style="-fx-padding: 10 15 10 15; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;">
+                        <Label prefWidth="250" text="NOMBRE" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Label text="SERVICIOS" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                    </HBox>
+                    <VBox fx:id="listaEmpresas" />
+                </VBox>
+
+                <!-- Formulario nueva empresa -->
+                <VBox spacing="15" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
+                    <Label text="NUEVA EMPRESA"
+                           style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 0 10 0;"/>
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="NOMBRE" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <TextField fx:id="txtNombreEmpresaForm" promptText="Nombre de la empresa"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
+                        </VBox>
+                        <Button onAction="#onGuardarEmpresa" text="+ Agregar empresa"
+                                style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Servicios -->
+                <VBox style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox alignment="CENTER_LEFT"
+                          style="-fx-padding: 10 15 10 15; -fx-border-color: #222222; -fx-border-width: 0 0 1 0;">
+                        <Label text="SERVICIOS" style="-fx-text-fill: #555555; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                    </HBox>
+                    <HBox spacing="15" style="-fx-padding: 10 15 10 15; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;">
+                        <Label prefWidth="150" text="EMPRESA" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Label prefWidth="150" text="SERVICIO" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Label prefWidth="90" text="TIPO" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Label prefWidth="150" text="TARIFA" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Label text="ACCIONES" style="-fx-text-fill: #444444; -fx-font-family: 'Courier New'; -fx-font-size: 15;"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                    </HBox>
+                    <VBox fx:id="listaServicios" />
+                </VBox>
+
+                <!-- Formulario nuevo servicio -->
+                <VBox spacing="15" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
+                    <Label text="NUEVO SERVICIO"
+                           style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 0 10 0;"/>
+                    <HBox spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="EMPRESA" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <ComboBox fx:id="cmbEmpresaForm" maxWidth="Infinity" promptText="Selecciona empresa"
+                                      style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="TIPO DE SERVICIO" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <ComboBox fx:id="cmbTipoServicioForm" maxWidth="Infinity" promptText="AGUA / LUZ / BASURA / INTERNET"
+                                      style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="TIPO DE TARIFA" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <ComboBox fx:id="cmbTipoValorForm" maxWidth="Infinity" promptText="FIJO / VARIABLE"
+                                      style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="10">
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="TARIFA BASE" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <TextField fx:id="txtTarifaBaseForm" promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="INTERÉS MORA DIARIO (%)" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <TextField fx:id="txtInteresMoraForm" promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="COSTO REACTIVACIÓN ($)" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <TextField fx:id="txtCostoReactivacionForm" promptText="0.00"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
+                        </VBox>
+                        <VBox spacing="5" HBox.hgrow="ALWAYS">
+                            <Label text="DÍAS PARA CORTE" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                            <TextField fx:id="txtDiasCorteForm" promptText="15"
+                                       style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
+                        </VBox>
+                    </HBox>
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button onAction="#onGuardarServicio" text="+ Agregar servicio"
+                                style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

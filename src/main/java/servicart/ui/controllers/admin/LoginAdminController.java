@@ -50,7 +50,7 @@ public class LoginAdminController {
         avm = LoginAdminMapperUI.DTOAviewModel(dtoRetorno);
 
         if(usuario.equals(avm.getUsuario()) && contrasenia.equals(avm.getContrasenia())) {
-            Navegador.irA("views/admin/adminDashboard.fxml");
+            Navegador.irA("views/admin/adminUsuarios.fxml");
         } else {
             mostrarError("Ingrese sus credenciales correctamente");
             return;
