@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +15,11 @@ public class EmpresaSQLiteDAO implements CrudDAO<Empresa> {
     @Override
     public void save(Empresa e) {
         String sql = "INSERT INTO Empresa (nombre) VALUES (?)";
-        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (Connection con = ConexionSQLite.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, e.getNombre());
             stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) e.setId(rs.getInt(1)); }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

@@ -12,7 +12,6 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import servicart.data.FactoryDAO;
 import servicart.domain.dtos.entradas.ForzarCorteDTOEntrada;
@@ -141,8 +140,6 @@ public class AdminCortesController {
             tarjeta.getChildren().add(filaInfo("Costo reactivación", vm.getCostoReactivacion(), "#aaaaaa"));
         }
 
-        tarjeta.getChildren().add(crearBarraProgreso(vm));
-
         Label lblPie = new Label(vm.getPieTexto());
         lblPie.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
         Label lblTotal = new Label((vm.isCortado() ? "Total con reactivación: $" : "Total: $") + vm.getTotal());
@@ -173,31 +170,6 @@ public class AdminCortesController {
         return tarjeta;
     }
 
-    private StackPane crearBarraProgreso(CorteDetalleViewModel vm) {
-        StackPane fondo = new StackPane();
-        fondo.setPrefHeight(4);
-        fondo.setStyle("-fx-background-color: #1e1e1e; -fx-background-radius: 2;");
-
-        HBox contenedor = new HBox();
-        contenedor.setAlignment(Pos.CENTER_LEFT);
-
-        Region relleno = new Region();
-        relleno.setPrefHeight(4);
-
-        if (vm.isCortado()) {
-            relleno.setMaxWidth(Double.MAX_VALUE);
-            HBox.setHgrow(relleno, Priority.ALWAYS);
-            relleno.setStyle("-fx-background-color: #c0392b; -fx-background-radius: 2;");
-        } else {
-            relleno.setPrefWidth(Math.max(4, vm.getProgresoCorte() * 220));
-            relleno.setStyle("-fx-background-color: #e07b39; -fx-background-radius: 2;");
-        }
-
-        contenedor.getChildren().add(relleno);
-        fondo.getChildren().add(contenedor);
-        return fondo;
-    }
-
     private HBox filaInfo(String etiqueta, String valor, String colorValor) {
         Label lblEtiqueta = new Label(etiqueta);
         lblEtiqueta.setStyle("-fx-text-fill: #555555; -fx-font-size: 15;");
@@ -213,14 +185,15 @@ public class AdminCortesController {
     }
 
     private double parseCosto(String costoReactivacionTexto) {
-        return costoReactivacionTexto == null ? 0 : Double.parseDouble(costoReactivacionTexto);
+        return costoReactivacionTexto == null ? 0 : Double.parseDouble(costoReactivacionTexto.replace(",", "."));
     }
 
     // Pago rápido desde el panel admin: registra un abono ya resuelto (pagoRealizado=true)
     // directamente sobre la factura, sin pasar por el carrito del cliente. Se asume transferencia
     // porque es un pago que el admin está reconciliando manualmente, no una modalidad elegida por el cliente
     private void onPagar(int idFactura, String nombreCliente, double saldoSugerido) {
-        TextInputDialog dialogo = new TextInputDialog(String.format("%.2f", saldoSugerido));
+        TextInputDialog dialogo = new TextInputDialog();
+        Navegador.estilizarDialogo(dialogo);
         dialogo.setTitle("Registrar pago");
         dialogo.setHeaderText(null);
         dialogo.setContentText("Monto a pagar de " + nombreCliente + " (máximo $" + String.format("%.2f", saldoSugerido) + "):");
@@ -246,6 +219,7 @@ public class AdminCortesController {
 
     private void onForzarCorte(int idContrato, String nombreCliente) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        Navegador.estilizarDialogo(confirmacion);
         confirmacion.setTitle("Forzar corte");
         confirmacion.setHeaderText(null);
         confirmacion.setContentText("¿Forzar el corte del servicio de " + nombreCliente + "? Esta acción no se puede deshacer");
@@ -262,7 +236,8 @@ public class AdminCortesController {
     }
 
     private void onReactivar(int idCorte, String nombreCliente, double costoRequerido) {
-        TextInputDialog dialogo = new TextInputDialog(String.format("%.2f", costoRequerido));
+        TextInputDialog dialogo = new TextInputDialog();
+        Navegador.estilizarDialogo(dialogo);
         dialogo.setTitle("Reactivar servicio");
         dialogo.setHeaderText(null);
         dialogo.setContentText("Monto pagado por reactivación de " + nombreCliente + " (mínimo $" + String.format("%.2f", costoRequerido) + "):");
@@ -293,6 +268,7 @@ public class AdminCortesController {
 
     private void mostrarError(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
+        Navegador.estilizarDialogo(alerta);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();

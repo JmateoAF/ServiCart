@@ -7,6 +7,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Factura implements Serializable, Identificable {
+    // Días de gracia entre el corte del servicio y la terminación automática del contrato
+    // (debe coincidir con GestionAutomaticaEmpresaJob.DIAS_CORTADO_PARA_TERMINAR)
+    public static final long DIAS_GRACIA_POST_CORTE = 30;
+
     private int id;
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;
@@ -28,7 +32,9 @@ public class Factura implements Serializable, Identificable {
     }
     public long diasDeRetraso() {
         if (!estaVencida()) return 0;
-        return ChronoUnit.DAYS.between(fechaVencimiento, LocalDateTime.now());
+        long dias = ChronoUnit.DAYS.between(fechaVencimiento, LocalDateTime.now());
+        long topeMaximo = contrato.getServicio().getDiasParaCorte() + DIAS_GRACIA_POST_CORTE;
+        return Math.min(dias, topeMaximo);
     }
 
     public double interesAcumulado() {

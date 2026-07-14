@@ -13,7 +13,6 @@ public class CorteDetalleViewModel {
     private String costoReactivacion;
     private String total;
     private String pieTexto; //"12/30 días para corte" o "Servicio cortado"
-    private double progresoCorte; //0.0 a 1.0 para la barra de progreso
     private double saldoPendiente; // deuda + interés, sin costo de reactivación; para prellenar el diálogo de pago
 
     public int getIdContrato() { return idContrato; }
@@ -54,7 +53,4 @@ public class CorteDetalleViewModel {
 
     public String getPieTexto() { return pieTexto; }
     public void setPieTexto(String pieTexto) { this.pieTexto = pieTexto; }
-
-    public double getProgresoCorte() { return progresoCorte; }
-    public void setProgresoCorte(double progresoCorte) { this.progresoCorte = progresoCorte; }
 }

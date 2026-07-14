@@ -30,9 +30,7 @@ public class AdminCortesMapperUI {
         vm.setCostoReactivacion(null);
         vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado()));
         vm.setSaldoPendiente(dto.deudaOriginal() + dto.interesAcumulado());
-        vm.setPieTexto(dto.diasMora() + "/" + dto.ventanaDias() + " días para corte");
-        double ventana = dto.ventanaDias() <= 0 ? 1 : dto.ventanaDias();
-        vm.setProgresoCorte(Math.min(1.0, dto.diasMora() / ventana));
+        vm.setPieTexto(Math.min(dto.diasMora(), dto.ventanaDias()) + "/" + dto.ventanaDias() + " días para corte");
         return vm;
     }
 
@@ -51,7 +49,6 @@ public class AdminCortesMapperUI {
         vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado() + dto.costoReactivacion()));
         vm.setSaldoPendiente(dto.deudaOriginal() + dto.interesAcumulado());
         vm.setPieTexto("Servicio cortado");
-        vm.setProgresoCorte(1.0);
         return vm;
     }
 

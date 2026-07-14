@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class GestionAutomaticaEmpresaJob {
 
     private static final int DIA_FACTURACION_MES = 20; // día fijo del mes en que se emite
-    private static final long DIAS_CORTADO_PARA_TERMINAR = 30;
+    private static final long DIAS_CORTADO_PARA_TERMINAR = Factura.DIAS_GRACIA_POST_CORTE;
 
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "hilo-gestion-automatica-empresa");

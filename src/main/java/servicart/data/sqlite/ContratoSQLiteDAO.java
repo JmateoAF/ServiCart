@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,15 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
     @Override
     public void save(Contrato c) {
         String sql = "INSERT INTO Contrato (fechaInicio, fechaFin, causaTerminacion, idServicio, idCliente) VALUES (?, ?, ?, ?, ?)";
-        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (Connection con = ConexionSQLite.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, FechaSQLite.formatear(c.getFechaInicio()));
             stmt.setString(2, c.getFechaFin() != null ? FechaSQLite.formatear(c.getFechaFin()) : null);
             stmt.setInt(3, c.getCausaTerminacion().getCodigo());
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
             stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) c.setId(rs.getInt(1)); }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

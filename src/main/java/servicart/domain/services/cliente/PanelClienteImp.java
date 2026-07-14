@@ -8,6 +8,7 @@ import servicart.domain.dtos.retornos.ServicioContratadoDTORetorno;
 import servicart.domain.interfaces.PanelCliente;
 import servicart.domain.mappers.PanelClienteMapperDomain;
 import servicart.domain.services.empresa.ContratoService;
+import servicart.domain.services.empresa.CorteService;
 import servicart.domain.services.empresa.FacturacionService;
 import servicart.entities.*;
 import servicart.entities.enums.EstadoFactura;
@@ -24,6 +25,7 @@ public class PanelClienteImp implements PanelCliente {
     public List<ServicioContratadoDTORetorno> listarServiciosContratados(PanelClienteDTOEntrada dto) {
         ContratoService contratoService = new ContratoService(FactoryDAO.getDAO(Contrato.class));
         FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class), FactoryDAO.getDAO(Abono.class));
+        CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
 
         return contratoService.buscarPorCliente(dto.cedula()).stream()
                 .map(contrato -> {
@@ -35,7 +37,7 @@ public class PanelClienteImp implements PanelCliente {
                     Map<Integer, Double> saldosPendientes = pendientes.stream()
                             .collect(Collectors.toMap(Factura::getId, facturacionService::calcularSaldoPendiente));
 
-                    boolean estaCortado = estaCortado(pendientes);
+                    boolean estaCortado = corteService.buscarCorteVigente(contrato.getId()).isPresent();
                     double deudaTotal = saldosPendientes.values().stream().mapToDouble(Double::doubleValue).sum();
 
                     return PanelClienteMapperDomain.entidadADTO(contrato, pendientes, estaCortado, deudaTotal, saldosPendientes);
@@ -77,9 +79,5 @@ public class PanelClienteImp implements PanelCliente {
         Abono abono = new Abono(dto.monto(), LocalDateTime.now(), false, factura, ModalidadPago.TC);
         abonoDAO.save(abono);
         carritoService.agregarAbono(cliente, abono);
-    }
-
-    public boolean estaCortado(List<Factura> pendientes) {
-        return pendientes.stream().anyMatch(Factura::superaFechaCorte);
     }
 }

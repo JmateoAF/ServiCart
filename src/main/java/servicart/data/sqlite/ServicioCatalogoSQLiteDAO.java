@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,8 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
     @Override
     public void save(ServicioCatalogo s) {
         String sql = "INSERT INTO ServicioCatalogo (idEmpresa, tipoServicio, tipoValor, tarifaFija, tarifaPorUnidad, costoReactivacion, tasaInteresDiario, diasParaCorte) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (Connection con = ConexionSQLite.conectar();
+             PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, s.getEmpresa().getId());
             stmt.setInt(2, s.getTipo().getCodigo());
             stmt.setInt(3, s.getTipoValor().getCodigo());
@@ -29,6 +31,7 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
             stmt.setDouble(7, s.getTasaInteresDiario());
             stmt.setInt(8, s.getDiasParaCorte());
             stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) s.setId(rs.getInt(1)); }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

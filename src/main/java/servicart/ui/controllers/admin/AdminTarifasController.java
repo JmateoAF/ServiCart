@@ -169,6 +169,7 @@ public class AdminTarifasController {
 
     private void mostrarError(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
+        Navegador.estilizarDialogo(alerta);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();

@@ -2,6 +2,7 @@ package servicart.ui.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Dialog;
 import javafx.stage.Stage;
 import servicart.domain.interfaces.*;
 import servicart.domain.services.admin.AdminCortesImp;
@@ -37,6 +38,12 @@ public class Navegador {
     private static final AdminEmpresas adminEmpresas = new AdminEmpresasImp();
 
     public static void inicializar(Stage stage) { Navegador.stage = stage; }
+
+    public static void estilizarDialogo(Dialog<?> dialog) {
+        dialog.getDialogPane().getStylesheets().add(
+                Objects.requireNonNull(ClassLoader.getSystemResource("assets/css/styles.css")).toExternalForm());
+        dialog.getDialogPane().setGraphic(null);
+    }
 
     public static void irA(String rutaFXML) {
         try {

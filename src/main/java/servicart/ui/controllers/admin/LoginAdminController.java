@@ -9,6 +9,7 @@ import servicart.domain.dtos.entradas.LoginAdminDTOEntrada;
 import servicart.domain.dtos.retornos.LoginAdminDTORetorno;
 import servicart.domain.interfaces.LoginAdmin;
 import servicart.domain.services.BdService;
+import servicart.domain.services.empresa.GestorProcesosEmpresa;
 import servicart.ui.controllers.Navegador;
 import servicart.ui.mappers.LoginAdminMapperUI;
 import servicart.ui.viewmodels.admin.LoginAdminViewModel;
@@ -33,6 +34,7 @@ public class LoginAdminController {
         }
 
         BdService.configurarBaseDatos("SQLite");
+        GestorProcesosEmpresa.iniciarSiEsNecesario();
 
         LoginAdminViewModel avm = new LoginAdminViewModel();
         avm.setUsuario(usuario);

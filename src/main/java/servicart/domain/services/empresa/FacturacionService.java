@@ -18,7 +18,7 @@ public class FacturacionService {
     public Factura emitirFactura(Contrato contrato, double consumo) {
         double monto = contrato.getServicio().calcularMonto(consumo);
         LocalDateTime ahora = LocalDateTime.now();
-        LocalDateTime vencimiento = ahora.plusDays(30);
+        LocalDateTime vencimiento = ahora.plusDays(7);
         LocalDateTime corte = vencimiento.plusDays(contrato.getServicio().getDiasParaCorte());
 
         Factura factura = new Factura(ahora, vencimiento, corte, monto, contrato);

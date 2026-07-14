@@ -95,13 +95,13 @@ public class DatosSeeder {
             // Todas nacen en estado PENDIENTE, igual que las crea FacturacionService.emitirFactura();
             // es la propia gestión automática la que las hace avanzar a VENCIDA/cortada.
             Factura facturaPendiente = new Factura(
-                    ahora.minusDays(10), ahora.plusDays(20), ahora.plusDays(35), 46.80, contrato1);
+                    ahora.minusDays(3), ahora.plusDays(4), ahora.plusDays(19), 46.80, contrato1);
 
             Factura facturaVencidaSinCortar = new Factura(
-                    ahora.minusDays(40), ahora.minusDays(10), ahora.plusDays(5), 35.0, contrato2);
+                    ahora.minusDays(19), ahora.minusDays(12), ahora.plusDays(3), 35.0, contrato2);
 
             Factura facturaVencidaYaCortada = new Factura(
-                    ahora.minusDays(75), ahora.minusDays(45), ahora.minusDays(30), 44.10, contrato1);
+                    ahora.minusDays(30), ahora.minusDays(23), ahora.minusDays(8), 44.10, contrato1);
 
             ponerEnArchivo(new FacturaBinarioDAO(),
                     List.of(facturaPendiente, facturaVencidaSinCortar, facturaVencidaYaCortada),

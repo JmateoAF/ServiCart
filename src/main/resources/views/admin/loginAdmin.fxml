@@ -32,7 +32,7 @@
 
                 <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: #2a1010; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Courier New'; -fx-text-fill: #e74c3c; -fx-font-size: 15;" visible="false" wrapText="true" />
 
-                <Button maxWidth="Infinity" onAction="#onIniciarSesion" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 15; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 0 10 0; -fx-cursor: hand;" text="INGRESAR" />
+                <Button defaultButton="true" maxWidth="Infinity" onAction="#onIniciarSesion" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 15; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 0 10 0; -fx-cursor: hand;" text="INGRESAR" />
 
                 <Separator />
 

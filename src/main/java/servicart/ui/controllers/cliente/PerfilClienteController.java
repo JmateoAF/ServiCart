@@ -127,6 +127,7 @@ public class PerfilClienteController {
 
     private void onCancelarContrato(int idContrato) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        Navegador.estilizarDialogo(confirmacion);
         confirmacion.setTitle("Cancelar servicio");
         confirmacion.setHeaderText(null);
         confirmacion.setContentText("¿Seguro que deseas cancelar este servicio? Esta acción no se puede deshacer");

@@ -91,6 +91,7 @@ public class CarritoController {
     @FXML
     private void onVaciarCarrito(ActionEvent event) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        Navegador.estilizarDialogo(confirmacion);
         confirmacion.setTitle("Vaciar carrito");
         confirmacion.setHeaderText(null);
         confirmacion.setContentText("¿Seguro que deseas quitar todos los abonos del carrito?");

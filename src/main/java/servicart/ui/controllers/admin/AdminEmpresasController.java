@@ -177,6 +177,7 @@ public class AdminEmpresasController {
 
     private void onQuitarServicio(int idServicio, String descripcion) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+        Navegador.estilizarDialogo(confirmacion);
         confirmacion.setTitle("Quitar servicio");
         confirmacion.setHeaderText(null);
         confirmacion.setContentText("¿Quitar " + descripcion + " del catálogo? Esta acción no se puede deshacer");
@@ -204,6 +205,7 @@ public class AdminEmpresasController {
 
     private void mostrarError(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.ERROR);
+        Navegador.estilizarDialogo(alerta);
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();

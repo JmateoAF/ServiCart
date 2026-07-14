@@ -36,7 +36,7 @@
 
                 <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 10 5 10;" visible="false" wrapText="true" />
 
-                <Button maxHeight="-Infinity" maxWidth="Infinity" onAction="#onBuscarDeudas" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 10 0 10 0;" text="BUSCAR MIS DEUDAS" />
+                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="Infinity" onAction="#onBuscarDeudas" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 10 0 10 0;" text="BUSCAR MIS DEUDAS" />
 
                 <Region prefHeight="10.0" />
                 <Separator />
