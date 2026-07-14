@@ -35,8 +35,8 @@ public class ServicioCatalogo implements Serializable, Identificable {
 
     private void asignarEstrategia() {
         this.estrategia = switch (tipoValor) {
-            case FIJO -> new CalculoFijo();
-            case VARIABLE -> new CalculoVariable();
+            case FIJO -> new ServicioFijo();
+            case VARIABLE -> new ServicioVariable();
         };
     }
 
