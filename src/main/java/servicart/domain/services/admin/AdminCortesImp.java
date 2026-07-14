@@ -38,17 +38,20 @@ public class AdminCortesImp implements AdminCortes {
     @Override
     public List<FacturaEnMoraDTORetorno> listarEnMoraSinCorte() {
         CorteService corteService = crearCorteService();
+        FacturacionService facturacionService = crearFacturacionService();
 
         return facturasVencidas().stream()
                 .filter(f -> corteService.buscarCorteVigente(f.getContrato().getId()).isEmpty())
-                .map(AdminCortesMapperDomain::enMoraADTO)
+                .map(f -> AdminCortesMapperDomain.enMoraADTO(f, facturacionService.calcularSaldoPendiente(f)))
                 .toList();
     }
 
     @Override
     public List<CorteDTORetorno> listarCortados() {
+        FacturacionService facturacionService = crearFacturacionService();
+
         return crearCorteService().buscarCortados().stream()
-                .map(AdminCortesMapperDomain::corteADTO)
+                .map(c -> AdminCortesMapperDomain.corteADTO(c, facturacionService.calcularSaldoPendiente(c.getFactura())))
                 .toList();
     }
 
@@ -93,7 +96,7 @@ public class AdminCortesImp implements AdminCortes {
         if (dto.monto() <= 0) {
             throw new IllegalArgumentException("El monto debe ser mayor a $0.00");
         }
-        if (dto.monto() > saldoPendiente) {
+        if (dto.monto() > saldoPendiente + 0.005) {
             throw new IllegalArgumentException("No puedes pagar más de lo que debe ($" + String.format("%.2f", saldoPendiente) + ")");
         }
 

@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ClaudeCodeEditorTabs">
-    <option name="activeSessionId" value="b9c2ad95-d2ef-42b5-b42b-dcf84f768fca" />
-    <option name="openSessionIds">
-      <list>
-        <option value="b9c2ad95-d2ef-42b5-b42b-dcf84f768fca" />
-      </list>
-    </option>
-    <option name="sessionPaths">
-      <map>
-        <entry key="b9c2ad95-d2ef-42b5-b42b-dcf84f768fca" value="/sessions/6e1020a0-c071-4000-ab08-3217c1cdc259" />
-      </map>
-    </option>
     <option name="sessionTitles">
       <map>
         <entry key="26bac415-a21d-4d3e-83b1-c873f57300bc" value="localhost:41841/sessions/new?workingDir=%2Fhome%2Fjmateoaf%2FEscritorio%2FUniversidad%2FCuarto+ciclo%2FProgramacion+3%2FServiCart&amp;panelId=8b21779b-5823-4809-8909-0e9f601ae5a1&amp;theme=dark" />
-        <entry key="b9c2ad95-d2ef-42b5-b42b-dcf84f768fca" value="puedes leer todos los archivos de este proyecto?" />
       </map>
     </option>
   </component>

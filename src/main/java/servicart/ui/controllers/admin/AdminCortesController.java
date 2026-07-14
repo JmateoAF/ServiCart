@@ -142,7 +142,7 @@ public class AdminCortesController {
 
         Label lblPie = new Label(vm.getPieTexto());
         lblPie.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
-        Label lblTotal = new Label((vm.isCortado() ? "Total con reactivación: $" : "Total: $") + vm.getTotal());
+        Label lblTotal = new Label((vm.isCortado() ? "Saldo pendiente + reactivación: $" : "Saldo pendiente: $") + vm.getTotal());
         lblTotal.setStyle("-fx-text-fill: #444444; -fx-font-size: 15;");
         tarjeta.getChildren().add(new HBox(lblPie, espaciador(), lblTotal));
 
@@ -253,7 +253,7 @@ public class AdminCortesController {
             return;
         }
 
-        if (monto < costoRequerido) {
+        if (monto < costoRequerido - 0.005) {
             mostrarError("El monto debe ser al menos $" + String.format("%.2f", costoRequerido));
             return;
         }

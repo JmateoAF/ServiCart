@@ -10,5 +10,6 @@ public record CorteDTORetorno(
         long diasCortado,
         double deudaOriginal,
         double interesAcumulado,
+        double saldoPendiente,
         double costoReactivacion
 ) { }

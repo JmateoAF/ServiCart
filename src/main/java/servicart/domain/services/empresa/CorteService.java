@@ -28,7 +28,7 @@ public class CorteService {
     // El costo de reactivación se cobra aparte al reactivar (más abajo), no se suma a la factura
     public void reactivarServicio(CorteServicio corte, double costoPagado) {
         double costoRequerido = corte.getContrato().getServicio().getCostoReactivacion();
-        if (costoPagado < costoRequerido) {
+        if (costoPagado < costoRequerido - 0.005) {
             throw new IllegalArgumentException("El costo de reactivación debe ser al menos $" + costoRequerido);
         }
         corte.setEstadoCorte(EstadoCorte.ACTIVO);

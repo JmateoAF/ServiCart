@@ -9,6 +9,7 @@ public record FacturaEnMoraDTORetorno(
         long diasMora,
         double deudaOriginal,
         double interesAcumulado,
+        double saldoPendiente,
         long diasParaCorte,
         long ventanaDias
 ) { }

@@ -69,7 +69,7 @@ public class PanelClienteImp implements PanelCliente {
         }
 
         double saldoPendiente = facturacionService.calcularSaldoPendiente(factura);
-        if (dto.monto() > saldoPendiente) {
+        if (dto.monto() > saldoPendiente + 0.005) {
             throw new IllegalArgumentException("No puedes abonar más del saldo pendiente ($ " + String.format("%.2f", saldoPendiente) + ")");
         }
 

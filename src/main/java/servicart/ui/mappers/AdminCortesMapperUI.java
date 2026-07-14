@@ -28,8 +28,8 @@ public class AdminCortesMapperUI {
         vm.setDeudaOriginal(String.format("%.2f", dto.deudaOriginal()));
         vm.setInteresAcumulado(String.format("+ $%.2f", dto.interesAcumulado()));
         vm.setCostoReactivacion(null);
-        vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado()));
-        vm.setSaldoPendiente(dto.deudaOriginal() + dto.interesAcumulado());
+        vm.setTotal(String.format("%.2f", dto.saldoPendiente()));
+        vm.setSaldoPendiente(dto.saldoPendiente());
         vm.setPieTexto(Math.min(dto.diasMora(), dto.ventanaDias()) + "/" + dto.ventanaDias() + " días para corte");
         return vm;
     }
@@ -46,8 +46,8 @@ public class AdminCortesMapperUI {
         vm.setDeudaOriginal(String.format("%.2f", dto.deudaOriginal()));
         vm.setInteresAcumulado(String.format("+ $%.2f", dto.interesAcumulado()));
         vm.setCostoReactivacion(String.format("%.2f", dto.costoReactivacion()));
-        vm.setTotal(String.format("%.2f", dto.deudaOriginal() + dto.interesAcumulado() + dto.costoReactivacion()));
-        vm.setSaldoPendiente(dto.deudaOriginal() + dto.interesAcumulado());
+        vm.setTotal(String.format("%.2f", dto.saldoPendiente() + dto.costoReactivacion()));
+        vm.setSaldoPendiente(dto.saldoPendiente());
         vm.setPieTexto("Servicio cortado");
         return vm;
     }

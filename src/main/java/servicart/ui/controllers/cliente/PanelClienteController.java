@@ -249,7 +249,7 @@ public class PanelClienteController {
             mostrarErrorFila(lblError, "El monto debe ser mayor a $0.00");
             return;
         }
-        if (monto > factura.getSaldoPendiente()) {
+        if (monto > factura.getSaldoPendiente() + 0.005) {
             mostrarErrorFila(lblError, "No puedes pagar más de lo que debes ($ " + String.format("%.2f", factura.getSaldoPendiente()) + ")");
             return;
         }
