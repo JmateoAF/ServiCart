@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class GestionAutomaticaEmpresaJob {
 
     private static final int DIA_FACTURACION_MES = 20; // día fijo del mes en que se emite
-    private static final int HORA_EJECUCION = 3; // 3:00 AM — fuera del horario en que hay clientes usando el panel
     private static final long DIAS_CORTADO_PARA_TERMINAR = Factura.DIAS_GRACIA_POST_CORTE;
     private static final Object CANDADO_BD = new Object();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -30,21 +29,17 @@ public class GestionAutomaticaEmpresaJob {
         return t;
     });
 
-    public void iniciar() {
-        // Antes: delay inicial 0 → el ciclo (mora + cortes) corría apenas arrancaba la
-        // app, en pleno horario de uso, cambiando saldos por debajo de un cliente que
-        // podía estar armando su pago en ese instante. Ahora arranca a una hora fija.
-        long delayInicialSegundos = calcularDelayHastaProximaEjecucion();
-        scheduler.scheduleAtFixedRate(this::ejecutarCiclo, delayInicialSegundos, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
+    /* Corre el ciclo una sola vez, en el hilo que la llama (bloqueante).
+       Pensado para usarse antes de iniciar() en el arranque, así la
+       primera consulta de la UI ya encuentra facturas/cortes/mora al día
+       y no depende de ganarle una carrera al hilo del scheduler. */
+    public void ejecutarCicloInicial() {
+        ejecutarCiclo();
     }
 
-    private long calcularDelayHastaProximaEjecucion() {
-        LocalDateTime ahora = LocalDateTime.now();
-        LocalDateTime proximaEjecucion = ahora.toLocalDate().atTime(HORA_EJECUCION, 0);
-        if (!proximaEjecucion.isAfter(ahora)) {
-            proximaEjecucion = proximaEjecucion.plusDays(1);
-        }
-        return ChronoUnit.SECONDS.between(ahora, proximaEjecucion);
+    public void iniciar() {
+        // delay inicial 1 día en vez de 0: el ciclo del arranque ya lo hizo ejecutarCicloInicial()
+        scheduler.scheduleAtFixedRate(this::ejecutarCiclo, 1, 1, TimeUnit.DAYS);
     }
 
     public void detener() {
