@@ -1,21 +1,20 @@
 package servicart.domain.services.empresa;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.entities.Abono;
-import servicart.entities.Contrato;
-import servicart.entities.Factura;
+import servicart.entities.*;
 import servicart.entities.enums.EstadoFactura;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class FacturacionService {
     private final CrudDAO<Factura> facturaDAO;
     private final CrudDAO<Abono> abonoDAO;
+    private final CorteService corteService;
 
-    public FacturacionService(CrudDAO<Factura> facturaDAO, CrudDAO<Abono> abonoDAO) {
+    public FacturacionService(CrudDAO<Factura> facturaDAO, CrudDAO<Abono> abonoDAO, CorteService corteService) {
         this.facturaDAO = facturaDAO;
         this.abonoDAO = abonoDAO;
+        this.corteService = corteService;
     }
 
     public Factura emitirFactura(Contrato contrato, double consumo) {
@@ -31,11 +30,6 @@ public class FacturacionService {
 
     public List<Factura> buscarPorContrato(int contratoId) {
         return facturaDAO.findAll().stream().filter(f -> f.getContrato().getId() == contratoId).toList();
-    }
-
-    public void marcarComoPagada(Factura factura) {
-        factura.setEstado(EstadoFactura.PAGADA);
-        facturaDAO.update(factura);
     }
 
     public void marcarComoVencida(Factura factura) {
@@ -56,9 +50,25 @@ public class FacturacionService {
                 .mapToDouble(Abono::getMonto)
                 .sum();
     }
+    public void marcarComoPagada(Factura factura) {
+        factura.setEstado(EstadoFactura.PAGADA);
+        facturaDAO.update(factura);
+        reactivarCorteSiCorresponde(factura); // NUEVO — cierra el ciclo del checkout
+    }
+
+    // Si esta factura es la que provocó un corte todavía vigente, al quedar pagada
+    // se reactiva el mismo corte con el costo ya cobrado dentro de esa factura.
+    private void reactivarCorteSiCorresponde(Factura factura) {
+        corteService.buscarCortePorFactura(factura.getId())
+                .filter(CorteServicio::estadoCortado)
+                .ifPresent(corte -> {
+                    double costoReactivacion = corte.getContrato().getServicio().getCostoReactivacion();
+                    corteService.reactivarServicio(corte, costoReactivacion);
+                });
+    }
 
     public double calcularSaldoPendiente(Factura factura) {
-        double totalReal = factura.getValorBase() + factura.interesAcumulado();
+        double totalReal = calcularTotalReal(factura);
         double totalPagado = calcularTotalPagado(factura);
         double saldo = Math.max(0, totalReal - totalPagado);
 
@@ -72,4 +82,16 @@ public class FacturacionService {
 
         return saldo;
     }
+
+    public double calcularTotalReal(Factura factura) {
+        return factura.getValorBase() + factura.interesAcumulado() + costoReactivacionPendiente(factura);
+    }
+
+    private double costoReactivacionPendiente(Factura factura) {
+        return corteService.buscarCortePorFactura(factura.getId())
+                .filter(CorteServicio::estadoCortado)
+                .map(corte -> corte.getContrato().getServicio().getCostoReactivacion())
+                .orElse(0.0);
+    }
+
 }

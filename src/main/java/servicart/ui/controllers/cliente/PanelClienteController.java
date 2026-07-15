@@ -142,7 +142,7 @@ public class PanelClienteController {
         titulo.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 15;");
 
         Label detalle = new Label("Costo de reactivación: " + vm.getCostoReactivacionTexto()
-                + " (adicional a la deuda pendiente)");
+                + " (ya incluido en el saldo pendiente de tu factura vencida)");
         detalle.setStyle("-fx-text-fill: #cccccc; -fx-font-size: 15;");
 
         aviso.getChildren().addAll(titulo, detalle);
@@ -211,12 +211,12 @@ public class PanelClienteController {
     }
 
     private HBox crearFilaTotal(List<ServicioContratadoViewModel> vms) {
+        // El costo de reactivación ya está incluido en el saldoPendiente de la factura
+        // que originó el corte (FacturacionService.calcularTotalReal) — sumarlo aparte
+        // acá lo cobraría dos veces.
         double total = vms.stream()
                 .flatMap(vm -> vm.getListaFacturas().stream())
-                .mapToDouble(FacturaPendienteViewModel::getSaldoPendiente).sum()
-                + vms.stream().filter(ServicioContratadoViewModel::isEstaCortado)
-                .mapToDouble(ServicioContratadoViewModel::getCostoReactivacion).sum();
-
+                .mapToDouble(FacturaPendienteViewModel::getSaldoPendiente).sum();
         Label lblTitulo = new Label("Total a pagar");
         lblTitulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-size: 15;");
         Label lblTotal = new Label(String.format("$ %.2f", total));

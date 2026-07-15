@@ -27,7 +27,7 @@ public class CheckoutService {
             if (facturacionService.calcularSaldoPendiente(factura) <= 0) {
                 facturacionService.marcarComoPagada(factura);
             } else {
-                facturacionService.actualizarValorTotal(factura, factura.getValorBase() + factura.interesAcumulado());
+                facturacionService.actualizarValorTotal(factura, facturacionService.calcularTotalReal(factura));
             }
         }
 

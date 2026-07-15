@@ -36,8 +36,7 @@ public class MoraService {
         buscarPorFactura(factura.getId())
                 .map(existente -> actualizarRegistro(existente, (int) diasRetraso, interesTotal, LocalDateTime.now()))
                 .orElseGet(() -> crearRegistro((int) diasRetraso, interesTotal, LocalDateTime.now(), factura));
-        factura.setValorTotal(factura.getValorBase() + interesTotal);
-
+        factura.setValorTotal(facturaService.calcularTotalReal(factura));
         if (factura.getEstado() != EstadoFactura.VENCIDA) {
             facturaService.marcarComoVencida(factura);
             facturaDAO.update(factura);// primera vez: cambia estado + persiste

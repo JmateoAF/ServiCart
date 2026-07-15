@@ -25,8 +25,8 @@ public class PanelClienteImp implements PanelCliente {
     @Override
     public List<ServicioContratadoDTORetorno> listarServiciosContratados(PanelClienteDTOEntrada dto) {
         ContratoService contratoService = new ContratoService(FactoryDAO.getDAO(Contrato.class));
-        FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class), FactoryDAO.getDAO(Abono.class));
         CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
+        FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class), FactoryDAO.getDAO(Abono.class), corteService);
 
         return contratoService.buscarPorCliente(dto.cedula()).stream().map(contrato -> {
             List<Factura> pendientes = facturacionService.buscarPorContrato(contrato.getId()).stream().filter(f -> f.getEstado() != EstadoFactura.PAGADA).sorted(Comparator.comparing(Factura::getFechaEmision)).toList();
@@ -46,7 +46,8 @@ public class PanelClienteImp implements PanelCliente {
         CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
         CrudDAO<Cliente> clienteDAO = FactoryDAO.getDAO(Cliente.class);
         CarritoService carritoService = new CarritoService(FactoryDAO.getDAO(Carrito.class));
-        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
+        CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO, corteService);
 
         if (facturaDAO == null || abonoDAO == null || clienteDAO == null) {
             throw new IllegalStateException("No se pudieron obtener los DAOs requeridos");

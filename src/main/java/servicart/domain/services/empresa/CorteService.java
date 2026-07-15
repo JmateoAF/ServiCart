@@ -17,6 +17,7 @@ public class CorteService {
         this.corteDAO = corteDAO;
     }
 
+    // SIN CAMBIOS — el guard ya es correcto y sigue impidiendo el doble corte
     public void cortarServicio(Contrato contrato, Factura factura) {
         if (buscarCorteVigente(contrato.getId()).isPresent()) {
             throw new IllegalStateException("El contrato " + contrato.getId() + " ya tiene un corte vigente");
@@ -25,7 +26,11 @@ public class CorteService {
         corteDAO.save(corte);
     }
 
-    // El costo de reactivación se cobra aparte al reactivar (más abajo), no se suma a la factura
+    /* El costo de reactivación no se persiste en ningún campo: se calcula siempre al
+       vuelo en FacturacionService (buscarCortePorFactura + estadoCortado), como parte
+       del saldo pendiente de la MISMA factura que originó el corte. Por eso se paga
+       con el flujo normal de abonos/carrito/checkout, y no hay nada que MoraService
+       pueda pisar al recalcular la mora del día siguiente. */
     public void reactivarServicio(CorteServicio corte, double costoPagado) {
         double costoRequerido = corte.getContrato().getServicio().getCostoReactivacion();
         if (costoPagado < costoRequerido - 0.005) {
@@ -43,6 +48,12 @@ public class CorteService {
 
     public Optional<CorteServicio> buscarCorteVigente(int idContrato) {
         return buscarPorContrato(idContrato).stream().filter(CorteServicio::estadoCortado).findFirst();
+    }
+
+    public Optional<CorteServicio> buscarCortePorFactura(int idFactura) {
+        return corteDAO.findAll().stream()
+                .filter(c -> c.getFactura().getId() == idFactura)
+                .findFirst();
     }
 
     public List<CorteServicio> buscarCortados() {

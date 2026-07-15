@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class GestionAutomaticaEmpresaJob {
 
     private static final int DIA_FACTURACION_MES = 20; // día fijo del mes en que se emite
+    private static final int HORA_EJECUCION = 3; // 3:00 AM — fuera del horario en que hay clientes usando el panel
     private static final long DIAS_CORTADO_PARA_TERMINAR = Factura.DIAS_GRACIA_POST_CORTE;
     private static final Object CANDADO_BD = new Object();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -30,7 +31,20 @@ public class GestionAutomaticaEmpresaJob {
     });
 
     public void iniciar() {
-        scheduler.scheduleAtFixedRate(this::ejecutarCiclo, 0, 1, TimeUnit.DAYS);
+        // Antes: delay inicial 0 → el ciclo (mora + cortes) corría apenas arrancaba la
+        // app, en pleno horario de uso, cambiando saldos por debajo de un cliente que
+        // podía estar armando su pago en ese instante. Ahora arranca a una hora fija.
+        long delayInicialSegundos = calcularDelayHastaProximaEjecucion();
+        scheduler.scheduleAtFixedRate(this::ejecutarCiclo, delayInicialSegundos, TimeUnit.DAYS.toSeconds(1), TimeUnit.SECONDS);
+    }
+
+    private long calcularDelayHastaProximaEjecucion() {
+        LocalDateTime ahora = LocalDateTime.now();
+        LocalDateTime proximaEjecucion = ahora.toLocalDate().atTime(HORA_EJECUCION, 0);
+        if (!proximaEjecucion.isAfter(ahora)) {
+            proximaEjecucion = proximaEjecucion.plusDays(1);
+        }
+        return ChronoUnit.SECONDS.between(ahora, proximaEjecucion);
     }
 
     public void detener() {
@@ -56,17 +70,17 @@ public class GestionAutomaticaEmpresaJob {
 
     //1) EMITIR FACTURAS — el día 20 de cada mes
     private void emitirFacturasPendientes() {
-        // Regla de calendario: solo se emite el día 20, el resto de los
-        // días del mes esta tarea no hace nada (pero las otras 3 sí siguen corriendo)
         if (LocalDate.now().getDayOfMonth() != DIA_FACTURACION_MES) return;
 
         CrudDAO<Contrato> contratoDAO = FactoryDAO.getDAO(Contrato.class);
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<Empresa> empresaDAO = FactoryDAO.getDAO(Empresa.class);
         CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
+        CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
 
         ContratoService contratoService = new ContratoService(contratoDAO);
-        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
+        CorteService corteService = new CorteService(corteDAO);
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO, corteService);
         EmpresaService empresaService = new EmpresaService(empresaDAO, List.of(new NotificadorService()));
 
         YearMonth mesActual = YearMonth.now();
@@ -85,24 +99,19 @@ public class GestionAutomaticaEmpresaJob {
         }
     }
 
-    private double obtenerConsumoDelPeriodo(Contrato contrato) {
-        return switch (contrato.getServicio().getTipo()) {
-            case AGUA, LUZ -> ThreadLocalRandom.current().nextInt(15, 26); // 15 a 25 inclusive
-            case BASURA, INTERNET -> 1.0;
-        };
-    }
-
     //2) APLICAR MORA
     private void aplicarMoraAVencidas() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
         CrudDAO<InteresMora> interesDAO = FactoryDAO.getDAO(InteresMora.class);
         CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
-        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO);
+        CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
+        CorteService corteService = new CorteService(corteDAO);
+        FacturacionService facturacionService = new FacturacionService(facturaDAO, abonoDAO, corteService);
         MoraService moraService = new MoraService(interesDAO, facturaDAO, facturacionService);
 
         assert facturaDAO != null;
         facturaDAO.findAll().stream()
-                .filter(f -> f.getEstado() != EstadoFactura.PAGADA) // antes: solo PENDIENTE
+                .filter(f -> f.getEstado() != EstadoFactura.PAGADA)
                 .filter(Factura::estaVencida)
                 .forEach(moraService::aplicarMora);
     }
@@ -142,5 +151,12 @@ public class GestionAutomaticaEmpresaJob {
                 corteDAO.delete(String.valueOf(corte.getId()));
             }
         }
+    }
+
+    private double obtenerConsumoDelPeriodo(Contrato contrato) {
+        return switch (contrato.getServicio().getTipo()) {
+            case AGUA, LUZ -> ThreadLocalRandom.current().nextInt(15, 26);
+            case BASURA, INTERNET -> 1.0;
+        };
     }
 }
