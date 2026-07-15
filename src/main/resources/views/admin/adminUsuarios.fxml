@@ -24,16 +24,16 @@
             <Label text="ADMIN"
                    style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 15 10 15;"/>
             <Region prefHeight="5"/>
-            <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="👥 Usuarios" maxWidth="Infinity"
+            <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="Usuarios" maxWidth="Infinity"
                     style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 10;"/>
-            <Button fx:id="btnTarifas" onAction="#onTarifas" text="⚙ Tarifas" maxWidth="Infinity"
+            <Button fx:id="btnTarifas" onAction="#onTarifas" text="Tarifas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
-            <Button fx:id="btnCortes" onAction="#onCortes" text="⚠ Cortes/mora" maxWidth="Infinity"
+            <Button fx:id="btnCortes" onAction="#onCortes" text="Cortes/mora" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
-            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="🏢 Empresas" maxWidth="Infinity"
+            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="Empresas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
             <Region VBox.vgrow="ALWAYS"/>
-            <Button fx:id="btnSalir" onAction="#onSalir" text="⬅ Salir" maxWidth="Infinity"
+            <Button fx:id="btnSalir" onAction="#onSalir" text="Salir" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
         </VBox>
     </left>
@@ -41,13 +41,11 @@
     <center>
         <VBox spacing="10" style="-fx-background-color: #0f0f0f; -fx-padding: 15 20 20 20;">
 
-            <!-- Toggle SQLite / Binario: reconfigura FactoryDAO para toda la sesión de la app -->
             <HBox maxWidth="-Infinity" style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6;">
                 <Button fx:id="btnSQLite" onAction="#onSeleccionarSQLite" style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5 0 0 5; -fx-font-size: 15; -fx-padding: 5 15 5 15;" text="SQLite" />
                 <Button fx:id="btnBinario" onAction="#onSeleccionarBinario" style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 0 5 5 0; -fx-font-size: 15; -fx-padding: 5 15 5 15;" text="Archivos binarios" />
             </HBox>
 
-            <!-- Stat cards: criterio de negocio (usuarios activos, cortados, con mora) -->
             <HBox spacing="10">
                 <VBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 5 0 10 10;" HBox.hgrow="ALWAYS">
                     <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="USUARIOS ACTIVOS" />
@@ -63,15 +61,12 @@
                 </VBox>
             </HBox>
 
-            <!-- Búsqueda -->
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <TextField fx:id="txtBuscar" promptText="Buscar por cédula, nombre o email..."
                            HBox.hgrow="ALWAYS"
                            style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-family: 'Courier New'; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
             </HBox>
 
-            <!-- Lista de usuarios: filas simples en vez de TableView, para que las acciones
-                 (Editar/Activar/Desactivar) se vean completas y no recortadas por el ancho de columna -->
             <VBox VBox.vgrow="ALWAYS"
                   style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
                 <HBox alignment="CENTER_LEFT"
@@ -94,7 +89,6 @@
                 <VBox fx:id="listaUsuarios" VBox.vgrow="ALWAYS" />
             </VBox>
 
-            <!-- Formulario editar/nuevo -->
             <VBox spacing="15" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
                 <Label text="EDITAR / NUEVO USUARIO"
                        style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 0 10 0;"/>
@@ -129,6 +123,25 @@
                     <Button fx:id="btnCancelar" onAction="#onCancelar" text="Cancelar"
                             style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
                     <Button fx:id="btnGuardar" onAction="#onGuardar" text="Guardar"
+                            style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
+                </HBox>
+            </VBox>
+
+            <VBox spacing="15" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
+                <Label text="CONTRATAR SERVICIO"
+                       style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 0 10 0;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="CLIENTE" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                        <Label fx:id="lblClienteContratar" text="Selecciona un cliente con el botón Contratar de la lista"
+                               style="-fx-text-fill: #aaaaaa; -fx-font-size: 15;"/>
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="SERVICIO" style="-fx-text-fill: #555555; -fx-font-size: 15;"/>
+                        <ComboBox fx:id="cmbServicioContratar" maxWidth="Infinity" promptText="Selecciona servicio"
+                                  style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"/>
+                    </VBox>
+                    <Button fx:id="btnContratar" onAction="#onContratarServicio" text="Contratar"
                             style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
                 </HBox>
             </VBox>

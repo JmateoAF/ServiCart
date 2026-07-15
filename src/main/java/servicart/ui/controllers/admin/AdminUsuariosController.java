@@ -14,14 +14,18 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import servicart.data.FactoryDAO;
 import servicart.domain.dtos.entradas.CambiarEstadoUsuarioDTOEntrada;
+import servicart.domain.dtos.entradas.ContratarServicioDTOEntrada;
 import servicart.domain.dtos.entradas.UsuarioDTOEntrada;
 import servicart.domain.dtos.retornos.ResumenAdminDTORetorno;
+import servicart.domain.dtos.retornos.TarifaDetalleDTORetorno;
 import servicart.domain.dtos.retornos.UsuarioDTORetorno;
 import servicart.domain.interfaces.AdminUsuarios;
 import servicart.domain.interfaces.PanelAdmin;
 import servicart.domain.services.BdService;
 import servicart.ui.controllers.Navegador;
+import servicart.ui.mappers.AdminTarifasMapperUI;
 import servicart.ui.mappers.AdminUsuariosMapperUI;
+import servicart.ui.viewmodels.admin.ServicioCatalogoViewModel;
 import servicart.ui.viewmodels.admin.UsuarioTablaViewModel;
 
 import java.util.List;
@@ -42,9 +46,14 @@ public class AdminUsuariosController {
     @FXML private TextField txtCelularForm;
     @FXML private ComboBox<String> cmbEstadoForm;
 
+    @FXML private Label lblClienteContratar;
+    @FXML private ComboBox<ServicioCatalogoViewModel> cmbServicioContratar;
+    @FXML private Button btnContratar;
+
     private final AdminUsuarios adminUsuarios;
     private final PanelAdmin panelAdmin;
     private boolean editando = false;
+    private String cedulaParaContratar = null;
 
     public AdminUsuariosController(AdminUsuarios adminUsuarios, PanelAdmin panelAdmin) {
         this.adminUsuarios = adminUsuarios;
@@ -54,13 +63,27 @@ public class AdminUsuariosController {
     @FXML
     public void initialize() {
         cmbEstadoForm.getItems().setAll("Activo", "Inactivo");
+        configurarComboServicios();
 
         txtBuscar.textProperty().addListener((obs, viejo, nuevo) -> cargarUsuarios());
 
         limpiarFormulario();
+        limpiarSeleccionContratar();
         cargarResumen();
         cargarUsuarios();
         actualizarEstiloToggle(FactoryDAO.obtenerModoActual());
+    }
+
+    private void configurarComboServicios() {
+        javafx.util.StringConverter<ServicioCatalogoViewModel> conversor = new javafx.util.StringConverter<>() {
+            @Override
+            public String toString(ServicioCatalogoViewModel s) {
+                return s == null ? "" : s.getEmpresaNombre() + " (" + s.getNombreServicio() + ") - " + s.getTarifa();
+            }
+            @Override
+            public ServicioCatalogoViewModel fromString(String s) { return null; }
+        };
+        cmbServicioContratar.setConverter(conversor);
     }
 
     private void cargarResumen() {
@@ -112,7 +135,11 @@ public class AdminUsuariosController {
                 + " -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
         btnEstado.setOnAction(event -> { onCambiarEstado(u); event.consume(); });
 
-        HBox acciones = new HBox(10, btnEditar, btnEstado);
+        Button btnContratarFila = new Button("Contratar");
+        btnContratarFila.setStyle("-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnContratarFila.setOnAction(event -> { seleccionarClienteParaContratar(u); event.consume(); });
+
+        HBox acciones = new HBox(10, btnEditar, btnEstado, btnContratarFila);
 
         Region relleno = new Region();
         HBox.setHgrow(relleno, Priority.ALWAYS);
@@ -137,6 +164,54 @@ public class AdminUsuariosController {
         boolean nuevoEstado = !"Activo".equals(fila.getActivo());
         adminUsuarios.cambiarEstado(new CambiarEstadoUsuarioDTOEntrada(fila.getCedula(), nuevoEstado));
         cargarUsuarios();
+    }
+
+    private void seleccionarClienteParaContratar(UsuarioTablaViewModel fila) {
+        cedulaParaContratar = fila.getCedula();
+        lblClienteContratar.setText(fila.getCedula() + " — " + fila.getNombre());
+
+        List<TarifaDetalleDTORetorno> disponibles = adminUsuarios.listarServiciosDisponibles(cedulaParaContratar);
+        cmbServicioContratar.getItems().setAll(disponibles.stream().map(AdminTarifasMapperUI::dtoAViewModel).toList());
+        cmbServicioContratar.setValue(null);
+        cmbServicioContratar.setDisable(disponibles.isEmpty());
+        cmbServicioContratar.setPromptText(disponibles.isEmpty() ? "Ya tiene todos los servicios contratados" : "Selecciona servicio");
+    }
+
+    private void limpiarSeleccionContratar() {
+        cedulaParaContratar = null;
+        lblClienteContratar.setText("Selecciona un cliente con el botón Contratar de la lista");
+        cmbServicioContratar.getItems().clear();
+        cmbServicioContratar.setValue(null);
+        cmbServicioContratar.setDisable(false);
+        cmbServicioContratar.setPromptText("Selecciona servicio");
+    }
+
+    @FXML
+    private void onContratarServicio(ActionEvent event) {
+        if (cedulaParaContratar == null) {
+            mostrarError("Selecciona un cliente de la lista con el botón Contratar");
+            event.consume();
+            return;
+        }
+
+        ServicioCatalogoViewModel servicio = cmbServicioContratar.getValue();
+        if (servicio == null) {
+            mostrarError("Selecciona un servicio");
+            event.consume();
+            return;
+        }
+
+        try {
+            adminUsuarios.contratarServicio(new ContratarServicioDTOEntrada(cedulaParaContratar, servicio.getId()));
+        } catch (RuntimeException ex) {
+            mostrarError(ex.getMessage());
+            event.consume();
+            return;
+        }
+
+        limpiarSeleccionContratar();
+        cargarResumen();
+        event.consume();
     }
 
     @FXML

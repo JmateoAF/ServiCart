@@ -23,16 +23,16 @@
             <Label text="ADMIN"
                    style="-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-weight: bold; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0; -fx-font-size: 20; -fx-padding: 0 15 10 15;"/>
             <Region prefHeight="5"/>
-            <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="👥 Usuarios" maxWidth="Infinity"
+            <Button fx:id="btnUsuarios" onAction="#onUsuarios" text="Usuarios" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
-            <Button fx:id="btnTarifas" onAction="#onTarifas" text="⚙ Tarifas" maxWidth="Infinity"
+            <Button fx:id="btnTarifas" onAction="#onTarifas" text="Tarifas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
-            <Button fx:id="btnCortes" onAction="#onCortes" text="⚠ Cortes/mora" maxWidth="Infinity"
+            <Button fx:id="btnCortes" onAction="#onCortes" text="Cortes/mora" maxWidth="Infinity"
                     style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 2; -fx-border-radius: 0; -fx-background-radius: 0; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 10;"/>
-            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="🏢 Empresas" maxWidth="Infinity"
+            <Button fx:id="btnEmpresas" onAction="#onEmpresas" text="Empresas" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
             <Region VBox.vgrow="ALWAYS"/>
-            <Button fx:id="btnSalir" onAction="#onSalir" text="⬅ Salir" maxWidth="Infinity"
+            <Button fx:id="btnSalir" onAction="#onSalir" text="Salir" maxWidth="Infinity"
                     style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-alignment: center-left; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 10 15 10 15;"/>
         </VBox>
     </left>
@@ -42,13 +42,11 @@
                     style="-fx-background: #0f0f0f; -fx-background-color: #0f0f0f; -fx-border-color: transparent;">
             <VBox spacing="10" style="-fx-background-color: #0f0f0f; -fx-padding: 15 20 20 20;">
 
-                <!-- Toggle SQLite / Binario: reconfigura FactoryDAO para toda la sesión de la app -->
                 <HBox maxWidth="-Infinity" style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6;">
                     <Button fx:id="btnSQLite" onAction="#onSeleccionarSQLite" style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5 0 0 5; -fx-font-size: 15; -fx-padding: 5 15 5 15;" text="SQLite" />
                     <Button fx:id="btnBinario" onAction="#onSeleccionarBinario" style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 0 5 5 0; -fx-font-size: 15; -fx-padding: 5 15 5 15;" text="Archivos binarios" />
                 </HBox>
 
-                <!-- Stats resumen: calculados en tiempo real en AdminCortesController -->
                 <HBox spacing="10">
                     <VBox HBox.hgrow="ALWAYS"
                           style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
@@ -67,7 +65,6 @@
                     </VBox>
                 </HBox>
 
-                <!-- Toggle Con mora / Cortados -->
                 <HBox maxWidth="-Infinity" style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6;">
                     <Button fx:id="btnVerMora" onAction="#onVerMora" text="Con mora"
                             style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5 0 0 5; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
@@ -75,7 +72,6 @@
                             style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 0 5 5 0; -fx-font-size: 15; -fx-padding: 5 15 5 15;"/>
                 </HBox>
 
-                <!-- Tarjetas dinámicas: en mora sin corte, o cortados, según el toggle -->
                 <VBox fx:id="contenedorTarjetas" spacing="10"/>
 
             </VBox>
