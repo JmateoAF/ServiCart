@@ -68,7 +68,7 @@
                     <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;">
                         <StackPane style="-fx-padding: 25 30 30 30;">
                             <ImageView fitHeight="500.0" fitWidth="500.0">
-                                <Image url="@../../assets/img/Ai Hoshino tercera temporada.jpg" />
+                                <Image url="@../../assets/img/Ai Hoshino.jpg" />
                             </ImageView>
                         </StackPane>
                         <Label style="-fx-text-fill: #aaaaaa; -fx-font-size: 20; -fx-padding: 0 0 10 0;" text="Jostin Aucancela" />

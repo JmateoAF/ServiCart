@@ -39,8 +39,6 @@
     -fx-padding: 0;
 }
 
-/* Encabezado de TableView: por defecto Modena lo deja gris claro, que desentona
-   con el resto de la app (fondo oscuro). Lo oscurecemos junto con el resto de la tabla */
 .table-view .column-header-background {
     -fx-background-color: #1a1a1a;
 }
@@ -65,9 +63,6 @@
     -fx-fill: #e8c96d;
 }
 
-/* Alert / TextInputDialog: por defecto Modena los pinta con fondo blanco e ícono
-   genérico de Windows/GTK, que desentonan por completo con el resto de la app.
-   Se aplica llamando a Navegador.estilizarDialogo(dialog) justo después de crearlos */
 .dialog-pane {
     -fx-background-color: #161616;
     -fx-border-color: #252525;
