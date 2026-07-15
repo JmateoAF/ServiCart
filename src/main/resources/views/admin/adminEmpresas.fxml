@@ -18,21 +18,21 @@
         <VBox prefWidth="200"
               style="-fx-background-color: #111111; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
             <Region prefHeight="5" style="-fx-background-color: #1e1e1e; -fx-border-color: #1e1e1e;"/>
-            <Button fx:id="btnUsuarios" maxWidth="Infinity" onAction="#onUsuarios"
+            <Button maxWidth="Infinity" onAction="#onUsuarios"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;"
                     text="Usuarios"/>
-            <Button fx:id="btnTarifas" maxWidth="Infinity" onAction="#onTarifas"
+            <Button maxWidth="Infinity" onAction="#onTarifas"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;"
                     text="Tarifas"/>
-            <Button fx:id="btnCortes" maxWidth="Infinity" onAction="#onCortes"
+            <Button maxWidth="Infinity" onAction="#onCortes"
                     style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;"
                     text="Cortes/mora"/>
-            <Button fx:id="btnEmpresas" maxWidth="Infinity" onAction="#onEmpresas"
+            <Button maxWidth="Infinity"
                     style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 5; -fx-font-size: 20; -fx-padding: 10 15 10 10; -fx-alignment: center-left; -fx-cursor: hand;"
                     text="Empresas"/>
             <Region VBox.vgrow="ALWAYS"/>
             <Separator style="-fx-background-color: #1e1e1e;"/>
-            <Button fx:id="btnSalir" maxWidth="Infinity" onAction="#onSalir"
+            <Button maxWidth="Infinity" onAction="#onSalir"
                     style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;"
                     text="Salir"/>
         </VBox>
@@ -72,12 +72,10 @@
                                        style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 15; -fx-padding: 5 10 5 10;"/>
                         </VBox>
                         <VBox>
-                            <children>
-                                <Region VBox.vgrow="ALWAYS"/>
-                                <Button onAction="#onGuardarEmpresa"
-                                        style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
-                                        text="Agregar empresa"/>
-                            </children>
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button onAction="#onGuardarEmpresa"
+                                    style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
+                                    text="Agregar empresa"/>
                         </VBox>
                     </HBox>
                 </VBox>

@@ -15,13 +15,17 @@ import servicart.ui.mappers.LoginAdminMapperUI;
 import servicart.ui.viewmodels.admin.LoginAdminViewModel;
 
 public class LoginAdminController {
-    @FXML private TextField txtUsuario;
-    @FXML private PasswordField txtPassword;
-    @FXML private Label lblError;
-
     private final LoginAdmin loginAdmin;
+    @FXML
+    private TextField txtUsuario;
+    @FXML
+    private PasswordField txtPassword;
+    @FXML
+    private Label lblError;
 
-    public LoginAdminController(LoginAdmin loginAdmin) { this.loginAdmin = loginAdmin; }
+    public LoginAdminController(LoginAdmin loginAdmin) {
+        this.loginAdmin = loginAdmin;
+    }
 
     @FXML
     private void onIniciarSesion(ActionEvent event) {
@@ -43,7 +47,7 @@ public class LoginAdminController {
         LoginAdminDTOEntrada dtoEntrada = LoginAdminMapperUI.viewModelADTO(avm);
         LoginAdminDTORetorno dtoRetorno = loginAdmin.validarLoginAdmin(dtoEntrada);
 
-        if(dtoRetorno == null) {
+        if (dtoRetorno == null) {
             mostrarError("Usuario o contraseña incorrectos");
             event.consume();
             return;
@@ -51,7 +55,7 @@ public class LoginAdminController {
 
         avm = LoginAdminMapperUI.DTOAviewModel(dtoRetorno);
 
-        if(usuario.equals(avm.getUsuario()) && contrasenia.equals(avm.getContrasenia())) {
+        if (usuario.equals(avm.getUsuario()) && contrasenia.equals(avm.getContrasenia())) {
             Navegador.irA("views/admin/adminUsuarios.fxml");
         } else {
             mostrarError("Ingrese sus credenciales correctamente");

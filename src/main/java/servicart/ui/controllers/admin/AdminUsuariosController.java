@@ -3,15 +3,12 @@ package servicart.ui.controllers.admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.jetbrains.annotations.NotNull;
 import servicart.data.FactoryDAO;
 import servicart.domain.dtos.entradas.CambiarEstadoUsuarioDTOEntrada;
 import servicart.domain.dtos.entradas.ContratarServicioDTOEntrada;
@@ -31,27 +28,39 @@ import servicart.ui.viewmodels.admin.UsuarioTablaViewModel;
 import java.util.List;
 
 public class AdminUsuariosController {
-    @FXML private Button btnSQLite;
-    @FXML private Button btnBinario;
-    @FXML private Label lblUsuariosActivos;
-    @FXML private Label lblCortados;
-    @FXML private Label lblConMora;
-    @FXML private TextField txtBuscar;
-    @FXML private Label lblConteo;
-    @FXML private VBox listaUsuarios;
-
-    @FXML private TextField txtCedulaForm;
-    @FXML private TextField txtNombreForm;
-    @FXML private TextField txtEmailForm;
-    @FXML private TextField txtCelularForm;
-    @FXML private ComboBox<String> cmbEstadoForm;
-
-    @FXML private Label lblClienteContratar;
-    @FXML private ComboBox<ServicioCatalogoViewModel> cmbServicioContratar;
-    @FXML private Button btnContratar;
-
     private final AdminUsuarios adminUsuarios;
     private final PanelAdmin panelAdmin;
+    @FXML
+    private Button btnSQLite;
+    @FXML
+    private Button btnBinario;
+    @FXML
+    private Label lblUsuariosActivos;
+    @FXML
+    private Label lblCortados;
+    @FXML
+    private Label lblConMora;
+    @FXML
+    private TextField txtBuscar;
+    @FXML
+    private Label lblConteo;
+    @FXML
+    private VBox listaUsuarios;
+    @FXML
+    private TextField txtCedulaForm;
+    @FXML
+    private TextField txtNombreForm;
+    @FXML
+    private TextField txtEmailForm;
+    @FXML
+    private TextField txtCelularForm;
+    @FXML
+    private ComboBox<String> cmbEstadoForm;
+    @FXML
+    private Label lblClienteContratar;
+    @FXML
+    private ComboBox<ServicioCatalogoViewModel> cmbServicioContratar;
+    @FXML
     private boolean editando = false;
     private String cedulaParaContratar = null;
 
@@ -65,7 +74,7 @@ public class AdminUsuariosController {
         cmbEstadoForm.getItems().setAll("Activo", "Inactivo");
         configurarComboServicios();
 
-        txtBuscar.textProperty().addListener((obs, viejo, nuevo) -> cargarUsuarios());
+        txtBuscar.textProperty().addListener((_, _, _) -> cargarUsuarios());
 
         limpiarFormulario();
         limpiarSeleccionContratar();
@@ -80,8 +89,11 @@ public class AdminUsuariosController {
             public String toString(ServicioCatalogoViewModel s) {
                 return s == null ? "" : s.getEmpresaNombre() + " (" + s.getNombreServicio() + ") - " + s.getTarifa();
             }
+
             @Override
-            public ServicioCatalogoViewModel fromString(String s) { return null; }
+            public ServicioCatalogoViewModel fromString(String s) {
+                return null;
+            }
         };
         cmbServicioContratar.setConverter(conversor);
     }
@@ -124,22 +136,7 @@ public class AdminUsuariosController {
         estado.setStyle((activo ? "-fx-text-fill: #27ae60; -fx-background-color: #0f2a18;" : "-fx-text-fill: #c0392b; -fx-background-color: #2a1010;")
                 + " -fx-font-size: 15; -fx-padding: 0 10 0 10; -fx-background-radius: 10;");
 
-        Button btnEditar = new Button("Editar");
-        btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
-        btnEditar.setOnAction(event -> { cargarEnFormulario(u); event.consume(); });
-
-        Button btnEstado = new Button(activo ? "Desactivar" : "Activar");
-        btnEstado.setStyle((activo
-                ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a;"
-                : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28;")
-                + " -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
-        btnEstado.setOnAction(event -> { onCambiarEstado(u); event.consume(); });
-
-        Button btnContratarFila = new Button("Contratar");
-        btnContratarFila.setStyle("-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
-        btnContratarFila.setOnAction(event -> { seleccionarClienteParaContratar(u); event.consume(); });
-
-        HBox acciones = new HBox(10, btnEditar, btnEstado, btnContratarFila);
+        HBox acciones = getHBox(u, activo);
 
         Region relleno = new Region();
         HBox.setHgrow(relleno, Priority.ALWAYS);
@@ -148,6 +145,34 @@ public class AdminUsuariosController {
         fila.setAlignment(Pos.CENTER_LEFT);
         fila.setStyle("-fx-padding: 10 15 10 15; -fx-border-color: #1e1e1e; -fx-border-width: 0 0 1 0;");
         return fila;
+    }
+
+    private @NotNull HBox getHBox(UsuarioTablaViewModel u, boolean activo) {
+        Button btnEditar = new Button("Editar");
+        btnEditar.setStyle("-fx-background-color: #1a1a1a; -fx-text-fill: #e8c96d; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnEditar.setOnAction(event -> {
+            cargarEnFormulario(u);
+            event.consume();
+        });
+
+        Button btnEstado = new Button(activo ? "Desactivar" : "Activar");
+        btnEstado.setStyle((activo
+                ? "-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a;"
+                : "-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28;")
+                + " -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnEstado.setOnAction(event -> {
+            onCambiarEstado(u);
+            event.consume();
+        });
+
+        Button btnContratarFila = new Button("Contratar");
+        btnContratarFila.setStyle("-fx-background-color: #0f2a18; -fx-text-fill: #27ae60; -fx-border-color: #1a3e28; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 10 5 10;");
+        btnContratarFila.setOnAction(event -> {
+            seleccionarClienteParaContratar(u);
+            event.consume();
+        });
+
+        return new HBox(10, btnEditar, btnEstado, btnContratarFila);
     }
 
     private void cargarEnFormulario(UsuarioTablaViewModel fila) {
@@ -303,8 +328,27 @@ public class AdminUsuariosController {
                 : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;";
     }
 
-    @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
-    @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
-    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
-    @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
+    @FXML
+    private void onTarifas(ActionEvent event) {
+        Navegador.irA("views/admin/adminTarifas.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onCortes(ActionEvent event) {
+        Navegador.irA("views/admin/adminCortes.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onEmpresas(ActionEvent event) {
+        Navegador.irA("views/admin/adminEmpresas.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        Navegador.irA("views/admin/loginAdmin.fxml");
+        event.consume();
+    }
 }

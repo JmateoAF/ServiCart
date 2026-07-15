@@ -8,11 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import servicart.domain.dtos.entradas.ActualizarTarifaDTOEntrada;
 import servicart.domain.dtos.retornos.TarifaDetalleDTORetorno;
 import servicart.domain.interfaces.AdminTarifas;
@@ -23,17 +19,24 @@ import servicart.ui.viewmodels.admin.ServicioCatalogoViewModel;
 import java.util.List;
 
 public class AdminTarifasController {
-    @FXML private GridPane gridTarifas;
-    @FXML private Label lblFormularioTitulo;
-    @FXML private TextField txtTarifaBase;
-    @FXML private TextField txtInteresMora;
-    @FXML private TextField txtDiasCorte;
-    @FXML private TextField txtCostoReactivacion;
-
     private final AdminTarifas adminTarifas;
+    @FXML
+    private GridPane gridTarifas;
+    @FXML
+    private Label lblFormularioTitulo;
+    @FXML
+    private TextField txtTarifaBase;
+    @FXML
+    private TextField txtInteresMora;
+    @FXML
+    private TextField txtDiasCorte;
+    @FXML
+    private TextField txtCostoReactivacion;
     private int idSeleccionado = -1;
 
-    public AdminTarifasController(AdminTarifas adminTarifas) { this.adminTarifas = adminTarifas; }
+    public AdminTarifasController(AdminTarifas adminTarifas) {
+        this.adminTarifas = adminTarifas;
+    }
 
     @FXML
     public void initialize() {
@@ -55,13 +58,13 @@ public class AdminTarifasController {
 
     private VBox crearTarjeta(ServicioCatalogoViewModel vm) {
         VBox tarjeta = new VBox(10);
-        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 15;");
+        tarjeta.setStyle("-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 15;");
 
         Label titulo = new Label(vm.getNombreServicio() + " — " + vm.getEmpresaNombre());
         titulo.setStyle("-fx-text-fill: #e8c96d; -fx-font-size: 15; -fx-font-family: 'Courier New';");
 
         Label badge = new Label(vm.getTipoValor());
-        badge.setStyle("-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 15; -fx-padding: 0 5 0 5; -fx-background-radius: 4;");
+        badge.setStyle("-fx-text-fill: #555555; -fx-background-color: #1e1e1e; -fx-font-size: 15; -fx-padding: 0 5 0 5; -fx-background-radius: 5;");
 
         HBox header = new HBox(titulo, espaciador(), badge);
         header.setAlignment(Pos.CENTER_LEFT);
@@ -75,7 +78,10 @@ public class AdminTarifasController {
         btnEditar.setMaxWidth(Double.MAX_VALUE);
         btnEditar.setStyle("-fx-background-color: transparent; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 0 5 0; -fx-cursor: hand;");
         VBox.setMargin(btnEditar, new Insets(5, 0, 0, 0));
-        btnEditar.setOnAction(event -> { cargarEnFormulario(vm); event.consume(); });
+        btnEditar.setOnAction(event -> {
+            cargarEnFormulario(vm);
+            event.consume();
+        });
 
         tarjeta.getChildren().addAll(header, filaTarifa, filaInteres, filaDias, filaCosto, btnEditar);
         return tarjeta;
@@ -175,9 +181,27 @@ public class AdminTarifasController {
         alerta.showAndWait();
     }
 
-    @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
-    @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
-    @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
-    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
-    @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
+    @FXML
+    private void onUsuarios(ActionEvent event) {
+        Navegador.irA("views/admin/adminUsuarios.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onCortes(ActionEvent event) {
+        Navegador.irA("views/admin/adminCortes.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onEmpresas(ActionEvent event) {
+        Navegador.irA("views/admin/adminEmpresas.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        Navegador.irA("views/admin/loginAdmin.fxml");
+        event.consume();
+    }
 }

@@ -3,12 +3,7 @@ package servicart.ui.controllers.admin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -28,22 +23,32 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdminEmpresasController {
-    @FXML private VBox listaEmpresas;
-    @FXML private TextField txtNombreEmpresaForm;
-
-    @FXML private VBox listaServicios;
-    @FXML private ComboBox<String> cmbEmpresaForm;
-    @FXML private ComboBox<String> cmbTipoServicioForm;
-    @FXML private ComboBox<String> cmbTipoValorForm;
-    @FXML private TextField txtTarifaBaseForm;
-    @FXML private TextField txtInteresMoraForm;
-    @FXML private TextField txtCostoReactivacionForm;
-    @FXML private TextField txtDiasCorteForm;
-
     private final AdminEmpresas adminEmpresas;
+    @FXML
+    private VBox listaEmpresas;
+    @FXML
+    private TextField txtNombreEmpresaForm;
+    @FXML
+    private VBox listaServicios;
+    @FXML
+    private ComboBox<String> cmbEmpresaForm;
+    @FXML
+    private ComboBox<String> cmbTipoServicioForm;
+    @FXML
+    private ComboBox<String> cmbTipoValorForm;
+    @FXML
+    private TextField txtTarifaBaseForm;
+    @FXML
+    private TextField txtInteresMoraForm;
+    @FXML
+    private TextField txtCostoReactivacionForm;
+    @FXML
+    private TextField txtDiasCorteForm;
     private List<EmpresaDTORetorno> empresasCache = List.of();
 
-    public AdminEmpresasController(AdminEmpresas adminEmpresas) { this.adminEmpresas = adminEmpresas; }
+    public AdminEmpresasController(AdminEmpresas adminEmpresas) {
+        this.adminEmpresas = adminEmpresas;
+    }
 
     @FXML
     public void initialize() {
@@ -100,8 +105,11 @@ public class AdminEmpresasController {
         tarifa.setStyle("-fx-text-fill: #e8c96d; -fx-font-family: 'Courier New'; -fx-font-size: 15;");
 
         Button btnQuitar = new Button("Quitar");
-        btnQuitar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 4; -fx-background-radius: 4; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
-        btnQuitar.setOnAction(event -> { onQuitarServicio(vm.getId(), vm.getEmpresaNombre() + " — " + vm.getNombreServicio()); event.consume(); });
+        btnQuitar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; -fx-border-color: #3a1a1a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 10 5 10; -fx-cursor: hand;");
+        btnQuitar.setOnAction(event -> {
+            onQuitarServicio(vm.getId(), vm.getEmpresaNombre() + " — " + vm.getNombreServicio());
+            event.consume();
+        });
 
         Region relleno = new Region();
         HBox.setHgrow(relleno, Priority.ALWAYS);
@@ -211,9 +219,27 @@ public class AdminEmpresasController {
         alerta.showAndWait();
     }
 
-    @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
-    @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
-    @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
-    @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
-    @FXML private void onSalir(ActionEvent event) { Navegador.irA("views/admin/loginAdmin.fxml"); event.consume(); }
+    @FXML
+    private void onUsuarios(ActionEvent event) {
+        Navegador.irA("views/admin/adminUsuarios.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onTarifas(ActionEvent event) {
+        Navegador.irA("views/admin/adminTarifas.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onCortes(ActionEvent event) {
+        Navegador.irA("views/admin/adminCortes.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        Navegador.irA("views/admin/loginAdmin.fxml");
+        event.consume();
+    }
 }

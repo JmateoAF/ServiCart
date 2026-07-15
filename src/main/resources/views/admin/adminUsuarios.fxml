@@ -148,10 +148,10 @@
                     </VBox>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" spacing="10">
-                    <Button fx:id="btnCancelar" onAction="#onCancelar"
+                    <Button onAction="#onCancelar"
                             style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
                             text="Cancelar"/>
-                    <Button fx:id="btnGuardar" onAction="#onGuardar"
+                    <Button onAction="#onGuardar"
                             style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
                             text="Guardar"/>
                 </HBox>
@@ -173,12 +173,10 @@
                                   style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"/>
                     </VBox>
                     <VBox>
-                        <children>
-                            <Region VBox.vgrow="ALWAYS"/>
-                            <Button fx:id="btnContratar" onAction="#onContratarServicio"
-                                    style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
-                                    text="Contratar"/>
-                        </children>
+                        <Region VBox.vgrow="ALWAYS"/>
+                        <Button fx:id="btnContratar" onAction="#onContratarServicio"
+                                style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 5 15 5 15;"
+                                text="Contratar"/>
                     </VBox>
                 </HBox>
             </VBox>
