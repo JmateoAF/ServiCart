@@ -21,16 +21,23 @@ import servicart.ui.viewmodels.cliente.AbonoCarritoViewModel;
 import servicart.ui.viewmodels.cliente.CarritoResumenViewModel;
 
 public class CheckoutController {
-    @FXML private VBox listaItemsResumen;
-    @FXML private Label lblTotalFinal;
-    @FXML private ComboBox<String> cmbMetodoPago;
-    @FXML private TextField txtReferenciaPago;
-    @FXML private Label lblMensaje;
-    @FXML private Button btnConfirmarPago;
-
     private final Checkout checkout;
+    @FXML
+    private VBox listaItemsResumen;
+    @FXML
+    private Label lblTotalFinal;
+    @FXML
+    private ComboBox<String> cmbMetodoPago;
+    @FXML
+    private TextField txtReferenciaPago;
+    @FXML
+    private Label lblMensaje;
+    @FXML
+    private Button btnConfirmarPago;
 
-    public CheckoutController(Checkout checkout) { this.checkout = checkout; }
+    public CheckoutController(Checkout checkout) {
+        this.checkout = checkout;
+    }
 
     @FXML
     public void initialize() {
@@ -64,8 +71,16 @@ public class CheckoutController {
 
     @FXML
     private void onConfirmarPago(ActionEvent event) {
-        if (cmbMetodoPago.getValue() == null) { mostrarMensaje("Seleccione un método de pago"); event.consume(); return; }
-        if (txtReferenciaPago.getText() == null || txtReferenciaPago.getText().isBlank()) { mostrarMensaje("Ingresa una referencia de pago"); event.consume(); return; }
+        if (cmbMetodoPago.getValue() == null) {
+            mostrarMensaje("Seleccione un método de pago");
+            event.consume();
+            return;
+        }
+        if (txtReferenciaPago.getText() == null || txtReferenciaPago.getText().isBlank()) {
+            mostrarMensaje("Ingresa una referencia de pago");
+            event.consume();
+            return;
+        }
 
         try {
             ModalidadPago modalidad = modalidadDesdeCombo(cmbMetodoPago.getValue());

@@ -4,17 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import servicart.domain.dtos.entradas.CancelarContratoDTOEntrada;
-import servicart.domain.dtos.entradas.PerfilClienteDTOEntrada;
 import servicart.domain.dtos.entradas.ContratoDTOEntrada;
+import servicart.domain.dtos.entradas.PerfilClienteDTOEntrada;
 import servicart.domain.dtos.retornos.ContratoDTORetorno;
 import servicart.domain.dtos.retornos.PerfilClienteDTORetorno;
 import servicart.domain.interfaces.ContratoCliente;
@@ -30,17 +26,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class PerfilClienteController {
-    @FXML private Label lblNombreUsuario;
-    @FXML private Label lblEmailUsuario;
-    @FXML private TextField txtNombre;
-    @FXML private TextField txtEmail;
-    @FXML private TextField txtCelular;
-    @FXML private TextField txtCedula;
-    @FXML private Label lblMensaje;
-    @FXML private VBox listaServicios;
-
     private final PerfilCliente perfilCliente;
     private final ContratoCliente contratoCliente;
+    @FXML
+    private Label lblNombreUsuario;
+    @FXML
+    private Label lblEmailUsuario;
+    @FXML
+    private TextField txtNombre;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private TextField txtCelular;
+    @FXML
+    private TextField txtCedula;
+    @FXML
+    private Label lblMensaje;
+    @FXML
+    private VBox listaServicios;
 
     public PerfilClienteController(PerfilCliente perfilCliente, ContratoCliente contratoCliente) {
         this.perfilCliente = perfilCliente;
@@ -107,14 +110,17 @@ public class PerfilClienteController {
         Button btnCancelar = new Button("Cancelar");
         btnCancelar.setStyle("-fx-background-color: #2a1010; -fx-text-fill: #c0392b; " +
                 "-fx-border-color: #c0392b; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;");
-        btnCancelar.setOnAction(event -> { onCancelarContrato(vm.getId()); event.consume(); });
+        btnCancelar.setOnAction(event -> {
+            onCancelarContrato(vm.getId());
+            event.consume();
+        });
 
         HBox fila = new HBox(info, crearEspaciador(), btnCancelar);
         fila.setAlignment(Pos.CENTER_LEFT);
         fila.setSpacing(15);
         fila.setPadding(new Insets(10, 15, 10, 15));
         fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; " +
-                "-fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;");
+                "-fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10;");
 
         return fila;
     }
@@ -151,17 +157,20 @@ public class PerfilClienteController {
         alerta.showAndWait();
     }
 
-    @FXML private void onMisServicios(ActionEvent event) {
+    @FXML
+    private void onMisServicios(ActionEvent event) {
         Navegador.irA("views/cliente/panelCliente.fxml");
         event.consume();
     }
 
-    @FXML private void onCarrito(ActionEvent event) {
+    @FXML
+    private void onCarrito(ActionEvent event) {
         Navegador.irA("views/cliente/carrito.fxml");
         event.consume();
     }
 
-    @FXML private void onSalir(ActionEvent event) {
+    @FXML
+    private void onSalir(ActionEvent event) {
         SesionCliente.cerrar();
         Navegador.irA("views/cliente/loginCliente.fxml");
         event.consume();

@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<BorderPane stylesheets="@../../assets/css/styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.cliente.LoginClienteController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../../assets/css/styles.css"
+            xmlns="http://javafx.com/javafx/26" fx:controller="servicart.ui.controllers.cliente.LoginClienteController">
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="65.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
-            <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-font-size: 25;" text="SERVICART" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button style="-fx-background-color: #1f1f1f; -fx-text-fill: #e8c96d; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 5 15 5 15;" text="Inicio" />
-            <Button onAction="#irASobreNosotros" style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 5 15 5 15;" text="Sobre Nosotros" />
+        <HBox alignment="CENTER_LEFT" prefHeight="65.0" spacing="10.0"
+              style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
+            <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-font-size: 25;"
+                   text="SERVICART"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button style="-fx-background-color: #1f1f1f; -fx-text-fill: #e8c96d; -fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 5 15 5 15;"
+                    text="Inicio"/>
+            <Button onAction="#irASobreNosotros"
+                    style="-fx-background-color: transparent; -fx-text-fill: #666666; -fx-border-color: transparent; -fx-cursor: hand; -fx-font-size: 20; -fx-padding: 5 15 5 15;"
+                    text="Sobre Nosotros"/>
         </HBox>
     </top>
 
     <center>
         <StackPane style="-fx-background-color: #0f0f0f;">
-            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="350.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
+            <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="350.0" spacing="10.0"
+                  style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
 
-                <Label maxWidth="Infinity" style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-family: 'Courier New'; -fx-alignment: center; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 0 5 0;" text="ACCESO CLIENTE" />
-                <Region prefHeight="40.0" />
+                <Label maxWidth="Infinity"
+                       style="-fx-text-fill: #27ae60; -fx-background-color: #0f2a18; -fx-font-family: 'Courier New'; -fx-alignment: center; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 0 5 0;"
+                       text="ACCESO CLIENTE"/>
+                <Region prefHeight="40.0"/>
 
-                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="CÉDULA" />
-                <TextField fx:id="txtCedula" promptText="0102030405" style="-fx-font-size: 15; -fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-family: 'Courier New'; -fx-padding: 5 10 5 10;" />
+                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="CÉDULA"/>
+                <TextField fx:id="txtCedula" promptText="0102030405"
+                           style="-fx-font-size: 15; -fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #aaaaaa; -fx-prompt-text-fill: #3a3a3a; -fx-font-family: 'Courier New'; -fx-padding: 5 10 5 10;"/>
 
-                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="BASE DE DATOS" />
-                <ComboBox fx:id="cmbBaseDatos" maxWidth="Infinity" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" styleClass="combo-box-popup" />
+                <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="BASE DE DATOS"/>
+                <ComboBox fx:id="cmbBaseDatos" maxWidth="Infinity"
+                          style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;"
+                          styleClass="combo-box-popup"/>
 
-                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="0.0" style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 10 5 10;" visible="false" wrapText="true" />
+                <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="0.0"
+                       style="-fx-text-fill: #c0392b; -fx-background-color: #2a1010; -fx-background-radius: 5; -fx-font-size: 15; -fx-padding: 5 10 5 10;"
+                       visible="false" wrapText="true"/>
 
-                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="Infinity" onAction="#onBuscarDeudas" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 10 0 10 0;" text="BUSCAR MIS DEUDAS" />
+                <Button defaultButton="true" maxHeight="-Infinity" maxWidth="Infinity" onAction="#onBuscarDeudas"
+                        style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand; -fx-font-size: 15; -fx-padding: 10 0 10 0;"
+                        text="BUSCAR MIS DEUDAS"/>
 
-                <Region prefHeight="10.0" />
-                <Separator />
+                <Region prefHeight="10.0"/>
+                <Separator/>
 
-                <Button maxWidth="Infinity" onAction="#irALoginAdmin" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand; -fx-font-size: 15;" text="Soy admin" />
+                <Button maxWidth="Infinity" onAction="#irALoginAdmin"
+                        style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand; -fx-font-size: 15;"
+                        text="Soy admin"/>
             </VBox>
         </StackPane>
     </center>

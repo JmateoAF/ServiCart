@@ -20,17 +20,24 @@ import servicart.ui.viewmodels.cliente.CarritoResumenViewModel;
 import java.util.Optional;
 
 public class CarritoController {
-    @FXML private VBox listaItems;
-    @FXML private Label lblSubtotal;
-    @FXML private Label lblTotalFinal;
-    @FXML private Label lblMensaje;
-
     private final CarritoCliente carritoCliente;
+    @FXML
+    private VBox listaItems;
+    @FXML
+    private Label lblSubtotal;
+    @FXML
+    private Label lblTotalFinal;
+    @FXML
+    private Label lblMensaje;
 
-    public CarritoController(CarritoCliente carritoCliente) { this.carritoCliente = carritoCliente; }
+    public CarritoController(CarritoCliente carritoCliente) {
+        this.carritoCliente = carritoCliente;
+    }
 
     @FXML
-    public void initialize() { cargarCarrito(); }
+    public void initialize() {
+        cargarCarrito();
+    }
 
     private void cargarCarrito() {
         CarritoDTORetorno dto = carritoCliente.verCarrito(new CarritoDTOEntrada(SesionCliente.getCedulaActual()));
@@ -65,27 +72,8 @@ public class CarritoController {
         HBox.setHgrow(espaciador, Priority.ALWAYS);
 
         HBox fila = new HBox(10, textos, espaciador, monto);
-        fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;");
+        fila.setStyle("-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 10;");
         return fila;
-    }
-
-    @FXML
-    private void onMisServicios(ActionEvent event) {
-        Navegador.irA("views/cliente/panelCliente.fxml");
-        event.consume();
-    }
-
-    @FXML
-    private void onPerfil(ActionEvent event) {
-        Navegador.irA("views/cliente/perfilCliente.fxml");
-        event.consume();
-    }
-
-    @FXML
-    private void onSalir(ActionEvent event) {
-        SesionCliente.cerrar();
-        Navegador.irA("views/cliente/loginCliente.fxml");
-        event.consume();
     }
 
     @FXML
@@ -107,6 +95,25 @@ public class CarritoController {
     @FXML
     private void onCheckout(ActionEvent event) {
         Navegador.irA("views/cliente/checkout.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onMisServicios(ActionEvent event) {
+        Navegador.irA("views/cliente/panelCliente.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onPerfil(ActionEvent event) {
+        Navegador.irA("views/cliente/perfilCliente.fxml");
+        event.consume();
+    }
+
+    @FXML
+    private void onSalir(ActionEvent event) {
+        SesionCliente.cerrar();
+        Navegador.irA("views/cliente/loginCliente.fxml");
         event.consume();
     }
 }

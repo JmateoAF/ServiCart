@@ -16,11 +16,13 @@ import servicart.ui.mappers.LoginClienteMapperUI;
 import servicart.ui.viewmodels.cliente.LoginClienteViewModel;
 
 public class LoginClienteController {
-    @FXML private TextField txtCedula;
-    @FXML private ComboBox<String> cmbBaseDatos;
-    @FXML private Label lblError;
-
     private final LoginCliente loginCliente;
+    @FXML
+    private TextField txtCedula;
+    @FXML
+    private ComboBox<String> cmbBaseDatos;
+    @FXML
+    private Label lblError;
 
     public LoginClienteController(LoginCliente loginCliente) {
         this.loginCliente = loginCliente;
@@ -52,7 +54,7 @@ public class LoginClienteController {
         LoginClienteDTOEntrada dtoEntrada = LoginClienteMapperUI.viewModelADTO(viewModel);
         LoginClienteDTORetorno dtoSalida = loginCliente.validarLoginCliente(dtoEntrada);
 
-        if(dtoSalida == null) {
+        if (dtoSalida == null) {
             mostrarError("Usuario no encontrado");
             event.consume();
             return;

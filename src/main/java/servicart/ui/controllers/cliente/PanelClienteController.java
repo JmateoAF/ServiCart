@@ -27,16 +27,21 @@ import java.util.List;
 import java.util.Set;
 
 public class PanelClienteController {
-    @FXML private VBox contenedorServicios;
-    @FXML private Label lblMensaje;
-
     private final PanelCliente panelCliente;
     private final Set<Integer> expandidos = new HashSet<>();
+    @FXML
+    private VBox contenedorServicios;
+    @FXML
+    private Label lblMensaje;
 
-    public PanelClienteController(PanelCliente panelCliente) { this.panelCliente = panelCliente; }
+    public PanelClienteController(PanelCliente panelCliente) {
+        this.panelCliente = panelCliente;
+    }
 
     @FXML
-    public void initialize() { cargarServicios(); }
+    public void initialize() {
+        cargarServicios();
+    }
 
     private void cargarServicios() {
         String cedula = SesionCliente.getCedulaActual();
@@ -117,7 +122,6 @@ public class PanelClienteController {
         return header;
     }
 
-    //cortado rojo, con mora amarillo, al día verde
     private String textoBadge(ServicioContratadoViewModel vm) {
         if (vm.isEstaCortado()) return "Servicio cortado";
         if (vm.isConMora()) return "Con mora";
@@ -195,7 +199,10 @@ public class PanelClienteController {
 
         Button btnAgregar = new Button("Añadir");
         btnAgregar.setStyle("-fx-background-color: #1c2a1c; -fx-text-fill: #4caf50; -fx-cursor: hand; -fx-font-size: 15;");
-        btnAgregar.setOnAction(event -> { onAgregarAlCarrito(factura, txtMonto, lblError); event.consume(); });
+        btnAgregar.setOnAction(event -> {
+            onAgregarAlCarrito(factura, txtMonto, lblError);
+            event.consume();
+        });
 
         HBox filaAccion = new HBox(10, txtMonto, btnAgregar);
         bloque.getChildren().addAll(filaAccion, lblError);
