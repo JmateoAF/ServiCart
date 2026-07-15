@@ -4,6 +4,7 @@
 
 <BorderPane prefWidth="1000" prefHeight="660"
             style="-fx-background-color: #0f0f0f;"
+            stylesheets="@../../assets/css/styles.css"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="servicart.ui.controllers.admin.AdminTarifasController">

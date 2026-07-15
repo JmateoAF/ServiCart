@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.cliente.CheckoutController">
+<BorderPane style="-fx-background-color: #0f0f0f;" stylesheets="@../../assets/css/styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.cliente.CheckoutController">
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
             <Label style="-fx-text-fill: #e8c96d; -fx-font-size: 25; -fx-font-weight: bold; -fx-font-family: 'Courier New';" text="SERVICART" />
@@ -19,7 +19,7 @@
 
     <center>
         <StackPane style="-fx-background-color: #0f0f0f;">
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="450.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 30;">
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="350.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #252525; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 25;">
 
                 <Label maxWidth="Infinity" style="-fx-text-fill: #e8c96d; -fx-font-size: 20; -fx-font-family: 'Courier New'; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 0 0 15 0; -fx-alignment: center;" text="CHECK OUT FINAL" />
 
@@ -32,7 +32,7 @@
                 </HBox>
 
                 <Label style="-fx-text-fill: #555555; -fx-font-size: 15;" text="Método de pago" />
-                <ComboBox fx:id="cmbMetodoPago" maxWidth="Infinity" promptText="Seleccione método de pago" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" />
+                <ComboBox fx:id="cmbMetodoPago" maxWidth="Infinity" promptText="Seleccione método de pago" style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-font-size: 15;" styleClass="combo-box-popup" />
 
                 <TextField fx:id="txtReferenciaPago" promptText="Número de tarjeta / cuenta PayPal..." style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5; -fx-text-fill: #cccccc; -fx-prompt-text-fill: #3a3a3a; -fx-font-size: 15; -fx-padding: 10 15 10 15; -fx-font-family: 'Courier New';" />
 

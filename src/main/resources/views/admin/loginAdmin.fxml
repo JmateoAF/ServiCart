@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane style="-fx-background-color: #0f0f0f;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.admin.LoginAdminController">
+<BorderPane style="-fx-background-color: #0f0f0f;" stylesheets="@../../assets/css/styles.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="servicart.ui.controllers.admin.LoginAdminController">
     <top>
-        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
+        <HBox alignment="CENTER_LEFT" prefHeight="65.0" spacing="10.0" style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">
             <Label style="-fx-text-fill: #e8c96d; -fx-font-weight: bold; -fx-font-family: 'Courier New'; -fx-font-size: 25;" text="SERVICART" />
         </HBox>
     </top>
@@ -33,10 +33,11 @@
                 <Label fx:id="lblError" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="0.0" style="-fx-background-color: #2a1010; -fx-background-radius: 5; -fx-padding: 5 10 5 10; -fx-font-family: 'Courier New'; -fx-text-fill: #e74c3c; -fx-font-size: 15;" visible="false" wrapText="true" />
 
                 <Button defaultButton="true" maxWidth="Infinity" onAction="#onIniciarSesion" style="-fx-background-color: #e8c96d; -fx-text-fill: #0f0f0f; -fx-font-size: 15; -fx-font-weight: bold; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10 0 10 0; -fx-cursor: hand;" text="INGRESAR" />
+            <Region prefHeight="10.0" />
 
                 <Separator />
 
-                <Button maxWidth="Infinity" onAction="#irALoginCliente" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-font-size: 15; -fx-alignment: center; -fx-cursor: hand; -fx-border-color: transparent;" text="Soy cliente" />
+                <Button maxWidth="Infinity" onAction="#irALoginCliente" style="-fx-background-color: transparent; -fx-text-fill: #444444; -fx-cursor: hand; -fx-font-size: 15;" text="Soy cliente" />
             </VBox>
         </StackPane>
     </center>
