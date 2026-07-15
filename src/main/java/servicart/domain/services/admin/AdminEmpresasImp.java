@@ -15,14 +15,15 @@ import servicart.entities.enums.TipoServicio;
 import servicart.entities.enums.TipoValorFactura;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AdminEmpresasImp implements AdminEmpresas {
 
     @Override
     public List<EmpresaDTORetorno> listarEmpresas() {
-        List<ServicioCatalogo> servicios = FactoryDAO.getDAO(ServicioCatalogo.class).findAll();
+        List<ServicioCatalogo> servicios = Objects.requireNonNull(FactoryDAO.getDAO(ServicioCatalogo.class)).findAll();
 
-        return FactoryDAO.getDAO(Empresa.class).findAll().stream()
+        return Objects.requireNonNull(FactoryDAO.getDAO(Empresa.class)).findAll().stream()
                 .map(empresa -> new EmpresaDTORetorno(
                         empresa.getId(),
                         empresa.getNombre(),
@@ -38,6 +39,7 @@ public class AdminEmpresasImp implements AdminEmpresas {
         if (nombre.isEmpty()) {
             throw new IllegalArgumentException("El nombre de la empresa no puede estar vacío");
         }
+        assert empresaDAO != null;
         boolean yaExiste = empresaDAO.findAll().stream().anyMatch(e -> e.getNombre().equalsIgnoreCase(nombre));
         if (yaExiste) {
             throw new IllegalArgumentException("Ya existe una empresa llamada " + nombre);
@@ -48,7 +50,7 @@ public class AdminEmpresasImp implements AdminEmpresas {
 
     @Override
     public List<TarifaDetalleDTORetorno> listarServicios() {
-        return FactoryDAO.getDAO(ServicioCatalogo.class).findAll().stream()
+        return Objects.requireNonNull(FactoryDAO.getDAO(ServicioCatalogo.class)).findAll().stream()
                 .map(AdminTarifasMapperDomain::entidadADTO)
                 .toList();
     }
@@ -58,6 +60,7 @@ public class AdminEmpresasImp implements AdminEmpresas {
         CrudDAO<Empresa> empresaDAO = FactoryDAO.getDAO(Empresa.class);
         CrudDAO<ServicioCatalogo> servicioDAO = FactoryDAO.getDAO(ServicioCatalogo.class);
 
+        assert empresaDAO != null;
         Empresa empresa = empresaDAO.findId(String.valueOf(dto.idEmpresa()))
                 .orElseThrow(() -> new RuntimeException("Empresa no encontrada: " + dto.idEmpresa()));
 
@@ -70,6 +73,7 @@ public class AdminEmpresasImp implements AdminEmpresas {
             throw new IllegalArgumentException("Selecciona el tipo de servicio y el tipo de tarifa");
         }
 
+        assert servicioDAO != null;
         boolean yaExiste = servicioDAO.findAll().stream()
                 .anyMatch(s -> s.getEmpresa().getId() == empresa.getId() && s.getTipo() == tipoServicio);
         if (yaExiste) {
@@ -96,10 +100,11 @@ public class AdminEmpresasImp implements AdminEmpresas {
     public void eliminarServicio(int idServicio) {
         CrudDAO<ServicioCatalogo> servicioDAO = FactoryDAO.getDAO(ServicioCatalogo.class);
 
+        assert servicioDAO != null;
         servicioDAO.findId(String.valueOf(idServicio))
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado: " + idServicio));
 
-        boolean enUso = FactoryDAO.getDAO(Contrato.class).findAll().stream()
+        boolean enUso = Objects.requireNonNull(FactoryDAO.getDAO(Contrato.class)).findAll().stream()
                 .anyMatch(c -> c.getServicio().getId() == idServicio);
         if (enUso) {
             throw new IllegalStateException("No se puede quitar: hay contratos activos usando este servicio");

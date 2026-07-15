@@ -17,6 +17,7 @@ import servicart.entities.Contrato;
 import servicart.entities.ServicioCatalogo;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AdminUsuariosImp implements AdminUsuarios {
 
@@ -100,7 +101,7 @@ public class AdminUsuariosImp implements AdminUsuarios {
                 .map(c -> c.getServicio().getId())
                 .toList();
 
-        return FactoryDAO.getDAO(ServicioCatalogo.class).findAll().stream()
+        return Objects.requireNonNull(FactoryDAO.getDAO(ServicioCatalogo.class)).findAll().stream()
                 .filter(s -> !idsYaContratados.contains(s.getId()))
                 .map(AdminTarifasMapperDomain::entidadADTO)
                 .toList();
@@ -115,6 +116,7 @@ public class AdminUsuariosImp implements AdminUsuarios {
         Cliente cliente = clienteDAO.findId(dto.cedula())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + dto.cedula()));
 
+        assert servicioDAO != null;
         ServicioCatalogo servicio = servicioDAO.findId(String.valueOf(dto.idServicio()))
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado: " + dto.idServicio()));
 

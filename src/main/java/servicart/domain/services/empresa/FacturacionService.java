@@ -1,8 +1,11 @@
 package servicart.domain.services.empresa;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.entities.*;
+import servicart.entities.Abono;
+import servicart.entities.Contrato;
+import servicart.entities.Factura;
 import servicart.entities.enums.EstadoFactura;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,10 +33,6 @@ public class FacturacionService {
         return facturaDAO.findAll().stream().filter(f -> f.getContrato().getId() == contratoId).toList();
     }
 
-    public List<Factura> buscarPendientesPorCliente(String cedula) {
-        return facturaDAO.findAll().stream().filter(f -> f.getContrato().getCliente().getCedula().equals(cedula)).filter(f -> f.getEstado() != EstadoFactura.PAGADA).toList();
-    }
-
     public void marcarComoPagada(Factura factura) {
         factura.setEstado(EstadoFactura.PAGADA);
         facturaDAO.update(factura);
@@ -58,10 +57,6 @@ public class FacturacionService {
                 .sum();
     }
 
-    /* Lo que realmente falta por pagar de esta factura ahora mismo (no incluye costoReactivacion).
-    Efecto colateral intencional: si los abonos ya cubren el total pero el estado guardado
-    quedó desactualizado (dato viejo, seed mal alineado, corte de luz a mitad de un checkout...),
-    esta lectura autocorrige el estado en vez de devolver un saldo que lo contradice */
     public double calcularSaldoPendiente(Factura factura) {
         double totalReal = factura.getValorBase() + factura.interesAcumulado();
         double totalPagado = calcularTotalPagado(factura);

@@ -9,8 +9,12 @@ import java.util.List;
 
 public interface AdminEmpresas {
     List<EmpresaDTORetorno> listarEmpresas();
+
     void crearEmpresa(CrearEmpresaDTOEntrada dto);
+
     List<TarifaDetalleDTORetorno> listarServicios();
+
     void crearServicio(CrearServicioDTOEntrada dto);
+
     void eliminarServicio(int idServicio);
 }

@@ -15,6 +15,7 @@ import servicart.entities.Factura;
 import servicart.entities.enums.CausaTerminacion;
 
 import java.util.List;
+
 public class ContratoClienteImp implements ContratoCliente {
 
     @Override

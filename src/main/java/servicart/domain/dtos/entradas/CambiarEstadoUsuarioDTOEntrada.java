@@ -1,3 +1,4 @@
 package servicart.domain.dtos.entradas;
 
-public record CambiarEstadoUsuarioDTOEntrada(String cedula, boolean activo) { }
+public record CambiarEstadoUsuarioDTOEntrada(String cedula, boolean activo) {
+}

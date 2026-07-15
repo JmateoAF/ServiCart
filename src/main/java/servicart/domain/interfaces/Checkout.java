@@ -6,5 +6,6 @@ import servicart.domain.dtos.retornos.CarritoDTORetorno;
 
 public interface Checkout {
     CarritoDTORetorno obtenerResumen(CarritoDTOEntrada dto);
+
     void confirmarPago(ConfirmarPagoDTOEntrada dto);
 }

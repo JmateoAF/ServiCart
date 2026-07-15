@@ -1,8 +1,8 @@
 package servicart.domain.services.empresa;
 
+import servicart.domain.interfaces.Observador;
 import servicart.entities.Cliente;
 import servicart.entities.Factura;
-import servicart.domain.interfaces.Observador;
 
 public class NotificadorService implements Observador {
 

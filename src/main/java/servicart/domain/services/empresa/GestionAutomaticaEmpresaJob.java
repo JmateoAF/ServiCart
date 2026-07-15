@@ -6,6 +6,7 @@ import servicart.domain.services.cliente.MoraService;
 import servicart.entities.*;
 import servicart.entities.enums.CausaTerminacion;
 import servicart.entities.enums.EstadoFactura;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -21,20 +22,20 @@ public class GestionAutomaticaEmpresaJob {
 
     private static final int DIA_FACTURACION_MES = 20; // día fijo del mes en que se emite
     private static final long DIAS_CORTADO_PARA_TERMINAR = Factura.DIAS_GRACIA_POST_CORTE;
-
+    private static final Object CANDADO_BD = new Object();
     private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
         Thread t = new Thread(r, "hilo-gestion-automatica-empresa");
         t.setDaemon(true);
         return t;
     });
 
-    private static final Object CANDADO_BD = new Object();
-
     public void iniciar() {
         scheduler.scheduleAtFixedRate(this::ejecutarCiclo, 0, 1, TimeUnit.DAYS);
     }
 
-    public void detener() { scheduler.shutdownNow(); }
+    public void detener() {
+        scheduler.shutdownNow();
+    }
 
     private void ejecutarCiclo() {
         synchronized (CANDADO_BD) {

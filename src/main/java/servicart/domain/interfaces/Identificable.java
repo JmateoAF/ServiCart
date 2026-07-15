@@ -6,5 +6,6 @@ necesitar conocer el tipo concreto de la entidad */
 
 public interface Identificable {
     int getId();
+
     void setId(int id);
 }

@@ -1,3 +1,4 @@
 package servicart.domain.dtos.entradas;
 
-public record ForzarCorteDTOEntrada(int idContrato) { }
+public record ForzarCorteDTOEntrada(int idContrato) {
+}

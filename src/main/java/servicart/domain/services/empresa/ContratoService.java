@@ -1,10 +1,11 @@
 package servicart.domain.services.empresa;
 
 import servicart.data.interfaces.CrudDAO;
-import servicart.entities.ServicioCatalogo;
 import servicart.entities.Cliente;
 import servicart.entities.Contrato;
+import servicart.entities.ServicioCatalogo;
 import servicart.entities.enums.CausaTerminacion;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,9 @@ public class ContratoService {
         this.contratoDAO = contratoDAO;
     }
 
-    public Contrato crearContrato(Cliente cliente, ServicioCatalogo servicio) {
+    public void crearContrato(Cliente cliente, ServicioCatalogo servicio) {
         Contrato contrato = new Contrato(LocalDateTime.now(), null, CausaTerminacion.ACTIVO, servicio, cliente);
         contratoDAO.save(contrato);
-
-        return contrato;
     }
 
     public void terminarContrato(Contrato contrato, CausaTerminacion causa) {

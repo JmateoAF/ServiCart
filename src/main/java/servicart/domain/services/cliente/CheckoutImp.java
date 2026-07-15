@@ -9,7 +9,10 @@ import servicart.domain.interfaces.Checkout;
 import servicart.domain.mappers.CarritoMapperDomain;
 import servicart.domain.services.empresa.FacturacionService;
 import servicart.domain.services.empresa.NotificadorService;
-import servicart.entities.*;
+import servicart.entities.Abono;
+import servicart.entities.Carrito;
+import servicart.entities.Cliente;
+import servicart.entities.Factura;
 
 public class CheckoutImp implements Checkout {
     @Override
@@ -36,7 +39,7 @@ public class CheckoutImp implements Checkout {
             throw new IllegalStateException("El carrito está vacío, no hay nada que pagar");
         }
 
-        // La modalidad de pago se elige AQUÍ, en el checkout — no al momento de agregar al carrito
+        // La modalidad de pago se elige aquí en el checkout
         for (Abono abono : carrito.getAbonos()) {
             abono.setModalidadPago(dto.modalidadPago());
         }

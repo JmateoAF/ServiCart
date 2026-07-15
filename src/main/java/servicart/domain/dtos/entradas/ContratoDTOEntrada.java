@@ -1,3 +1,4 @@
 package servicart.domain.dtos.entradas;
 
-public record ContratoDTOEntrada(String cedula) { }
+public record ContratoDTOEntrada(String cedula) {
+}

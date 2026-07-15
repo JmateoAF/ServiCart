@@ -1,6 +1,7 @@
 package servicart.domain.interfaces;
 
 import servicart.entities.ServicioCatalogo;
+
 import java.io.Serializable;
 
 /* Define la estrategia de cálculo del monto de una factura.

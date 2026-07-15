@@ -5,5 +5,6 @@ import servicart.domain.dtos.retornos.CarritoDTORetorno;
 
 public interface CarritoCliente {
     CarritoDTORetorno verCarrito(CarritoDTOEntrada dto);
+
     void vaciarCarrito(CarritoDTOEntrada dto);
 }

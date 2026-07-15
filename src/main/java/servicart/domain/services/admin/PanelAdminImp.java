@@ -10,6 +10,7 @@ import servicart.entities.CorteServicio;
 import servicart.entities.Factura;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class PanelAdminImp implements PanelAdmin {
 
     @Override
     public ResumenAdminDTORetorno obtenerResumen() {
-        List<Cliente> clientes = FactoryDAO.getDAO(Cliente.class).findAll();
+        List<Cliente> clientes = Objects.requireNonNull(FactoryDAO.getDAO(Cliente.class)).findAll();
         int usuariosActivos = (int) clientes.stream().filter(c -> c.getActivo() == 1).count();
 
         CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
@@ -25,7 +26,7 @@ public class PanelAdminImp implements PanelAdmin {
                 .map(corte -> corte.getContrato().getCliente().getCedula())
                 .collect(Collectors.toSet());
 
-        List<Factura> facturas = FactoryDAO.getDAO(Factura.class).findAll();
+        List<Factura> facturas = Objects.requireNonNull(FactoryDAO.getDAO(Factura.class)).findAll();
         Set<String> cedulasConMora = facturas.stream()
                 .filter(Factura::estaVencida)
                 .map(f -> f.getContrato().getCliente().getCedula())

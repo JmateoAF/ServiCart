@@ -13,7 +13,10 @@ import servicart.domain.mappers.AdminCortesMapperDomain;
 import servicart.domain.services.empresa.ContratoService;
 import servicart.domain.services.empresa.CorteService;
 import servicart.domain.services.empresa.FacturacionService;
-import servicart.entities.*;
+import servicart.entities.Abono;
+import servicart.entities.Contrato;
+import servicart.entities.CorteServicio;
+import servicart.entities.Factura;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -77,6 +80,7 @@ public class AdminCortesImp implements AdminCortes {
         CrudDAO<CorteServicio> corteDAO = FactoryDAO.getDAO(CorteServicio.class);
         CorteService corteService = crearCorteService();
 
+        assert corteDAO != null;
         CorteServicio corte = corteDAO.findId(String.valueOf(dto.idCorte()))
                 .orElseThrow(() -> new RuntimeException("Corte no encontrado: " + dto.idCorte()));
 
@@ -89,6 +93,7 @@ public class AdminCortesImp implements AdminCortes {
         CrudDAO<Abono> abonoDAO = FactoryDAO.getDAO(Abono.class);
         FacturacionService facturacionService = crearFacturacionService();
 
+        assert facturaDAO != null;
         Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura()))
                 .orElseThrow(() -> new RuntimeException("Factura no encontrada: " + dto.idFactura()));
 
@@ -101,6 +106,7 @@ public class AdminCortesImp implements AdminCortes {
         }
 
         Abono abono = new Abono(dto.monto(), LocalDateTime.now(), true, factura, dto.modalidadPago());
+        assert abonoDAO != null;
         abonoDAO.save(abono);
 
         if (facturacionService.calcularSaldoPendiente(factura) <= 0) {
@@ -110,6 +116,7 @@ public class AdminCortesImp implements AdminCortes {
 
     private List<Factura> facturasVencidas() {
         CrudDAO<Factura> facturaDAO = FactoryDAO.getDAO(Factura.class);
+        assert facturaDAO != null;
         return facturaDAO.findAll().stream().filter(Factura::estaVencida).toList();
     }
 

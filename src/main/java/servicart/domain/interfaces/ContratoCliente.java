@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ContratoCliente {
     List<ContratoDTORetorno> listarContratos(ContratoDTOEntrada dto);
+
     void cancelarContrato(CancelarContratoDTOEntrada dto);
 }

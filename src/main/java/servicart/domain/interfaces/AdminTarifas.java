@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface AdminTarifas {
     List<TarifaDetalleDTORetorno> listarTarifas();
+
     void actualizarTarifa(ActualizarTarifaDTOEntrada dto);
 }

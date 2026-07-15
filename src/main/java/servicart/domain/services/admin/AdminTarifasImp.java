@@ -10,12 +10,13 @@ import servicart.entities.ServicioCatalogo;
 import servicart.entities.enums.TipoValorFactura;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AdminTarifasImp implements AdminTarifas {
 
     @Override
     public List<TarifaDetalleDTORetorno> listarTarifas() {
-        return FactoryDAO.getDAO(ServicioCatalogo.class).findAll().stream()
+        return Objects.requireNonNull(FactoryDAO.getDAO(ServicioCatalogo.class)).findAll().stream()
                 .map(AdminTarifasMapperDomain::entidadADTO)
                 .toList();
     }
@@ -31,6 +32,7 @@ public class AdminTarifasImp implements AdminTarifas {
             throw new IllegalArgumentException("Los días para corte deben ser mayores a 0");
         }
 
+        assert servicioDAO != null;
         ServicioCatalogo servicio = servicioDAO.findId(String.valueOf(dto.idServicio()))
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado: " + dto.idServicio()));
 

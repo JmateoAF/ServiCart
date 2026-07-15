@@ -11,9 +11,14 @@ import java.util.List;
 
 public interface AdminCortes {
     ResumenCortesDTORetorno obtenerResumen();
+
     List<FacturaEnMoraDTORetorno> listarEnMoraSinCorte();
+
     List<CorteDTORetorno> listarCortados();
+
     void forzarCorte(ForzarCorteDTOEntrada dto);
+
     void reactivar(ReactivarCorteDTOEntrada dto);
+
     void pagarFactura(PagarFacturaDTOEntrada dto);
 }

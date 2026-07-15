@@ -13,6 +13,7 @@ import servicart.domain.services.empresa.FacturacionService;
 import servicart.entities.*;
 import servicart.entities.enums.EstadoFactura;
 import servicart.entities.enums.ModalidadPago;
+
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -27,22 +28,16 @@ public class PanelClienteImp implements PanelCliente {
         FacturacionService facturacionService = new FacturacionService(FactoryDAO.getDAO(Factura.class), FactoryDAO.getDAO(Abono.class));
         CorteService corteService = new CorteService(FactoryDAO.getDAO(CorteServicio.class));
 
-        return contratoService.buscarPorCliente(dto.cedula()).stream()
-                .map(contrato -> {
-                    List<Factura> pendientes = facturacionService.buscarPorContrato(contrato.getId()).stream()
-                            .filter(f -> f.getEstado() != EstadoFactura.PAGADA)
-                            .sorted(Comparator.comparing(Factura::getFechaEmision))
-                            .toList();
+        return contratoService.buscarPorCliente(dto.cedula()).stream().map(contrato -> {
+            List<Factura> pendientes = facturacionService.buscarPorContrato(contrato.getId()).stream().filter(f -> f.getEstado() != EstadoFactura.PAGADA).sorted(Comparator.comparing(Factura::getFechaEmision)).toList();
 
-                    Map<Integer, Double> saldosPendientes = pendientes.stream()
-                            .collect(Collectors.toMap(Factura::getId, facturacionService::calcularSaldoPendiente));
+            Map<Integer, Double> saldosPendientes = pendientes.stream().collect(Collectors.toMap(Factura::getId, facturacionService::calcularSaldoPendiente));
 
-                    boolean estaCortado = corteService.buscarCorteVigente(contrato.getId()).isPresent();
-                    double deudaTotal = saldosPendientes.values().stream().mapToDouble(Double::doubleValue).sum();
+            boolean estaCortado = corteService.buscarCorteVigente(contrato.getId()).isPresent();
+            double deudaTotal = saldosPendientes.values().stream().mapToDouble(Double::doubleValue).sum();
 
-                    return PanelClienteMapperDomain.entidadADTO(contrato, pendientes, estaCortado, deudaTotal, saldosPendientes);
-                })
-                .toList();
+            return PanelClienteMapperDomain.entidadADTO(contrato, pendientes, estaCortado, deudaTotal, saldosPendientes);
+        }).toList();
     }
 
     @Override
@@ -61,8 +56,7 @@ public class PanelClienteImp implements PanelCliente {
             throw new IllegalArgumentException("El monto del abono debe ser mayor a 0");
         }
 
-        Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura()))
-                .orElseThrow(() -> new RuntimeException("Factura no encontrada"));
+        Factura factura = facturaDAO.findId(String.valueOf(dto.idFactura())).orElseThrow(() -> new RuntimeException("Factura no encontrada"));
 
         if (factura.getEstado() == EstadoFactura.PAGADA) {
             throw new IllegalStateException("La factura ya está pagada, no admite abonos");
@@ -73,8 +67,7 @@ public class PanelClienteImp implements PanelCliente {
             throw new IllegalArgumentException("No puedes abonar más del saldo pendiente ($ " + String.format("%.2f", saldoPendiente) + ")");
         }
 
-        Cliente cliente = clienteDAO.findId(dto.cedula())
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        Cliente cliente = clienteDAO.findId(dto.cedula()).orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
         Abono abono = new Abono(dto.monto(), LocalDateTime.now(), false, factura, ModalidadPago.TC);
         abonoDAO.save(abono);
