@@ -4,16 +4,17 @@ import servicart.domain.interfaces.CalculoStrategy;
 import servicart.domain.interfaces.Identificable;
 import servicart.entities.enums.TipoServicio;
 import servicart.entities.enums.TipoValorFactura;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serial;
 import java.io.Serializable;
 
 public class ServicioCatalogo implements Serializable, Identificable {
+    private final TipoServicio tipo;
+    private final TipoValorFactura tipoValor;
     private int id;
     private Empresa empresa;
-    private TipoServicio tipo;
-    private TipoValorFactura tipoValor;
     private double tarifaFija;
     private double tarifaPorUnidad;
     private double costoReactivacion;
@@ -47,35 +48,71 @@ public class ServicioCatalogo implements Serializable, Identificable {
         asignarEstrategia();
     }
 
-    public double calcularMonto(double consumo) { return estrategia.calcular(consumo, this); }
-
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-
-    public Empresa getEmpresa() { return empresa; }
-    public void setEmpresa(Empresa empresa) { this.empresa = empresa; }
-
-    public TipoServicio getTipo() { return tipo; }
-    public void setTipo(TipoServicio tipo) { this.tipo = tipo; }
-
-    public TipoValorFactura getTipoValor() { return tipoValor; }
-    public void setTipoValorFactura(TipoValorFactura tipoValor) {
-        this.tipoValor = tipoValor;
-        asignarEstrategia();
+    public double calcularMonto(double consumo) {
+        return estrategia.calcular(consumo, this);
     }
 
-    public double getTarifaFija() { return tarifaFija; }
-    public void setTarifaFija(double tarifaFija) { this.tarifaFija = tarifaFija; }
+    public int getId() {
+        return id;
+    }
 
-    public double getTarifaPorUnidad() { return tarifaPorUnidad; }
-    public void setTarifaPorUnidad(double tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public double getCostoReactivacion() { return costoReactivacion; }
-    public void setCostoReactivacion(double costoReactivacion) { this.costoReactivacion = costoReactivacion; }
+    public Empresa getEmpresa() {
+        return empresa;
+    }
 
-    public double getTasaInteresDiario() { return tasaInteresDiario; }
-    public void setTasaInteresDiario(double tasaInteresDiario) { this.tasaInteresDiario = tasaInteresDiario; }
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
-    public int getDiasParaCorte() { return diasParaCorte; }
-    public void setDiasParaCorte(int diasParaCorte) { this.diasParaCorte = diasParaCorte; }
+    public TipoServicio getTipo() {
+        return tipo;
+    }
+
+    public TipoValorFactura getTipoValor() {
+        return tipoValor;
+    }
+
+    public double getTarifaFija() {
+        return tarifaFija;
+    }
+
+    public void setTarifaFija(double tarifaFija) {
+        this.tarifaFija = tarifaFija;
+    }
+
+    public double getTarifaPorUnidad() {
+        return tarifaPorUnidad;
+    }
+
+    public void setTarifaPorUnidad(double tarifaPorUnidad) {
+        this.tarifaPorUnidad = tarifaPorUnidad;
+    }
+
+    public double getCostoReactivacion() {
+        return costoReactivacion;
+    }
+
+    public void setCostoReactivacion(double costoReactivacion) {
+        this.costoReactivacion = costoReactivacion;
+    }
+
+    public double getTasaInteresDiario() {
+        return tasaInteresDiario;
+    }
+
+    public void setTasaInteresDiario(double tasaInteresDiario) {
+        this.tasaInteresDiario = tasaInteresDiario;
+    }
+
+    public int getDiasParaCorte() {
+        return diasParaCorte;
+    }
+
+    public void setDiasParaCorte(int diasParaCorte) {
+        this.diasParaCorte = diasParaCorte;
+    }
 }

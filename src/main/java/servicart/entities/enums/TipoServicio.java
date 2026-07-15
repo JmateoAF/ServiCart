@@ -5,18 +5,13 @@ public enum TipoServicio {
     AGUA(0),
     LUZ(1),
     BASURA(2),
-    INTERNET(3);   // cada constante guarda su código
+    INTERNET(3); // cada constante guarda su código
 
-    private final int codigo;                  // código numérico del servicio
+    private final int codigo; // código numérico del servicio
 
     // Constructor privado (los enums lo llaman automáticamente al definir las constantes)
     TipoServicio(int codigo) {
         this.codigo = codigo;
-    }
-
-    // Permite acceder al código asociado al tipo de servicio
-    public int getCodigo() {
-        return codigo;
     }
 
     // Convierte un código numérico de vuelta a su enum correspondiente
@@ -25,5 +20,10 @@ public enum TipoServicio {
             if (ts.codigo == codigo) return ts;
 
         throw new IllegalArgumentException("Servicio no válido: " + codigo);
+    }
+
+    // Permite acceder al código asociado al tipo de servicio
+    public int getCodigo() {
+        return codigo;
     }
 }

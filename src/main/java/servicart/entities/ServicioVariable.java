@@ -1,6 +1,7 @@
 package servicart.entities;
 
 import servicart.domain.interfaces.CalculoStrategy;
+
 import java.io.Serializable;
 
 public class ServicioVariable implements CalculoStrategy, Serializable {

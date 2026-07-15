@@ -7,12 +7,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Contrato implements Serializable, Identificable {
-    private int id;
     private final LocalDateTime fechaInicio;
-    private LocalDateTime fechaFin; //Null mientras el contrato está activo
-    private CausaTerminacion causaTerminacion;
     private final ServicioCatalogo servicio;
     private final Cliente cliente;
+    private int id;
+    private LocalDateTime fechaFin; //Null mientras el contrato está activo
+    private CausaTerminacion causaTerminacion;
 
     public Contrato(LocalDateTime fechaInicio, LocalDateTime fechaFin, CausaTerminacion causaTerminacion, ServicioCatalogo servicio, Cliente cliente) {
         this.fechaInicio = fechaInicio;
@@ -22,21 +22,44 @@ public class Contrato implements Serializable, Identificable {
         this.cliente = cliente;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) {this.id = id;}
+    public int getId() {
+        return id;
+    }
 
-    public LocalDateTime getFechaInicio() { return fechaInicio; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public LocalDateTime getFechaFin() { return fechaFin; }
-    public void setFechaFin(LocalDateTime fechaFin) { this.fechaFin = fechaFin; }
+    public LocalDateTime getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public LocalDateTime getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(LocalDateTime fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 
 
-    public CausaTerminacion getCausaTerminacion() { return causaTerminacion; }
-    public void setCausaTerminacion(CausaTerminacion causaTerminacion) { this.causaTerminacion = causaTerminacion; }
+    public CausaTerminacion getCausaTerminacion() {
+        return causaTerminacion;
+    }
 
-    public ServicioCatalogo getServicio() { return servicio; }
+    public void setCausaTerminacion(CausaTerminacion causaTerminacion) {
+        this.causaTerminacion = causaTerminacion;
+    }
 
-    public Cliente getCliente() { return cliente; }
+    public ServicioCatalogo getServicio() {
+        return servicio;
+    }
 
-    public boolean estaActivo() { return causaTerminacion == CausaTerminacion.ACTIVO; }
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public boolean estaActivo() {
+        return causaTerminacion == CausaTerminacion.ACTIVO;
+    }
 }

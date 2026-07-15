@@ -12,14 +12,15 @@ public enum ModalidadPago {
     ModalidadPago(int codigo) {
         this.codigo = codigo;
     }
-    public int getCodigo() {
-        return codigo;
-    }
 
     public static ModalidadPago fromCodigo(int codigo) {
         for (ModalidadPago ts : values())
             if (ts.codigo == codigo) return ts;
 
         throw new IllegalArgumentException("Modalidad de Pago no válido: " + codigo);
+    }
+
+    public int getCodigo() {
+        return codigo;
     }
 }

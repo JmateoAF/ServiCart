@@ -14,17 +14,16 @@ public enum CausaTerminacion {
         this.codigo = codigo;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    /* Obtiene la causa de terminación desde un código leído del archivo.
-    Si el código no es válido, lanza excepción */
-
     public static CausaTerminacion fromCodigo(int codigo) {
         for (CausaTerminacion ct : values())
             if (ct.codigo == codigo) return ct;
 
         throw new IllegalArgumentException("Causa de terminación no válida: " + codigo);
+    }
+
+    /* Obtiene la causa de terminación desde un código leído del archivo.
+    Si el código no es válido, lanza excepción */
+    public int getCodigo() {
+        return codigo;
     }
 }

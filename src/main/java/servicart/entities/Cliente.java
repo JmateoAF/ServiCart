@@ -17,17 +17,39 @@ public class Cliente implements Serializable {
         this.activo = activo;
     }
 
-    public String getCedula() { return cedula; }
+    public String getCedula() {
+        return cedula;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getNombre() {
+        return nombre;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    public String getCelular() { return celular; }
-    public void setCelular(String celular) { this.celular = celular; }
+    public String getEmail() {
+        return email;
+    }
 
-    public int getActivo() { return activo; }
-    public void setActivo(int activo) { this.activo = activo; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public int getActivo() {
+        return activo;
+    }
+
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
 }

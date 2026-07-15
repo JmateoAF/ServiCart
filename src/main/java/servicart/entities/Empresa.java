@@ -1,6 +1,7 @@
 package servicart.entities;
 
 import servicart.domain.interfaces.Identificable;
+
 import java.io.Serializable;
 
 /* Emitir facturas a los clientes
@@ -15,11 +16,23 @@ public class Empresa extends SujetoNotificable implements Serializable, Identifi
         this.nombre = nombre;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void emitirFactura(Factura factura) { if (factura != null) notificarObservadores(factura); }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void emitirFactura(Factura factura) {
+        if (factura != null) notificarObservadores(factura);
+    }
 }

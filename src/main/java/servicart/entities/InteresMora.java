@@ -1,18 +1,20 @@
 package servicart.entities;
 
 import servicart.domain.interfaces.Identificable;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /* Registro del interés por mora aplicado a una factura vencida.
 Los intereses son progresivos según los días de retraso */
+
 public class InteresMora implements Serializable, Identificable {
+    private final Factura factura;
     private int id;
     private int diasRetraso;
     private double interesAcumulado;
     private LocalDateTime fechaCalculo;
     private boolean aplicadoAFactura;
-    private final Factura factura;
 
     public InteresMora(int diasRetraso, double interesAcumulado, LocalDateTime fechaCalculo, boolean aplicadoAFactura, Factura factura) {
         this.diasRetraso = diasRetraso;
@@ -22,20 +24,47 @@ public class InteresMora implements Serializable, Identificable {
         this.factura = factura;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) {this.id = id;}
+    public int getId() {
+        return id;
+    }
 
-    public int getDiasRetraso() { return diasRetraso; }
-    public void setDiasRetraso(int diasRetraso) { this.diasRetraso = diasRetraso; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public double getInteresAcumulado() { return interesAcumulado; }
-    public void setInteresAcumulado(double interesAcumulado) { this.interesAcumulado = interesAcumulado; }
+    public int getDiasRetraso() {
+        return diasRetraso;
+    }
 
-    public LocalDateTime getFechaCalculo() { return fechaCalculo; }
-    public void setFechaCalculo(LocalDateTime fechaCalculo) { this.fechaCalculo = fechaCalculo; }
+    public void setDiasRetraso(int diasRetraso) {
+        this.diasRetraso = diasRetraso;
+    }
 
-    public boolean isAplicadoAFactura() { return aplicadoAFactura; }
-    public void setAplicadoAFactura(boolean aplicadoAFactura) { this.aplicadoAFactura = aplicadoAFactura; }
+    public double getInteresAcumulado() {
+        return interesAcumulado;
+    }
 
-    public Factura getFactura() { return factura; }
+    public void setInteresAcumulado(double interesAcumulado) {
+        this.interesAcumulado = interesAcumulado;
+    }
+
+    public LocalDateTime getFechaCalculo() {
+        return fechaCalculo;
+    }
+
+    public void setFechaCalculo(LocalDateTime fechaCalculo) {
+        this.fechaCalculo = fechaCalculo;
+    }
+
+    public boolean isAplicadoAFactura() {
+        return aplicadoAFactura;
+    }
+
+    public void setAplicadoAFactura(boolean aplicadoAFactura) {
+        this.aplicadoAFactura = aplicadoAFactura;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
 }

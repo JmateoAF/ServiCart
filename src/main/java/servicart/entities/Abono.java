@@ -2,13 +2,14 @@ package servicart.entities;
 
 import servicart.domain.interfaces.Identificable;
 import servicart.entities.enums.ModalidadPago;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Abono implements Serializable, Identificable {
+    private final LocalDateTime fechaPago;
     private int id;
     private double monto;
-    private final LocalDateTime fechaPago;
     private boolean pagoRealizado;
     private Factura factura;
     private ModalidadPago modalidadPago;
@@ -21,22 +22,51 @@ public class Abono implements Serializable, Identificable {
         this.modalidadPago = modalidadPago;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) {this.id = id;}
+    public int getId() {
+        return id;
+    }
 
-    public double getMonto() { return monto; }
-    public void setMonto(double monto) { this.monto = monto; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public LocalDateTime getFechaPago() { return fechaPago; }
+    public double getMonto() {
+        return monto;
+    }
 
-    public boolean isPagoRealizado() { return pagoRealizado; }
-    public void setPagoRealizado(boolean pagoRealizado) { this.pagoRealizado = pagoRealizado; }
+    public void setMonto(double monto) {
+        this.monto = monto;
+    }
 
-    public Factura getFactura() { return factura; }
-    public void setFactura(Factura factura) { this.factura = factura; }
+    public LocalDateTime getFechaPago() {
+        return fechaPago;
+    }
 
-    public ModalidadPago getModalidadPago() { return modalidadPago; }
-    public void setModalidadPago(ModalidadPago modalidadPago) { this.modalidadPago = modalidadPago; }
+    public boolean isPagoRealizado() {
+        return pagoRealizado;
+    }
 
-    public String getDescripcionServicio() { return factura.getContrato().getServicio().getEmpresa().getNombre() + " – " + factura.getContrato().getServicio().getTipo(); }
+    public void setPagoRealizado(boolean pagoRealizado) {
+        this.pagoRealizado = pagoRealizado;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
+    public ModalidadPago getModalidadPago() {
+        return modalidadPago;
+    }
+
+    public void setModalidadPago(ModalidadPago modalidadPago) {
+        this.modalidadPago = modalidadPago;
+    }
+
+    public String getDescripcionServicio() {
+        return factura.getContrato().getServicio().getEmpresa().getNombre() + " – " + factura.getContrato().getServicio().getTipo();
+    }
 }
