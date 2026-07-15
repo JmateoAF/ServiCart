@@ -8,32 +8,72 @@ public class FacturaPendienteViewModel {
     private String fechaVencimientoTexto;
     private String fechaCorteTexto;
     private double interesAcumulado;
-    private boolean tieneMora;
     private String totalIndividualTexto;
 
-    public int getIdFactura() { return idFactura; }
-    public void setIdFactura(int idFactura) { this.idFactura = idFactura; }
+    public int getIdFactura() {
+        return idFactura;
+    }
 
-    public double getValorBase() { return valorBase; }
-    public void setValorBase(double valorBase) { this.valorBase = valorBase; }
+    public void setIdFactura(int idFactura) {
+        this.idFactura = idFactura;
+    }
 
-    public double getSaldoPendiente() { return saldoPendiente; }
-    public void setSaldoPendiente(double saldoPendiente) { this.saldoPendiente = saldoPendiente; }
-    public String getPeriodoTexto() { return periodoTexto; }
-    public void setPeriodoTexto(String periodoTexto) { this.periodoTexto = periodoTexto; }
+    public double getValorBase() {
+        return valorBase;
+    }
 
-    public String getFechaVencimientoTexto() { return fechaVencimientoTexto; }
-    public void setFechaVencimientoTexto(String fechaVencimientoTexto) { this.fechaVencimientoTexto = fechaVencimientoTexto; }
+    public void setValorBase(double valorBase) {
+        this.valorBase = valorBase;
+    }
 
-    public String getFechaCorteTexto() { return fechaCorteTexto; }
-    public void setFechaCorteTexto(String fechaCorteTexto) { this.fechaCorteTexto = fechaCorteTexto; }
+    public double getSaldoPendiente() {
+        return saldoPendiente;
+    }
 
-    public double getInteresAcumulado() { return interesAcumulado; }
-    public void setInteresAcumulado(double interesAcumulado) { this.interesAcumulado = interesAcumulado; }
+    public void setSaldoPendiente(double saldoPendiente) {
+        this.saldoPendiente = saldoPendiente;
+    }
 
-    public boolean isTieneMora() { return tieneMora; }
-    public void setTieneMora(boolean tieneMora) { this.tieneMora = tieneMora; }
+    public String getPeriodoTexto() {
+        return periodoTexto;
+    }
 
-    public String getTotalIndividualTexto() { return totalIndividualTexto; }
-    public void setTotalIndividualTexto(String totalIndividualTexto) { this.totalIndividualTexto = totalIndividualTexto; }
+    public void setPeriodoTexto(String periodoTexto) {
+        this.periodoTexto = periodoTexto;
+    }
+
+    public String getFechaVencimientoTexto() {
+        return fechaVencimientoTexto;
+    }
+
+    public void setFechaVencimientoTexto(String fechaVencimientoTexto) {
+        this.fechaVencimientoTexto = fechaVencimientoTexto;
+    }
+
+    public String getFechaCorteTexto() {
+        return fechaCorteTexto;
+    }
+
+    public void setFechaCorteTexto(String fechaCorteTexto) {
+        this.fechaCorteTexto = fechaCorteTexto;
+    }
+
+    public double getInteresAcumulado() {
+        return interesAcumulado;
+    }
+
+    public void setInteresAcumulado(double interesAcumulado) {
+        this.interesAcumulado = interesAcumulado;
+    }
+
+    public void setTieneMora() {
+    }
+
+    public String getTotalIndividualTexto() {
+        return totalIndividualTexto;
+    }
+
+    public void setTotalIndividualTexto(String totalIndividualTexto) {
+        this.totalIndividualTexto = totalIndividualTexto;
+    }
 }

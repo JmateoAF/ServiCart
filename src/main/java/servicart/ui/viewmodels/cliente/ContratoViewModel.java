@@ -7,18 +7,43 @@ public class ContratoViewModel {
     private String tarifaTexto;
     private String fechaInicioTexto;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getEmpresa() { return empresa; }
-    public void setEmpresa(String empresa) { this.empresa = empresa; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getTipoServicio() { return tipoServicio; }
-    public void setTipoServicio(String tipoServicio) { this.tipoServicio = tipoServicio; }
+    public String getEmpresa() {
+        return empresa;
+    }
 
-    public String getTarifaTexto() { return tarifaTexto; }
-    public void setTarifaTexto(String tarifaTexto) { this.tarifaTexto = tarifaTexto; }
+    public void setEmpresa(String empresa) {
+        this.empresa = empresa;
+    }
 
-    public String getFechaInicioTexto() { return fechaInicioTexto; }
-    public void setFechaInicioTexto(String fechaInicioTexto) { this.fechaInicioTexto = fechaInicioTexto; }
+    public String getTipoServicio() {
+        return tipoServicio;
+    }
+
+    public void setTipoServicio(String tipoServicio) {
+        this.tipoServicio = tipoServicio;
+    }
+
+    public String getTarifaTexto() {
+        return tarifaTexto;
+    }
+
+    public void setTarifaTexto(String tarifaTexto) {
+        this.tarifaTexto = tarifaTexto;
+    }
+
+    public String getFechaInicioTexto() {
+        return fechaInicioTexto;
+    }
+
+    public void setFechaInicioTexto(String fechaInicioTexto) {
+        this.fechaInicioTexto = fechaInicioTexto;
+    }
 }

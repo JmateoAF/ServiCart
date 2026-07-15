@@ -14,10 +14,10 @@
             <Region HBox.hgrow="ALWAYS"/>
 
             <HBox style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
-                <Button fx:id="btnSQLite" onAction="#onSeleccionarSQLite"
+                <Button fx:id="btnSQLite" maxHeight="Infinity" onAction="#onSeleccionarSQLite"
                         style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 15 5 15;"
                         text="SQLite"/>
-                <Button fx:id="btnBinario" onAction="#onSeleccionarBinario"
+                <Button fx:id="btnBinario" maxHeight="Infinity" onAction="#onSeleccionarBinario"
                         style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 15 5 15;"
                         text="Archivos binarios"/>
             </HBox>

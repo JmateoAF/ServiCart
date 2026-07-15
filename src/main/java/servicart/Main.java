@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import servicart.domain.services.empresa.GestorProcesosEmpresa;
 import servicart.ui.controllers.Navegador;
-import java.util.Objects;
 
 void main() {
     Platform.startup(() -> {
@@ -22,7 +21,7 @@ void main() {
             stage.setScene(new Scene(root));
 
             Navegador.inicializar(stage);
-            stage.setOnCloseRequest(event -> GestorProcesosEmpresa.detener());
+            stage.setOnCloseRequest(_ -> GestorProcesosEmpresa.detener());
             stage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("assets/icon/marcoDorado.png"), "Icono no encontrado")));
             stage.setMinWidth(700);
             stage.setMinHeight(500);

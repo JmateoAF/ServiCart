@@ -18,18 +18,23 @@ public class UsuarioTablaViewModel {
         this.activo = new SimpleStringProperty(activo);
     }
 
-    public StringProperty cedulaProperty() { return cedula; }
-    public String getCedula() { return cedula.get(); }
+    public String getCedula() {
+        return cedula.get();
+    }
 
-    public StringProperty nombreProperty() { return nombre; }
-    public String getNombre() { return nombre.get(); }
+    public String getNombre() {
+        return nombre.get();
+    }
 
-    public StringProperty emailProperty() { return email; }
-    public String getEmail() { return email.get(); }
+    public String getEmail() {
+        return email.get();
+    }
 
-    public StringProperty celularProperty() { return celular; }
-    public String getCelular() { return celular.get(); }
+    public String getCelular() {
+        return celular.get();
+    }
 
-    public StringProperty activoProperty() { return activo; }
-    public String getActivo() { return activo.get(); }
+    public String getActivo() {
+        return activo.get();
+    }
 }

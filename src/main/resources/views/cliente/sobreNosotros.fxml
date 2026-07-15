@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #0f0f0f;"
             stylesheets="@../../assets/css/styles.css" xmlns="http://javafx.com/javafx/26"
-            fx:controller="servicart.ui.controllers.SobreNosotrosController">
+            fx:controller="servicart.ui.controllers.cliente.SobreNosotrosController">
     <top>
         <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" spacing="10.0"
               style="-fx-background-color: #161616; -fx-border-color: #222222; -fx-border-width: 0 0 1 0; -fx-padding: 10 20 10 20;">

@@ -8,7 +8,7 @@ public class AdminTarifasMapperUI {
     public static ServicioCatalogoViewModel dtoAViewModel(TarifaDetalleDTORetorno dto) {
         ServicioCatalogoViewModel vm = new ServicioCatalogoViewModel();
         vm.setId(dto.id());
-        vm.setNombreServicio(icono(dto.nombreServicio()) + " " + TipoServicios.nombreServicio(dto.nombreServicio()));
+        vm.setNombreServicio(TipoServicios.nombreServicio(dto.nombreServicio()));
         vm.setEmpresaNombre(dto.empresa());
         vm.setTipoValor(capitalizar(dto.tipoValor()));
 
@@ -27,16 +27,6 @@ public class AdminTarifasMapperUI {
         vm.setDiasParaCorteValor(dto.diasParaCorte());
 
         return vm;
-    }
-
-    private static String icono(String tipoServicio) {
-        return switch (tipoServicio) {
-            case "AGUA" -> "💧";
-            case "LUZ" -> "⚡";
-            case "BASURA" -> "🗑";
-            case "INTERNET" -> "📶";
-            default -> "•";
-        };
     }
 
     private static String unidad(String tipoServicio) {

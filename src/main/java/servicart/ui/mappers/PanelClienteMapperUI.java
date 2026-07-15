@@ -4,6 +4,7 @@ import servicart.domain.dtos.retornos.FacturaPendienteDTORetorno;
 import servicart.domain.dtos.retornos.ServicioContratadoDTORetorno;
 import servicart.ui.viewmodels.cliente.FacturaPendienteViewModel;
 import servicart.ui.viewmodels.cliente.ServicioContratadoViewModel;
+
 import java.time.format.DateTimeFormatter;
 
 public class PanelClienteMapperUI {
@@ -34,7 +35,7 @@ public class PanelClienteMapperUI {
         vm.setFechaVencimientoTexto(dto.fechaVencimiento().format(FORMATO_CORTO));
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
         vm.setInteresAcumulado(dto.interesAcumulado());
-        vm.setTieneMora(dto.diasMora() > 0);
+        vm.setTieneMora();
         vm.setTotalIndividualTexto(String.format("$ %.2f", dto.saldoPendiente()));
         return vm;
     }

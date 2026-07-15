@@ -4,7 +4,15 @@ package servicart.ui;
 public class SesionCliente {
     private static String cedulaActual;
 
-    public static void iniciarSesion(String cedula) { cedulaActual = cedula; }
-    public static String getCedulaActual() { return cedulaActual; }
-    public static void cerrar() { cedulaActual = null; }
+    public static void iniciarSesion(String cedula) {
+        cedulaActual = cedula;
+    }
+
+    public static String getCedulaActual() {
+        return cedulaActual;
+    }
+
+    public static void cerrar() {
+        cedulaActual = null;
+    }
 }

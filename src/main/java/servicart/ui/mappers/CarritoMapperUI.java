@@ -9,7 +9,7 @@ public class CarritoMapperUI {
 
     public static CarritoResumenViewModel DTOAviewModel(CarritoDTORetorno dto) {
         CarritoResumenViewModel vm = new CarritoResumenViewModel();
-        vm.setCantidadItems(dto.items().size());
+        vm.setCantidadItems();
         vm.setSubtotal(String.format("$ %.2f", dto.total()));
         vm.setTotal(String.format("$ %.2f", dto.total()));
         vm.setItems(dto.items().stream().map(CarritoMapperUI::itemAViewModel).toList());
@@ -18,7 +18,7 @@ public class CarritoMapperUI {
 
     private static AbonoCarritoViewModel itemAViewModel(AbonoCarritoDTORetorno dto) {
         AbonoCarritoViewModel vm = new AbonoCarritoViewModel();
-        vm.setIdAbono(dto.idAbono());
+        vm.setIdAbono();
         vm.setServicio(dto.descripcionServicio());
         vm.setMonto(String.format("$ %.2f", dto.monto()));
         vm.setReferenciaFactura("Factura #" + dto.idFactura());
