@@ -4,6 +4,7 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Abono;
 import servicart.entities.Carrito;
 import servicart.entities.Cliente;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,9 @@ public class CarritoSQLiteDAO implements CrudDAO<Carrito> {
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, c.getCliente().getCedula());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) c.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) c.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -33,7 +36,9 @@ public class CarritoSQLiteDAO implements CrudDAO<Carrito> {
         String sql = "SELECT * FROM Carrito WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

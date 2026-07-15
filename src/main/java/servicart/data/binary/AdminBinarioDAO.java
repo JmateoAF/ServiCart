@@ -6,10 +6,14 @@ import servicart.entities.Admin;
 import java.util.Optional;
 
 public class AdminBinarioDAO extends GenericBinarioDAO<Admin> implements AdminDAO<Admin> {
-    public AdminBinarioDAO() { super("bin/administradores.bin"); } // archivo único para esta entidad
+    public AdminBinarioDAO() {
+        super("bin/administradores.bin"); // archivo único para esta entidad
+    }
 
     @Override
-    protected String getId(Admin admin) { return admin.getUsuario(); }
+    protected String getId(Admin admin) {
+        return admin.getUsuario();
+    }
 
     @Override
     public Optional<Admin> credenciales(String usuario, String contrasenia) {

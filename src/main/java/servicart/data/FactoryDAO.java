@@ -1,7 +1,9 @@
 package servicart.data;
 
 import servicart.data.binary.*;
-import servicart.data.interfaces.*;
+import servicart.data.interfaces.AdminDAO;
+import servicart.data.interfaces.ClienteAdminDAO;
+import servicart.data.interfaces.CrudDAO;
 import servicart.data.sqlite.*;
 import servicart.entities.*;
 
@@ -31,7 +33,8 @@ public class FactoryDAO {
 
         if (entidad == Cliente.class) return (CrudDAO<T>) (sqlite ? new ClienteSQLiteDAO() : new ClienteBinarioDAO());
 
-        if (entidad == Contrato.class) return (CrudDAO<T>) (sqlite ? new ContratoSQLiteDAO() : new ContratoBinarioDAO());
+        if (entidad == Contrato.class)
+            return (CrudDAO<T>) (sqlite ? new ContratoSQLiteDAO() : new ContratoBinarioDAO());
 
         if (entidad == Factura.class) return (CrudDAO<T>) (sqlite ? new FacturaSQLiteDAO() : new FacturaBinarioDAO());
 
@@ -41,11 +44,14 @@ public class FactoryDAO {
 
         if (entidad == Empresa.class) return (CrudDAO<T>) (sqlite ? new EmpresaSQLiteDAO() : new EmpresaBinarioDAO());
 
-        if (entidad == CorteServicio.class) return (CrudDAO<T>) (sqlite ? new CorteServicioSQLiteDAO() : new CorteServicioBinarioDAO());
+        if (entidad == CorteServicio.class)
+            return (CrudDAO<T>) (sqlite ? new CorteServicioSQLiteDAO() : new CorteServicioBinarioDAO());
 
-        if (entidad == InteresMora.class) return (CrudDAO<T>) (sqlite ? new InteresMoraSQLiteDAO(): new InteresMoraBinarioDAO());
+        if (entidad == InteresMora.class)
+            return (CrudDAO<T>) (sqlite ? new InteresMoraSQLiteDAO() : new InteresMoraBinarioDAO());
 
-        if (entidad == ServicioCatalogo.class) return (CrudDAO<T>) (sqlite ? new ServicioCatalogoSQLiteDAO() : new ServicioCatalogoBinarioDAO());
+        if (entidad == ServicioCatalogo.class)
+            return (CrudDAO<T>) (sqlite ? new ServicioCatalogoSQLiteDAO() : new ServicioCatalogoBinarioDAO());
 
         return null;
     }
@@ -60,5 +66,7 @@ public class FactoryDAO {
         return sqlite ? new ClienteSQLiteDAO() : new ClienteBinarioDAO();
     }
 
-    public static String obtenerModoActual() { return baseDatosActual; }
+    public static String obtenerModoActual() {
+        return baseDatosActual;
+    }
 }

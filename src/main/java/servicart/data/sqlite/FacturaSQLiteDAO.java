@@ -5,6 +5,7 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Contrato;
 import servicart.entities.Factura;
 import servicart.entities.enums.EstadoFactura;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,9 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
             stmt.setInt(6, f.getEstado().getCodigo());
             stmt.setInt(7, f.getContrato().getId());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) f.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) f.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -37,7 +40,9 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
         String sql = "SELECT * FROM Factura WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

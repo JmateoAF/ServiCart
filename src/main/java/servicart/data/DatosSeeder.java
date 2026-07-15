@@ -3,7 +3,10 @@ package servicart.data;
 import servicart.data.binary.*;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.*;
-import servicart.entities.enums.*;
+import servicart.entities.enums.CausaTerminacion;
+import servicart.entities.enums.TipoServicio;
+import servicart.entities.enums.TipoValorFactura;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,7 +48,7 @@ public class DatosSeeder {
             Empresa emp2 = new Empresa("CENTROSUR");
             Empresa emp3 = new Empresa("EMAC");
             Empresa emp4 = new Empresa("FIBRAMAX");
-            EmpresaBinarioDAO empresaDAO =  new EmpresaBinarioDAO();
+            EmpresaBinarioDAO empresaDAO = new EmpresaBinarioDAO();
             ponerEnArchivo(empresaDAO, List.of(emp1, emp2, emp3, emp4),
                     (existente, nuevo) -> existente.getNombre().equals(nuevo.getNombre()));
 
@@ -89,9 +92,9 @@ public class DatosSeeder {
 
             // Tres facturas en tres estados distintos, para ver de inmediato (sin esperar
             // al ciclo automático diario) los tres caminos del negocio:
-            //   1) pendiente y aún no vencida        -> se puede agregar al carrito y pagar
-            //   2) ya vencida pero sin corte todavía -> MoraService le calculará el interés al iniciar la app
-            //   3) ya pasó su fecha de corte         -> CorteService la cortará automáticamente al iniciar la app
+            //   1) pendiente y aún no vencida -> se puede agregar al carrito y pagar
+            //   2) ya vencida, pero sin corte todavía -> MoraService le calculará el interés al iniciar la app
+            //   3) ya pasó su fecha de corte -> CorteService la cortará automáticamente al iniciar la app
             // Todas nacen en estado PENDIENTE, igual que las crea FacturacionService.emitirFactura();
             // es la propia gestión automática la que las hace avanzar a VENCIDA/cortada.
             Factura facturaPendiente = new Factura(

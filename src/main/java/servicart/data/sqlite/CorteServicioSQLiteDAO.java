@@ -6,6 +6,7 @@ import servicart.entities.Contrato;
 import servicart.entities.CorteServicio;
 import servicart.entities.Factura;
 import servicart.entities.enums.EstadoCorte;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,9 @@ public class CorteServicioSQLiteDAO implements CrudDAO<CorteServicio> {
             stmt.setInt(5, c.getContrato().getId());
             stmt.setInt(6, c.getFactura().getId());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) c.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) c.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -38,7 +41,9 @@ public class CorteServicioSQLiteDAO implements CrudDAO<CorteServicio> {
         String sql = "SELECT * FROM CorteServicio WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

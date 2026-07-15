@@ -1,16 +1,13 @@
 package servicart.data.sqlite;
 
 import servicart.data.FechaSQLite;
-import servicart.entities.Contrato;
+import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Cliente;
+import servicart.entities.Contrato;
 import servicart.entities.ServicioCatalogo;
 import servicart.entities.enums.CausaTerminacion;
-import servicart.data.interfaces.CrudDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +28,9 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
             stmt.setInt(4, c.getServicio().getId());
             stmt.setString(5, c.getCliente().getCedula());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) c.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) c.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -42,7 +41,9 @@ public class ContratoSQLiteDAO implements CrudDAO<Contrato> {
         String sql = "SELECT * FROM Contrato WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

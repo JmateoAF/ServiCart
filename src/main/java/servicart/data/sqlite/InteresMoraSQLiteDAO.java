@@ -4,6 +4,7 @@ import servicart.data.FechaSQLite;
 import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Factura;
 import servicart.entities.InteresMora;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,9 @@ public class InteresMoraSQLiteDAO implements CrudDAO<InteresMora> {
             stmt.setInt(4, m.isAplicadoAFactura() ? 1 : 0);
             stmt.setInt(5, m.getFactura().getId());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) m.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) m.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -34,7 +37,9 @@ public class InteresMoraSQLiteDAO implements CrudDAO<InteresMora> {
         String sql = "SELECT * FROM InteresMora WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

@@ -10,6 +10,12 @@ import java.time.format.DateTimeFormatter;
 
 public class FechaSQLite {
     private static final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    public static LocalDateTime parsear(String texto) { return LocalDateTime.parse(texto, FORMATO); }
-    public static String formatear(LocalDateTime fecha) { return fecha.format(FORMATO); }
+
+    public static LocalDateTime parsear(String texto) {
+        return LocalDateTime.parse(texto, FORMATO);
+    }
+
+    public static String formatear(LocalDateTime fecha) {
+        return fecha.format(FORMATO);
+    }
 }

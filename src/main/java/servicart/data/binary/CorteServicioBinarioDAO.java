@@ -22,6 +22,7 @@ public class CorteServicioBinarioDAO extends GenericBinarioDAO<CorteServicio> {
 
     /* Borrado lógico: cambia el estado a TERMINADO en lugar de eliminar.
     Si ya está TERMINADO, no se regraba el archivo */
+
     @Override
     public void delete(String id) {
         List<CorteServicio> lista = (cache != null) ? cache : leerTodos();

@@ -1,11 +1,14 @@
 package servicart.data.binary;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.*;
 import java.util.function.Consumer;
 
 /* Capa de infraestructura para manejo de archivos binarios
 No conoce el formato de los datos internos; trabaja únicamente con bytes */
+
 public class ConexionBinario {
     private final Path rutaArchivo;
 
@@ -49,12 +52,17 @@ public class ConexionBinario {
             if (dir == null) dir = Paths.get(".");
             temp = Files.createTempFile(dir, "tmp_", ".bin");
 
-            try (OutputStream os = Files.newOutputStream(temp)) { escritor.accept(os); } //El DAO escribe los bytes que considere
+            try (OutputStream os = Files.newOutputStream(temp)) {
+                escritor.accept(os);
+            } //El DAO escribe los bytes que considere
 
             Files.move(temp, rutaArchivo, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
 
         } catch (IOException e) {
-            if (temp != null) try { Files.deleteIfExists(temp); } catch (IOException ignored) {}
+            if (temp != null) try {
+                Files.deleteIfExists(temp);
+            } catch (IOException ignored) {
+            }
             throw e;
         }
     }

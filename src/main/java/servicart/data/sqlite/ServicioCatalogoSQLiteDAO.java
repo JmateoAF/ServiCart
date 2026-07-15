@@ -1,15 +1,12 @@
 package servicart.data.sqlite;
 
-import servicart.entities.ServicioCatalogo;
+import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Empresa;
+import servicart.entities.ServicioCatalogo;
 import servicart.entities.enums.TipoServicio;
 import servicart.entities.enums.TipoValorFactura;
-import servicart.data.interfaces.CrudDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +28,9 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
             stmt.setDouble(7, s.getTasaInteresDiario());
             stmt.setInt(8, s.getDiasParaCorte());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) s.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) s.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -42,7 +41,9 @@ public class ServicioCatalogoSQLiteDAO implements CrudDAO<ServicioCatalogo> {
         String sql = "SELECT * FROM ServicioCatalogo WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }

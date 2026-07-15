@@ -9,8 +9,12 @@ public class ContratoBinarioDAO extends GenericBinarioDAO<Contrato> {
     }
 
     @Override
-    protected String getId(Contrato contrato) { return String.valueOf(contrato.getId()); } //Identificador natural
+    protected String getId(Contrato contrato) {
+        return String.valueOf(contrato.getId()); //Identificador natural
+    }
 
     @Override
-    protected boolean isActivo(Contrato contrato) { return contrato.getCausaTerminacion() == CausaTerminacion.ACTIVO; } //Borrado lógico: activo = 1
+    protected boolean isActivo(Contrato contrato) {
+        return contrato.getCausaTerminacion() == CausaTerminacion.ACTIVO; //Borrado lógico: activo = 1
+    }
 }

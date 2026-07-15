@@ -2,6 +2,7 @@ package servicart.data.binary;
 
 import servicart.data.interfaces.CrudDAO; // ubicación real según el árbol
 import servicart.domain.interfaces.Identificable;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +12,27 @@ import java.util.stream.Collectors;
 public abstract class GenericBinarioDAO<T extends Serializable> implements CrudDAO<T> {
 
     /* Es {@code protected} para que las subclases puedan, si lo necesitan, realizar
-     * operaciones excepcionales directamente sobre el archivo (por ejemplo, backups,
-     * compactación o lecturas auxiliares) sin duplicar la configuración de la ruta.
-     */
+    operaciones excepcionales directamente sobre el archivo (por ejemplo, backups,
+    compactación o lecturas auxiliares) sin duplicar la configuración de la ruta */
     protected final ConexionBinario conexion;
 
-    /* Caché en memoria de la lista completa.
-     * Se declara {@code protected} para que las subclases puedan invalidarla
-     * manualmente cuando implementen métodos adicionales que modifiquen el archivo.
-     */
+    /* Caché en memoria de la lista completa
+    Se declara {@code protected} para que las subclases puedan invalidarla
+    manualmente cuando implementen métodos adicionales que modifiquen el archivo */
     protected List<T> cache = null;
 
-    public GenericBinarioDAO(String nombreArchivo) { this.conexion = new ConexionBinario(nombreArchivo); }
+    public GenericBinarioDAO(String nombreArchivo) {
+        this.conexion = new ConexionBinario(nombreArchivo);
+    }
 
     //Identificador único de la entidad
     protected abstract String getId(T entidad);
 
     /* Es {@code protected} para que solo los DAO de la misma jerarquía puedan
     cambiar el criterio de activación, manteniéndolo oculto para el resto del sistema */
-    protected boolean isActivo(T entidad) { return true; }
+    protected boolean isActivo(T entidad) {
+        return true;
+    }
 
     /* Lee la lista completa desde el archivo.
     Ahora utiliza InputStream crudo y lo envuelve explícitamente.
@@ -37,6 +40,7 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
     en operaciones complejas (cálculos, reportes, migraciones) sin depender
     únicamente de los métodos públicos CRUD.
     La anotación @SuppressWarnings("unchecked") la agregué para silenciar la advertencia del compilador en la línea */
+
     @SuppressWarnings("unchecked")
     protected List<T> leerTodos() {
         try {
@@ -54,13 +58,13 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
         }
     }
 
-    /**
-     * Persiste la lista completa de manera atómica.
-     * Es {@code protected} para que las subclases puedan acceder a la lista cruda
-     * en operaciones complejas (cálculos, reportes, migraciones) sin depender
-     * únicamente de los métodos públicos CRUD.
-     * Convierte la lista en bytes mediante ObjectOutputStream.
-     */
+    /*
+    Persiste la lista completa de manera atómica
+    Es {@code protected} para que las subclases puedan acceder a la lista cruda
+    en operaciones complejas (cálculos, reportes, migraciones) sin depender
+    únicamente de los métodos públicos CRUD
+    Convierte la lista en bytes mediante ObjectOutputStream */
+
     protected void guardarTodos(List<T> lista) {
         try {
             conexion.escribirAtomicamente(os -> {
@@ -106,7 +110,8 @@ public abstract class GenericBinarioDAO<T extends Serializable> implements CrudD
         }
 
         String id = getId(entidad);
-        if (lista.stream().anyMatch(e -> getId(e).equals(id))) throw new RuntimeException("Ya existe un registro con ID " + id);
+        if (lista.stream().anyMatch(e -> getId(e).equals(id)))
+            throw new RuntimeException("Ya existe un registro con ID " + id);
 
         lista.add(entidad);
         guardarTodos(lista);

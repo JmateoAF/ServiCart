@@ -13,7 +13,7 @@ public class ConexionSQLite {
 
     // Solo da conexiones limpias
     public static Connection conectar() throws SQLException {
-        Connection con= DriverManager.getConnection(URL);
+        Connection con = DriverManager.getConnection(URL);
         // busy_timeout: si el archivo está bloqueado por otra conexión,
         // espera hasta 5 segundos reintentando en vez de fallar de inmediato con SQLITE_BUSY
         // journal_mode=WAL: permite que lecturas y escrituras convivan sin bloquear

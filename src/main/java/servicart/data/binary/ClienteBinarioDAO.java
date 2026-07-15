@@ -6,13 +6,19 @@ import servicart.entities.Cliente;
 import java.util.List;
 
 public class ClienteBinarioDAO extends GenericBinarioDAO<Cliente> implements ClienteAdminDAO<Cliente> {
-    public ClienteBinarioDAO() { super("bin/clientes.bin"); }
+    public ClienteBinarioDAO() {
+        super("bin/clientes.bin");
+    }
 
     @Override
-    protected String getId(Cliente cliente) { return cliente.getCedula(); } //Identificador natural
+    protected String getId(Cliente cliente) {
+        return cliente.getCedula(); //Identificador natural
+    }
 
     @Override
-    protected boolean isActivo(Cliente cliente) { return cliente.getActivo() == 1; } //Borrado lógico
+    protected boolean isActivo(Cliente cliente) {
+        return cliente.getActivo() == 1; //Borrado lógico
+    }
 
     /* Borrado lógico: marca el campo activo a 0 en lugar de eliminar físicamente
     Si ya estaba inactivo, no hace nada */

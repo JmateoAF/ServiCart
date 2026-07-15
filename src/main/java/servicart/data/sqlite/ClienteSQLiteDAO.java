@@ -1,7 +1,8 @@
 package servicart.data.sqlite;
 
-import servicart.entities.Cliente;
 import servicart.data.interfaces.ClienteAdminDAO;
+import servicart.entities.Cliente;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +37,9 @@ public class ClienteSQLiteDAO implements ClienteAdminDAO<Cliente> {
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, cedula);
 
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }

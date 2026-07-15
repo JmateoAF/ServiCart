@@ -5,6 +5,7 @@ import servicart.data.interfaces.CrudDAO;
 import servicart.entities.Abono;
 import servicart.entities.Factura;
 import servicart.entities.enums.ModalidadPago;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,9 @@ public class AbonoSQLiteDAO implements CrudDAO<Abono> {
             stmt.setInt(4, a.getModalidadPago().getCodigo());
             stmt.setInt(5, a.getFactura().getId());
             stmt.executeUpdate();
-            try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) a.setId(rs.getInt(1)); }
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) a.setId(rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
@@ -35,7 +38,9 @@ public class AbonoSQLiteDAO implements CrudDAO<Abono> {
         String sql = "SELECT * FROM Abono WHERE id = ?";
         try (Connection con = ConexionSQLite.conectar(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, Integer.parseInt(id));
-            try (ResultSet rs = stmt.executeQuery()) { if (rs.next()) return Optional.of(mapear(rs)); }
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return Optional.of(mapear(rs));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
