@@ -134,9 +134,21 @@ public class PerfilClienteController {
 
         Optional<ButtonType> respuesta = confirmacion.showAndWait();
         if (respuesta.isPresent() && respuesta.get() == ButtonType.OK) {
-            contratoCliente.cancelarContrato(new CancelarContratoDTOEntrada(idContrato));
-            cargarContratos();
+            try {
+                contratoCliente.cancelarContrato(new CancelarContratoDTOEntrada(idContrato));
+                cargarContratos();
+            } catch (RuntimeException ex) {
+                mostrarError(ex.getMessage());
+            }
         }
+    }
+
+    private void mostrarError(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        Navegador.estilizarDialogo(alerta);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 
     @FXML private void onMisServicios(ActionEvent event) {
