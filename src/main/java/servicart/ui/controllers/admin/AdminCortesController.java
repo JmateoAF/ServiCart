@@ -299,16 +299,8 @@ public class AdminCortesController {
     }
 
     private void actualizarToggle() {
-        btnVerMora.setStyle((mostrandoCortados ? estiloToggleInactivo() : estiloToggleActivo()) + "-fx-background-radius: 5 0 0 5;");
-        btnVerCortados.setStyle((mostrandoCortados ? estiloToggleActivo() : estiloToggleInactivo()) + "-fx-background-radius: 0 5 5 0;");
-    }
-
-    private String estiloToggleActivo() {
-        return "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; ";
-    }
-
-    private String estiloToggleInactivo() {
-        return "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; ";
+        btnVerMora.setStyle((mostrandoCortados ? "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; " : "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; -fx-background-radius: 5 0 0 5;"));
+        btnVerCortados.setStyle((mostrandoCortados ? "-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; " : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand; -fx-background-radius: 0 5 5 0;"));
     }
 
     @FXML
