@@ -163,6 +163,7 @@ public class AdminUsuariosController {
     private void onCambiarEstado(UsuarioTablaViewModel fila) {
         boolean nuevoEstado = !"Activo".equals(fila.getActivo());
         adminUsuarios.cambiarEstado(new CambiarEstadoUsuarioDTOEntrada(fila.getCedula(), nuevoEstado));
+        cargarResumen();
         cargarUsuarios();
     }
 
