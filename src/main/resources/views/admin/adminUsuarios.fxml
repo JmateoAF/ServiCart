@@ -19,7 +19,7 @@
 
             <HBox style="-fx-border-color: #2a2a2a; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
                 <Button fx:id="btnSQLite" maxHeight="Infinity" onAction="#onSeleccionarSQLite" style="-fx-background-color: #1e1c0f; -fx-text-fill: #e8c96d; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 15 5 15;" text="SQLite" />
-                <Button fx:id="btnBinario" maxHeight="Infinity" onAction="#onSeleccionarBinario" style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 0 5 5 0; -fx-font-size: 20; -fx-padding: 5 15 5 15;" text="Archivos binarios" />
+                <Button fx:id="btnBinario" maxHeight="Infinity" onAction="#onSeleccionarBinario" style="-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-cursor: hand; -fx-background-radius: 5; -fx-font-size: 20; -fx-padding: 5 15 5 15;" text="Archivos binarios" />
             </HBox>
         </HBox>
     </top>
@@ -27,13 +27,13 @@
     <left>
         <VBox prefWidth="200.0" style="-fx-background-color: #0f0f0f; -fx-border-color: #1e1e1e; -fx-border-width: 0 1 0 0;">
             <Region prefHeight="5.0" style="-fx-background-color: #1e1e1e; -fx-border-color: #1e1e1e;" />
-            <Button fx:id="btnUsuarios" maxWidth="Infinity" onAction="#onUsuarios" style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 5; -fx-font-size: 20; -fx-padding: 10 15 10 10; -fx-alignment: center-left; -fx-cursor: hand;" text="Usuarios" />
-            <Button fx:id="btnTarifas" maxWidth="Infinity" onAction="#onTarifas" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Tarifas" />
-            <Button fx:id="btnCortes" maxWidth="Infinity" onAction="#onCortes" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Cortes/mora" />
-            <Button fx:id="btnEmpresas" maxWidth="Infinity" onAction="#onEmpresas" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Empresas" />
+            <Button maxWidth="Infinity" style="-fx-background-color: #1a1a0d; -fx-text-fill: #e8c96d; -fx-border-color: #e8c96d; -fx-border-width: 0 0 0 5; -fx-font-size: 20; -fx-padding: 10 15 10 10; -fx-alignment: center-left; -fx-cursor: hand;" text="Usuarios" />
+            <Button maxWidth="Infinity" onAction="#onTarifas" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Tarifas" />
+            <Button maxWidth="Infinity" onAction="#onCortes" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Cortes/mora" />
+            <Button maxWidth="Infinity" onAction="#onEmpresas" style="-fx-background-color: transparent; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Empresas" />
             <Region VBox.vgrow="ALWAYS" />
          <Separator style="-fx-background-color: #1e1e1e;" />
-            <Button fx:id="btnSalir" maxWidth="Infinity" onAction="#onSalir" style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Salir" />
+            <Button maxWidth="Infinity" onAction="#onSalir" style="-fx-background-color: transparent; -fx-text-fill: #c0392b; -fx-border-color: transparent; -fx-font-size: 20; -fx-padding: 10 15 10 15; -fx-alignment: center-left; -fx-cursor: hand;" text="Salir" />
         </VBox>
     </left>
 

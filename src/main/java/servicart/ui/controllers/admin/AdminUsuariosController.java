@@ -303,7 +303,6 @@ public class AdminUsuariosController {
                 : "-fx-background-color: #161616; -fx-text-fill: #555555; -fx-border-color: transparent; -fx-font-size: 15; -fx-padding: 5 15 5 15; -fx-cursor: hand;";
     }
 
-    @FXML private void onUsuarios(ActionEvent event) { Navegador.irA("views/admin/adminUsuarios.fxml"); event.consume(); }
     @FXML private void onTarifas(ActionEvent event) { Navegador.irA("views/admin/adminTarifas.fxml"); event.consume(); }
     @FXML private void onCortes(ActionEvent event) { Navegador.irA("views/admin/adminCortes.fxml"); event.consume(); }
     @FXML private void onEmpresas(ActionEvent event) { Navegador.irA("views/admin/adminEmpresas.fxml"); event.consume(); }
