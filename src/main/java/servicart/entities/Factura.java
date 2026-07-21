@@ -10,16 +10,18 @@ public class Factura implements Serializable, Identificable {
     private final LocalDateTime fechaEmision;
     private final LocalDateTime fechaVencimiento;
     private final LocalDateTime fechaCorte;
+    private final double valorBase;   // monto original del servicio, nunca cambia
     private double valorTotal;
     private EstadoFactura estado;
     private final Contrato contrato;
 
 
-    public Factura( LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorTotal, Contrato contrato) {
+    public Factura(LocalDateTime fechaEmision, LocalDateTime fechaVencimiento, LocalDateTime fechaCorte, double valorBase, Contrato contrato) {
         this.fechaEmision = fechaEmision;
         this.fechaVencimiento = fechaVencimiento;
         this.fechaCorte = fechaCorte;
-        this.valorTotal = valorTotal;
+        this.valorBase = valorBase;
+        this.valorTotal = valorBase;
         this.contrato = contrato;
         this.estado = EstadoFactura.PENDIENTE;
     }
@@ -32,6 +34,8 @@ public class Factura implements Serializable, Identificable {
     public LocalDateTime getFechaVencimiento() { return fechaVencimiento; }
 
     public LocalDateTime getFechaCorte() { return fechaCorte; }
+
+    public double getValorBase() { return valorBase; }
 
     public double getValorTotal() { return valorTotal; }
     public void setValorTotal(double valorTotal) { this.valorTotal = valorTotal; }

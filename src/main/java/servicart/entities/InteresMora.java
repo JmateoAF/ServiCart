@@ -10,7 +10,7 @@ public class InteresMora implements Serializable, Identificable {
     private int id;
     private int diasRetraso;
     private double interesAcumulado;
-    private final LocalDateTime fechaCalculo;
+    private LocalDateTime fechaCalculo;
     private boolean aplicadoAFactura;
     private final Factura factura;
 
@@ -32,6 +32,7 @@ public class InteresMora implements Serializable, Identificable {
     public void setInteresAcumulado(double interesAcumulado) { this.interesAcumulado = interesAcumulado; }
 
     public LocalDateTime getFechaCalculo() { return fechaCalculo; }
+    public void setFechaCalculo(LocalDateTime fechaCalculo) { this.fechaCalculo = fechaCalculo; }
 
     public boolean isAplicadoAFactura() { return aplicadoAFactura; }
     public void setAplicadoAFactura(boolean aplicadoAFactura) { this.aplicadoAFactura = aplicadoAFactura; }

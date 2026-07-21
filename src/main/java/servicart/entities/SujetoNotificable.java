@@ -8,7 +8,7 @@ import java.util.List;
 FacturacionService la extiende para notificar al emitir una factura */
 
 public abstract class SujetoNotificable {
-    private final List<Observador> observadores = new ArrayList<>();
+    private final transient List<Observador> observadores = new ArrayList<>();
 
     public void agregarObservador(Observador obs) { if (obs != null && !observadores.contains(obs)) observadores.add(obs); }
 

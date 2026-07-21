@@ -42,14 +42,15 @@ CREATE TABLE IF NOT EXISTS Contrato (
 );
 
 CREATE TABLE IF NOT EXISTS Factura (
-    id INTEGER  PRIMARY KEY AUTOINCREMENT,
-    fechaEmision DATETIME NOT NULL,
-    fechaVencimiento DATETIME NOT NULL,
-    fechaCorte DATETIME NOT NULL,
-    valorTotal REAL NOT NULL,
-    estado INTEGER NOT NULL DEFAULT 0,
-    idContrato INTEGER NOT NULL,
-    CONSTRAINT fkFacturaContrato FOREIGN KEY (idContrato) REFERENCES Contrato(id)
+   id INTEGER  PRIMARY KEY AUTOINCREMENT,
+   fechaEmision DATETIME NOT NULL,
+   fechaVencimiento DATETIME NOT NULL,
+   fechaCorte DATETIME NOT NULL,
+   valorBase REAL NOT NULL,
+   valorTotal REAL NOT NULL,
+   estado INTEGER NOT NULL DEFAULT 0,
+   idContrato INTEGER NOT NULL,
+   CONSTRAINT fkFacturaContrato FOREIGN KEY (idContrato) REFERENCES Contrato(id)
 );
 
 CREATE TABLE IF NOT EXISTS Abono (

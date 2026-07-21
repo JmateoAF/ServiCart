@@ -4,13 +4,9 @@ import servicart.domain.interfaces.CalculoStrategy;
 import servicart.domain.interfaces.Identificable;
 import servicart.entities.enums.TipoServicio;
 import servicart.entities.enums.TipoValorFactura;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
-
-/*
- * Representa un servicio del catálogo (agua, luz, basura, internet).
- * Contiene las tarifas, empresa asociada y delega el cálculo del monto
- * en una estrategia (fijo/variable) según el tipo de valor.
- */
 
 public class ServicioCatalogo implements Serializable, Identificable {
     private int id;
@@ -21,7 +17,7 @@ public class ServicioCatalogo implements Serializable, Identificable {
     private double tarifaPorUnidad;
     private double costoReactivacion;
     private double tasaInteresDiario;
-    private transient CalculoStrategy estrategia;    // Estrategia de cálculo (transitoria o calculada)
+    private transient CalculoStrategy estrategia;
 
     public ServicioCatalogo(Empresa empresa, TipoServicio tipo, TipoValorFactura tipoValor, double costoReactivacion, double tasaInteresDiario) {
         this.empresa = empresa;
@@ -34,7 +30,6 @@ public class ServicioCatalogo implements Serializable, Identificable {
         asignarEstrategia();
     }
 
-    //Asigna la estrategia correcta según el tipo de valor
     private void asignarEstrategia() {
         this.estrategia = switch (tipoValor) {
             case FIJO -> new CalculoFijo();
@@ -42,15 +37,16 @@ public class ServicioCatalogo implements Serializable, Identificable {
         };
     }
 
-    /* Calcula el monto de la factura para un consumo dado.
-    Se basa en la estrategia asignada*/
-
-    public double calcularMonto(double consumo) {
-        return estrategia.calcular(consumo, this);
+    // Se ejecuta automáticamente cada vez que Java deserializa este objeto desde el .bin
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        asignarEstrategia();
     }
 
+    public double calcularMonto(double consumo) { return estrategia.calcular(consumo, this); }
+
     public int getId() { return id; }
-    public void setId(int id) {this.id = id;}
+    public void setId(int id) { this.id = id; }
 
     public Empresa getEmpresa() { return empresa; }
     public void setEmpresa(Empresa empresa) { this.empresa = empresa; }
@@ -61,14 +57,13 @@ public class ServicioCatalogo implements Serializable, Identificable {
     public TipoValorFactura getTipoValor() { return tipoValor; }
     public void setTipoValorFactura(TipoValorFactura tipoValor) {
         this.tipoValor = tipoValor;
-        asignarEstrategia();  // reasignar al cambiar el tipo
+        asignarEstrategia();
     }
 
     public double getTarifaFija() { return tarifaFija; }
     public void setTarifaFija(double tarifaFija) { this.tarifaFija = tarifaFija; }
 
     public double getTarifaPorUnidad() { return tarifaPorUnidad; }
-
     public void setTarifaPorUnidad(double tarifaPorUnidad) { this.tarifaPorUnidad = tarifaPorUnidad; }
 
     public double getCostoReactivacion() { return costoReactivacion; }

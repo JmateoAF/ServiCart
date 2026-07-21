@@ -19,7 +19,7 @@ public class FacturacionService extends SujetoNotificable {
         LocalDateTime vencimiento = ahora.plusDays(30);
         LocalDateTime corte = ahora.plusDays(45);
 
-        Factura factura = new Factura(ahora, vencimiento, corte, monto, contrato);
+        Factura factura = new Factura(ahora, vencimiento, corte,monto, contrato);
         facturaDAO.save(factura);
 
         // Observer, avisa a todos los canales suscritos

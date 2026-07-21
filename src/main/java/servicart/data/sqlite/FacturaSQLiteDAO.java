@@ -15,15 +15,15 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
 
     @Override
     public void save(Factura f) {
-        String sql = "INSERT INTO Factura (fechaEmision, fechaVencimiento, fechaCorte, valorTotal, estado, idContrato) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection con = ConexionSQLite.conectar();
+        String sql = "INSERT INTO Factura (fechaEmision, fechaVencimiento, fechaCorte, valorBase, valorTotal, estado, idContrato) VALUES (?, ?, ?, ?, ?, ?, ?)";        try (Connection con = ConexionSQLite.conectar();
              PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, FechaSQLite.formatear(f.getFechaEmision()));
             stmt.setString(2, FechaSQLite.formatear(f.getFechaVencimiento()));
             stmt.setString(3, FechaSQLite.formatear(f.getFechaCorte()));
-            stmt.setDouble(4, f.getValorTotal());
-            stmt.setInt(5, f.getEstado().getCodigo());
-            stmt.setInt(6, f.getContrato().getId());
+            stmt.setDouble(4, f.getValorBase());
+            stmt.setDouble(5, f.getValorTotal());
+            stmt.setInt(6, f.getEstado().getCodigo());
+            stmt.setInt(7, f.getContrato().getId());
             stmt.executeUpdate();
             try (ResultSet rs = stmt.getGeneratedKeys()) { if (rs.next()) f.setId(rs.getInt(1)); }
         } catch (SQLException ex) {
@@ -91,10 +91,12 @@ public class FacturaSQLiteDAO implements CrudDAO<Factura> {
                 FechaSQLite.parsear(rs.getString("fechaEmision")),
                 FechaSQLite.parsear(rs.getString("fechaVencimiento")),
                 FechaSQLite.parsear(rs.getString("fechaCorte")),
-                rs.getDouble("valorTotal"),
+                rs.getDouble("valorBase"),
                 contrato);
         f.setId(rs.getInt("id"));
         f.setEstado(EstadoFactura.fromCodigo(rs.getInt("estado")));
+        f.setValorTotal(rs.getDouble("valorTotal")); // aplica el valor real (con mora acumulada, si la hay)
+
         return f;
     }
 }

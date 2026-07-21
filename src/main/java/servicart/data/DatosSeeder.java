@@ -14,6 +14,20 @@ public class DatosSeeder {
 
     public static void iniciar() {
         try {
+            // Verificar si ya existen datos (por ejemplo, contratos)
+            ContratoBinarioDAO contratoDAO = new ContratoBinarioDAO();
+            List<Contrato> existentes;
+            try {
+                existentes = contratoDAO.findAllSinFiltro();
+            } catch (Exception e) {
+                // Si falla la lectura, asumimos que no hay datos y continuamos
+                existentes = null;
+            }
+
+            if (existentes != null && !existentes.isEmpty()) {
+                System.out.println("Datos ya existentes en archivos binarios. Se omite la siembra.");
+                return;
+            }
             Administrador admin1 = new Administrador("admin", "pass1");
             ponerEnArchivo(new AdminBinarioDAO(), List.of(admin1),
                     (existente, nuevo) -> existente.getUsuario().equals(nuevo.getUsuario()));
@@ -81,30 +95,36 @@ public class DatosSeeder {
                                     && existente.getServicio().getId() == nuevo.getServicio().getId()
                                     && existente.getFechaInicio().equals(nuevo.getFechaInicio()));
 
+            // Facturas con fechas consistentes: emisión, vencimiento, fecha máxima de pago.
             Factura factura1 = new Factura(
-                    LocalDateTime.of(2026, 6, 1, 0, 0, 0),
-                    LocalDateTime.of(2026, 6, 30, 23, 59, 59),
-                    LocalDateTime.of(2026, 7, 15, 0, 0, 0), 85.40, contrato1);
+                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),       // emisión
+                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),    // vencimiento
+                    LocalDateTime.of(2026, 8, 4, 0, 0, 0), 85.40, contrato1); // max pago
             factura1.setEstado(EstadoFactura.PENDIENTE);
+
             Factura factura2 = new Factura(
-                    LocalDateTime.of(2026, 6, 1, 0, 0, 0),
-                    LocalDateTime.of(2026, 6, 30, 23, 59, 59),
-                    LocalDateTime.of(2026, 7, 15, 0, 0, 0), 35.0, contrato2);
+                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),
+                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),
+                    LocalDateTime.of(2026, 8, 6, 0, 0, 0), 35.0, contrato2);
             factura2.setEstado(EstadoFactura.PAGADA);
+
+            // factura3: fechaMaxPago corregida a 2026-07-04 (posterior al vencimiento 2026-06-19)
             Factura factura3 = new Factura(
-                    LocalDateTime.of(2026, 5, 1, 0, 0, 0),
-                    LocalDateTime.of(2026, 5, 31, 23, 59, 59),
-                    LocalDateTime.of(2026, 6, 15, 0, 0, 0), 22.50, contrato3);
+                    LocalDateTime.of(2026, 5, 20, 0, 0, 0),
+                    LocalDateTime.of(2026, 6, 19, 23, 59, 59),
+                    LocalDateTime.of(2026, 7, 4, 0, 0, 0), 22.50, contrato3);
             factura3.setEstado(EstadoFactura.VENCIDA);
+
             Factura factura4 = new Factura(
-                    LocalDateTime.of(2026, 6, 1, 0, 0, 0),
-                    LocalDateTime.of(2026, 6, 30, 23, 59, 59),
-                    LocalDateTime.of(2026, 7, 15, 0, 0, 0), 24.75, contrato3);
+                    LocalDateTime.of(2026, 6, 20, 0, 0, 0),
+                    LocalDateTime.of(2026, 7, 20, 23, 59, 59),
+                    LocalDateTime.of(2026, 8, 6, 0, 0, 0), 24.75, contrato3);
             factura4.setEstado(EstadoFactura.PENDIENTE);
+
             Factura factura5 = new Factura(
-                    LocalDateTime.of(2026, 4, 1, 0, 0, 0),
-                    LocalDateTime.of(2026, 4, 30, 23, 59, 59),
-                    LocalDateTime.of(2026, 5, 15, 0, 0, 0), 82.60, contrato1);
+                    LocalDateTime.of(2026, 4, 20, 0, 0, 0),
+                    LocalDateTime.of(2026, 5, 20, 23, 59, 59),
+                    LocalDateTime.of(2026, 6, 4, 0, 0, 0), 82.60, contrato1);
             factura5.setEstado(EstadoFactura.PAGADA);
 
             ponerEnArchivo(new FacturaBinarioDAO(), List.of(factura1, factura2, factura3, factura4, factura5),
@@ -112,8 +132,9 @@ public class DatosSeeder {
                             existente.getContrato().getId() == nuevo.getContrato().getId()
                                     && existente.getFechaEmision().equals(nuevo.getFechaEmision()));
 
-            Abono abono1 = new Abono(50.0, LocalDateTime.of(2026, 6, 15, 10, 30, 0), true, factura1, ModalidadPago.TC);
-            Abono abono2 = new Abono(35.0, LocalDateTime.of(2026, 6, 20, 14, 0, 0), true, factura2, ModalidadPago.TRANSFERENCIA);
+            // Abonos con fechas posteriores a la emisión de cada factura
+            Abono abono1 = new Abono(50.0, LocalDateTime.of(2026, 6, 21, 10, 30, 0), true, factura1, ModalidadPago.TC);
+            Abono abono2 = new Abono(35.0, LocalDateTime.of(2026, 6, 25, 14, 0, 0), true, factura2, ModalidadPago.TRANSFERENCIA);
             Abono abono3 = new Abono(22.50, LocalDateTime.of(2026, 6, 10, 9, 45, 0), false, factura3, ModalidadPago.TD);
             Abono abono4 = new Abono(24.75, LocalDateTime.of(2026, 6, 28, 11, 15, 0), false, factura4, ModalidadPago.PAYPAL);
             Abono abono5 = new Abono(35.40, LocalDateTime.of(2026, 6, 25, 16, 20, 0), true, factura1, ModalidadPago.DEBITO);
@@ -125,15 +146,18 @@ public class DatosSeeder {
                                     && existente.getFechaPago().equals(nuevo.getFechaPago())
                                     && existente.getMonto() == nuevo.getMonto());
 
+            // Intereses: fecha de cálculo después del vencimiento
             InteresMora interes1 = new InteresMora(14, 8.75, LocalDateTime.of(2026, 6, 29, 0, 0, 0), false, factura3);
-            InteresMora interes2 = new InteresMora(8, 5.20, LocalDateTime.of(2026, 6, 28, 0, 0, 0), false, factura4);
+            // interes2 ahora calculado el 2026-08-01 (después del vencimiento 2026-07-20)
+            InteresMora interes2 = new InteresMora(8, 5.20, LocalDateTime.of(2026, 8, 1, 0, 0, 0), false, factura4);
 
             ponerEnArchivo(new InteresMoraBinarioDAO(), List.of(interes1, interes2),
                     (existente, nuevo) ->
                             existente.getFactura().getId() == nuevo.getFactura().getId()
                                     && existente.getFechaCalculo().equals(nuevo.getFechaCalculo()));
 
-            CorteServicio corte1 = new CorteServicio(LocalDateTime.of(2026, 6, 16, 8, 0, 0), contrato3, factura3);
+            // Corte de servicio después del vencimiento de la factura relacionada
+            CorteServicio corte1 = new CorteServicio(LocalDateTime.of(2026, 6, 20, 8, 0, 0), contrato3, factura3);
             corte1.setEstadoCorte(EstadoCorte.CORTADO);
 
             ponerEnArchivo(new CorteServicioBinarioDAO(), List.of(corte1),

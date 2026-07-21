@@ -9,6 +9,7 @@ import servicart.domain.dtos.entradas.LoginClienteDTOEntrada;
 import servicart.domain.dtos.salidas.LoginClienteDTOSalida;
 import servicart.domain.interfaces.LoginCliente;
 import servicart.domain.services.BdService;
+import servicart.domain.services.GestorProcesosEmpresa;
 import servicart.ui.SesionCliente;
 import servicart.ui.controllers.Navegador;
 import servicart.ui.mappers.LoginClienteMapperUI;
@@ -42,6 +43,7 @@ public class LoginClienteController {
         }
 
         BdService.configurarBaseDatos(baseDatos);
+        GestorProcesosEmpresa.iniciarSiEsNecesario();
 
         LoginClienteViewModel viewModel = new LoginClienteViewModel();
         viewModel.setCedula(cedula);

@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import servicart.domain.services.GestorProcesosEmpresa;
 import servicart.ui.controllers.Navegador;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ void main() {
             stage.setScene(new Scene(root));
 
             Navegador.inicializar(stage);
-
+            stage.setOnCloseRequest(e -> GestorProcesosEmpresa.detener());
             stage.getIcons().add(new Image(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("assets/icon/marcoDorado.png"), "Icono no encontrado")));
             stage.setMinWidth(700);
             stage.setMinHeight(500);
