@@ -36,11 +36,11 @@ public class MoraService {
         InteresMora mora = buscarPorFactura(factura.getId())
                 .map(existente -> actualizarRegistro(existente, (int) diasRetraso, interesTotal, LocalDateTime.now()))
                 .orElseGet(() -> crearRegistro((int) diasRetraso, interesTotal, LocalDateTime.now(), factura));
-
         factura.setValorTotal(factura.getValorBase() + interesTotal);
 
         if (factura.getEstado() != EstadoFactura.VENCIDA) {
-            facturaService.marcarComoVencida(factura); // primera vez: cambia estado + persiste
+            facturaService.marcarComoVencida(factura);
+            facturaDAO.update(factura);// primera vez: cambia estado + persiste
         } else {
             facturaDAO.update(factura); // ya estaba vencida: solo persiste el nuevo valorTotal
         }

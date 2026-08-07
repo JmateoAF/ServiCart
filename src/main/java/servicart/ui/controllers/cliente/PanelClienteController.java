@@ -251,7 +251,7 @@ public class PanelClienteController {
             return;
         }
         if (monto > factura.getValorTotal()) {
-            mostrarErrorFila(lblError, "No puedes pagar más de lo que debes ($ " + String.format("%.2f", factura.getValorTotal()) + ")");
+            mostrarErrorFila(lblError, "No puedes pagar más de lo que debes ($ " + String.format("%.2f", factura.getValorTotal()));
             return;
         }
 

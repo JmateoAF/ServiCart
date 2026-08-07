@@ -33,10 +33,7 @@ public class PanelClienteMapperUI {
         FacturaPendienteViewModel vm = new FacturaPendienteViewModel();
         vm.setIdFactura(dto.idFactura());
 
-        // CORREGIDO: Antes se asignaba dto.valorTotal() al ValorBase de manera errónea
         vm.setValorBase(dto.valorBase());
-
-        // CORREGIDO: Se agregó la asignación para el valor total numérico que faltaba
         vm.setValorTotal(dto.valorTotal());
 
         vm.setPeriodoTexto(capitalizar(dto.fechaEmision().format(FORMATO_PERIODO)));
@@ -44,7 +41,7 @@ public class PanelClienteMapperUI {
         vm.setFechaCorteTexto(dto.fechaCorte().format(FORMATO_CORTO));
         vm.setInteresAcumulado(dto.interesAcumulado());
         vm.setTieneMora(dto.diasMora() > 0);
-        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal() + dto.interesAcumulado()));
+        vm.setTotalIndividualTexto(String.format("$ %.2f", dto.valorTotal()));
         return vm;
     }
 
